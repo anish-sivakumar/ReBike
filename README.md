@@ -1,2 +1,2 @@
 # eBike
-Design Project - BMS, Motor Controls, Peripherals
+ECE 499 Capstone Design Project - BMS, Motor Controls, Peripherals
