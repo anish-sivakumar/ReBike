@@ -6,7 +6,7 @@
 #define 	ANGLE_RES      		    (float)(ANGLE_2PI/(float)TABLE_SIZE) //Defines the angle resolution in the sine/cosine look up table
 #define     ONE_OVER_ANGLE_RES     (float)(1.0f/ANGLE_RES)
 
-//Structure containing component values for 3-Phase Stator Reference Frame
+// Structure containing component values for 3-Phase Stator Reference Frame
 typedef struct 
 {
     float   a;
@@ -15,7 +15,7 @@ typedef struct
 } struct_ABC;
 
 
-//Structure containing component values for 2-Phase Stator Reference Frame
+// Structure containing component values for 2-Phase Stator Reference Frame
 typedef struct 
 {
     float   alpha;
@@ -23,12 +23,108 @@ typedef struct
 } struct_AlphaBeta;
 
 
-//Structure containing component values for 2-Phase Rotating Reference Frame
+// Structure containing component values for 2-Phase Rotating Reference Frame
 typedef struct 
 {
     float   d;          // in direction parallel to flux (direct)
     float   q;          // in direction parallel to torque (quadrature)
 } struct_DQ;
+
+
+// Enum for Space Vector PWM sectors
+enum sector {
+    SECTOR1, // ABC = 100
+    SECTOR2, // ABC = 110
+    SECTOR3, // ABC = 010
+    SECTOR4, // ABC = 011
+    SECTOR5, // ABC = 001
+    SECTOR6  // ABC = 101
+            // sector 7 = 000
+            // sector 8 = 111
+}; 
+
+// Structure containing duty values for phases/switches
+typedef struct
+{
+    float a; // this will depend on PWM mode of mcu
+    float b;
+    float c;
+} struct_Duty;
+
+/* Calculates Space Vector Sector (1-6) based on alpha beta components 
+    Parameters:
+        *alphabetaValues           pointer to structure for alpha,beta axis components
+    Returns:
+        sector                     Space Vector PWM sector enum (SECTOR1....SECTOR6)
+*/
+static inline sector SpaceVectorSector(struct_AlphaBeta *voltage)
+{
+    // each Space Vector sector is 60deg. Dividing lines between sectors is where y = tan(60) * x = sqrt(3) * x
+    temp = voltage->alpha * SQRT3;
+
+    // check each of four quadrant in alpha beta reference frame (alpha = x, beta = y)
+    // determine Sector using 60deg property
+
+    if ((voltage->alpha >= 0) && (voltage->beta >= 0)) // Quadrant 1
+    {
+        if (voltage->beta <= temp)
+        {
+            sector = SECTOR1;
+        }
+        else
+        {
+            sector = SECTOR2;
+        }
+    }
+    else if ((voltage->alpha < 0) && (voltage->beta >= 0)) // Quadrant 2
+    { 
+        if (voltage->beta >= -tempIQ)
+        {
+            sector = SECTOR2;
+        }
+        else
+        {
+            sector = SECTOR3;
+        }
+    }
+    else if ((voltage->alpha < 0) && (voltage->beta < 0)) // Quadrant 3
+    {
+        if (voltage->beta >= tempIQ)
+        {
+            sector = SECTOR4;
+        }
+        else
+        {
+            sector = SECTOR5;
+        }
+    }
+    else                                                  // Quadrant 1
+    {
+        if (voltage->beta  <= -tempIQ)
+        {
+            sector = SECTOR5;
+        }
+        else
+        {
+            sector = SECTOR6;
+        }
+    }
+
+    return sector;
+
+}
+
+
+/* Calculates Space Vector PWM Duties for six switches based on  
+    Parameters:
+        *alphabetaValues           pointer to structure for alpha,beta axis components
+        sector                     sector of desired voltage
+        dity                       duty values for inverter switches
+*/
+static inline sector SpaceVectorPWMDuty(struct_AlphaBeta voltage, sector sector, struct_Duty* duty)
+{
+    return; // write me
+}
 
 
 /* Calculates Clarke Transform (a,b,c -> alpha,beta)
