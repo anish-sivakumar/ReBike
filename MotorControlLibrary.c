@@ -46,10 +46,74 @@ enum sector {
 // Structure containing duty values for phases/switches
 typedef struct
 {
-    float a; // this will depend on PWM mode of mcu
+    float a; // change struct depending on PWM mode of mcu
     float b;
     float c;
 } struct_Duty;
+
+// Structure containing variables used by PI Controller
+typedef struct 
+{
+    float   sum;    // Sum of error values
+    float   kp;     // Proportional Coefficient
+    float   ki;     // Integral Coefficient
+    float   kw;     // Anti-windup Coefficient for integral action
+    float   outMax; // Max output limit (inclusive)
+    float   outMin; // Min output limit (inclusive)
+    float   ref;    // Reference input
+    float   fdb;    // Feedback input
+    float   out;    // Controller output (integral output + proportional output)
+    float   error;  // Calculated error (reference - feedback)
+} struct_PI;
+
+
+/* Clears PI controller integral sum and output 
+    Parameters:
+        *PI          pointer to structure for PI controller values
+*/
+static inline void ClearPI(struct_PI *PI)
+{
+    PI->sum = 0.0f;
+    PI->qOut = 0.0f;
+}
+
+
+/* Updates PI controller integral sum and output 
+    Parameters:
+        *PI          pointer to structure for PI controller values
+*/
+static inline void UpdatePI(struct_PI *PI)
+{
+    float errorTemp;
+    float outTemp;
+    float windup_delta;
+    
+    errorTemp  = PI->ref - PI->fdb;
+    PI->error =  errorTemp; 
+    outTemp  = PI->sum + PI->kp * errorTemp;
+   
+    // check output limits and assign output
+    if(outTemp > PI->outMax)
+    {
+        PI->out = PI->outMax;
+    }    
+    else if(outTemp < PI->outMin)
+    {
+        PI->out = PI->outMin;
+    }
+    else        
+    {
+        PI->qOut = outTemp;  
+    }
+    
+    windup_delta = outTemp - PI->out; // setpoint change 
+    
+    // calculate integral sum with anti-windup https://en.wikipedia.org/wiki/Integral_windup
+    // when large setpoint changes happen, integral error sum won't include the error during ramp/windup
+    PI->sum = PI->sum + (PI->ki * Err) - (PI->kw * windup_delta); 
+
+}
+
 
 /* Calculates Space Vector Sector (1-6) based on alpha beta components 
     Parameters:
@@ -115,7 +179,7 @@ static inline sector SpaceVectorSector(struct_AlphaBeta *voltage)
 }
 
 
-/* Calculates Space Vector PWM Duties for six switches based on  
+/* Calculates Space Vector PWM Duties and Timing for six switches based on desired voltage vector  
     Parameters:
         *alphabetaValues           pointer to structure for alpha,beta axis components
         sector                     sector of desired voltage
@@ -200,11 +264,14 @@ void CalcSinCos(float *sinTheta, float *cosTheta, float angle)
     float x0, y0, y1, temp;
     
     // Software check to ensure  0 <= Angle < 2*PI
-     if(theta <  0.0f) {
-        theta = theta + ANGLE_2PI; }
-    
-    else if(theta >= ANGLE_2PI){
-        theta = theta - ANGLE_2PI; }
+    if(theta <  0.0f) 
+    {
+        theta = theta + ANGLE_2PI; 
+    }
+    else if(theta >= ANGLE_2PI)
+    {
+        theta = theta - ANGLE_2PI; 
+    }
     
     y0_Index = (uint32_t)((float)(theta/ANGLE_RES));
     
@@ -220,10 +287,6 @@ void CalcSinCos(float *sinTheta, float *cosTheta, float angle)
         if(y0_IndexNext >= TABLE_SIZE )
         {
             y0_IndexNext = 0;
-        }
-        else
-        {
-
         }
 
         x0 = ((float)y0_Index * ANGLE_RES);  
