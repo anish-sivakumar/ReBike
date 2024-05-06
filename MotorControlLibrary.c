@@ -1,6 +1,7 @@
 #define 	ONE_OVER_SQRT3     		(float)0.5773502691    // Defines value for 1/sqrt(3)
 #define 	SQRT3    		        (float)1.7320508076    // Defines value for sqrt(3)
 #define     TWO_OVER_SQRT3          (float)1.1547005383    // Defines value for 2/sqrt(3)
+#define     SQRT3_OVER_TWO          (float)0.86602540378   // Defines values for sqrt(3)/2
 #define 	ANGLE_2PI              	(float)6.2831853072    // Defines value for 2*PI
 #define     LUT_SIZE                256U                   // Defines size of sine and cosine tables
 #define 	ANGLE_RES      		    (float)(ANGLE_2PI/(float)TABLE_SIZE) //Defines the angle resolution in the sine/cosine look up table
@@ -183,12 +184,56 @@ static inline sector SpaceVectorSector(struct_AlphaBeta *voltage)
     Parameters:
         *alphabetaValues           pointer to structure for alpha,beta axis components
         sector                     sector of desired voltage
-        dity                       duty values for inverter switches
+        duty                       duty values for inverter switches
 */
-static inline sector SpaceVectorPWMDuty(struct_AlphaBeta voltage, sector sector, struct_Duty* duty)
+static inline void SpaceVectorPWMDuty(struct_AlphaBeta alphabetaVoltage, sector sector, struct_Duty* duty)
 {
-    return; // write me
-}
+    struct_ABC abcVoltages;
+    
+    InverseClarkeTransform(&alphabetaVoltage, &abcVoltages)
+
+    // Precalculate common terms 
+
+    // Sector specific duties
+    switch (sector)
+    {
+        case SECT1:
+        {
+            break;
+        }
+
+        case SECT2:
+        {
+            break;
+        }
+
+        case SECT3:
+        {
+            break; 
+        }
+
+        case SECT4:
+        {
+           break; 
+        }
+
+        case SECT5:
+        {
+            break;
+        }
+
+        case SECT6:
+        {
+            break;
+        } 
+
+        default:
+            duty->A = 0;
+            duty->B = 0;
+            duty->C = 0;
+            break;
+    }
+}  
 
 
 /* Calculates Clarke Transform (a,b,c -> alpha,beta)
@@ -200,6 +245,20 @@ static inline void ClarkeTransform(struct_ABC *abcValues, struct_AlphaBeta *alph
 {
     alphabetaValues->alpha = abcValues->a;
     alphabetaValues->beta = (abcValues->a * ONE_OVER_SQRT3) + (abcValues->b * TWO_OVER_SQRT3);
+}
+
+
+/* Calculates Inverse Clarke Transform (alpha,beta -> a,b,c)
+    Parameters:
+        *alphabetaValues           pointer to structure for alpha,beta axis components
+        *abcValues                 pointer to structure for a,b,c axis components
+    https://www.mathworks.com/help/sps/ref/inverseclarketransform.html
+*/
+static inline void InverseClarkeTransform(struct_AlphaBeta *alphabetaValues, struct_ABC *abcValues)
+{
+    abcValues->a = alphabetaValues->alpha;
+    abcValues->b = (-alphabetaParam->alpha/2.0f + SQRT3_OVER_TWO * alphabetaParam->beta);
+    abcValues->c = (-alphabetaParam->alpha/2.0f - SQRT3_OVER_TWO * alphabetaParam->beta);     
 }
 
 
