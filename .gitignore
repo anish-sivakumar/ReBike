@@ -32,7 +32,7 @@
 *.app
 
 # VS Code generated files
-.vscode/*
+*/.vscode/*
 
 # Platform IO files
 .pio/
