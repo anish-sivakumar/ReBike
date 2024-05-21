@@ -11,7 +11,7 @@
 typedef struct 
 {
     float   a;
-    float   b; 
+    float   b;
     float   c;
 } struct_ABC;
 
