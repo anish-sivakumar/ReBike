@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/contrib/auto-render.min.js"></script>
+<!-- KaTeX is faster and we only need it for basic math. If MathJax is needed, replace the two lines above with the lines below.
+<script type="text/javascript"
+	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css' />
+<style type='text/css'>
+body { font-family: 'Open Sans', Helvetica, Arial, sans-serif; }
+code { font-family: Consolas, monospace; }
+table td, table th { border: 1px solid black; padding: 0px 5px 0px 5px;}
+table th.sectionhead { text-align: left; }
+table { border-collapse: collapse; }
+table .value { text-align: right; }
+.bold { font-weight: bold; }
+.metadata { font-size: small; }
+.metadata dl {
+	overflow: none;
+	width: 100%;
+	position: relative;
+	float: left;
+}
+.metadata dt, .metadata dd {
+	float:left;
+	margin: 0px;
+	padding: 0px;
+}
+.metadata dt {
+	clear:both;
+	width: 10em;
+	font-weight: bold;
+}
+.metadata dd{
+	position: relative;
+	left: 10em;
+}
+tr:nth-child(odd) {
+	background-color: #faf8f8;
+}
+tr.param-group th {
+    border-top-width: 2px;
+	text-align: left;
+}
+tr.param-group th code {
+	font-size: 110%;
+}
+td code { font-size: 90%; }
+table.hide_macro .col_macro { display: none; }
+</style>
+</head>
+<body>
+<p>
+The following table lists configurable parameters of the Motor Control Application Framework.
+</p>
+<p>
+This list is still under construction.
+</p>
+<p>
+<label><input type='checkbox' id='show_macro' />Show #define macro names</label>
+</p>
+<table id='parameter_table'>
+	<tr>
+	<th>Key</th><th class="col_macro">#define macro</th><th>Symbol</th><th>Intended Value</th><th>Units</th><th>Description</th>
+	</tr>
+<tr class="param-group">
+<th class="group-name"><code>adc</code> (15 items)</th><th>ADC parameters</th>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>adc.bridge_temperature</code> (4 items)</th><th>Three-phase bridge temperature</th>
+</tr>
+<tr>
+<td><code>adc.bridge_temperature.filterGain</code></td>
+<td class="col_macro"><code>MCAF_BRIDGE_TEMPERATURE_FILTER_GAIN</code></td>
+<td></td>
+<td>1.000e+02 </td>
+<td>rad/s</td>
+<td>Pole of bridge temperature low-pass filter</td>
+</tr>
+<tr>
+<td><code>adc.bridge_temperature.gain</code></td>
+<td class="col_macro"><code>MCAF_BRIDGE_TEMPERATURE_GAIN</code></td>
+<td></td>
+<td>0.5035400 </td>
+<td></td>
+<td>temperature gain</td>
+</tr>
+<tr>
+<td><code>adc.bridge_temperature.offset</code></td>
+<td class="col_macro"><code>MCAF_BRIDGE_TEMPERATURE_OFFSET</code></td>
+<td></td>
+<td>5.000e+03 </td>
+<td></td>
+<td>temperature offset</td>
+</tr>
+<tr>
+<td><code>adc.bridge_temperature.slewRate</code></td>
+<td class="col_macro"><code>MCAF_BRIDGE_TEMPERATURE_SLEW_RATE</code></td>
+<td></td>
+<td>4.0000000 </td>
+<td>C/s</td>
+<td>Maximum temperature slew rate</td>
+</tr>
+<tr>
+<td><code>adc.currentKaa</code></td>
+<td class="col_macro"><code>CURRENT_KAA</code></td>
+<td></td>
+<td>1.0000000 </td>
+<td></td>
+<td>normalized A->A current gain</td>
+</tr>
+<tr>
+<td><code>adc.currentKab</code></td>
+<td class="col_macro"><code>CURRENT_KAB</code></td>
+<td></td>
+<td>0.000e+00 </td>
+<td></td>
+<td>normalized B->A current gain</td>
+</tr>
+<tr>
+<td><code>adc.currentKba</code></td>
+<td class="col_macro"><code>CURRENT_KBA</code></td>
+<td></td>
+<td>0.000e+00 </td>
+<td></td>
+<td>normalized A->B current gain</td>
+</tr>
+<tr>
+<td><code>adc.currentKbb</code></td>
+<td class="col_macro"><code>CURRENT_KBB</code></td>
+<td></td>
+<td>1.0000000 </td>
+<td></td>
+<td>normalized B->B current gain</td>
+</tr>
+<tr>
+<td><code>adc.currentKcc</code></td>
+<td class="col_macro"><code>CURRENT_KCC</code></td>
+<td></td>
+<td>1.0000000 </td>
+<td></td>
+<td>normalized C->C current gain</td>
+</tr>
+<tr>
+<td><code>adc.mcafCalCount</code></td>
+<td class="col_macro"><code>MCAF_CAL_COUNT</code></td>
+<td></td>
+<td>128 </td>
+<td></td>
+<td>number of samples taken for current offset compensation</td>
+</tr>
+<tr>
+<td><code>adc.mcafCalFilterGain</code></td>
+<td class="col_macro"><code>MCAF_CAL_FILTER_GAIN</code></td>
+<td></td>
+<td>0.2500000 </td>
+<td></td>
+<td>low-pass filter gain for current offset compensation</td>
+</tr>
+<tr>
+<td><code>adc.mcafCalRange</code></td>
+<td class="col_macro"><code>MCAF_CAL_RANGE</code></td>
+<td></td>
+<td>0.0312500 </td>
+<td></td>
+<td>normalized range of current offset compensation, relative to ADC fullscale</td>
+</tr>
+<tr>
+<td><code>adc.mcafCalShift</code></td>
+<td class="col_macro"><code>MCAF_CAL_SHIFT</code></td>
+<td></td>
+<td>5 </td>
+<td></td>
+<td>shift count used to limit offset to 2^(-MCAF_CAL_SHIFT) of ADC fullscale</td>
+</tr>
+<tr>
+<td><code>adc.mcafIdcScalingFactor</code></td>
+<td class="col_macro"><code>MCAF_IDC_SCALING_FACTOR</code></td>
+<td></td>
+<td>1.0000000 </td>
+<td></td>
+<td>scaling for Idc</td>
+</tr>
+<tr>
+<td><code>adc.mcafVdcScalingFactor</code></td>
+<td class="col_macro"><code>MCAF_VDC_SCALING_FACTOR</code></td>
+<td></td>
+<td>1.0000000 </td>
+<td></td>
+<td>scaling for Vdc</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>board_service</code> (2 items)</th><th>board service parameters</th>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>board_service.button</code> (2 items)</th><th>pushbutton</th>
+</tr>
+<tr>
+<td><code>board_service.button.debounceTime</code></td>
+<td class="col_macro"><code>MCAF_BUTTON_DEBOUNCE_TIME</code></td>
+<td></td>
+<td>0.0070000 </td>
+<td>s</td>
+<td>UI button debounce time in ISRs</td>
+</tr>
+<tr>
+<td><code>board_service.button.longPressTime</code></td>
+<td class="col_macro"><code>MCAF_BUTTON_LONG_PRESS_TIME</code></td>
+<td></td>
+<td>2.5000000 </td>
+<td>s</td>
+<td>UI button long press time in ISRs</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>current_measure</code> (2 items)</th><th></th>
+</tr>
+<tr>
+<td><code>current_measure.criticalTime</code></td>
+<td class="col_macro"><code>MCAF_CURRENT_MEASURE_CRITICAL_TIME</code></td>
+<td></td>
+<td>3.000e-06 </td>
+<td>seconds</td>
+<td>Minimum time window required for single channel current measurement</td>
+</tr>
+<tr>
+<td><code>current_measure.triggerDelay</code></td>
+<td class="col_macro"><code>MCAF_CURRENT_MEASURE_TRIGGER_DELAY</code></td>
+<td></td>
+<td>1.000e-06 </td>
+<td>s</td>
+<td>ADC trigger delay to get cleaner current samples</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>dyn_current1</code> (7 items)</th><th>ADC parameters</th>
+</tr>
+<tr>
+<td><code>dyn_current1.accumulatorCount</code></td>
+<td class="col_macro"><code>MCAF_DYNAMIC_CURRENT_ACCUMULATOR_COUNT</code></td>
+<td></td>
+<td>128 </td>
+<td></td>
+<td>number of samples for dynamic current accumulation</td>
+</tr>
+<tr>
+<td><code>dyn_current1.accumulatorShift</code></td>
+<td class="col_macro"><code>MCAF_DYNAMIC_CURRENT_ACCUMULATOR_SHIFT</code></td>
+<td></td>
+<td>4 </td>
+<td></td>
+<td>right-shift count for dynamic current accumulation</td>
+</tr>
+<tr>
+<td><code>dyn_current1.continuous</code></td>
+<td class="col_macro"><code>MCAF_DYNAMIC_CURRENT_CONTINUOUS</code></td>
+<td></td>
+<td>4.5300000 </td>
+<td>A</td>
+<td>Maximum current (continuous)</td>
+</tr>
+<tr>
+<td><code>dyn_current1.horizon</code></td>
+<td class="col_macro"><code>MCAF_DYNAMIC_CURRENT_HORIZON</code></td>
+<td></td>
+<td>1.485e+01 </td>
+<td>A</td>
+<td>Relaxation current horizon: current limit relaxes toward this level until it hits the peak current</td>
+</tr>
+<tr>
+<td><code>dyn_current1.k1</code></td>
+<td class="col_macro"><code>MCAF_DYNAMIC_CURRENT_K1</code></td>
+<td></td>
+<td>0.0012800 </td>
+<td></td>
+<td>Relaxation gain (=1/tau)</td>
+</tr>
+<tr>
+<td><code>dyn_current1.k2</code></td>
+<td class="col_macro"><code>MCAF_DYNAMIC_CURRENT_K2</code></td>
+<td></td>
+<td>0.0070256 </td>
+<td></td>
+<td>I^2 accumulation gain</td>
+</tr>
+<tr>
+<td><code>dyn_current1.peak</code></td>
+<td class="col_macro"><code>MCAF_DYNAMIC_CURRENT_PEAK</code></td>
+<td></td>
+<td>4.5300000 </td>
+<td>A</td>
+<td>Peak current level (max current for short transients)</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>fault_detect</code> (3 items)</th><th>Fault detection parameters</th>
+</tr>
+<tr>
+<td><code>fault_detect.mcafOvertemperatureThreshold</code></td>
+<td class="col_macro"><code>MCAF_OVERTEMPERATURE_THRESHOLD</code></td>
+<td></td>
+<td>5.000e+01 </td>
+<td>C</td>
+<td>overtemperature fault threshold</td>
+</tr>
+<tr>
+<td><code>fault_detect.vdcOvervoltageThreshold</code></td>
+<td class="col_macro"><code>VDC_OVERVOLTAGE_THRESHOLD</code></td>
+<td></td>
+<td>5.000e+01 </td>
+<td>V</td>
+<td>overvoltage fault threshold</td>
+</tr>
+<tr>
+<td><code>fault_detect.vdcUndervoltageThreshold</code></td>
+<td class="col_macro"><code>VDC_UNDERVOLTAGE_THRESHOLD</code></td>
+<td></td>
+<td>1.000e+01 </td>
+<td>V</td>
+<td>undervoltage fault threshold</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>foc</code> (12 items)</th><th>Field-oriented control (FOC) parameters</th>
+</tr>
+<tr>
+<td><code>foc.kii</code></td>
+<td class="col_macro"><code>KII</code></td>
+<td>\(K_{ii}\)</td>
+<td>6.155e+02 </td>
+<td>V/A/s</td>
+<td>Current loop integral gain</td>
+</tr>
+<tr>
+<td><code>foc.kip</code></td>
+<td class="col_macro"><code>KIP</code></td>
+<td>\(K_{ip}\)</td>
+<td>0.4153039 </td>
+<td>V/A</td>
+<td>Current loop proportional gain</td>
+</tr>
+<tr>
+<td><code>foc.kwi</code></td>
+<td class="col_macro"><code>KWI</code></td>
+<td>\(K_{\omega i}\)</td>
+<td>0.5887392 </td>
+<td>A/rad</td>
+<td>Velocity loop integral gain</td>
+</tr>
+<tr>
+<td><code>foc.kwp</code></td>
+<td class="col_macro"><code>KWP</code></td>
+<td>\(K_{\omega p}\)</td>
+<td>0.0358503 </td>
+<td>A/(rad/s)</td>
+<td>Velocity loop proportional gain</td>
+</tr>
+<tr>
+<td><code>foc.mcafControlGainKvi</code></td>
+<td class="col_macro"><code>MCAF_CONTROL_GAIN_KVI</code></td>
+<td></td>
+<td>2.6910530 </td>
+<td>A/Vs</td>
+<td>Voltage loop integral gain</td>
+</tr>
+<tr>
+<td><code>foc.mcafControlGainKvp</code></td>
+<td class="col_macro"><code>MCAF_CONTROL_GAIN_KVP</code></td>
+<td></td>
+<td>0.2691053 </td>
+<td>A/V</td>
+<td>Voltage loop proportional gain</td>
+</tr>
+<tr>
+<td><code>foc.mcafDeadTimeCompensationVoltageDelay</code></td>
+<td class="col_macro"><code>MCAF_DEAD_TIME_COMPENSATION_VOLTAGE_DELAY</code></td>
+<td></td>
+<td>0 </td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>foc.mcafFilterCoeffVq</code></td>
+<td class="col_macro"><code>MCAF_FILTER_COEFF_VQ</code></td>
+<td></td>
+<td>5.000e+02 </td>
+<td>rad/s</td>
+<td>Pole of voltage loop low-pass filter</td>
+</tr>
+<tr>
+<td><code>foc.mcafRvdcMin</code></td>
+<td class="col_macro"><code>MCAF_RVDC_MIN</code></td>
+<td></td>
+<td>0.1121985 </td>
+<td>1/V</td>
+<td>reciprocal of minimum DC link voltage</td>
+</tr>
+<tr>
+<td><code>foc.mcafRvdcMinVdc</code></td>
+<td class="col_macro"><code>MCAF_RVDC_MIN_VDC</code></td>
+<td></td>
+<td>8.9127720 </td>
+<td>V</td>
+<td>minimum DC link voltage for which we calculate reciprocals</td>
+</tr>
+<tr>
+<td><code>foc.mcafRvdcQ</code></td>
+<td class="col_macro"><code>MCAF_RVDC_Q</code></td>
+<td></td>
+<td>12 </td>
+<td></td>
+<td>binary point for reciprocal voltages</td>
+</tr>
+<tr>
+<td><code>foc.mcafVelocityToVoltageGain</code></td>
+<td class="col_macro"><code>MCAF_VELOCITY_TO_VOLTAGE_GAIN</code></td>
+<td></td>
+<td>0.0371469 </td>
+<td>V/(rad/s)</td>
+<td>Gain from velocity reference to voltage</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>hal</code> (9 items)</th><th>Hardware Abstraction Layer (HAL) parameters</th>
+</tr>
+<tr>
+<td><code>hal.adcTriggerDelay</code></td>
+<td class="col_macro"><code>HAL_PARAM_ADC_TRIGGER_DELAY</code></td>
+<td></td>
+<td>0.000e+00 </td>
+<td>s</td>
+<td>ADC sampling delay</td>
+</tr>
+<tr>
+<td><code>hal.deadtimeCounts</code></td>
+<td class="col_macro"><code>HAL_PARAM_DEADTIME_COUNTS</code></td>
+<td></td>
+<td>1.000e-06 </td>
+<td>s</td>
+<td>Dead time in PWM clock cycles</td>
+</tr>
+<tr>
+<td><code>hal.maxDutyCounts</code></td>
+<td class="col_macro"><code>HAL_PARAM_MAX_DUTY_COUNTS</code></td>
+<td></td>
+<td>0.9550000 </td>
+<td></td>
+<td>Maximum duty cycle register value in counts</td>
+</tr>
+<tr>
+<td><code>hal.maxDutyQ15</code></td>
+<td class="col_macro"><code>HAL_PARAM_MAX_DUTY_Q15</code></td>
+<td></td>
+<td>0.9550000 </td>
+<td></td>
+<td>Maximum duty cycle register value, as ratio</td>
+</tr>
+<tr>
+<td><code>hal.maxLowerDutyCounts</code></td>
+<td class="col_macro"><code>HAL_PARAM_MAX_LOWER_DUTY_COUNTS</code></td>
+<td></td>
+<td>0.9710000 </td>
+<td></td>
+<td>Maximum low-side duty cycle register value in counts</td>
+</tr>
+<tr>
+<td><code>hal.minDutyCounts</code></td>
+<td class="col_macro"><code>HAL_PARAM_MIN_DUTY_COUNTS</code></td>
+<td></td>
+<td>0.0290000 </td>
+<td></td>
+<td>Minimum duty cycle register value in counts</td>
+</tr>
+<tr>
+<td><code>hal.minDutyQ15</code></td>
+<td class="col_macro"><code>HAL_PARAM_MIN_DUTY_Q15</code></td>
+<td></td>
+<td>0.0290000 </td>
+<td></td>
+<td>Minimum duty cycle register value, as ratio</td>
+</tr>
+<tr>
+<td><code>hal.minLowerDutyCounts</code></td>
+<td class="col_macro"><code>HAL_PARAM_MIN_LOWER_DUTY_COUNTS</code></td>
+<td></td>
+<td>0.0450000 </td>
+<td></td>
+<td>Minimum low-side duty cycle register value in counts</td>
+</tr>
+<tr>
+<td><code>hal.pwmPeriodCounts</code></td>
+<td class="col_macro"><code>HAL_PARAM_PWM_PERIOD_COUNTS</code></td>
+<td></td>
+<td>2.500e-05 </td>
+<td>s</td>
+<td>PWM period register value in PWM clock cycles</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>mcapi</code> (8 items)</th><th>MC API parameters</th>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>mcapi.fullscale</code> (4 items)</th><th>Fullscale values</th>
+</tr>
+<tr>
+<td><code>mcapi.fullscale.current</code></td>
+<td class="col_macro"><code>MCAPI_FULLSCALE_CURRENT</code></td>
+<td></td>
+<td>4.366e+01 </td>
+<td></td>
+<td>A</td>
+</tr>
+<tr>
+<td><code>mcapi.fullscale.torque</code></td>
+<td class="col_macro"><code>MCAPI_FULLSCALE_TORQUE</code></td>
+<td></td>
+<td>1.2163748 </td>
+<td></td>
+<td>Nm</td>
+</tr>
+<tr>
+<td><code>mcapi.fullscale.velocity</code></td>
+<td class="col_macro"><code>MCAPI_FULLSCALE_VELOCITY</code></td>
+<td></td>
+<td>5.466e+03 </td>
+<td></td>
+<td>RPM</td>
+</tr>
+<tr>
+<td><code>mcapi.fullscale.voltage</code></td>
+<td class="col_macro"><code>MCAPI_FULLSCALE_VOLTAGE</code></td>
+<td></td>
+<td>7.130e+01 </td>
+<td></td>
+<td>V</td>
+</tr>
+<tr>
+<td><code>mcapi.kfilterIq</code></td>
+<td class="col_macro"><code>KFILTER_IQ</code></td>
+<td></td>
+<td>1.000e+03 </td>
+<td>rad/s</td>
+<td>Filter constant used for filtering the measured current in q-axis</td>
+</tr>
+<tr>
+<td><code>mcapi.kfilterIsSquared</code></td>
+<td class="col_macro"><code>KFILTER_IS_SQUARED</code></td>
+<td></td>
+<td>1.000e+03 </td>
+<td>rad/s</td>
+<td>Filter constant used for filtering the squared magnitude of measured current</td>
+</tr>
+<tr>
+<td><code>mcapi.mcapiMaximumVelocity</code></td>
+<td class="col_macro"><code>MCAPI_MAXIMUM_VELOCITY</code></td>
+<td></td>
+<td>4.770e+02 </td>
+<td>rad/s</td>
+<td>Maximum velocity command</td>
+</tr>
+<tr>
+<td><code>mcapi.mcapiMinimumVelocity</code></td>
+<td class="col_macro"><code>MCAPI_MINIMUM_VELOCITY</code></td>
+<td></td>
+<td>9.540e+01 </td>
+<td>rad/s</td>
+<td>Minimum velocity command</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>motor</code> (19 items)</th><th>Motor parameters</th>
+</tr>
+<tr>
+<td><code>motor.ke</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_KE</code></td>
+<td></td>
+<td>0.0371469 </td>
+<td>V/(rad/s)</td>
+<td>Back-EMF constant of the motor</td>
+</tr>
+<tr>
+<td><code>motor.keInverse</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_KE_INVERSE</code></td>
+<td></td>
+<td>2.692e+01 </td>
+<td>(rad/s)/V</td>
+<td>Inverse of BEMF constant of the motor</td>
+</tr>
+<tr>
+<td><code>motor.l0BaseDt</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_L0_BASE_DT</code></td>
+<td></td>
+<td>0.0003590 </td>
+<td>H</td>
+<td>Common-mode stator inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.l0BaseOmegaE</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_L0_BASE_OMEGA_E</code></td>
+<td></td>
+<td>0.0003590 </td>
+<td>H</td>
+<td>Common-mode stator inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.l1BaseDt</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_L1_BASE_DT</code></td>
+<td></td>
+<td>9.486e-06 </td>
+<td>H</td>
+<td>Differential-mode stator inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.l1BaseOmegaE</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_L1_BASE_OMEGA_E</code></td>
+<td></td>
+<td>9.486e-06 </td>
+<td>H</td>
+<td>Differential-mode stator inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.ldBaseDt</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_LD_BASE_DT</code></td>
+<td></td>
+<td>0.0003685 </td>
+<td>H</td>
+<td>Stator d-axis inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.ldBaseOmegaE</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_LD_BASE_OMEGA_E</code></td>
+<td></td>
+<td>0.0003685 </td>
+<td>H</td>
+<td>Stator d-axis inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.lmaxBaseDt</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_LMAX_BASE_DT</code></td>
+<td></td>
+<td>0.0003685 </td>
+<td>H</td>
+<td>Maximum of Ld, Lq</td>
+</tr>
+<tr>
+<td><code>motor.lmaxBaseOmegaE</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_LMAX_BASE_OMEGA_E</code></td>
+<td></td>
+<td>0.0003685 </td>
+<td>H</td>
+<td>Maximum of Ld, Lq</td>
+</tr>
+<tr>
+<td><code>motor.lqBaseDt</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_LQ_BASE_DT</code></td>
+<td></td>
+<td>0.0003495 </td>
+<td>H</td>
+<td>Stator q-axis inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.lqBaseOmegaE</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_LQ_BASE_OMEGA_E</code></td>
+<td></td>
+<td>0.0003495 </td>
+<td>H</td>
+<td>Stator q-axis inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.lsBaseDt</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_LS_BASE_DT</code></td>
+<td></td>
+<td>0.0003590 </td>
+<td>H</td>
+<td>Stator inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.lsBaseOmegaE</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_LS_BASE_OMEGA_E</code></td>
+<td></td>
+<td>0.0003590 </td>
+<td>H</td>
+<td>Stator inductance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.psiBaseDt</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_PSI_BASE_DT</code></td>
+<td></td>
+<td>0.0074294 </td>
+<td>V*s</td>
+<td>Magnetic Flux of the motor</td>
+</tr>
+<tr>
+<td><code>motor.psiBaseOmegaE</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_PSI_BASE_OMEGA_E</code></td>
+<td></td>
+<td>0.0074294 </td>
+<td>V*s</td>
+<td>Magnetic Flux of the motor</td>
+</tr>
+<tr>
+<td><code>motor.relativeSaliency</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_RELATIVE_SALIENCY</code></td>
+<td></td>
+<td>-2.642e-02 </td>
+<td></td>
+<td>Relative saliency = (Lq-Ld)/(Lq+Ld)</td>
+</tr>
+<tr>
+<td><code>motor.rs</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_RS</code></td>
+<td></td>
+<td>0.3716018 </td>
+<td>ohm</td>
+<td>Stator resistance (line-to-neutral)</td>
+</tr>
+<tr>
+<td><code>motor.saliencyRatio</code></td>
+<td class="col_macro"><code>MCAF_MOTOR_SALIENCY_RATIO</code></td>
+<td></td>
+<td>0.9485110 </td>
+<td></td>
+<td>Saliency ratio Lq/Ld</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>operation</code> (10 items)</th><th></th>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>operation.ilimit</code> (1 item)</th><th>current limit</th>
+</tr>
+<tr>
+<td><code>operation.ilimit.ratedMotorIpeak</code></td>
+<td class="col_macro"><code>RATED_MOTOR_IPEAK</code></td>
+<td></td>
+<td>4.5300000 </td>
+<td>A</td>
+<td>rated allowable current of motor (peak amplitude)</td>
+</tr>
+<tr>
+<td><code>operation.mcafRelativeSaliencyThreshold</code></td>
+<td class="col_macro"><code>MCAF_RELATIVE_SALIENCY_THRESHOLD</code></td>
+<td></td>
+<td>0.1111111 </td>
+<td></td>
+<td> Relative saliency threshold = (xi-1.0)/(xi+1.0) </td>
+</tr>
+<tr>
+<td><code>operation.mcafVelocityCommandMax</code></td>
+<td class="col_macro"><code>MCAF_VELOCITY_COMMAND_MAX</code></td>
+<td></td>
+<td>4.770e+02 </td>
+<td>rad/s</td>
+<td>Maximum velocity command</td>
+</tr>
+<tr>
+<td><code>operation.mcafVelocityCommandMin</code></td>
+<td class="col_macro"><code>MCAF_VELOCITY_COMMAND_MIN</code></td>
+<td></td>
+<td>9.540e+01 </td>
+<td>rad/s</td>
+<td>Minimum velocity command</td>
+</tr>
+<tr>
+<td><code>operation.mcafVelocityNominal</code></td>
+<td class="col_macro"><code>MCAF_VELOCITY_NOMINAL</code></td>
+<td></td>
+<td>3.816e+02 </td>
+<td>rad/s</td>
+<td>Nominal velocity (base speed): nominal no-load speed at nominal supply voltage with no flux weakening</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>operation.run</code> (5 items)</th><th>run parameters</th>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>operation.run.closedLoopStopping</code> (2 items)</th><th>closed-loop stopping parameters</th>
+</tr>
+<tr>
+<td><code>operation.run.closedLoopStopping.speed</code></td>
+<td class="col_macro"><code>MCAF_CLOSED_LOOP_STOPPING_SPEED</code></td>
+<td></td>
+<td>1.908e+01 </td>
+<td>rad/s</td>
+<td>Speed threshold for a closed-loop stop</td>
+</tr>
+<tr>
+<td><code>operation.run.closedLoopStopping.time</code></td>
+<td class="col_macro"><code>MCAF_CLOSED_LOOP_STOPPING_TIME</code></td>
+<td></td>
+<td>0.5000000 </td>
+<td>s</td>
+<td>Minimum time for achieving a closed-loop stop below the speed threshold</td>
+</tr>
+<tr>
+<td><code>operation.run.velocityCoastdownTime</code></td>
+<td class="col_macro"><code>VELOCITY_COASTDOWN_TIME</code></td>
+<td></td>
+<td>0.9825443 </td>
+<td>s</td>
+<td>estimate of worst-case time needed to decelerate to a stop</td>
+</tr>
+<tr>
+<td><code>operation.run.velocitySlewrateLimitAccel</code></td>
+<td class="col_macro"><code>VELOCITY_SLEWRATE_LIMIT_ACCEL</code></td>
+<td></td>
+<td>6.8476646 </td>
+<td>rad/s</td>
+<td>slew rate limit for velocity commands during acceleration</td>
+</tr>
+<tr>
+<td><code>operation.run.velocitySlewrateLimitDecel</code></td>
+<td class="col_macro"><code>VELOCITY_SLEWRATE_LIMIT_DECEL</code></td>
+<td></td>
+<td>0.4361724 </td>
+<td>rad/s</td>
+<td>slew rate limit for velocity commands during deceleration</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>overmodulation</code> (3 items)</th><th></th>
+</tr>
+<tr>
+<td><code>overmodulation.dOutLimit</code></td>
+<td class="col_macro"><code>MCAF_CURRENT_CTRL_D_OUT_LIMIT</code></td>
+<td></td>
+<td>1.0000000 </td>
+<td>line-to-line</td>
+<td>Limit for output line-to-line voltage of d-axis current controller, expressed as a fraction of DC link voltage</td>
+</tr>
+<tr>
+<td><code>overmodulation.dqMagnitudeLimit</code></td>
+<td class="col_macro"><code>MCAF_CURRENT_CTRL_DQ_MAGNITUDE_LIMIT</code></td>
+<td></td>
+<td>0.9500000 </td>
+<td>line-to-line</td>
+<td>Limit for output magnitude of current controllers which triggers voltage saturation, expressed as a fraction of DC link voltage</td>
+</tr>
+<tr>
+<td><code>overmodulation.qOutLimit</code></td>
+<td class="col_macro"><code>MCAF_CURRENT_CTRL_Q_OUT_LIMIT</code></td>
+<td></td>
+<td>1.1500000 </td>
+<td>line-to-line</td>
+<td>Limit for output line-to-line voltage of q-axis current controller, expressed as a fraction of DC link voltage</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>pll</code> (12 items)</th><th>AN1292 PLL estimator parameters</th>
+</tr>
+<tr>
+<td><code>pll.dIlimitHs</code></td>
+<td class="col_macro"><code>D_ILIMIT_HS</code></td>
+<td></td>
+<td>4.366e+04 </td>
+<td>A/s</td>
+<td>Maximum rate of change of current dI/dt, used as limit at high velocity operating range</td>
+</tr>
+<tr>
+<td><code>pll.dIlimitLs</code></td>
+<td class="col_macro"><code>D_ILIMIT_LS</code></td>
+<td></td>
+<td>2.652e+04 </td>
+<td>A/s</td>
+<td>Maximum rate of change of current dI/dt, used as limit at low velocity operating range
+(Note: this has a different scaling factor from D_ILIMIT_HS to account for the subsampling factor PLL_LOWSPEED_DIBYDT_PRESCALER)
+</td>
+</tr>
+<tr>
+<td><code>pll.decimateBaseSpeed</code></td>
+<td class="col_macro"><code>DECIMATE_BASE_SPEED</code></td>
+<td></td>
+<td>3.816e+01 </td>
+<td>rad/s</td>
+<td>Decimation speed threshold, below which velocity 
+                  estimation is optimized for stability</td>
+</tr>
+<tr>
+<td><code>pll.kfilterEsdq</code></td>
+<td class="col_macro"><code>KFILTER_ESDQ</code></td>
+<td></td>
+<td>7.320e+02 </td>
+<td>rad/s</td>
+<td>Filter constant that is used for filtering the estimated 
+                  BEMF, at nominal velocity</td>
+</tr>
+<tr>
+<td><code>pll.kfilterEsdqFw</code></td>
+<td class="col_macro"><code>KFILTER_ESDQ_FW</code></td>
+<td></td>
+<td>1.001e+02 </td>
+<td>rad/s</td>
+<td>Filter constant that is used for filtering the estimated 
+                  BEMF, during field-weakening</td>
+</tr>
+<tr>
+<td><code>pll.kfilterVelestim</code></td>
+<td class="col_macro"><code>KFILTER_VELESTIM</code></td>
+<td></td>
+<td>4.566e+02 </td>
+<td>rad/s</td>
+<td>Filter contant that is used for 
+                  filtering the estimated velocity</td>
+</tr>
+<tr>
+<td><code>pll.mcafPllDelayMatch</code></td>
+<td class="col_macro"><code>MCAF_PLL_DELAY_MATCH</code></td>
+<td></td>
+<td>1 </td>
+<td></td>
+<td>Add one-cycle delay to match current and voltage sample timing</td>
+</tr>
+<tr>
+<td><code>pll.mcafPllDtAngular</code></td>
+<td class="col_macro"><code>MCAF_PLL_DT_ANGULAR</code></td>
+<td></td>
+<td>5.000e-05 </td>
+<td>seconds</td>
+<td>Estimator sampling time used for integrating electrical frequency to obtain electrical angle</td>
+</tr>
+<tr>
+<td><code>pll.mcafPllKeInverseScaling</code></td>
+<td class="col_macro"><code>MCAF_PLL_KE_INVERSE_SCALING</code></td>
+<td></td>
+<td>1.0000000 </td>
+<td></td>
+<td>Empirical scaling factor for 1/Ke scaling</td>
+</tr>
+<tr>
+<td><code>pll.mcafPllVelocityFilterThreshold</code></td>
+<td class="col_macro"><code>MCAF_PLL_VELOCITY_FILTER_THRESHOLD</code></td>
+<td></td>
+<td>3.816e+02 </td>
+<td>rad/s</td>
+<td>Velocity filter threshold, below which a slow filter is used</td>
+</tr>
+<tr>
+<td><code>pll.pllLowspeedDibydtPrescaler</code></td>
+<td class="col_macro"><code>PLL_LOWSPEED_DIBYDT_PRESCALER</code></td>
+<td></td>
+<td>8 </td>
+<td></td>
+<td>Number of PLL execution steps per deltaI calculation.
+This undersampling prescaler must be a power of two
+</td>
+</tr>
+<tr>
+<td><code>pll.pllLowspeedDibydtPrescalerShiftcount</code></td>
+<td class="col_macro"><code>PLL_LOWSPEED_DIBYDT_PRESCALER_SHIFTCOUNT</code></td>
+<td></td>
+<td>3 </td>
+<td></td>
+<td>Number of shift counts required to compensate 
+for the gain in dI/dt calculation that is due to undersampling
+</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>recovery</code> (1 item)</th><th>MC API parameters</th>
+</tr>
+<tr>
+<td><code>recovery.startupAttempts</code></td>
+<td class="col_macro"><code>MCAF_RECOVERY_STARTUP_ATTEMPTS</code></td>
+<td></td>
+<td>3.0000000 </td>
+<td>counts</td>
+<td>Number of recovery re-trials</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>sat_pi</code> (5 items)</th><th>Control loop saturation parameters</th>
+</tr>
+<tr>
+<td><code>sat_pi.currentMaximumCommand</code></td>
+<td class="col_macro"><code>CURRENT_MAXIMUM_COMMAND</code></td>
+<td></td>
+<td>4.5300000 </td>
+<td>A</td>
+<td>Maximum current command to current controller</td>
+</tr>
+<tr>
+<td><code>sat_pi.currentSaturationThresholdDown</code></td>
+<td class="col_macro"><code>CURRENT_SATURATION_THRESHOLD_DOWN</code></td>
+<td></td>
+<td>4.3980583 </td>
+<td>A</td>
+<td>Threshold limit for current to exit saturation (velocity controller output)</td>
+</tr>
+<tr>
+<td><code>sat_pi.currentSaturationThresholdUp</code></td>
+<td class="col_macro"><code>CURRENT_SATURATION_THRESHOLD_UP</code></td>
+<td></td>
+<td>4.6729369 </td>
+<td>A</td>
+<td>Threshold limit for current to enter saturation (velocity controller output)</td>
+</tr>
+<tr>
+<td><code>sat_pi.voltageSaturationThresholdDownConstant</code></td>
+<td class="col_macro"><code>VOLTAGE_SATURATION_THRESHOLD_DOWN_CONSTANT</code></td>
+<td></td>
+<td>0.8500000 </td>
+<td>line-to-line</td>
+<td>Threshold limit for voltage to exit saturation (current controller output)</td>
+</tr>
+<tr>
+<td><code>sat_pi.voltageSaturationThresholdUpConstant</code></td>
+<td class="col_macro"><code>VOLTAGE_SATURATION_THRESHOLD_UP_CONSTANT</code></td>
+<td></td>
+<td>0.9000000 </td>
+<td>line-to-line</td>
+<td>Threshold limit for voltage to enter saturation (current controller output)</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>stall_detect</code> (21 items)</th><th>Stall detection parameters</th>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>stall_detect.group</code> (14 items)</th><th></th>
+</tr>
+<tr>
+<td><code>stall_detect.group.activeTimerThresholdLowSpeedDetect</code></td>
+<td class="col_macro"><code>ACTIVE_TIMER_THRESHOLD_LOW_SPEED_DETECT</code></td>
+<td></td>
+<td>0.2023901 </td>
+<td>s</td>
+<td>
+Timer threshold to trigger low speed detect.
+It is set to 3 times (1/natural frequency of velocity loop)
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.activeTimerThresholdNegativeEdDetect</code></td>
+<td class="col_macro"><code>ACTIVE_TIMER_THRESHOLD_NEGATIVE_ED_DETECT</code></td>
+<td></td>
+<td>0.3373168 </td>
+<td>s</td>
+<td>
+Timer threshold to trigger negative Ed stall detect.
+It is set to 5 times (1/natural frequency of velocity loop)
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.activeTimerThresholdTorqueAngleDetect</code></td>
+<td class="col_macro"><code>ACTIVE_TIMER_THRESHOLD_TORQUE_ANGLE_DETECT</code></td>
+<td></td>
+<td>0.2023901 </td>
+<td>s</td>
+<td>
+Timer threshold to trigger stall detect based on torque angle.
+It is set to 3 times (1/natural frequency of velocity loop)
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.decimationFactor</code></td>
+<td class="col_macro"><code>DECIMATION_FACTOR</code></td>
+<td></td>
+<td>1.000e+02 </td>
+<td></td>
+<td>decimation factor for 2 stage filter LPF</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.decimationFilterLpf1VarianceDetectCoeffa1</code></td>
+<td class="col_macro"><code>DECIMATION_FILTER_LPF1_VARIANCE_DETECT_COEFFA1</code></td>
+<td></td>
+<td>1.000e+01 </td>
+<td>Hz</td>
+<td>
+Coefficient a1 for 2 stage implementation of LPF. Equation used for calculation:
+f3db*Ts*2*pi. f3db for 1st stage is 10hz
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.decimationFilterLpf2VarianceDetectCoeffa1</code></td>
+<td class="col_macro"><code>DECIMATION_FILTER_LPF2_VARIANCE_DETECT_COEFFA1</code></td>
+<td></td>
+<td>1.4822860 </td>
+<td>Hz</td>
+<td>
+Coefficient a1 for 2 stage implementation of LPF. Equation used for calculation:
+f3db*Ts*2*pi. f3db for second stage is 1/10th of the natural frequency, Ts is 1/200hz
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.filterHpfVarianceDetect</code></td>
+<td class="col_macro"><code>FILTER_HPF_VARIANCE_DETECT</code></td>
+<td></td>
+<td>2.965e+01 </td>
+<td>Hz</td>
+<td>
+HPF filter coefficient for 16bit implementation of HPF.
+f3db is 2x natural frequency.
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.filterLpfNegativeEdDetect</code></td>
+<td class="col_macro"><code>FILTER_LPF_NEGATIVE_ED_DETECT</code></td>
+<td></td>
+<td>1.482e+01 </td>
+<td>Hz</td>
+<td>
+LPF filter coefficient for negative Ed detect. Equation used for calculation:
+f3db*Ts*2*pi f3d is equal to natural frequency
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.filterLpfOvercurrentDetect</code></td>
+<td class="col_macro"><code>FILTER_LPF_OVERCURRENT_DETECT</code></td>
+<td></td>
+<td>1.482e+01 </td>
+<td>Hz</td>
+<td>
+LPF filter coefficient for over current detect. Equation used for calculation:
+f3db*Ts*2*pi f3d is equal to natural frequency
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.inactiveTimerThresholdLowSpeedDetect</code></td>
+<td class="col_macro"><code>INACTIVE_TIMER_THRESHOLD_LOW_SPEED_DETECT</code></td>
+<td></td>
+<td>0.2023901 </td>
+<td>s</td>
+<td>
+Inactive timer threshold for low speed detect.
+It is set to (2.0/natural frequency of velocity loop),
+in units of the ADC ISR period.
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.inactiveTimerThresholdNegativeEdDetect</code></td>
+<td class="col_macro"><code>INACTIVE_TIMER_THRESHOLD_NEGATIVE_ED_DETECT</code></td>
+<td></td>
+<td>0.3373168 </td>
+<td>s</td>
+<td>
+Timer threshold to trigger negative Ed stall detect.
+It is set to 5 times (1/natural frequency of velocity loop)
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.inactiveTimerThresholdTorqueAngleDetect</code></td>
+<td class="col_macro"><code>INACTIVE_TIMER_THRESHOLD_TORQUE_ANGLE_DETECT</code></td>
+<td></td>
+<td>0.2023901 </td>
+<td>s</td>
+<td>
+Inactive Timer threshold for stall detect based on torque angle.
+It is set to 3 times (1/natural frequency of velocity loop)
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.timerCountsOvercurrentDetect</code></td>
+<td class="col_macro"><code>TIMER_COUNTS_OVERCURRENT_DETECT</code></td>
+<td></td>
+<td>0.0084794 </td>
+<td>s</td>
+<td>
+Overcurrent detector. Normally if the saturation limit was exceeded,
+then we have a fault in the controllers.
+then the error should immediately trigger
+Timer threshold to trigger over currents detect.
+It is set to 2 times (1/natural frequency of current loop)
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.group.timerCountsVarianceDetect</code></td>
+<td class="col_macro"><code>TIMER_COUNTS_VARIANCE_DETECT</code></td>
+<td></td>
+<td>0.0674634 </td>
+<td>s</td>
+<td>
+Timer threshold to trigger stall detect based on variance in Ed and Eq.
+It is set to (1/natural frequency of velocity loop)
+</td>
+</tr>
+<tr>
+<td><code>stall_detect.thresholdEdStallDetect</code></td>
+<td class="col_macro"><code>THRESHOLD_ED_STALL_DETECT</code></td>
+<td></td>
+<td>0.0100000 </td>
+<td>V</td>
+<td>Ed detect threshold</td>
+</tr>
+<tr>
+<td><code>stall_detect.thresholdOvercurrentStallDetect</code></td>
+<td class="col_macro"><code>THRESHOLD_OVERCURRENT_STALL_DETECT</code></td>
+<td></td>
+<td>4.9478155 </td>
+<td>A</td>
+<td>overcurrent threshold (109.2% of rated allowable current)</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>stall_detect.torque_angle</code> (5 items)</th><th>
+Torque angle method of stall detection
+</th>
+</tr>
+<tr>
+<td><code>stall_detect.torque_angle.coeff0</code></td>
+<td class="col_macro"><code>STALL_DETECT_TORQUE_ANGLE_COEFF0</code></td>
+<td></td>
+<td>0.1573315 </td>
+<td></td>
+<td>torque angle threshold polynomial, constant term</td>
+</tr>
+<tr>
+<td><code>stall_detect.torque_angle.coeff1</code></td>
+<td class="col_macro"><code>STALL_DETECT_TORQUE_ANGLE_COEFF1</code></td>
+<td></td>
+<td>0.7826046 </td>
+<td></td>
+<td>torque angle threshold polynomial, linear term</td>
+</tr>
+<tr>
+<td><code>stall_detect.torque_angle.coeff2</code></td>
+<td class="col_macro"><code>STALL_DETECT_TORQUE_ANGLE_COEFF2</code></td>
+<td></td>
+<td>0.0500638 </td>
+<td></td>
+<td>torque angle threshold polynomial, quadratic term</td>
+</tr>
+<tr>
+<td><code>stall_detect.torque_angle.k</code></td>
+<td class="col_macro"><code>STALL_DETECT_TORQUE_ANGLE_K</code></td>
+<td></td>
+<td>0.3714820 </td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>stall_detect.torque_angle.velocityThreshold</code></td>
+<td class="col_macro"><code>STALL_DETECT_TORQUE_ANGLE_VELOCITY_THRESHOLD</code></td>
+<td></td>
+<td>1.526e+02 </td>
+<td>rad/s</td>
+<td>Maximum velocity for torque angle stall detection (we inhibit at faster speeds)</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>startup</code> (21 items)</th><th>Motor startup parameters controlling open-loop commutation and transition to sensorless closed-loop operation</th>
+</tr>
+<tr>
+<td><code>startup.mcafRampdownDecayRate</code></td>
+<td class="col_macro"><code>MCAF_RAMPDOWN_DECAY_RATE</code></td>
+<td></td>
+<td>1.144e+01 </td>
+<td>1/s</td>
+<td>current rampdown decay rate (=1/time constant)</td>
+</tr>
+<tr>
+<td><code>startup.mcafRampdownEndCurrent</code></td>
+<td class="col_macro"><code>MCAF_RAMPDOWN_END_CURRENT</code></td>
+<td></td>
+<td>0.1698750 </td>
+<td>A</td>
+<td>current rampdown end threshold</td>
+</tr>
+<tr>
+<td><code>startup.mcafStartupCurrent</code></td>
+<td class="col_macro"><code>MCAF_STARTUP_CURRENT</code></td>
+<td></td>
+<td>3.3975000 </td>
+<td>A</td>
+<td>motor current from end of current rampup phase to end of startup</td>
+</tr>
+<tr>
+<td><code>startup.mcafStartupCurrentInitial</code></td>
+<td class="col_macro"><code>MCAF_STARTUP_CURRENT_INITIAL</code></td>
+<td></td>
+<td>0.000e+00 </td>
+<td>A</td>
+<td>motor current at beginning of startup</td>
+</tr>
+<tr>
+<td><code>startup.minspeedinrpm</code></td>
+<td class="col_macro"><code>MINSPEEDINRPM</code></td>
+<td></td>
+<td>911 </td>
+<td></td>
+<td>minimum operating speed in RPM</td>
+</tr>
+<tr>
+<td><code>startup.startupAccel0VelocityThreshold</code></td>
+<td class="col_macro"><code>STARTUP_ACCEL0_VELOCITY_THRESHOLD</code></td>
+<td></td>
+<td>9.153e+01 </td>
+<td>rad/s</td>
+<td>first startup threshold velocity</td>
+</tr>
+<tr>
+<td><code>startup.startupAccel1VelocityThreshold</code></td>
+<td class="col_macro"><code>STARTUP_ACCEL1_VELOCITY_THRESHOLD</code></td>
+<td></td>
+<td>1.047e+02 </td>
+<td>rad/s</td>
+<td>second startup threshold velocity</td>
+</tr>
+<tr>
+<td><code>startup.startupAcceleration0</code></td>
+<td class="col_macro"><code>STARTUP_ACCELERATION0</code></td>
+<td></td>
+<td>3.042e+02 </td>
+<td>rad/s^2</td>
+<td>first startup acceleration rate</td>
+</tr>
+<tr>
+<td><code>startup.startupAcceleration1</code></td>
+<td class="col_macro"><code>STARTUP_ACCELERATION1</code></td>
+<td></td>
+<td>4.336e+02 </td>
+<td>rad/s^2</td>
+<td>second startup acceleration rate</td>
+</tr>
+<tr>
+<td><code>startup.startupAlignAngleDelta</code></td>
+<td class="col_macro"><code>STARTUP_ALIGN_ANGLE_DELTA</code></td>
+<td></td>
+<td>0.5235988 </td>
+<td>rad</td>
+<td>align angle shift after current rampup</td>
+</tr>
+<tr>
+<td><code>startup.startupAlignTime</code></td>
+<td class="col_macro"><code>STARTUP_ALIGN_TIME</code></td>
+<td></td>
+<td>0.000e+00 </td>
+<td>s</td>
+<td>hold time between current rampup and acceleration</td>
+</tr>
+<tr>
+<td><code>startup.startupDampingGain</code></td>
+<td class="col_macro"><code>STARTUP_DAMPING_GAIN</code></td>
+<td></td>
+<td>0.0736635 </td>
+<td>A/(rad/s)</td>
+<td>active damping gain</td>
+</tr>
+<tr>
+<td><code>startup.startupDampingIqmax</code></td>
+<td class="col_macro"><code>STARTUP_DAMPING_IQMAX</code></td>
+<td></td>
+<td>0.4530000 </td>
+<td>A</td>
+<td>maximum current amplitude used for active damping</td>
+</tr>
+<tr>
+<td><code>startup.startupDampingShift</code></td>
+<td class="col_macro"><code>STARTUP_DAMPING_SHIFT</code></td>
+<td></td>
+<td>8 </td>
+<td></td>
+<td>binary point for active damping gain</td>
+</tr>
+<tr>
+<td><code>startup.startupDampingThreshold</code></td>
+<td class="col_macro"><code>STARTUP_DAMPING_THRESHOLD</code></td>
+<td></td>
+<td>4.188e+01 </td>
+<td>rad/s</td>
+<td>threshold velocity for damping</td>
+</tr>
+<tr>
+<td><code>startup.startupDeltaTFactor</code></td>
+<td class="col_macro"><code>STARTUP_DELTA_T_FACTOR</code></td>
+<td></td>
+<td>2,985 </td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>startup.startupDeltaTFactorAcceleration</code></td>
+<td class="col_macro"><code>STARTUP_DELTA_T_FACTOR_ACCELERATION</code></td>
+<td></td>
+<td>3 </td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>startup.startupHoldTime</code></td>
+<td class="col_macro"><code>STARTUP_HOLD_TIME</code></td>
+<td></td>
+<td>0.000e+00 </td>
+<td>s</td>
+<td>hold time between velocity rampup and current rampdown</td>
+</tr>
+<tr>
+<td><code>startup.startupRampupAngle</code></td>
+<td class="col_macro"><code>STARTUP_RAMPUP_ANGLE</code></td>
+<td></td>
+<td>-5.236e-01 </td>
+<td>rad</td>
+<td>align angle shift after current rampup</td>
+</tr>
+<tr>
+<td><code>startup.startupThetaErrorConvergeRate</code></td>
+<td class="col_macro"><code>STARTUP_THETA_ERROR_CONVERGE_RATE</code></td>
+<td></td>
+<td>1.745e+01 </td>
+<td>rad/s</td>
+<td>convergence rate (electrical frequency) for forcing angle error towards zero, during transition to closed-loop</td>
+</tr>
+<tr>
+<td><code>startup.startupTorqueRampupRate</code></td>
+<td class="col_macro"><code>STARTUP_TORQUE_RAMPUP_RATE</code></td>
+<td></td>
+<td>0.0070339 </td>
+<td>A</td>
+<td>increase in current per control cycle, during current rampup</td>
+</tr>
+<tr class="param-group">
+<th class="group-name"><code>timing</code> (8 items)</th><th>Timing parameters</th>
+</tr>
+<tr>
+<td><code>timing.dtcy</code></td>
+<td class="col_macro"><code>DTCY</code></td>
+<td></td>
+<td>1.000e-08 </td>
+<td>s</td>
+<td>instruction cycle period</td>
+</tr>
+<tr>
+<td><code>timing.looptimeinsec</code></td>
+<td class="col_macro"><code>LOOPTIMEINSEC</code></td>
+<td></td>
+<td>5.000e-05 </td>
+<td>s</td>
+<td>sampling period</td>
+</tr>
+<tr>
+<td><code>timing.mcafCyclesPerNanosecondQ16</code></td>
+<td class="col_macro"><code>MCAF_CYCLES_PER_NANOSECOND_Q16</code></td>
+<td>\(f_{cy}\)</td>
+<td>1.000e+08 </td>
+<td>Hz</td>
+<td>Instruction clock frequency (converted to cycles per nanosecond Q16 for use in time delays)</td>
+</tr>
+<tr>
+<td><code>timing.mcafIsrSubsampleDivider</code></td>
+<td class="col_macro"><code>MCAF_ISR_SUBSAMPLE_DIVIDER</code></td>
+<td>\(T_{s,\omega}\)</td>
+<td>0.0010000 </td>
+<td>s</td>
+<td>Timestep for velocity loop timing, converted to a divider (one velocity control cycle executes every N ISRs)</td>
+</tr>
+<tr>
+<td><code>timing.mcafUiLoopTimeInIsrs</code></td>
+<td class="col_macro"><code>MCAF_UI_LOOP_TIME_IN_ISRS</code></td>
+<td></td>
+<td>0.1000000 </td>
+<td>s</td>
+<td>UI update period</td>
+</tr>
+<tr>
+<td><code>timing.velocityLoopFreq</code></td>
+<td class="col_macro"><code>VELOCITY_LOOP_FREQ</code></td>
+<td></td>
+<td>1.000e+03 </td>
+<td>Hz</td>
+<td>velocity loop frequency</td>
+</tr>
+<tr>
+<td><code>timing.velocityLoopFreqInteger</code></td>
+<td class="col_macro"><code>VELOCITY_LOOP_FREQ_INTEGER</code></td>
+<td></td>
+<td>1,000 </td>
+<td></td>
+<td>integer version of velocityLoopFreq</td>
+</tr>
+<tr>
+<td><code>timing.velocityLoopTime</code></td>
+<td class="col_macro"><code>VELOCITY_LOOP_TIME</code></td>
+<td></td>
+<td>0.0010000 </td>
+<td>s</td>
+<td>velocity loop period</td>
+</tr>
+</table>
+
+<script>
+    // this is for KaTeX only
+    renderMathInElement(document.body);
+    
+    
+    window.addEventListener('DOMContentLoaded',function(event) {
+        var table = document.getElementById('parameter_table');
+        var columns = {key:true, macro:true, symbol:true, value:true, units:true, description:true};
+        function count_true(obj)
+        {
+            var result = 0;
+            for (const k in obj)
+            {
+                if (obj[k])
+                    ++result;
+            }
+            return result;
+        }
+        function show_column(colname, show)
+        {
+            table.classList.toggle('hide_'+colname,!show);
+            columns[colname] = show;
+            var column_count = count_true(columns);
+            document.querySelectorAll('tr.param-group th.group-name').forEach(function(cell) {
+                cell.setAttribute('colspan',column_count-1);
+            });
+        }
+        show_column('macro',false);
+        document.getElementById('show_macro').addEventListener('change', function(event) {
+            show_column('macro', event.target.checked);
+        });
+    });
+</script>
+<p>
+ Motor Control Application Framework <br>
+ R7/RC37 (commit 116330, build on 2023 Feb 09 16:21)
+</p>
+</body>
+</html>

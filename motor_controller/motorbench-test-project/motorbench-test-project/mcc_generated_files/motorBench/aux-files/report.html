@@ -1,0 +1,784 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/contrib/auto-render.min.js"></script>
+<!-- KaTeX is faster and we only need it for basic math. If MathJax is needed, replace the two lines above with the lines below.
+<script type="text/javascript"
+	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css' />
+<style type='text/css'>
+body { font-family: 'Open Sans', Helvetica, Arial, sans-serif; }
+table td, table th { border: 1px solid black; padding: 0px 5px 0px 5px;}
+table th.sectionhead { text-align: left; }
+table { border-collapse: collapse; }
+table .value { text-align: right; }
+table.normfactors > thead > tr > th {
+    font-size: 90%;
+}
+
+.bold { font-weight: bold; }
+.metadata { font-size: small; }
+.metadata dl {
+	overflow: none;
+	width: 100%;
+	position: relative;
+	float: left;
+}
+.metadata dt, .metadata dd {
+	float:left;
+	margin: 0px;
+	padding: 0px;
+}
+.metadata dt {
+	clear:both;
+	width: 10em;
+	font-weight: bold;
+}
+.metadata dd{
+	position: relative;
+	left: 10em;
+}
+tr:nth-child(odd) {
+	background-color: #faf8f8;
+}
+</style>
+</head>
+<body>
+<table>
+	<tr>
+	<th>Key</th><th>Symbol</th><th>Value</th><th>Units</th><th>Description</th>
+	</tr>
+<tr>
+    <td >id</td>
+    <td ></td>
+	<td class='value'>Hurst300</td><td></td>
+    <td >motor ID </td>
+</tr>
+<tr>
+    <td >poleCount</td>
+    <td ></td>
+	<td class='value'>10</td><td></td>
+    <td >number of poles </td>
+</tr>
+<tr>
+    <td >polePairs</td>
+    <td >\(N_p\)</td>
+	<td class='value'>5</td><td></td>
+    <td >number of pole pairs </td>
+</tr>
+<tr>
+    <td rowspan='2'>R</td>
+    <td rowspan='2'>\(R_s\)</td>
+	<td class='value'>371.602</td><td>m&Omega; line-neutral</td>
+    <td rowspan='2'>stator resistance </td>
+</tr>
+<tr>
+	<td class='value'>743.203</td><td>m&Omega; line-line</td>
+</tr>
+<tr>
+    <td rowspan='2'>L</td>
+    <td rowspan='2'>\(L_s\)</td>
+	<td class='value'>358.981</td><td>&mu;H line-neutral</td>
+    <td rowspan='2'>stator inductance (\(L_s = \frac{L_d + L_q}{2}\))</td>
+</tr>
+<tr>
+	<td class='value'>717.962</td><td>&mu;H line-line</td>
+</tr>
+<tr>
+    <td rowspan='2'>Ld</td>
+    <td rowspan='2'>\(L_d\)</td>
+	<td class='value'>368.467</td><td>&mu;H line-neutral</td>
+    <td rowspan='2'>d-axis stator inductance </td>
+</tr>
+<tr>
+	<td class='value'>736.934</td><td>&mu;H line-line</td>
+</tr>
+<tr>
+    <td rowspan='2'>Lq</td>
+    <td rowspan='2'>\(L_q\)</td>
+	<td class='value'>349.495</td><td>&mu;H line-neutral</td>
+    <td rowspan='2'>q-axis stator inductance </td>
+</tr>
+<tr>
+	<td class='value'>698.990</td><td>&mu;H line-line</td>
+</tr>
+<tr>
+    <td rowspan='5'>Ke</td>
+    <td rowspan='5'>\(K_e\)</td>
+	<td class='value'>37.147</td><td>mV/(rad/s) line-neutral 0-pk</td>
+    <td rowspan='5'>back-EMF constant </td>
+</tr>
+<tr>
+	<td class='value'>3.890</td><td>V/kRPM line-neutral 0-pk</td>
+</tr>
+<tr>
+	<td class='value'>64.340</td><td>mV/(rad/s) line-line 0-pk</td>
+</tr>
+<tr>
+	<td class='value'>6.738</td><td>V/kRPM line-line 0-pk</td>
+</tr>
+<tr>
+	<td class='value'>4.764</td><td>Vrms/KRPM line-line</td>
+</tr>
+<tr>
+    <td >B</td>
+    <td >\(B\)</td>
+	<td class='value'>32.213</td><td>&mu;Nm/(rad/s)</td>
+    <td >viscous damping </td>
+</tr>
+<tr>
+    <td >Tf</td>
+    <td >\(T_{f}\)</td>
+	<td class='value'>4.812</td><td>mNm</td>
+    <td >Coulomb friction </td>
+</tr>
+<tr>
+    <td >J</td>
+    <td >\(J\)</td>
+	<td class='value'>18.079</td><td>&mu;Nm/(rad/s^2)</td>
+    <td >inertia </td>
+</tr>
+<tr>
+    <td rowspan='2'>omega_m_max</td>
+    <td rowspan='2'>\(\omega_{max}\)</td>
+	<td class='value'>628.319</td><td>rad/s</td>
+    <td rowspan='2'>maximum velocity </td>
+</tr>
+<tr>
+	<td class='value'>6.000</td><td>kRPM</td>
+</tr>
+<tr>
+    <td rowspan='2'>omega_m1</td>
+    <td rowspan='2'>\(\omega_{m1}\)</td>
+	<td class='value'>381.599</td><td>rad/s</td>
+    <td rowspan='2'>nominal (base) velocity (nominal velocity at rated voltage)</td>
+</tr>
+<tr>
+	<td class='value'>3.644</td><td>kRPM</td>
+</tr>
+<tr>
+    <td rowspan='2'>omega_e1</td>
+    <td rowspan='2'>\(\omega_{e1}\)</td>
+	<td class='value'>1.908</td><td>krad/s</td>
+    <td rowspan='2'>nominal electrical frequency (electrical frequency at nominal velocity)</td>
+</tr>
+<tr>
+	<td class='value'>303.667</td><td>Hz</td>
+</tr>
+<tr>
+    <td >I1</td>
+    <td >\(I_{1}\)</td>
+	<td class='value'>4.530</td><td>A</td>
+    <td >rated current </td>
+</tr>
+<tr>
+    <td rowspan='2'>V1</td>
+    <td rowspan='2'>\(V_1\)</td>
+	<td class='value'>14.175</td><td>V line-neutral</td>
+    <td rowspan='2'>nominal voltage (voltage at nominal velocity \(V_1 = K_e\omega_{m1}\))</td>
+</tr>
+<tr>
+	<td class='value'>24.552</td><td>V line-line</td>
+</tr>
+<tr>
+    <td >T1</td>
+    <td >\(T_1\)</td>
+	<td class='value'>252.413</td><td>mNm</td>
+    <td >rated torque \(T_1 = \frac{3}{2}K_e I_1 \)</td>
+</tr>
+<tr>
+    <td >P1</td>
+    <td >\(P_1\)</td>
+	<td class='value'>96.321</td><td>W</td>
+    <td >rated power \(P_1 = \frac{3}{2}I_1 V_1\)</td>
+</tr>
+	<tr><th colspan="5" class="sectionhead">Derived parameters</th></tr>
+<tr>
+    <td >K_m</td>
+    <td >\(K_m\)</td>
+	<td class='value'>74.633</td><td>mNm/sqrt(W)</td>
+    <td >motor constant \( K_m = K_e\sqrt{\frac{3}{2R}} \)</td>
+</tr>
+<tr>
+    <td >tau_e</td>
+    <td >\(\tau_e\)</td>
+	<td class='value'>966.037</td><td>&mu;s</td>
+    <td >electrical time constant \(\tau_e = L_s/R_s\)</td>
+</tr>
+<tr>
+    <td >tau_m0</td>
+    <td >\(\tau_{m0}\)</td>
+	<td class='value'>561.232</td><td>ms</td>
+    <td >mechanical time constant \(\tau_{m0}= J/B\)</td>
+</tr>
+<tr>
+    <td >tau_m1</td>
+    <td >\(\tau_{m1}\)</td>
+	<td class='value'>3.246</td><td>ms</td>
+    <td >mechanical time constant \(\tau_{m1}= J / K_m{}^2 = JR_s/\frac{3}{2}K_e{}^2\)</td>
+</tr>
+<tr>
+    <td >tau_m2</td>
+    <td >\(\tau_{m2}\)</td>
+	<td class='value'>3.227</td><td>ms</td>
+    <td >mechanical time constant including effect of stator resistance \(\tau_{m2}= J/\left(B + \frac{3}{2}K_e{}^2/R_s\right)\)</td>
+</tr>
+<tr>
+    <td >psi_m</td>
+    <td >\(\psi_m\)</td>
+	<td class='value'>7.429</td><td>mVs</td>
+    <td >rotor flux \(\psi_m= K_e / N_p\)</td>
+</tr>
+<tr>
+    <td >xi</td>
+    <td >\(\xi\)</td>
+	<td class='value'>0.9485</td><td></td>
+    <td >saliency ratio \(\xi=L_q/L_d\)</td>
+</tr>
+<tr>
+    <td >tau_e_bar</td>
+    <td >\(\bar{\tau}_e\)</td>
+	<td class='value'>1.8432</td><td></td>
+    <td >normalized electrical time constant  \(\bar{\tau}_e = \tau_e \omega_{e1} \)</td>
+</tr>
+<tr>
+    <td >tau_m_bar</td>
+    <td >\(\bar{\tau}_m\)</td>
+	<td class='value'>1.2386</td><td></td>
+    <td >normalized mechanical time constant  \(\bar{\tau}_m = \tau_{m1} \omega_{m1} \)</td>
+</tr>
+<tr>
+    <td >alpha_J</td>
+    <td >\(\alpha_J\)</td>
+	<td class='value'>3.3599</td><td></td>
+    <td >normalized inertia \(\alpha_J = \frac{\tau_{m1}}{\tau_e} = \frac{JR_s}{L_sK_m{}^2} \) (mechanical time constant measured in electrical time constants)</td>
+</tr>
+<tr>
+    <td >alpha_B</td>
+    <td >\(\alpha_B\)</td>
+	<td class='value'>0.0058</td><td></td>
+    <td >normalized viscous damping \(\alpha_B = B / K_m{}^2 \)</td>
+</tr>
+<tr>
+    <td >alpha_psi</td>
+    <td >\(\alpha_\psi\)</td>
+	<td class='value'>0.2189</td><td></td>
+    <td >normalized magnetic flux utilization \(\alpha_\psi = LI_1 / \psi_m = N_pLI_1 / K_e \) (Values much above 1.5 are not meaningful and can result in saturation or demagnetization.)</td>
+</tr>
+<tr>
+    <td >alpha_Tf</td>
+    <td >\(\alpha_{T_f}\)</td>
+	<td class='value'>0.0191</td><td></td>
+    <td >normalized Coulomb friction \(\alpha_{T_f} = T_f / T_1 = T_f / \frac{3}{2}K_e I_1 \) (Values above 0.5 not meaningful and represent motors with poor mechanical design &mdash; above 1.0 means they would not start at all)</td>
+</tr>
+<tr>
+    <td >alpha_R</td>
+    <td >\(\alpha_R\)</td>
+	<td class='value'>0.1188</td><td></td>
+    <td >normalized stator resistance \(\alpha_R = I_1R_s / V_1 \) (Values above 0.5 not meaningful and represent motors with poor electrical design &mdash; above 1.0 means the IR drop would exceed the nominal back-emf voltage)</td>
+</tr>
+</table>
+
+<div>
+<h2>Normalization factors used in fixed-point representation</h2>
+<p>By variable type and name</p>
+<table class="normfactors">
+	<thead>
+    <tr>
+<th>Type</th><th>Member</th><th>Scaling factor</th><th>Unit</th><th>Q</th><th>Scale/count</th>
+</tr>
+ </thead>
+	<tbody>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>idCtrl.integrator</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q31</td>
+  <td class="value">3.3202e-08</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>idCtrl.outMax</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>idCtrl.outMin</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>iqCtrl.integrator</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q31</td>
+  <td class="value">3.3202e-08</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>iqCtrl.outMax</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>iqCtrl.outMin</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>omegaCtrl.integrator</code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>omegaCtrl.outMax</code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>omegaCtrl.outMin</code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td rowspan="2"><code>MCAF_U_ANGLE_ELEC</code></td>
+  <td rowspan="2"><code></code></td>
+  <td class="value">3.1416</td>
+  <td>rad</td>
+  <td rowspan="2">Q15</td>
+  <td class="value">9.5874e-05</td>
+</tr>
+<tr>
+  <td class="value">180</td>
+  <td>&deg;</td>
+  <td class="value">0.0054932</td>
+</tr>
+<tr>
+  <td rowspan="2"><code>MCAF_U_ANGLE_MECH</code></td>
+  <td rowspan="2"><code></code></td>
+  <td class="value">3.1416</td>
+  <td>rad</td>
+  <td rowspan="2">Q15</td>
+  <td class="value">9.5874e-05</td>
+</tr>
+<tr>
+  <td class="value">180</td>
+  <td>&deg;</td>
+  <td class="value">0.0054932</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_CURRENT</code></td>
+  <td ><code></code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_CURRENT_ABC</code></td>
+  <td ><code></code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_CURRENT_ALPHABETA</code></td>
+  <td ><code></code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_CURRENT_DQ</code></td>
+  <td ><code></code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_DIMENSIONLESS</code></td>
+  <td ><code></code></td>
+  <td class="value">1</td>
+  <td></td>
+  <td >Q15</td>
+  <td class="value">3.0518e-05</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_DIMENSIONLESS_SINCOS</code></td>
+  <td ><code></code></td>
+  <td class="value">1</td>
+  <td></td>
+  <td >Q15</td>
+  <td class="value">3.0518e-05</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_DUTYCYCLE_ABC</code></td>
+  <td ><code></code></td>
+  <td class="value">1</td>
+  <td></td>
+  <td >Q15</td>
+  <td class="value">3.0518e-05</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_NORMALIZED_GAIN</code></td>
+  <td ><code></code></td>
+  <td class="value">1</td>
+  <td></td>
+  <td >Q14</td>
+  <td class="value">6.1035e-05</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_TEMPERATURE</code></td>
+  <td ><code></code></td>
+  <td class="value">327.68</td>
+  <td>C</td>
+  <td >Q15</td>
+  <td class="value">0.01</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VELOCITY_DTHETA_ELEC_DT</code></td>
+  <td ><code></code></td>
+  <td class="value">62832</td>
+  <td>rad/s elec</td>
+  <td >Q15</td>
+  <td class="value">1.9175</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VELOCITY_ELEC</code></td>
+  <td ><code></code></td>
+  <td class="value">2862</td>
+  <td>rad/s elec</td>
+  <td >Q15</td>
+  <td class="value">0.087341</td>
+</tr>
+<tr>
+  <td rowspan="2"><code>MCAF_U_VELOCITY_MECH</code></td>
+  <td rowspan="2"><code></code></td>
+  <td class="value">572.4</td>
+  <td>rad/s</td>
+  <td rowspan="2">Q15</td>
+  <td class="value">0.017468</td>
+</tr>
+<tr>
+  <td class="value">5466</td>
+  <td>RPM</td>
+  <td class="value">0.16681</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VOLTAGE</code></td>
+  <td ><code></code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VOLTAGE_ABC</code></td>
+  <td ><code></code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VOLTAGE_ALPHABETA</code></td>
+  <td ><code></code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VOLTAGE_DQ</code></td>
+  <td ><code></code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+	</tbody>
+</table>
+
+<p>By unit</p>
+<table class="normfactors">
+	<thead>
+    <tr>
+<th>Type</th><th>Member</th><th>Scaling factor</th><th>Unit</th><th>Q</th><th>Scale/count</th>
+</tr>
+ </thead>
+	<tbody>
+<tr>
+  <td ><code>MCAF_U_NORMALIZED_GAIN</code></td>
+  <td ><code></code></td>
+  <td class="value">1</td>
+  <td></td>
+  <td >Q14</td>
+  <td class="value">6.1035e-05</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_DIMENSIONLESS</code></td>
+  <td ><code></code></td>
+  <td class="value">1</td>
+  <td></td>
+  <td >Q15</td>
+  <td class="value">3.0518e-05</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_DIMENSIONLESS_SINCOS</code></td>
+  <td ><code></code></td>
+  <td class="value">1</td>
+  <td></td>
+  <td >Q15</td>
+  <td class="value">3.0518e-05</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_DUTYCYCLE_ABC</code></td>
+  <td ><code></code></td>
+  <td class="value">1</td>
+  <td></td>
+  <td >Q15</td>
+  <td class="value">3.0518e-05</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>omegaCtrl.integrator</code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>omegaCtrl.outMax</code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>omegaCtrl.outMin</code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_CURRENT</code></td>
+  <td ><code></code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_CURRENT_ABC</code></td>
+  <td ><code></code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_CURRENT_ALPHABETA</code></td>
+  <td ><code></code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_CURRENT_DQ</code></td>
+  <td ><code></code></td>
+  <td class="value">43.66</td>
+  <td>A</td>
+  <td >Q15</td>
+  <td class="value">0.0013324</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_TEMPERATURE</code></td>
+  <td ><code></code></td>
+  <td class="value">327.68</td>
+  <td>C</td>
+  <td >Q15</td>
+  <td class="value">0.01</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>idCtrl.outMax</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>idCtrl.outMin</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>iqCtrl.outMax</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>iqCtrl.outMin</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VOLTAGE</code></td>
+  <td ><code></code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VOLTAGE_ABC</code></td>
+  <td ><code></code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VOLTAGE_ALPHABETA</code></td>
+  <td ><code></code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VOLTAGE_DQ</code></td>
+  <td ><code></code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q15</td>
+  <td class="value">0.0021759</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>idCtrl.integrator</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q31</td>
+  <td class="value">3.3202e-08</td>
+</tr>
+<tr>
+  <td ><code>MCAF_MOTOR_DATA</code></td>
+  <td ><code>iqCtrl.integrator</code></td>
+  <td class="value">71.3</td>
+  <td>V</td>
+  <td >Q31</td>
+  <td class="value">3.3202e-08</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VELOCITY_DTHETA_ELEC_DT</code></td>
+  <td ><code></code></td>
+  <td class="value">62832</td>
+  <td>rad/s elec</td>
+  <td >Q15</td>
+  <td class="value">1.9175</td>
+</tr>
+<tr>
+  <td ><code>MCAF_U_VELOCITY_ELEC</code></td>
+  <td ><code></code></td>
+  <td class="value">2862</td>
+  <td>rad/s elec</td>
+  <td >Q15</td>
+  <td class="value">0.087341</td>
+</tr>
+<tr>
+  <td rowspan="2"><code>MCAF_U_VELOCITY_MECH</code></td>
+  <td rowspan="2"><code></code></td>
+  <td class="value">572.4</td>
+  <td>rad/s</td>
+  <td rowspan="2">Q15</td>
+  <td class="value">0.017468</td>
+</tr>
+<tr>
+  <td class="value">5466</td>
+  <td>RPM</td>
+  <td class="value">0.16681</td>
+</tr>
+<tr>
+  <td rowspan="2"><code>MCAF_U_ANGLE_ELEC</code></td>
+  <td rowspan="2"><code></code></td>
+  <td class="value">3.1416</td>
+  <td>rad</td>
+  <td rowspan="2">Q15</td>
+  <td class="value">9.5874e-05</td>
+</tr>
+<tr>
+  <td class="value">180</td>
+  <td>&deg;</td>
+  <td class="value">0.0054932</td>
+</tr>
+<tr>
+  <td rowspan="2"><code>MCAF_U_ANGLE_MECH</code></td>
+  <td rowspan="2"><code></code></td>
+  <td class="value">3.1416</td>
+  <td>rad</td>
+  <td rowspan="2">Q15</td>
+  <td class="value">9.5874e-05</td>
+</tr>
+<tr>
+  <td class="value">180</td>
+  <td>&deg;</td>
+  <td class="value">0.0054932</td>
+</tr>
+	</tbody>
+</table>
+</div>
+
+<script>
+    // this is for KaTeX only
+    renderMathInElement(document.body);
+</script>
+<p>
+ Motor Control Application Framework <br>
+ R7/RC37 (commit 116330, build on 2023 Feb 09 16:21)
+</p>
+</body>
+</html>
