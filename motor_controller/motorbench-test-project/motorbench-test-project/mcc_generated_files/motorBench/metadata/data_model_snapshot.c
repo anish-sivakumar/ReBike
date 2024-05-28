@@ -234,4 +234,5 @@ __attribute__((section("diagnostics_cinfo, info"), keep)) char MCAF_data_model_s
   "lse,\"adc-temp_bridge_params-threshold\": 50.0,\"adc-temp_bridge_params-tau_lpf"
   "\": 10.0,\"adc-temp_bridge_params-slewrate\": 4.0,\"adc-vabsref\": false,\"adc-v"
   "phasea\": false,\"adc-vphaseb\": false,\"adc-vphasec\": false},\"version\": {\"s"
-  "chema\": 4.0,\"MCAF\": \"R7\"},\"status\": {\"valid\": true}}}}";
+  "chema\": 4.0,\"motorBench\": \"2.45.0\",\"MCAF\": \"R7\"},\"status\": {\"valid\""
+  ": true}}}}";

@@ -504,6 +504,7 @@ config:
       adc-vphasec: false
     version:
       schema: 4.0
+      motorBench: 2.45.0
       MCAF: R7
     status:
       valid: true
