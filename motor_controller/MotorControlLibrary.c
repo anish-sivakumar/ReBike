@@ -5,7 +5,13 @@
 #define 	ANGLE_2PI              	(float)6.2831853072    // Defines value for 2*PI
 #define     LUT_SIZE                256U                   // Defines size of sine and cosine tables
 #define 	ANGLE_RES      		    (float)(ANGLE_2PI/(float)TABLE_SIZE) //Defines the angle resolution in the sine/cosine look up table
-#define     ONE_OVER_ANGLE_RES     (float)(1.0f/ANGLE_RES)
+#define     ONE_OVER_ANGLE_RES      (float)(1.0f/ANGLE_RES)
+#define     Id_SHUTOFF_MAX          (float)5.0              // Defines safety max allowable Id current
+#define     Id_SHUTOFF_MIN          (float)-5.0             // Defines safety min allowable Id current
+#define     Iq_SHUTOFF_MAX          (float)12.0             // Defines safety max allowable Iq current
+#define     Iq_SHUTOFF_MIN          (float)-10.0            // Defines safety min allowable Iq current
+#define     Iq_CONTORL_MAX                  (float)10.0             // Defines control max Iq current
+#define     Iq_CONROL_MIN                  (float)-5.0             // Defines control min Iq current
 
 // Structure containing component values for 3-Phase Stator Reference Frame
 typedef struct 
@@ -180,7 +186,7 @@ static inline sector SpaceVectorSector(struct_AlphaBeta *voltage)
 }
 
 
-/* Calculates Space Vector PWM Duties and Timing for six switches based on desired voltage vector  
+/* Calculates Space Vector PWM Duties for 3 phases based on desired voltage vector  
     Parameters:
         *alphabetaValues           pointer to structure for alpha,beta axis components
         sector                     sector of desired voltage
@@ -188,45 +194,119 @@ static inline sector SpaceVectorSector(struct_AlphaBeta *voltage)
 */
 static inline void SpaceVectorPWMDuty(struct_AlphaBeta alphabetaVoltage, sector sector, struct_Duty* duty)
 {
-    struct_ABC abcVoltages;
-    
-    InverseClarkeTransform(&alphabetaVoltage, &abcVoltages)
+    struct_ABC phaseV;
+    float   PWMPeriod;  // PWM Period in PWM Timer Counts
+    float	t1;         // Length of Vector T1
+    float   t2;         // Length of Vector T2
+    // float   Ta;         // Ta = To/2 + T1 + T2
+    // float   Tb;         // Tb = To/2 + T2
+    // float   Tc;         // Tc = To/2
 
-    // Precalculate common terms 
+    float 	dutyA;      // Phase A Duty Cycle
+    float   dutyB;      // Phase B Duty Cycle
+    float   dutyC;      // Phase C Duty Cycle
+    
+    // get normalized phase voltages
+    InverseClarkeTransform(&alphabetaVoltage, &phaseV)
 
     // Sector specific duties
     switch (sector)
     {
+        // basic vectors (ABC) = (100) and (110)
         case SECT1:
         {
+            t1 = -phaseV->a;
+            t2 = -phaseV->b;
+            
+            t1 = PWMPeriod * t1;
+            t2 = PWMPeriod * t2;
+
+            dutyA = (PWMPeriod - t1 - t2)/2.0f;
+            dutyB = dutyA + t2;
+            dutyC = dutyB + t1;           
+
             break;
         }
 
+        // basic vectors (ABC) = (110) and (010)
         case SECT2:
         {
+            t1 = phaseV->c;
+            t2 = phaseV->b;
+            
+            t1 = PWMPeriod * t1;
+            t2 = PWMPeriod * t2;
+
+            dutyB = (PWMPeriod - t1 - t2)/2.0f;
+            dutyA = dutyB + t2;
+            dutyC = dutyA + t1; 
             break;
         }
 
+        // basic vectors (ABC) = (010) and (011)
         case SECT3:
         {
+            t1 = -phaseV->c;
+            t2 = -phaseV->a;
+            
+            t1 = PWMPeriod * t1;
+            t2 = PWMPeriod * t2;
+
+            dutyB = (PWMPeriod - t1 - t2)/2.0f;
+            dutyC = dutyB + t2;
+            dutyA = dutyC + t1;
+
             break; 
         }
 
+        // basic vectors (ABC) = (011) and (001)
         case SECT4:
         {
-           break; 
+            t1 = phaseV->b;
+            t2 = phaseV->a;
+            
+            t1 = PWMPeriod * t1;
+            t2 = PWMPeriod * t2;
+
+            dutyC = (PWMPeriod - t1 - t2)/2.0f;
+            dutyB = dutyC + t2;
+            dutyA = dutyB + t1;
+
+            break; 
         }
 
+        // basic vectors (ABC) = (001) and (101)
         case SECT5:
         {
+            t1 = -phaseV->b;
+            t2 = -phaseV->c;
+            
+            t1 = PWMPeriod * t1;
+            t2 = PWMPeriod * t2;
+
+            dutyC = (PWMPeriod - t1 - t2)/2.0f;
+            dutyA = dutyC + t2;
+            dutyB = dutyA + t1;
+            
             break;
         }
 
+        // basic vectors (ABC) = (101) and (100)
         case SECT6:
-        {
+        {   
+            t1 = phaseV->a;
+            t2 = phaseV->c;
+            
+            t1 = PWMPeriod * t1;
+            t2 = PWMPeriod * t2;
+
+            dutyA = (PWMPeriod - t1 - t2)/2.0f;
+            dutyC = dutyA + t2;
+            dutyB = dutyC + t1;
             break;
         } 
 
+        // zero vector
         default:
             duty->A = 0;
             duty->B = 0;
@@ -234,6 +314,30 @@ static inline void SpaceVectorPWMDuty(struct_AlphaBeta alphabetaVoltage, sector 
             break;
     }
 }  
+
+
+/* Generates Torque-Ampere Reference from Torque Command
+    Parameters:
+        pmtCmd                 float value with percentage max torque command [-100,100]. Negative indicates rev torque
+*/
+static inline struct_DQ TorqueAmpereReference(float pmtCmd)
+{
+    struct_DQ Iref;
+    
+    Iref.d = 0; // may need non-zero Id at startup - Anish unsure
+
+    if (pmtCmd >= 0)
+    {
+        Iref.q = pmtCmd * Iq_CONTROL_MAX; // positive current/torque
+    } 
+    else 
+    {
+        Iref.q = pmtCmd * Iq_CONTROL_MIN; // negative current/torque
+    }
+    
+    return Iref;
+}
+
 
 
 /* Calculates Clarke Transform (a,b,c -> alpha,beta)
@@ -248,17 +352,17 @@ static inline void ClarkeTransform(struct_ABC *abcValues, struct_AlphaBeta *alph
 }
 
 
-/* Calculates Inverse Clarke Transform (alpha,beta -> a,b,c)
+/* Calculates Modified Inverse Clarke Transform (alpha,beta -> a,b,c) with alpha and beta values swapped
     Parameters:
         *alphabetaValues           pointer to structure for alpha,beta axis components
         *abcValues                 pointer to structure for a,b,c axis components
     https://www.mathworks.com/help/sps/ref/inverseclarketransform.html
 */
-static inline void InverseClarkeTransform(struct_AlphaBeta *alphabetaValues, struct_ABC *abcValues)
+static inline void ModifiedInverseClarkeTransform(struct_AlphaBeta *alphabetaValues, struct_ABC *abcValues)
 {
-    abcValues->a = alphabetaValues->alpha;
-    abcValues->b = (-alphabetaParam->alpha/2.0f + SQRT3_OVER_TWO * alphabetaParam->beta);
-    abcValues->c = (-alphabetaParam->alpha/2.0f - SQRT3_OVER_TWO * alphabetaParam->beta);     
+    abcValues->a = alphabetaValues->beta;
+    abcValues->b = (-alphabetaParam->beta/2.0f + SQRT3_OVER_TWO * alphabetaParam->alpha);
+    abcValues->c = (-alphabetaParam->beta/2.0f - SQRT3_OVER_TWO * alphabetaParam->alpha);     
 }
 
 
