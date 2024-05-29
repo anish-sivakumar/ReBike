@@ -20,18 +20,55 @@
 */
 #include "mcc_generated_files/motorBench/mcaf_main.h"
 #include "mcc_generated_files/system/system.h"
+#include "mcc_generated_files/system/pins.h"
 
 /*
     Main application
 */
 
+// Hall signals
+int hall_a;
+int hall_b;
+int hall_c;
+
+// Hall interrupt declarations
+void Hall_A_InterruptHandler(void);
+void Hall_B_InterruptHandler(void);
+void Hall_C_InterruptHandler(void);
+
+
 int main(void)
 {
     SYSTEM_Initialize();
     MCAF_MainInit();
+    
+    // Configure Hall ISRs
+    IO_RE8_SetInterruptHandler(&Hall_A_InterruptHandler);
+    IO_RE9_SetInterruptHandler(&Hall_B_InterruptHandler);
+    IO_RE10_SetInterruptHandler(&Hall_C_InterruptHandler);
+
+    // Initialize Hall values
+    hall_a = PORTEbits.RE8;
+    hall_b = PORTEbits.RE9;
+    hall_c = PORTEbits.RE10;
 
     while(1)
     {
         MCAF_MainLoop();
     }    
+}
+
+void Hall_A_InterruptHandler(void)
+{
+    hall_a = PORTEbits.RE8;
+}
+
+void Hall_B_InterruptHandler(void)
+{
+    hall_b = PORTEbits.RE9;
+}
+
+void Hall_C_InterruptHandler(void)
+{
+    hall_c = PORTEbits.RE10;
 }
