@@ -72,6 +72,8 @@ void TMR1_Initialize (void)
 {
     //TCS External; TSYNC disabled; TCKPS 1:1; TGATE disabled; TECS FCY; PRWIP Write complete; TMWIP Write complete; TMWDIS disabled; TSIDL disabled; TON disabled; 
     T1CON = 0x102;
+    T1CONbits.TCKPS = 2; //1:64
+    
     //TMR 0x0; 
     TMR1 = 0x0;
     //Period 0 ms; Frequency 100,000,000 Hz; PR 65535; 

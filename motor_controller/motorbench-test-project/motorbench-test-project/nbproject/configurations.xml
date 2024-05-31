@@ -320,6 +320,7 @@
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
       <C30>
+        <property key="appendMe" value="-Wno-volatile-register-var -finline"/>
         <property key="cast-align" value="false"/>
         <property key="code-model" value="default"/>
         <property key="const-model" value="default"/>
@@ -435,6 +436,7 @@
         <property key="warn-section-align" value="false"/>
       </C30-LD>
       <C30Global>
+        <property key="appendMe" value=""/>
         <property key="combine-sourcefiles" value="false"/>
         <property key="common-include-directories"
                   value="mcc_generated_files;mcc_generated_files/motorBench;mcc_generated_files/motorBench/library/mc-library;mcc_generated_files/motorBench/library/x2cscope"/>
@@ -623,6 +625,8 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-2beff"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/Users/siani/Documents/Classes/Summer24/ECE499/eBike/motor_controller/motorbench-test-project/motorbench-test-project/debug/default/default_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmentry.voltage" value="low"/>
