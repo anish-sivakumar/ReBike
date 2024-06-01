@@ -63,22 +63,20 @@
 volatile int16_t thetaElectrical = 0;
 typedef struct
 {
-    uint16_t timerValue;
-    uint16_t sector;
-    uint16_t speed;
-    /* angle of estimation */
-    int16_t theta;    
+    uint16_t sector; // sector of [3, 2, 6, 4, 5, 1] during 1 electrical cycle
+    uint16_t speed; // rotor speed in RPM using filtered period 
+    int16_t theta; // angle of estimation
 
-    int16_t period;
-    int32_t periodStateVar;
-    int16_t periodFilter;
-    int16_t periodKFilter;
-    int16_t phaseInc;
-    int16_t correctHallTheta;
-    int16_t thetaError;
-    int16_t halfThetaCorrection;
-    int16_t correctionFactor;
-    int16_t correctionCounter;
+    uint16_t period; // captures raw timer1 value 
+    uint32_t periodStateVar; // intermediate result for filtered period calculation
+    uint16_t periodFilter; // filtered period using moving average filtering method
+    uint16_t periodKFilter; // period filter gain
+    uint16_t phaseInc; // phase increment value for subsequent electrical angle
+    //int16_t correctHallTheta; not used
+    int16_t thetaError; // calculated error in electrical angle using OFFSET_CORRECTION
+    // int16_t halfThetaCorrection; not used
+    int16_t correctionFactor; // adjustment to electrical angle every ISR run
+    int16_t correctionCounter; // counts the number of ISR runs to correct electrical angle over to avoid abrupt changes
 } struct_HallData;
 struct_HallData hallData;
 
@@ -100,13 +98,13 @@ int main(void)
     IO_RE10_SetInterruptHandler(&HallStateChange);
 
     // hall data initialization
-    hallData.periodKFilter = UTIL_MulQ15(0.001, 1);
+    hallData.periodKFilter = Q15(0.01);//Q15(0.001);
     hallData.period = 0xFFF0; //65520
     
     while(1)
     {
         MCAF_MainLoop();
-        //TMR1_testing = TMR1;
+        HallBasedEstimation(); 
     }    
 }
 
@@ -128,11 +126,11 @@ int16_t sectorToAngle[8] =  // 3, 2, 6, 4, 5, 1
 
 uint16_t HallValueRead(void) //defined in board_service.c in github sample project
 {
-    uint16_t buffer;
-    uint16_t hallValue;
+    uint16_t buffer; // stores PORTE bits
+    uint16_t hallValue; // extracted hall sector 1-6
 
     buffer = PORTE; // using RE8, RE9, RE10 for Hall sensors. PORTE is 16 pins RE15..RE0
-    buffer = buffer >> 8;
+    buffer = buffer >> 8; // right shift to extract hall signals
     hallValue = buffer & 0x0007; // 0b111 mask
     
     return hallValue;
@@ -140,55 +138,54 @@ uint16_t HallValueRead(void) //defined in board_service.c in github sample proje
 
 void HallStateChange(void) 
 {
-    TMR1_testing = PORTEbits.RE8;
-    
-    
-    hallData.timerValue = TMR1;
-    
-    
-    TMR1 = 0;
-    hallData.period = hallData.timerValue;    
+    hallData.period = TMR1; // timer1 count value
+    TMR1 = 0; // reset timer 1 counter
     
     hallData.sector = HallValueRead();
     
-    
     // Instead of making abrupt correction to the angle corresponding to hall sector, find the error and make gentle correction  
     hallData.thetaError = (sectorToAngle[hallData.sector] + OFFSET_CORRECTION) - hallData.theta;
+    
     // Find the correction to be done in every step
     // If "hallThetaError" is 2000, and "hallCorrectionFactor" = (2000/8) = 250
     // So the error of 2000 will be corrected in 8 steps, with each step being 250
     hallData.correctionFactor = hallData.thetaError >> HALL_CORRECTION_DIVISOR;
     hallData.correctionCounter = HALL_CORRECTION_STEPS;
     
-    //HallBasedEstimation(); 
+    // Run this in main ISR
+    HallBasedEstimation(); 
     
 }
 
-/** Hall effect based speed and position estimation 
-  this should be in main control ISR later    */
+/** Hall effect based speed and position estimation */
 void HallBasedEstimation(void) 
 {
-    // 1. Set reference values
-    // 2. Update PI controller loops
+    // 1. Set reference values (main ISR)
+    // 2. Update PI controller loops (main ISR)
     
     // 3. Hall based position and speed calculations
-    hallData.periodStateVar += (((long int)hallData.period - (long int)hallData.periodFilter)*(int)(hallData.periodKFilter));
-    hallData.periodFilter = (int)(hallData.periodStateVar>>15);
-    hallData.phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(unsigned int)(hallData.periodFilter));
-    hallData.speed = __builtin_divud((uint32_t)SPEED_MULTI,(unsigned int)(hallData.periodFilter));
     
-    thetaElectrical = hallData.theta; //thetaElectrical used for FOC calcs
-    hallData.theta = hallData.theta + hallData.phaseInc; 
+    /* calculate filtered period = delta_period x filter_gain. 
+        right shift result to remove extra 2^15 factor from fixed point multiplication*/
+    hallData.periodStateVar += (((int32_t)hallData.period - (int32_t)hallData.periodFilter)*(int16_t)(hallData.periodKFilter));
+    hallData.periodFilter = (int16_t)(hallData.periodStateVar>>15);
+    
+    
+    hallData.phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(uint16_t)(hallData.periodFilter));
+    hallData.speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(hallData.periodFilter));
+    
+    thetaElectrical = hallData.theta; //thetaElectrical used for FOC calculations
+    hallData.theta = hallData.theta + hallData.phaseInc;
     if(hallData.correctionCounter > 0)
     {
         hallData.theta = hallData.theta + hallData.correctionFactor;
         hallData.correctionCounter--;
     }
     
-    // 4. Calculate sine and cosine theta
-    // 5. Calculate inverse Park
-    // 6. Calculate inverse Clarke - swapped input
-    // 7. Calculate SVPWM sector and Duties
-    // 8. Update PWM Duties
+    // 4. Calculate sine and cosine theta (main ISR)
+    // 5. Calculate inverse Park (main ISR)
+    // 6. Calculate inverse Clarke - swapped input (main ISR)
+    // 7. Calculate SVPWM sector and Duties (main ISR)
+    // 8. Update PWM Duties (main ISR)
     
 }
