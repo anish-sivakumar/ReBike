@@ -274,6 +274,7 @@
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>mc_library/mc_hall.c</itemPath>
+      <itemPath>mc_isr.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

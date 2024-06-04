@@ -68,14 +68,9 @@ uint16_t MC_HALL_ValueRead(void)
     return hallValue;
 }
 
-
+// called by FOC ADC interrupt
 int16_t MC_HALL_Estimate(MC_HALL_DATA *pHall) 
 {
-    // 1. Set reference values (main ISR)
-    // 2. Update PI controller loops (main ISR)
-    
-    
-    // 3. Hall based position and speed calculations
     int16_t thetaElectrical = 0;
     
     /* calculate filtered period = delta_period x filter_gain. 
@@ -95,13 +90,6 @@ int16_t MC_HALL_Estimate(MC_HALL_DATA *pHall)
     }
     
     return thetaElectrical;
-    
-    
-    // 4. Calculate sine and cosine theta (main ISR)
-    // 5. Calculate inverse Park (main ISR)
-    // 6. Calculate inverse Clarke - swapped input (main ISR)
-    // 7. Calculate SVPWM sector and Duties (main ISR)
-    // 8. Update PWM Duties (main ISR)
     
 }
 

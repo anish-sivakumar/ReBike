@@ -56,6 +56,8 @@ MC_HALL_DATA hall;
 
 extern volatile MCAF_WATCHDOG_T watchdog;
 
+volatile uint16_t ISR_testing;
+
 bool MainInit(void);
 
 
@@ -64,8 +66,30 @@ bool MainInit(void);
 */
 int main(void)
 {
+    // INIT STUFF
     SYSTEM_Initialize();
-    MainInit();
+    //MCAF_MainInit();
+    MCAF_ConfigurationPwmUpdate();
+    if (MCAF_OpAmpsEnabled())
+    {
+        HAL_OpAmpsEnable();
+        HAL_OpAmpsInputVoltageRangeSelect();
+    }
+    HAL_InterruptPrioritySet();
+    HAL_CMP_SetComparatorOvercurrentThreshold(HAL_PARAM_DAC_OVERCURRENT_THRESHOLD);
+    HAL_ADC_SignalsInit();
+    HAL_ADC_ResolutionInit();
+    HAL_ADC_Enable();
+    MCAF_DiagnosticsInit(); // UART and X2C scope
+    
+    
+    
+    MCAF_SystemStart(&sysData);
+    
+    /* Ideally, MCAF has nothing to do with the application timer and hence this
+       function should be called from the main() in main.c */
+    HAL_TMR_TICK_Start();
+    // END of INIT STUFF
     
     
     // Configure Hall ISRs and data
@@ -78,6 +102,15 @@ int main(void)
     while(1)
     {
         //MCAF_MainLoop();
+        X2CScope_Communicate();
+        
+        
+//        ISR_testing++;
+//        
+//        if (ISR_testing > 50000)
+//        {
+//            ISR_testing = 0;
+//        }
         
         /* State variables are fine to access w/o volatile qualifier for ISR
         * (since no interruptions)

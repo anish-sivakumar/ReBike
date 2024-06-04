@@ -19,14 +19,14 @@
 #include "current_measure.h"
 
 
-#include "motorcontrol_library/mc_fsm.h"
+#include "mc_library/mc_hall.h"
 
 /**
  * motor state variables, accessed directly
  * 
  * The ISR does not receive any arguments so we need access to this somehow.
  */
-extern MCAF_MOTOR_DATA motor;
+extern MCAF_MOTOR_DATA PMSM;
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
 /** watchdog state, accessed directly */
@@ -35,6 +35,7 @@ extern volatile MCAF_WATCHDOG_T watchdog;
 extern MC_HALL_DATA hall;
 
 extern volatile uint16_t ISR_testing; //temp
+volatile uint16_t thetaElectrical; // change to PMSM object attribute
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -46,15 +47,19 @@ extern volatile uint16_t ISR_testing; //temp
  * GPIO test point output is activated during this ISR for timing purposes.
  */
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
+//void TEST_ISR(void)
 {
-   /*
+   
+   thetaElectrical = MC_HALL_Estimate(&hall);
+    
    ISR_testing++;
    
    if (ISR_testing > 50000)
    {
        ISR_testing = 0;
    }
-    */
+   HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
+   X2CScope_Update();
    
    // 1. read current ADC buffer and Vdc ADC, apply offsets, and LPF if needed
    // MCAF_ADCRead(&motor);
@@ -95,12 +100,12 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     // 15. Figure out where duties are set and do it
    
     // 16. clear ADC
-    HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from ADC buffer
+    //HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from ADC buffer
    
-   // Lastly: Diagnostics code are always the lowest-priority routine within
-   MCAF_CaptureTimestamp(&motor.testing, MCTIMESTAMP_DIAGNOSTICS);
-   MCAF_DiagnosticsStepIsr(); // Update X2C scope
-   MCAF_CaptureTimestamp(&motor.testing, MCTIMESTAMP_END_OF_ISR);
+    // Lastly: Diagnostics code are always the lowest-priority routine within
+    //MCAF_CaptureTimestamp(&PMSM.testing, MCTIMESTAMP_DIAGNOSTICS);
+    // MCAF_DiagnosticsStepIsr(); // Update X2C scope
+    // MCAF_CaptureTimestamp(&PMSM.testing, MCTIMESTAMP_END_OF_ISR);
   
 }
 

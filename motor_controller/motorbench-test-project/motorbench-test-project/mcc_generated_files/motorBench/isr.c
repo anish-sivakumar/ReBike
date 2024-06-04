@@ -91,7 +91,7 @@ extern volatile MCAF_WATCHDOG_T watchdog;
  * GPIO test point output is activated during this ISR for timing purposes.
  */
 
-//void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR_ORIGINAL(void)
+//void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 void HAL_ADC_ISR_ORIGINAL(void)
 {
     if (MCAF_AdcIsrPrologEnabled())
