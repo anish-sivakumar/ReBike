@@ -158,6 +158,7 @@
           <itemPath>mcc_generated_files/uart/uart_types.h</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>mc_library/mc_hall.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -272,6 +273,7 @@
         </logicalFolder>
       </logicalFolder>
       <itemPath>main.c</itemPath>
+      <itemPath>mc_library/mc_hall.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -528,6 +530,8 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-2beff"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/Users/siani/Documents/Classes/Summer24/ECE499/eBike/motor_controller/motorbench-test-project/motorbench-test-project/debug/default/default_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmentry.voltage" value="low"/>
