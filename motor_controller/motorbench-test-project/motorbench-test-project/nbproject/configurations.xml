@@ -158,7 +158,8 @@
           <itemPath>mcc_generated_files/uart/uart_types.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>mc_library/mc_hall.h</itemPath>
+      <itemPath>rb_library/rb_control.h</itemPath>
+      <itemPath>rb_library/rb_hall.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -273,8 +274,9 @@
         </logicalFolder>
       </logicalFolder>
       <itemPath>main.c</itemPath>
-      <itemPath>mc_library/mc_hall.c</itemPath>
-      <itemPath>mc_isr.c</itemPath>
+      <itemPath>rb_isr.c</itemPath>
+      <itemPath>rb_library/rb_hall.c</itemPath>
+      <itemPath>rb_library/rb_control.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

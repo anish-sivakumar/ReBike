@@ -43,7 +43,7 @@
 #include "mcapi.h"
 #include "mcaf_sample_application.h"
 
-#include "mc_library/mc_hall.h"
+#include "rb_library/rb_hall.h"
 
 /* Global Variables */
 
@@ -52,7 +52,7 @@ MCAF_MOTOR_DATA PMSM;
 /** Global instance of the main set of system state variables */
 MCAF_SYSTEM_DATA sysData;
 /** Global instance of the hall sensor variables */
-MC_HALL_DATA hall;
+RB_HALL_DATA hall;
 
 extern volatile MCAF_WATCHDOG_T watchdog;
 
@@ -94,10 +94,10 @@ int main(void)
     
     // Configure Hall ISRs and data
     //volatile int16_t thetaElectrical = 0;
-    MC_HALL_Init(&hall);
-    IO_RE8_SetInterruptHandler(&MC_HALL_ISR);
-    IO_RE9_SetInterruptHandler(&MC_HALL_ISR);
-    IO_RE10_SetInterruptHandler(&MC_HALL_ISR);
+    RB_HALL_Init(&hall);
+    IO_RE8_SetInterruptHandler(&RB_HALL_ISR);
+    IO_RE9_SetInterruptHandler(&RB_HALL_ISR);
+    IO_RE10_SetInterruptHandler(&RB_HALL_ISR);
 
     while(1)
     {
@@ -116,7 +116,7 @@ int main(void)
         * (since no interruptions)
         * but in main loop, the ISR may interrupt + we need to assume volatile.
         */
-        volatile MC_HALL_DATA *pHall = &hall;
+        volatile RB_HALL_DATA *pHall = &hall;
         volatile MCAF_MOTOR_DATA *pPMSM = &PMSM;
         volatile MCAF_SYSTEM_DATA *pSysData = &sysData;
         volatile MCAF_WATCHDOG_T *pWatchdog = &watchdog;

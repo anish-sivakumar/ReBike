@@ -19,7 +19,7 @@
 #include "current_measure.h"
 
 
-#include "mc_library/mc_hall.h"
+#include "rb_library/rb_hall.h"
 
 /**
  * motor state variables, accessed directly
@@ -32,7 +32,7 @@ extern MCAF_SYSTEM_DATA systemData;
 /** watchdog state, accessed directly */
 extern volatile MCAF_WATCHDOG_T watchdog;
 
-extern MC_HALL_DATA hall;
+extern RB_HALL_DATA hall;
 
 extern volatile uint16_t ISR_testing; //temp
 volatile uint16_t thetaElectrical; // change to PMSM object attribute
@@ -50,7 +50,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //void TEST_ISR(void)
 {
    
-   thetaElectrical = MC_HALL_Estimate(&hall);
+   thetaElectrical = RB_HALL_Estimate(&hall);
     
    ISR_testing++;
    
