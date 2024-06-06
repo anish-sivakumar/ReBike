@@ -277,6 +277,7 @@
       <itemPath>rb_isr.c</itemPath>
       <itemPath>rb_library/rb_hall.c</itemPath>
       <itemPath>rb_library/rb_control.c</itemPath>
+      <itemPath>rb_library/rb_foc_params.h</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

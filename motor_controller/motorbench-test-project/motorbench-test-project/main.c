@@ -44,6 +44,7 @@
 #include "mcaf_sample_application.h"
 
 #include "rb_library/rb_hall.h"
+#include "rb_library/rb_control.h"
 
 /* Global Variables */
 
@@ -66,51 +67,11 @@ bool MainInit(void);
 */
 int main(void)
 {
-    // INIT STUFF
-    SYSTEM_Initialize();
-    //MCAF_MainInit();
-    MCAF_ConfigurationPwmUpdate();
-    if (MCAF_OpAmpsEnabled())
-    {
-        HAL_OpAmpsEnable();
-        HAL_OpAmpsInputVoltageRangeSelect();
-    }
-    HAL_InterruptPrioritySet();
-    HAL_CMP_SetComparatorOvercurrentThreshold(HAL_PARAM_DAC_OVERCURRENT_THRESHOLD);
-    HAL_ADC_SignalsInit();
-    HAL_ADC_ResolutionInit();
-    HAL_ADC_Enable();
-    MCAF_DiagnosticsInit(); // UART and X2C scope
-    
-    
-    
-    MCAF_SystemStart(&sysData);
-    
-    /* Ideally, MCAF has nothing to do with the application timer and hence this
-       function should be called from the main() in main.c */
-    HAL_TMR_TICK_Start();
-    // END of INIT STUFF
-    
-    
-    // Configure Hall ISRs and data
-    //volatile int16_t thetaElectrical = 0;
-    RB_HALL_Init(&hall);
-    IO_RE8_SetInterruptHandler(&RB_HALL_ISR);
-    IO_RE9_SetInterruptHandler(&RB_HALL_ISR);
-    IO_RE10_SetInterruptHandler(&RB_HALL_ISR);
+    MainInit();
 
     while(1)
     {
-        //MCAF_MainLoop();
-        X2CScope_Communicate();
-        
-        
-//        ISR_testing++;
-//        
-//        if (ISR_testing > 50000)
-//        {
-//            ISR_testing = 0;
-//        }
+        X2CScope_Communicate(); 
         
         /* State variables are fine to access w/o volatile qualifier for ISR
         * (since no interruptions)
@@ -130,39 +91,41 @@ int main(void)
 }
 
 
-/** FIGURE OUT WHAT WE NEED HERE **************
+/**
+ * Initialize hardware including ADC, PWM, and X2CScope
+ * and Control Parameters
+ * @return initialization success 
  */
-bool MainInit(void)
+bool MainInit (void)
 {
-    MCAF_SystemStateInit(&PMSM, &sysData);
-    MCAF_SystemInit(&sysData);
-    MCAF_BoardServiceInit(&sysData.board);
-    MCAF_UiInit(&PMSM.ui);
-    MCAF_MonitorInit(&PMSM.monitor);
-#if MCAF_INCLUDE_STALL_DETECT  
-    MCAF_StallDetectInit(&PMSM.stallDetect);
-#endif
+    SYSTEM_Initialize();
+    MCAF_ConfigurationPwmUpdate();
+    if (MCAF_OpAmpsEnabled())
+    {
+        HAL_OpAmpsEnable();
+        HAL_OpAmpsInputVoltageRangeSelect();
+    }
+    HAL_InterruptPrioritySet();
+    HAL_CMP_SetComparatorOvercurrentThreshold(HAL_PARAM_DAC_OVERCURRENT_THRESHOLD);
+    HAL_ADC_SignalsInit();
+    HAL_ADC_ResolutionInit();
+    HAL_ADC_Enable();
+    MCAF_DiagnosticsInit(); // UART and X2C scope
+    MCAF_SystemStart(&sysData);
+    HAL_TMR_TICK_Start();
+    
+    // Configure Hall ISRs and data
+    RB_HALL_Init(&hall);
+    IO_RE8_SetInterruptHandler(&RB_HALL_ISR);
+    IO_RE9_SetInterruptHandler(&RB_HALL_ISR);
+    IO_RE10_SetInterruptHandler(&RB_HALL_ISR);
+    
+    
+    // These might be needed. Need to modify functions
     MCAF_FaultDetectInit(&PMSM.faultDetect);
-    MCAF_RecoveryInit(&PMSM.recovery);
-    MCAF_SystemStateMachine_Init(&PMSM);
-    MCAF_SystemTestHarness_Init(&sysData.testing);
-    
-    /* Check reset cause and act upon it, prior to clearing the watchdog,
-     * (see notes in declaration of MCAF_CheckResetCause)
-     */
-    MCAF_CheckResetCause();
-    HAL_WATCHDOG_Timer_Enable();
-    MCAF_WatchdogManageMainLoop(&watchdog);
-    
-    MCAPI_Initialize(&PMSM.apiData);
-    
-    /* Ideally, MCAF has nothing to do with the application and hence this
-       function should be called from the main() in main.c */
-    APP_ApplicationInitialize(&PMSM.apiData, &sysData.board);
-    
-    MCAF_InitControlParameters_Motor1(&PMSM);
-    
-    bool success = MCAF_FocInit(&PMSM);
+    RB_InitControlParameters(&PMSM);
+
+    bool success = RB_FocInit(&PMSM);
     if (success)
     {
         MCAF_SystemStart(&sysData);
@@ -173,4 +136,5 @@ bool MainInit(void)
     }
     return success;
 }
+
 
