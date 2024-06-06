@@ -5,8 +5,9 @@
  * Created on June 3, 2024, 4:10 PM
  */
 
-#include "../mcc_generated_files/motorBench/hal/hardware_access_functions.h"
 #include "rb_hall.h"
+
+#include "../mcc_generated_files/motorBench/hal/hardware_access_functions.h"
 #include "../mcc_generated_files/motorBench/util.h"
 
 /**
@@ -26,21 +27,44 @@ int16_t sectorToQ15Angle[8] =  // 3, 2, 6, 4, 5, 1
 };
 extern RB_HALL_DATA hall;
 
-void RB_HALL_Init(RB_HALL_DATA *pHall){
-   
-    pHall->periodKFilter = Q15(0.01);
-    pHall->period = 0xFFF0; //65520
-}
-
 void RB_HALL_ISR(void){
     RB_HALL_StateChange(&hall);
 }
 
+void RB_HALL_Init(RB_HALL_DATA *pHall){
+   
+    pHall->periodKFilter = Q15(0.01);
+    pHall->period = 0xFFF0; //65520
+    
+    // Configure ISRs
+    IO_RE8_SetInterruptHandler(&RB_HALL_ISR);
+    IO_RE9_SetInterruptHandler(&RB_HALL_ISR);
+    IO_RE10_SetInterruptHandler(&RB_HALL_ISR);
+}
+
+void RB_HALL_InvalidateData(void)
+{
+    hall.timedOut = true;
+    hall.minSpeedReached = false;
+    hall.speed = 0;
+    hall.period = 0xffff;
+    hall.periodFilter = 0xffff;
+}
+
+
 void RB_HALL_StateChange(RB_HALL_DATA *pHall)
 {
-    pHall->period = TMR1; // timer1 count value
+    uint16_t tmr1_tmp = TMR1; // store timer1 count value
     TMR1 = 0; // reset timer 1 counter
     
+    // Check if our TMR1 measurement was valid
+    if(hall.timedOut){
+        hall.timedOut = false;
+    }else{
+        hall.minSpeedReached = true;
+        pHall->period = tmr1_tmp;
+    }
+
     pHall->sector = RB_HALL_ValueRead();
     
     // Instead of making abrupt correction to the angle corresponding to hall sector, find the error and make gentle correction  
@@ -71,26 +95,26 @@ uint16_t RB_HALL_ValueRead(void)
 // called by FOC ADC interrupt
 int16_t RB_HALL_Estimate(RB_HALL_DATA *pHall) 
 {
-    int16_t thetaElectrical = 0;
-    
-    /* calculate filtered period = delta_period x filter_gain. 
-        right shift result to remove extra 2^15 factor from fixed point multiplication*/
-    pHall->periodStateVar += (((int32_t)pHall->period - (int32_t)pHall->periodFilter)*(int16_t)(pHall->periodKFilter));
-    pHall->periodFilter = (int16_t)(pHall->periodStateVar>>15);
-    
-    pHall->phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(uint16_t)(pHall->periodFilter));
-    pHall->speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(pHall->periodFilter));
-    
-    thetaElectrical = pHall->theta; //thetaElectrical used for FOC calculations
-    pHall->theta = pHall->theta + pHall->phaseInc;
-    if(pHall->correctionCounter > 0)
-    {
-        pHall->theta = pHall->theta + pHall->correctionFactor;
-        pHall->correctionCounter--;
+    if (hall.minSpeedReached){
+
+        /* calculate filtered period = delta_period x filter_gain. 
+            right shift result to remove extra 2^15 factor from fixed point multiplication*/
+        pHall->periodStateVar += (((int32_t)pHall->period - (int32_t)pHall->periodFilter)*(int16_t)(pHall->periodKFilter));
+        pHall->periodFilter = (int16_t)(pHall->periodStateVar>>15);
+
+        pHall->phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(uint16_t)(pHall->periodFilter));
+        pHall->speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(pHall->periodFilter));
+
     }
     
+    int16_t thetaElectrical = pHall->theta; //thetaElectrical used for FOC calculations
+    pHall->theta = pHall->theta + pHall->phaseInc;
+        if(pHall->correctionCounter > 0)
+        {
+            pHall->theta = pHall->theta + pHall->correctionFactor;
+            pHall->correctionCounter--;
+        }
     return thetaElectrical;
-    
 }
 
 
