@@ -42,6 +42,7 @@
 #include "fault_detect.h"
 #include "mcapi.h"
 #include "mcaf_sample_application.h"
+#include "current_measure.h"
 
 #include "rb_library/rb_hall.h"
 #include "rb_library/rb_control.h"
@@ -49,7 +50,7 @@
 /* Global Variables */
 
 /** Global instance of the main set of motor state variables */
-MCAF_MOTOR_DATA PMSM;
+RB_MOTOR_DATA PMSM;
 /** Global instance of the main set of system state variables */
 MCAF_SYSTEM_DATA sysData;
 /** Global instance of the hall sensor variables */
@@ -71,22 +72,23 @@ int main(void)
 
     while(1)
     {
-        X2CScope_Communicate(); 
+        
         
         /* State variables are fine to access w/o volatile qualifier for ISR
         * (since no interruptions)
         * but in main loop, the ISR may interrupt + we need to assume volatile.
         */
         volatile RB_HALL_DATA *pHall = &hall;
-        volatile MCAF_MOTOR_DATA *pPMSM = &PMSM;
+        volatile RB_MOTOR_DATA *pPMSM = &PMSM;
         volatile MCAF_SYSTEM_DATA *pSysData = &sysData;
         volatile MCAF_WATCHDOG_T *pWatchdog = &watchdog;
-
-        MCAF_UiStepMain(&pPMSM->ui);
-        MCAF_SystemStateMachine_StepMain(pPMSM);
-        MCAF_WatchdogManageMainLoop(pWatchdog);
-        MCAF_TestHarnessStepMain(&pSysData->testing);
-        MCAF_DiagnosticsStepMain();
+        
+        // Re-integrate these as needed
+        //MCAF_UiStepMain(&pPMSM->ui);
+        //MCAF_SystemStateMachine_StepMain(pPMSM);
+        //MCAF_WatchdogManageMainLoop(pWatchdog);
+        //MCAF_TestHarnessStepMain(&pSysData->testing);
+        X2CScope_Communicate(); 
     }    
 }
 
@@ -124,7 +126,17 @@ bool MainInit (void)
     // These might be needed. Need to modify functions
     MCAF_FaultDetectInit(&PMSM.faultDetect);
     RB_InitControlParameters(&PMSM);
-
+    //MCAF_MotorControllerOnRestartInit(pmotor); !!!! IMPORTANT?
+    MCAF_FaultDetectInit(&PMSM.faultDetect);
+    
+    // from restart state set from MCAF_SystemStateMachine_Init(&motor);
+    MCAF_ADCCalibrateCurrentOffsets(&PMSM.initialization,
+                                        &PMSM.currentCalibration,
+                                        &PMSM.iabc,
+                                        &PMSM.iDC); 
+    
+    MCC_TMR_PROFILE_Start(); // start timer 1
+    
     bool success = RB_FocInit(&PMSM);
     if (success)
     {

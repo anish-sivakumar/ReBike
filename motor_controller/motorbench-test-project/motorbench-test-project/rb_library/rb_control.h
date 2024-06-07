@@ -176,9 +176,36 @@ typedef struct tagPMSM
 
 void RB_InitControlParameters(RB_MOTOR_DATA *pPMSM);
 
-
 bool RB_FocInit(RB_MOTOR_DATA *pPMSM);
 
+/**
+ * Initialize controller state
+ * @param pmotor motor data
+ */
+inline static void RB_InitControlLoopState(RB_MOTOR_DATA *pPMSM)
+{
+    // D and Q axis PI controller state variables
+    pPMSM->idCtrl.integrator = 0;
+    pPMSM->iqCtrl.integrator = 0;
+    pPMSM->vdqCmd.d = 0;
+    pPMSM->vdqCmd.q = 0;
+    pPMSM->idqCmdRaw.d = 0;
+    pPMSM->idqCmdRaw.q = 0;
+}
+
+void RB_ADCRead(const MCAF_CURRENT_COMPENSATION_PARAMETERS *pcal, MC_ABC_T *piabc, int16_t *pvDC);
+
+inline static int16_t RB_applyOffset(int16_t measurement, int16_t offset, bool invert)
+{
+    if (invert)
+    {
+        return offset - measurement;
+    }
+    else
+    {
+        return measurement - offset;
+    }
+}
 
 #ifdef	__cplusplus
 }

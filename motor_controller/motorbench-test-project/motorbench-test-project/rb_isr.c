@@ -18,7 +18,7 @@
 #include "mcapi_internal.h"
 #include "current_measure.h"
 
-
+#include "rb_library/rb_control.h"
 #include "rb_library/rb_hall.h"
 
 /**
@@ -26,16 +26,16 @@
  * 
  * The ISR does not receive any arguments so we need access to this somehow.
  */
-extern MCAF_MOTOR_DATA PMSM;
+extern RB_MOTOR_DATA PMSM;
+
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
+
+extern RB_HALL_DATA hall;
 /** watchdog state, accessed directly */
 extern volatile MCAF_WATCHDOG_T watchdog;
 
-extern RB_HALL_DATA hall;
-
 extern volatile uint16_t ISR_testing; //temp
-volatile uint16_t thetaElectrical; // change to PMSM object attribute
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -50,19 +50,16 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //void TEST_ISR(void)
 {
    
-   thetaElectrical = RB_HALL_Estimate(&hall);
-    
-   ISR_testing++;
+   //ISR_testing++;
+   //if (ISR_testing > 50000){ ISR_testing = 0;}
    
-   if (ISR_testing > 50000)
-   {
-       ISR_testing = 0;
-   }
-   HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
-   X2CScope_Update();
+  
    
    // 1. read current ADC buffer and Vdc ADC, apply offsets, and LPF if needed
-   // MCAF_ADCRead(&motor);
+   RB_ADCRead(&PMSM.currentCalibration, &PMSM.iabc, &PMSM.vDC);
+  
+   
+   HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
    
    // 2. FOC Feedback path
    // like: MCAF_FocStepIsrFeedbackPath(pmotor), but break it up into clarke, and park
@@ -103,10 +100,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     //HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from ADC buffer
    
     // Lastly: Diagnostics code are always the lowest-priority routine within
-    //MCAF_CaptureTimestamp(&PMSM.testing, MCTIMESTAMP_DIAGNOSTICS);
-    // MCAF_DiagnosticsStepIsr(); // Update X2C scope
-    // MCAF_CaptureTimestamp(&PMSM.testing, MCTIMESTAMP_END_OF_ISR);
-  
+    X2CScope_Update();
 }
 
 
