@@ -162,6 +162,7 @@
       <itemPath>rb_library/rb_hall.h</itemPath>
       <itemPath>rb_library/rb_measure.h</itemPath>
       <itemPath>rb_library/rb_isr.h</itemPath>
+      <itemPath>rb_library/rb_pwm.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -280,6 +281,7 @@
       <itemPath>rb_library/rb_control.c</itemPath>
       <itemPath>rb_library/rb_foc_params.h</itemPath>
       <itemPath>rb_library/rb_measure.c</itemPath>
+      <itemPath>rb_library/rb_pwm.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
