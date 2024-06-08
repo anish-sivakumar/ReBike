@@ -104,4 +104,13 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     X2CScope_Update();
 }
 
+/**
+ * TMR1 timeout routine
+ */
+void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
+    IFS0bits.T1IF = 0; // reset interrupt flag
+    RB_HALL_InvalidateData();
+
+}
+
 

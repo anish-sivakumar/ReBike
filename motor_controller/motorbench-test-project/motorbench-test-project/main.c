@@ -1,5 +1,5 @@
 /*
-© [2024] Microchip Technology Inc. and its subsidiaries.
+ï¿½ [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -42,6 +42,7 @@
 #include "fault_detect.h"
 #include "mcapi.h"
 #include "mcaf_sample_application.h"
+#include "xc.h"
 #include "current_measure.h"
 
 #include "rb_library/rb_hall.h"
@@ -118,9 +119,7 @@ bool MainInit (void)
     
     // Configure Hall ISRs and data
     RB_HALL_Init(&hall);
-    IO_RE8_SetInterruptHandler(&RB_HALL_ISR);
-    IO_RE9_SetInterruptHandler(&RB_HALL_ISR);
-    IO_RE10_SetInterruptHandler(&RB_HALL_ISR);
+    
     
     
     // These might be needed. Need to modify functions

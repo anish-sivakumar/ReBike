@@ -60,6 +60,10 @@ typedef struct
     // int16_t halfThetaCorrection; not used
     int16_t correctionFactor; // adjustment to electrical angle every ISR run
     int16_t correctionCounter; // counts the number of ISR runs to correct electrical angle over to avoid abrupt changes
+    
+    bool minSpeedReached;
+    bool timedOut;
+    
 } RB_HALL_DATA;
 
 /** Function Declarations */
@@ -75,9 +79,14 @@ void RB_HALL_ISR(void);
  * @param hall
  */    
 void RB_HALL_Init(RB_HALL_DATA *pHall);
+
+/**
+ * Invalidates the hall data structure
+ */
+void RB_HALL_InvalidateData(void);
+
 /**
  * ISR for hall state change
- *
  */
 void RB_HALL_StateChange(RB_HALL_DATA *pHall);
 
