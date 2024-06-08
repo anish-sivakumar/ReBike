@@ -49,6 +49,7 @@ void RB_HALL_InvalidateData(void)
     hall.speed = 0;
     hall.period = 0xffff;
     hall.periodFilter = 0xffff;
+    hall.phaseInc = 0;
 }
 
 
@@ -104,11 +105,11 @@ int16_t RB_HALL_Estimate(RB_HALL_DATA *pHall)
 
         pHall->phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(uint16_t)(pHall->periodFilter));
         pHall->speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(pHall->periodFilter));
+        pHall->theta = pHall->theta + pHall->phaseInc;
 
     }
     
     int16_t thetaElectrical = pHall->theta; //thetaElectrical used for FOC calculations
-    pHall->theta = pHall->theta + pHall->phaseInc;
         if(pHall->correctionCounter > 0)
         {
             pHall->theta = pHall->theta + pHall->correctionFactor;
