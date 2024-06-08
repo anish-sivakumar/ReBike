@@ -78,17 +78,17 @@ void RB_HALL_ISR(void);
  * initializes hall object
  * @param hall
  */    
-void RB_HALL_Init(RB_HALL_DATA *pHall);
+void RB_HALL_Init(void);
 
 /**
  * Invalidates the hall data structure
  */
-void RB_HALL_InvalidateData(void);
+void RB_HALL_Reset(void);
 
 /**
  * ISR for hall state change
  */
-void RB_HALL_StateChange(RB_HALL_DATA *pHall);
+void RB_HALL_StateChange(void);
 
 
 /**
@@ -102,7 +102,7 @@ uint16_t RB_HALL_ValueRead(void);
  * Estimates electrical angle and rotor speed using hall bits
  *
  */
-int16_t RB_HALL_Estimate(RB_HALL_DATA *pHall);
+int16_t RB_HALL_Estimate(void);
 
 
  

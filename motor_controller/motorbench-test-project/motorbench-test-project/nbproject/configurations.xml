@@ -161,6 +161,7 @@
       <itemPath>rb_library/rb_control.h</itemPath>
       <itemPath>rb_library/rb_hall.h</itemPath>
       <itemPath>rb_library/rb_measure.h</itemPath>
+      <itemPath>rb_library/rb_isr.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -275,7 +276,6 @@
         </logicalFolder>
       </logicalFolder>
       <itemPath>main.c</itemPath>
-      <itemPath>rb_isr.c</itemPath>
       <itemPath>rb_library/rb_hall.c</itemPath>
       <itemPath>rb_library/rb_control.c</itemPath>
       <itemPath>rb_library/rb_foc_params.h</itemPath>

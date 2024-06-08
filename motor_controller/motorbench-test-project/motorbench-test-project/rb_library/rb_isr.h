@@ -1,10 +1,16 @@
-/**
- * mc_isr.c
- * 
- * Interrupt Service Routine entry points
- * 
- * Component: main application
+/* 
+ * File:   rb_isr.h
+ * Author: siani
+ *
+ * Created on June 8, 2024, 3:32 PM
  */
+
+#ifndef RB_ISR_H
+#define	RB_ISR_H
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 #include "system_state.h"
@@ -18,8 +24,9 @@
 #include "mcapi_internal.h"
 #include "current_measure.h"
 
-#include "rb_library/rb_control.h"
-#include "rb_library/rb_hall.h"
+#include "X2CScope.h"
+#include "rb_control.h"
+#include "rb_hall.h"
 
 /**
  * motor state variables, accessed directly
@@ -31,7 +38,6 @@ extern RB_MOTOR_DATA PMSM;
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
 
-extern RB_HALL_DATA hall;
 /** watchdog state, accessed directly */
 extern volatile MCAF_WATCHDOG_T watchdog;
 
@@ -50,8 +56,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //void TEST_ISR(void)
 {
    
-   //ISR_testing++;
-   //if (ISR_testing > 50000){ ISR_testing = 0;}
+    RB_HALL_Estimate();
    
   
    
@@ -109,8 +114,25 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
  */
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0; // reset interrupt flag
-    RB_HALL_InvalidateData();
+    RB_HALL_Reset();
 
 }
 
+/**
+ * Hall sensor interrupt
+ * 
+ */
+void RB_HALL_ISR(void)
+{
+    RB_HALL_StateChange();
+    
+}
+
+
+
+#ifdef	__cplusplus
+}
+#endif
+
+#endif	/* RB_ISR_H */
 

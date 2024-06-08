@@ -45,6 +45,7 @@
 #include "xc.h"
 #include "current_measure.h"
 
+#include "X2CScope.h"
 #include "rb_library/rb_hall.h"
 #include "rb_library/rb_control.h"
 
@@ -54,8 +55,7 @@
 RB_MOTOR_DATA PMSM;
 /** Global instance of the main set of system state variables */
 MCAF_SYSTEM_DATA sysData;
-/** Global instance of the hall sensor variables */
-RB_HALL_DATA hall;
+
 
 extern volatile MCAF_WATCHDOG_T watchdog;
 
@@ -79,7 +79,7 @@ int main(void)
         * (since no interruptions)
         * but in main loop, the ISR may interrupt + we need to assume volatile.
         */
-        volatile RB_HALL_DATA *pHall = &hall;
+        //volatile RB_HALL_DATA *pHall = &hall;
         volatile RB_MOTOR_DATA *pPMSM = &PMSM;
         volatile MCAF_SYSTEM_DATA *pSysData = &sysData;
         volatile MCAF_WATCHDOG_T *pWatchdog = &watchdog;
@@ -118,7 +118,7 @@ bool MainInit (void)
     HAL_TMR_TICK_Start();
     
     // Configure Hall ISRs and data
-    RB_HALL_Init(&hall);
+    RB_HALL_Init();
     
     
     

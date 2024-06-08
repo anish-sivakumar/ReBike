@@ -51,9 +51,9 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
     /* initialize ADC compensation parameters  */
     RB_ADCCompensationInit(&pPMSM->currentCalibration); 
     
-    pPMSM->rVdc = MCAF_ComputeReciprocalDCLinkVoltage(INT16_MAX);
+    //pPMSM->rVdc = MCAF_ComputeReciprocalDCLinkVoltage(INT16_MAX);
     
-    MCAF_SatInit(&pPMSM->sat);
+    //MCAF_SatInit(&pPMSM->sat);
     
     return true;
 }
