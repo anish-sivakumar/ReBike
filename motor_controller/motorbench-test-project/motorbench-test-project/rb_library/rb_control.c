@@ -49,8 +49,7 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
     pPMSM->adcSelect = HADC_POTENTIOMETER;
     
     /* initialize ADC compensation parameters  */
-    MCAF_ADCCompensationInit(&pPMSM->initialization,
-                             &pPMSM->currentCalibration); 
+    RB_ADCCompensationInit(&pPMSM->currentCalibration); 
     
     pPMSM->rVdc = MCAF_ComputeReciprocalDCLinkVoltage(INT16_MAX);
     
@@ -59,38 +58,4 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
     return true;
 }
 
-void RB_ADCRead(const MCAF_CURRENT_COMPENSATION_PARAMETERS *pcal, MC_ABC_T *piabc, int16_t *pvDC)
-{
-    //1. read phase A and B current
-    piabc->a = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
-    piabc->b = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT); 
-    
-    //2. apply current offset compensation. pcal is initialized in RB_FocInit())
-    /**
-    * Compensation for current measurements.
-    * 
-    * These are applied as follows:
-    * If Ia[0] and Ib[0] are the original ADC measurements, we calculate:
-    * (note: sign is correct since our current sensing gain into the ADC is negative)
-    * 
-    * Ia[1] = -(Ia[0] - offseta)
-    * Ib[1] = -(Ib[0] - offsetb)
-    * 
-    * Ia[final] = qKaa * Ia[1] + qKab * Ib[1]
-    * Ib[final] = qKba * Ia[1] + qKbb * Ib[1]
-    * 
-    * The cross-terms are important to correct cross-coupling of the ADC measurements.
-    */
-    const int16_t a1 = RB_applyOffset(piabc->a, pcal->offseta, true);
-    const int16_t b1 = RB_applyOffset(piabc->b, pcal->offsetb, true);
-    piabc->a =  (__builtin_mulss(a1, pcal->qKaa)
-                +__builtin_mulss(b1, pcal->qKab)) >> 15;
-    piabc->b =  (__builtin_mulss(a1, pcal->qKba)
-                +__builtin_mulss(b1, pcal->qKbb)) >> 15;
-    
-    //3. read DC link voltage
-    uint16_t unsignedVdc = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_VOLTAGE));
-    *pvDC = unsignedVdc >> 1; //vDC is signed - I don't understand
-      
-}
 

@@ -17,6 +17,7 @@ extern "C" {
 #include <stdbool.h>
 #include "../motorBench/library/mc-library/motor_control_types.h"
 #include "rb_foc_params.h"
+#include "rb_measure.h"
     
 // try to avoid using motorBench files
 #include "../motorBench/units.h"
@@ -143,7 +144,7 @@ typedef struct tagPMSM
 //    MCAF_STOPPING_STATE stopping; /** Stopping timer state */
 
     /** current calibration parameters */
-    MCAF_CURRENT_COMPENSATION_PARAMETERS currentCalibration;
+    RB_MEASURE_CURRENT_T currentCalibration;
         
     /** initialization - current offsets */
     MCAF_MOTOR_INITIALIZATION initialization;  
@@ -191,20 +192,6 @@ inline static void RB_InitControlLoopState(RB_MOTOR_DATA *pPMSM)
     pPMSM->vdqCmd.q = 0;
     pPMSM->idqCmdRaw.d = 0;
     pPMSM->idqCmdRaw.q = 0;
-}
-
-void RB_ADCRead(const MCAF_CURRENT_COMPENSATION_PARAMETERS *pcal, MC_ABC_T *piabc, int16_t *pvDC);
-
-inline static int16_t RB_applyOffset(int16_t measurement, int16_t offset, bool invert)
-{
-    if (invert)
-    {
-        return offset - measurement;
-    }
-    else
-    {
-        return measurement - offset;
-    }
 }
 
 #ifdef	__cplusplus

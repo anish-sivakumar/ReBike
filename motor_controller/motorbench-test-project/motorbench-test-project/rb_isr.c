@@ -56,7 +56,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
   
    
    // 1. read current ADC buffer and Vdc ADC, apply offsets, and LPF if needed
-   RB_ADCRead(&PMSM.currentCalibration, &PMSM.iabc, &PMSM.vDC);
+   //RB_ADCRead(&PMSM.currentCalibration, &PMSM.iabc, &PMSM.vDC);
+   
   
    
    HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer

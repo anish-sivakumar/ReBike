@@ -128,12 +128,7 @@ bool MainInit (void)
     RB_InitControlParameters(&PMSM);
     //MCAF_MotorControllerOnRestartInit(pmotor); !!!! IMPORTANT?
     MCAF_FaultDetectInit(&PMSM.faultDetect);
-    
-    // from restart state set from MCAF_SystemStateMachine_Init(&motor);
-    MCAF_ADCCalibrateCurrentOffsets(&PMSM.initialization,
-                                        &PMSM.currentCalibration,
-                                        &PMSM.iabc,
-                                        &PMSM.iDC); 
+
     
     MCC_TMR_PROFILE_Start(); // start timer 1
     
