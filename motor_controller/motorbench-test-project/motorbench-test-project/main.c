@@ -48,6 +48,7 @@
 #include "X2CScope.h"
 #include "rb_library/rb_hall.h"
 #include "rb_library/rb_control.h"
+#include "rb_library/rb_pwm.h"
 
 /* Global Variables */
 
@@ -62,6 +63,7 @@ extern volatile MCAF_WATCHDOG_T watchdog;
 volatile uint16_t ISR_testing;
 
 bool MainInit(void);
+
 
 
 /*
@@ -102,7 +104,11 @@ int main(void)
 bool MainInit (void)
 {
     SYSTEM_Initialize();
-    MCAF_ConfigurationPwmUpdate();
+    
+    /* PWM Init from MCAF_ConfigurationPwmUpdate */
+    RB_PWMInit();
+    
+      
     if (MCAF_OpAmpsEnabled())
     {
         HAL_OpAmpsEnable();
@@ -142,5 +148,3 @@ bool MainInit (void)
     }
     return success;
 }
-
-
