@@ -56,7 +56,7 @@ bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
             break;
         
         case RBBS_B_SETUP:
-            // Set PWM A duty to enable charging on A
+            // Set PWM B duty to enable charging on B
             pBootstrap->dutyB = RB_MIN_DUTY_FOR_BOOTSRAP_CHARGING;
             // State Transition
             pBootstrap->state= RBBS_B_CHARGING;
@@ -64,8 +64,8 @@ bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
             break;
             
         case RBBS_B_CHARGING:
-            // Wait to let the the Phase-A bootstrap capacitor charge
-            // When the delay counter finishes, start charging B
+            // Wait to let the the Phase-B bootstrap capacitor charge
+            // When the delay counter finishes, start charging C
             if (pBootstrap->delayCount == 0)
             {
                 pBootstrap->state= RBBS_C_SETUP;
@@ -73,7 +73,7 @@ bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
             break;
             
         case RBBS_C_SETUP:
-            // Set PWM A duty to enable charging on A
+            // Set PWM C duty to enable charging on C
             pBootstrap->dutyC = RB_MIN_DUTY_FOR_BOOTSRAP_CHARGING;
             // State Transition
             pBootstrap->state= RBBS_C_CHARGING;
@@ -81,8 +81,8 @@ bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
             break;
             
         case RBBS_C_CHARGING:
-            // Wait to let the the Phase-A bootstrap capacitor charge
-            // When the delay counter finishes, start charging B
+            // Wait to let the the Phase-C bootstrap capacitor charge
+            // When the delay counter finishes, charging is done
             if (pBootstrap->delayCount == 0)
             {
                 pBootstrap->state = RBBS_DONE;
