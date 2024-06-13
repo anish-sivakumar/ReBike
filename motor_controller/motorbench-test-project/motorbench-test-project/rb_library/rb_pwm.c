@@ -1,12 +1,8 @@
 #include "rb_pwm.h"
 #include "pwm_hs/pwm.h"
-
+#include "pwm_hs/pwm_hs_types.h"
 #include "parameters/hal_params.h"
 #include "hal/hardware_access_functions.h"
-
-#include "../mcc_generated_files/pwm_hs/pwm.h"
-#include "../mcc_generated_files/pwm_hs/pwm_hs_types.h"
-#include "../motorbench/parameters/hal_params.h"
 
 /**
  * Configures the PWM module as required.
@@ -59,6 +55,15 @@ void RB_PWMInit(void)
 //    HAL_PWM_DutyCycleRegister_Set(pwmDutyCycle);
 }
 
+void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap) {
+    pBootstrap->state = RBBS_IDLE;
+    pBootstrap->delayCount = 0;
+    pBootstrap->dutyA = 0;
+    pBootstrap->dutyB = 0;
+    pBootstrap->dutyC = 0;
+}
+
+
 bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
 
     bool bootstrapDone = false;
@@ -71,10 +76,10 @@ bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
             pBootstrap->dutyA = HAL_PARAM_PWM_PERIOD_COUNTS;
             pBootstrap->dutyB = HAL_PARAM_PWM_PERIOD_COUNTS;
             pBootstrap->dutyC = HAL_PARAM_PWM_PERIOD_COUNTS;
-            // Overrides, don't fully understand
-            // First example project seems to do this differently 
-            HAL_PWM_UpperTransistorsOverride_Low();
-            HAL_PWM_LowerTransistorsOverride_Disable();
+            
+            HAL_PWM_UpperTransistorsOverride_Low(); //upper switches off
+            HAL_PWM_LowerTransistorsOverride_Disable(); //lower side PWM controlled
+            
             // State transition
             pBootstrap->state = RBBS_INIT_WAIT;
             pBootstrap->delayCount = MCAF_BOARD_BOOTSTRAP_INITIAL_DELAY;

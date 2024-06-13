@@ -52,17 +52,14 @@
 
 /* Global Variables */
 
-/** Global instance of the main set of motor state variables */
-RB_MOTOR_DATA PMSM;
 /** Global instance of the main set of system state variables */
 MCAF_SYSTEM_DATA sysData;
-
 
 extern volatile MCAF_WATCHDOG_T watchdog;
 
 volatile uint16_t ISR_testing;
 
-bool MainInit(void);
+void MainInit(void);
 
 
 
@@ -75,17 +72,7 @@ int main(void)
 
     while(1)
     {
-        
-        
-        /* State variables are fine to access w/o volatile qualifier for ISR
-        * (since no interruptions)
-        * but in main loop, the ISR may interrupt + we need to assume volatile.
-        */
-        //volatile RB_HALL_DATA *pHall = &hall;
-        volatile RB_MOTOR_DATA *pPMSM = &PMSM;
-        volatile MCAF_SYSTEM_DATA *pSysData = &sysData;
-        volatile MCAF_WATCHDOG_T *pWatchdog = &watchdog;
-        
+      
         // Re-integrate these as needed
         //MCAF_UiStepMain(&pPMSM->ui);
         //MCAF_SystemStateMachine_StepMain(pPMSM);
@@ -101,14 +88,13 @@ int main(void)
  * and Control Parameters
  * @return initialization success 
  */
-bool MainInit (void)
+void MainInit (void)
 {
     SYSTEM_Initialize();
     
     /* PWM Init from MCAF_ConfigurationPwmUpdate */
     RB_PWMInit();
-    
-      
+          
     if (MCAF_OpAmpsEnabled())
     {
         HAL_OpAmpsEnable();
@@ -126,25 +112,9 @@ bool MainInit (void)
     // Configure Hall ISRs and data
     RB_HALL_Init();
     
-    
-    
-    // These might be needed. Need to modify functions
-    MCAF_FaultDetectInit(&PMSM.faultDetect);
-    RB_InitControlParameters(&PMSM);
-    //MCAF_MotorControllerOnRestartInit(pmotor); !!!! IMPORTANT?
-    MCAF_FaultDetectInit(&PMSM.faultDetect);
-
-    
     MCC_TMR_PROFILE_Start(); // start timer 1
     
-    bool success = RB_FocInit(&PMSM);
-    if (success)
-    {
-        MCAF_SystemStart(&sysData);
-
-        /* Ideally, MCAF has nothing to do with the application timer and hence this
-           function should be called from the main() in main.c */
-        HAL_TMR_TICK_Start();
-    }
-    return success;
+    // move to initialization state before ISR starts
+    RB_ISR_StateInit();
+    
 }

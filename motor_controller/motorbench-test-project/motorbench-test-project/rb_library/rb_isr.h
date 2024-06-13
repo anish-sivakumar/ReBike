@@ -13,33 +13,37 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-#include "system_state.h"
-#include "state_machine.h"
-#include "diagnostics.h"
-#include "hal.h"
-#include "monitor.h"
-#include "mcaf_watchdog.h"
-#include "test_harness.h"
-#include "ui.h"
-#include "mcapi_internal.h"
-#include "current_measure.h"
 
+#include "fault_detect.h"
+    
 #include "X2CScope.h"
 #include "rb_control.h"
 #include "rb_hall.h"
+#include "rb_pwm.h"
+ 
+typedef enum 
+{   
+    RBFSM_INIT = 0,
+    RBFSM_STARTUP,
+    RBFSM_RUNNING,
+    RBFSM_FAULTED
+        
+} RB_FSM_STATE; 
 
-/**
- * motor state variables, accessed directly
- * 
- * The ISR does not receive any arguments so we need access to this somehow.
- */
-extern RB_MOTOR_DATA PMSM;
+
+/** Global Variables */
+RB_MOTOR_DATA PMSM;
+RB_FSM_STATE state;
+RB_BOOTSTRAP bootstrap;
+
+bool bootstrapDone;
+
 
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
 
 /** watchdog state, accessed directly */
-extern volatile MCAF_WATCHDOG_T watchdog;
+//extern volatile MCAF_WATCHDOG_T watchdog;
 
 extern volatile uint16_t ISR_testing; //temp
 
@@ -53,60 +57,56 @@ extern volatile uint16_t ISR_testing; //temp
  * GPIO test point output is activated during this ISR for timing purposes.
  */
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
-//void TEST_ISR(void)
 {
    
-    RB_HALL_Estimate();
-   
-  
-   
-   // 1. read current ADC buffer and Vdc ADC, apply offsets, and LPF if needed
-   //RB_ADCRead(&PMSM.currentCalibration, &PMSM.iabc, &PMSM.vDC);
-   
-  
-   
-   HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
-   
-   // 2. FOC Feedback path
-   // like: MCAF_FocStepIsrFeedbackPath(pmotor), but break it up into clarke, and park
-   
-   // 3. Estimate Angle and Speed and save into main data structure
-   // like: MCAF_CommutationPrepareStallDetectInputs, but use MC_HALL_Estimate code
-   
-   // 4. fault detection - understand this better
-   // like: MCAF_MonitorSysDiagnose
-   
-   // 5. determine next state (simplify to running or faulted)
-   
-   // 6. If faulted, run fault handling code
-   // like: MCAF_MotorControllerOnFault and MCAF_MotorControllerOnFaultInit
-   
-   // 7. If running as usual, run forward FOC code:
-   // like: MCAF_FocStepIsrForwardPath, but we can break this up as below
+    switch(state){
+        
+        case RBFSM_INIT:
+
+            MCAF_FaultDetectInit(&PMSM.faultDetect);
+            RB_InitControlParameters(&PMSM);
+            //MCAF_MotorControllerOnRestartInit(pmotor); not sure if IMPORTANT?
+            MCAF_FaultDetectInit(&PMSM.faultDetect);
+            RB_PWMCapBootstrapInit(&bootstrap);
+            
+            // might need this: HAL_PWM_FaultClearBegin();
+            RB_FocInit(&PMSM);
+            
+            state = RBFSM_STARTUP;
+            break;
+            
+        case RBFSM_STARTUP:
+            bootstrapDone = RB_PWMCapBootstrapISRStep(&bootstrap);
+            if (bootstrapDone) {
+                // calibrate ADC offsets before RUnning
+                state = RBFSM_RUNNING;
+            }
+            
+            break;
+            
+        case RBFSM_RUNNING:
+            
+            //EnablePwmMinDuty?
+            RB_HALL_Estimate();
+            
+            MCC_PWM_DutyCycleSet(MOTOR1_PHASE_A, 1000);
+            MCC_PWM_DutyCycleSet(MOTOR1_PHASE_B, 3500);
+            MCC_PWM_DutyCycleSet(MOTOR1_PHASE_C, 4775);
+            
+            HAL_PWM_UpperTransistorsOverride_Disable();
+            
+            MCAF_LED1_SetHigh();
+            
+            break;
+            
+        case RBFSM_FAULTED:
+            break;      
+        
+    }
     
-    // 8. Do PI control
-    // like: MCAF_VelocityAndCurrentControllerStep
-    
-    // 9. Calculate Sine(theta) and Cos(theta) like: MC_CalculateSineCosine
-    
-    // 10. Calculate Park Inverse like MC_TransformParkInverse
-    
-    // 11. Calculate Clarke Inverse like MC_TransformClarkeInverse
-    // skip deadtime compensation stuff
-    
-    // 12. figure out if MCAF_ApplyDCLinkVoltageCompensation is needed
-    
-    // 13. do SVPWM like MC_CalculateZeroSequenceModulation or calculateManualZeroSequenceModulation
-    
-    // 14. scaling? MCAF_ScaleQ15(&pmotor->dabc, &pmotor->pwmDutycycle,HAL_PARAM_PWM_PERIOD_COUNTS);
-    
-    // 15. Figure out where duties are set and do it
-   
-    // 16. clear ADC
-    //HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from ADC buffer
-   
-    // Lastly: Diagnostics code are always the lowest-priority routine within
+    HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
     X2CScope_Update();
+     
 }
 
 /**
@@ -128,7 +128,9 @@ void RB_HALL_ISR(void)
     
 }
 
-
+void RB_ISR_StateInit(void){
+    state = RBFSM_INIT;
+}
 
 #ifdef	__cplusplus
 }

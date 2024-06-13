@@ -31,7 +31,7 @@ extern "C" {
  */    
 typedef enum tagRB_BOOTSTRAP_STATE
 {
-    RBBS_IDLE,
+    RBBS_IDLE = 0,
     RBBS_INIT_WAIT,
     RBBS_A_SETUP,
     RBBS_A_CHARGING,
@@ -64,6 +64,8 @@ typedef struct tagRB_BOOTSTRAP
 
 void RB_PWMInit(void);
 
+
+void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap);
 /**
  * Function to perform capacitor bootstrap charging during motor starting
  */

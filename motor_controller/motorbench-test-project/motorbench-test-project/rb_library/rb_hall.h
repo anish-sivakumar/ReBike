@@ -69,12 +69,6 @@ typedef struct
 /** Function Declarations */
 
 /**
- * ISR for hall signals
- */
-void RB_HALL_ISR(void);
-
-
-/**
  * initializes hall object
  * @param hall
  */    
