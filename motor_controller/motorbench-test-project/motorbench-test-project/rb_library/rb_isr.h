@@ -134,7 +134,9 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
             RunningStateCounter++;
             
-            if (RunningStateCounter >= 10)
+            // Sine Frequency = 1/ (X*(1/20000)*297), where phaseIndex++ if RunningStateCounter >= X
+            // RPM = 120*f/52
+            if (RunningStateCounter >= 9) //2 didn't work, 15& 10 sounded weird but spun
             {
                 RunningStateCounter = 0;
                 
@@ -142,9 +144,9 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 sineB = SineDutyCycle[phaseBIndex];
                 sineC = SineDutyCycle[phaseCIndex];
                 
-                //MCC_PWM_DutyCycleSet(MOTOR1_PHASE_A,SineDutyCycle[phaseAIndex]);
-                //MCC_PWM_DutyCycleSet(MOTOR1_PHASE_B,SineDutyCycle[phaseBIndex]);
-                //MCC_PWM_DutyCycleSet(MOTOR1_PHASE_C,SineDutyCycle[phaseBIndex]);
+                MCC_PWM_DutyCycleSet(MOTOR1_PHASE_A,sineA);
+                MCC_PWM_DutyCycleSet(MOTOR1_PHASE_B,sineB);
+                MCC_PWM_DutyCycleSet(MOTOR1_PHASE_C,sineC);
                 
                 phaseAIndex++;
                 phaseBIndex++;
