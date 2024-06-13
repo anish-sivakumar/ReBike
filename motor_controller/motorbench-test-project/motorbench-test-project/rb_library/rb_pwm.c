@@ -153,6 +153,7 @@ bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
     MCC_PWM_DutyCycleSet(MOTOR1_PHASE_A, pBootstrap->dutyA);
     MCC_PWM_DutyCycleSet(MOTOR1_PHASE_B, pBootstrap->dutyB);
     MCC_PWM_DutyCycleSet(MOTOR1_PHASE_C, pBootstrap->dutyC);
+    
     // Decrement delay counter
     if (pBootstrap->delayCount > 0)
     {
