@@ -31,7 +31,7 @@ extern "C" {
  */    
 typedef enum tagRB_BOOTSTRAP_STATE
 {
-    RBBS_IDLE,
+    RBBS_IDLE = 0,
     RBBS_INIT_WAIT,
     RBBS_A_SETUP,
     RBBS_A_CHARGING,
@@ -41,6 +41,7 @@ typedef enum tagRB_BOOTSTRAP_STATE
     RBBS_C_CHARGING,
     RBBS_DONE
 } RB_BOOTSTRAP_STATE;
+
 
 typedef struct tagRB_BOOTSTRAP
 {
@@ -58,16 +59,36 @@ typedef struct tagRB_BOOTSTRAP
     
 } RB_BOOTSTRAP;
 
+
+typedef struct tagRB_SINE_PWM
+{
+    volatile uint16_t runningStateCounter;
+    
+    volatile uint16_t phaseAIndex; // phase indices 120 degrees apart
+    volatile uint16_t phaseBIndex;
+    volatile uint16_t phaseCIndex;
+    volatile uint16_t sineA;
+    volatile uint16_t sineB;
+    volatile uint16_t sineC;
+} RB_SINE_PWM;
+
 /**
  * Functions
  */
 
 void RB_PWMInit(void);
 
+
+void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap);
 /**
  * Function to perform capacitor bootstrap charging during motor starting
  */
 bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap);
+
+void RB_FixedFrequencySinePWMInit (void);
+
+void RB_FixedFrequencySinePWM(uint16_t freqDivider);
+
 
 
 #ifdef	__cplusplus
