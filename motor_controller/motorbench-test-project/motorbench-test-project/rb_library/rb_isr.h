@@ -60,7 +60,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     
     switch(state){
         
-        //pot = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_POTENTIOMETER));
+        pot = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_POTENTIOMETER));
         
         case RBFSM_INIT:
             

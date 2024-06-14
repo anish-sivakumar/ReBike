@@ -85,7 +85,7 @@ void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap);
  */
 bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap);
 
-void RB_RB_FixedFrequencySinePWM (void);
+void RB_FixedFrequencySinePWMInit (void);
 
 void RB_FixedFrequencySinePWM(uint16_t freqDivider);
 
