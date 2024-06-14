@@ -32,9 +32,7 @@ typedef enum
 
 /** Global Variables */
 RB_MOTOR_DATA PMSM;
-RB_FSM_STATE current_state;
-RB_FSM_STATE next_state;
-
+RB_FSM_STATE state;
 RB_BOOTSTRAP bootstrap;
 
 bool bootstrapDone;
@@ -46,7 +44,7 @@ extern MCAF_SYSTEM_DATA systemData;
 /** watchdog state, accessed directly */
 //extern volatile MCAF_WATCHDOG_T watchdog;
 
-extern volatile uint16_t ISR_testing; //temp
+volatile uint16_t pot; //temp
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -60,12 +58,9 @@ extern volatile uint16_t ISR_testing; //temp
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {
     
-    
-    
-    const bool state_changed = (next_state != current_state);
-    current_state = next_state;
-    
-    switch(next_state){
+    switch(state){
+        
+        //pot = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_POTENTIOMETER));
         
         case RBFSM_INIT:
             
@@ -78,28 +73,28 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             // might need this: HAL_PWM_FaultClearBegin();
             RB_FocInit(&PMSM);
             
-            next_state = RBFSM_STARTUP;
+            RB_RB_FixedFrequencySinePWM(); //for testing
+            
+            state = RBFSM_STARTUP;
             break;
             
         case RBFSM_STARTUP:
             
             bootstrapDone = RB_PWMCapBootstrapISRStep(&bootstrap);
+            
             if (bootstrapDone) {
-                // calibrate ADC offsets before RUnning
-                next_state = RBFSM_RUNNING;
-            }
-            
-            break;
-            
-        case RBFSM_RUNNING:
-            
-            if (state_changed)
-            {
+                // calibrate ADC offsets before Running
+                state = RBFSM_RUNNING;
+                
                 // get ready to output PWM
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
                 HAL_PWM_UpperTransistorsOverride_Disable();
                 MCAF_LED1_SetHigh();
             }
+            
+            break;
+            
+        case RBFSM_RUNNING:         
             
             // Sine Frequency = 1 / (X*(1/20000)*297)
             // RPM = 120*f/52
@@ -139,8 +134,8 @@ void RB_HALL_ISR(void)
 }
 
 void RB_ISR_StateInit(void){
-    current_state = RBFSM_INIT;
-    next_state = RBFSM_INIT;
+    state = RBFSM_INIT;
+    
 }
 
 #ifdef	__cplusplus

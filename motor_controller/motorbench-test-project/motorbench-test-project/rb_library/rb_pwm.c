@@ -7,7 +7,10 @@
 /**
  * Frixed Frequency Sine PWM Variables
  */
-uint16_t SineDutyCycle[297] = {2500, 2548, 2596, 2644, 2692, 2740, 2788, 2836, 2883, 2931, 2978, 3025, 3071, 3118, 3164, 3210, 3255,
+
+#define RB_SINE_TABLE_SIZE 297
+
+uint16_t SineDutyCycle[RB_SINE_TABLE_SIZE] = {2500, 2548, 2596, 2644, 2692, 2740, 2788, 2836, 2883, 2931, 2978, 3025, 3071, 3118, 3164, 3210, 3255,
 3301, 3346, 3390, 3434, 3478, 3521, 3564, 3606, 3648, 3689, 3730, 3770, 3810, 3849, 3887, 3925,
 3962, 3999, 4035, 4070, 4104, 4138, 4171, 4203, 4235, 4266, 4296, 4325, 4353, 4381, 4407, 4433,
 4458, 4482, 4505, 4528, 4549, 4569, 4589, 4608, 4625, 4642, 4658, 4672, 4686, 4699, 4711, 4722,
@@ -27,16 +30,7 @@ uint16_t SineDutyCycle[297] = {2500, 2548, 2596, 2644, 2692, 2740, 2788, 2836, 2
 1394, 1436, 1479, 1522, 1566, 1610, 1654, 1699, 1745, 1790, 1836, 1882, 1929, 1975, 2022, 2069,
 2117, 2164, 2212, 2260, 2308, 2356, 2404, 2452};
 
-volatile uint16_t RunningStateCounter = 0;
-// phase indices below initialized 120* apart
-volatile uint16_t phaseAIndex  = 0;
-volatile uint16_t phaseBIndex  = 99;
-volatile uint16_t phaseCIndex  = 198;
-volatile uint16_t sineA  = 0;
-volatile uint16_t sineB  = 0;
-volatile uint16_t sineC  = 0;
-
-
+RB_SINE_PWM sinePWM;
 
 /**
  * Configures the PWM module as required.
@@ -197,41 +191,38 @@ bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
     return bootstrapDone;
 }
 
+void RB_RB_FixedFrequencySinePWM (void)
+{
+    // 120 degrees apart
+    sinePWM.phaseAIndex = 0;
+    sinePWM.phaseBIndex = 99;
+    sinePWM.phaseCIndex = 198;
+}
+
 void RB_FixedFrequencySinePWM(uint16_t freqDivider)
 {
-    RunningStateCounter++;
+    sinePWM.runningStateCounter++;
             
     // Sine Frequency = 1/ (X*(1/20000)*297), where phaseIndex++ if RunningStateCounter >= X
     // RPM = 120*f/52
-    if (RunningStateCounter >= freqDivider) // 9 works
+    if (sinePWM.runningStateCounter >= freqDivider) // 9 works
     {
-        RunningStateCounter = 0;
+        sinePWM.runningStateCounter = 0;
 
         // retrieve sine() value
-        sineA = SineDutyCycle[phaseAIndex];
-        sineB = SineDutyCycle[phaseBIndex];
-        sineC = SineDutyCycle[phaseCIndex];
+        sinePWM.sineA = SineDutyCycle[sinePWM.phaseAIndex];
+        sinePWM.sineB = SineDutyCycle[sinePWM.phaseBIndex];
+        sinePWM.sineC = SineDutyCycle[sinePWM.phaseCIndex];
 
         // set duties
-        MCC_PWM_DutyCycleSet(MOTOR1_PHASE_A,sineA);
-        MCC_PWM_DutyCycleSet(MOTOR1_PHASE_B,sineB);
-        MCC_PWM_DutyCycleSet(MOTOR1_PHASE_C,sineC);
+        MCC_PWM_DutyCycleSet(MOTOR1_PHASE_A,sinePWM.sineA);
+        MCC_PWM_DutyCycleSet(MOTOR1_PHASE_B,sinePWM.sineB);
+        MCC_PWM_DutyCycleSet(MOTOR1_PHASE_C,sinePWM.sineC);
 
-        // increment index of phases
-        phaseAIndex++;
-        phaseBIndex++;
-        phaseCIndex++;
-
-        // wrap around sine table
-        if (phaseAIndex > 296)
-        {
-            phaseAIndex = 0;
-        } else if (phaseBIndex > 296)
-        {
-            phaseBIndex = 0;
-        } else if (phaseCIndex > 296)
-        {
-            phaseCIndex = 0;
-        }
+        // increment index and wrap around sine table
+        sinePWM.phaseAIndex = (++sinePWM.phaseAIndex < (RB_SINE_TABLE_SIZE)) ? sinePWM.phaseAIndex : 0; 
+        sinePWM.phaseBIndex = (++sinePWM.phaseBIndex < (RB_SINE_TABLE_SIZE)) ? sinePWM.phaseBIndex : 0; 
+        sinePWM.phaseCIndex = (++sinePWM.phaseCIndex < (RB_SINE_TABLE_SIZE)) ? sinePWM.phaseCIndex : 0; 
+       
     }
 }

@@ -57,8 +57,6 @@ MCAF_SYSTEM_DATA sysData;
 
 extern volatile MCAF_WATCHDOG_T watchdog;
 
-volatile uint16_t ISR_testing;
-
 void MainInit(void);
 
 
