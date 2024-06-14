@@ -73,7 +73,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             // might need this: HAL_PWM_FaultClearBegin();
             RB_FocInit(&PMSM);
             
-            RB_RB_FixedFrequencySinePWM(); //for testing
+            RB_FixedFrequencySinePWMInit(); //for testing
             
             state = RBFSM_STARTUP;
             break;
