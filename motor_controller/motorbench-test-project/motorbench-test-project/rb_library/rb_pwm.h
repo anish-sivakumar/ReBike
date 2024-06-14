@@ -42,6 +42,7 @@ typedef enum tagRB_BOOTSTRAP_STATE
     RBBS_DONE
 } RB_BOOTSTRAP_STATE;
 
+
 typedef struct tagRB_BOOTSTRAP
 {
     // defines what step of the bootstrap charging sequence we are in
@@ -70,6 +71,9 @@ void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap);
  * Function to perform capacitor bootstrap charging during motor starting
  */
 bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap);
+
+void RB_FixedFrequencySinePWM(uint16_t freqDivider);
+
 
 
 #ifdef	__cplusplus
