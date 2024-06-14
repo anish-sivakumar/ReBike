@@ -100,11 +100,13 @@ typedef struct
     int16_t                 offsetIdc;   /** DC link offset */
     
     int16_t                 calibrationCounter;  /** counted number of samples used to calc offset */
-    int16_t                 calibrationComplete; /** 1 when offset values have been calculated */
+    bool                    calibrationComplete; /** true when offset values have been calculated */
     
 } RB_MEASURE_CURRENT_T;
 
 void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcal);
+
+void RB_MeasureCurrentOffset(RB_MEASURE_CURRENT_T *pcal);
 
 void RB_ADCRead(RB_MEASURE_CURRENT_T *pcal, MC_ABC_T *piabc, int16_t *pvDC);
 

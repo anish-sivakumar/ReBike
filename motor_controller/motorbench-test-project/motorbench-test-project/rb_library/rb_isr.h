@@ -37,14 +37,12 @@ RB_BOOTSTRAP bootstrap;
 
 bool bootstrapDone;
 
-
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
 
 /** watchdog state, accessed directly */
 //extern volatile MCAF_WATCHDOG_T watchdog;
 
-volatile uint16_t pot; //temp
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -59,9 +57,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {
     
     switch(state){
-        
-        pot = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_POTENTIOMETER));
-        
+                
         case RBFSM_INIT:
             
             MCAF_FaultDetectInit(&PMSM.faultDetect);
@@ -80,21 +76,34 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
         case RBFSM_STARTUP:
             
+            
+            // charge bootstrap capacitors over multiple ISR steps
             bootstrapDone = RB_PWMCapBootstrapISRStep(&bootstrap);
             
-            if (bootstrapDone) {
-                // calibrate ADC offsets before Running
-                state = RBFSM_RUNNING;
-                
+            // next, take current measurements to calculate offset over multiple steps
+            if (bootstrapDone)
+            {
+                RB_MeasureCurrentOffset(&PMSM.currentCalibration);
+            }
+            
+            // move to next state once both are done
+            if (bootstrapDone && PMSM.currentCalibration.calibrationComplete){
+               
+                RB_MeasureCurrentOffset(&PMSM.currentCalibration);
+
                 // get ready to output PWM
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
                 HAL_PWM_UpperTransistorsOverride_Disable();
                 MCAF_LED1_SetHigh();
+                
+                state = RBFSM_RUNNING;
             }
             
             break;
             
         case RBFSM_RUNNING:         
+            
+            RB_ADCRead(&PMSM.currentCalibration, &PMSM.iabc, &PMSM.vDC);
             
             // Sine Frequency = 1 / (X*(1/20000)*297)
             // RPM = 120*f/52
