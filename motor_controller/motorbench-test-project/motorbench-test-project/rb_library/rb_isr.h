@@ -30,12 +30,10 @@ typedef enum
         
 } RB_FSM_STATE; 
 
-/** Global Variables */
+/** ISR Variables - These are passed into library functions as needed*/
 RB_MOTOR_DATA PMSM;
 RB_FSM_STATE state;
 RB_BOOTSTRAP bootstrap;
-
-bool bootstrapDone;
 
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
@@ -55,7 +53,6 @@ extern MCAF_SYSTEM_DATA systemData;
  */
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {
-    
     switch(state){
                 
         case RBFSM_INIT:
@@ -75,23 +72,20 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             break;
             
         case RBFSM_STARTUP:
-            
-            
-            // charge bootstrap capacitors over multiple ISR steps
-            bootstrapDone = RB_PWMCapBootstrapISRStep(&bootstrap);
-            
-            // next, take current measurements to calculate offset over multiple steps
-            if (bootstrapDone)
+           
+            if(!bootstrap.done)
+            {   
+                // charge bootstrap capacitors over multiple ISR steps
+                RB_PWMCapBootstrapISRStep(&bootstrap);
+                
+            } else if ((bootstrap.done) && (!PMSM.currentCal.done))
             {
-                RB_MeasureCurrentOffset(&PMSM.currentCalibration);
-            }
+               // next, take current measurements to calculate offset over multiple steps
+               RB_MeasureCurrentOffsetStepISR(&PMSM.currentCal); 
             
-            // move to next state once both are done
-            if (bootstrapDone && PMSM.currentCalibration.calibrationComplete){
-               
-                RB_MeasureCurrentOffset(&PMSM.currentCalibration);
-
-                // get ready to output PWM
+            } else if(bootstrap.done && PMSM.currentCal.done)
+            {
+                // get ready to output PWM 
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
                 HAL_PWM_UpperTransistorsOverride_Disable();
                 MCAF_LED1_SetHigh();
@@ -103,7 +97,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
         case RBFSM_RUNNING:         
             
-            RB_ADCRead(&PMSM.currentCalibration, &PMSM.iabc, &PMSM.vDC);
+            RB_ADCRead(&PMSM.currentCal, &PMSM.iabc, &PMSM.vDC);
             
             // Sine Frequency = 1 / (X*(1/20000)*297)
             // RPM = 120*f/52

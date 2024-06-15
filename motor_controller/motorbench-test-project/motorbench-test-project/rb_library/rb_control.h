@@ -144,7 +144,7 @@ typedef struct tagPMSM
 //    MCAF_STOPPING_STATE stopping; /** Stopping timer state */
 
     /** current calibration parameters */
-    RB_MEASURE_CURRENT_T currentCalibration;
+    RB_MEASURE_CURRENT_T currentCal;
         
     /** initialization - current offsets */
     MCAF_MOTOR_INITIALIZATION initialization;  

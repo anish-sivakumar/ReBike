@@ -99,26 +99,53 @@ typedef struct
     int32_t                 sumIdc;        /* Accumulation of Idc to calculate offset*/
     int16_t                 offsetIdc;   /** DC link offset */
     
-    int16_t                 calibrationCounter;  /** counted number of samples used to calc offset */
-    bool                    calibrationComplete; /** true when offset values have been calculated */
+    int16_t                 calCounter;  /** counted number of samples used to calc offset */
+    bool                    done; /** true when offset values have been calculated */
     
 } RB_MEASURE_CURRENT_T;
 
 void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcal);
 
-void RB_MeasureCurrentOffset(RB_MEASURE_CURRENT_T *pcal);
+void RB_MeasureCurrentOffsetStepISR(RB_MEASURE_CURRENT_T *pcal);
 
 void RB_ADCRead(RB_MEASURE_CURRENT_T *pcal, MC_ABC_T *piabc, int16_t *pvDC);
 
-inline static int16_t RB_ADCProcess(int16_t measurement, int16_t offset)
+inline static int16_t RB_ADCProcess(int16_t measurement, int16_t offset, int16_t gain)
 {
+    int16_t temp;
     
     // inverted ADC and offset
     {
-        return offset - measurement;
+        temp = offset - measurement;
     }
     
-    // scale 
+    // scale by gain
+    temp = (__builtin_mulss(temp, gain)) >> 15;
+    
+    return temp;
+}
+
+
+/**
+ * 16 bit implementation of low pass filter
+ * y[n] += (x[n]-y[n-1])*coeff
+ *
+ * @param pfilterx16 LPF state
+ * @param input 1.15 fixed point
+ * @return Output of low pass filter
+ * 
+ * coefficient for LPF given by f3db*Ts*2*pi, 
+ * where f3db is cutoff frequency and Ts is sampling time
+ */
+inline static int16_t RB_LPF(int16_t input, int16_t prevOutput, int16_t coeff)
+{
+    int32_t stateVar;
+    
+    stateVar = (prevOutput << 15); // load 16-bit int into 32-bit int
+    stateVar += __builtin_mulss(input, coeff);
+    stateVar -= __builtin_mulss(prevOutput, coeff);
+    
+    return (int16_t)(stateVar >> 15); // remove extra 2^15 factor
     
 }
 

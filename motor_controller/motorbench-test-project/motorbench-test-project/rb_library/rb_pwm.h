@@ -55,6 +55,9 @@ typedef struct tagRB_BOOTSTRAP
     uint16_t dutyA;
     uint16_t dutyB;
     uint16_t dutyC;
+    
+    // true when bootstrap charging is complete
+    bool done;
 
     
 } RB_BOOTSTRAP;

@@ -89,6 +89,7 @@ void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap) {
     pBootstrap->dutyA = 0;
     pBootstrap->dutyB = 0;
     pBootstrap->dutyC = 0;
+    pBootstrap->done = false;
 }
 
 
