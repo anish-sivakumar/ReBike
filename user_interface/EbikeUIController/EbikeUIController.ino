@@ -452,16 +452,6 @@ void setup() {
 
   }
 
-  // Clear the display buffer
-  display.clearDisplay();
-
-  // Initialize the button toggles
-  increaseThrottle.begin(10);
-  decreaseThrottle.begin(11);
-  toggleRegen.begin(12);
-
-}
-
 void loop() {
 
   // Poll the state of each button
@@ -503,15 +493,6 @@ void loop() {
 
   }
 
-   // Set the text size to 2 (normal 1:1 pixel scale)
-    display.setTextSize(2);
-
-    // Set the text color to white
-    display.setTextColor(SSD1306_WHITE);
-
-    // Set the cursor to the top-left corner
-    display.setCursor(4, 0);
-
   // Check if the toggle regenerative braking button has been pressed
   if (toggleRegen.onPress()) {
 
@@ -536,6 +517,11 @@ void loop() {
 // Function to update the speed parameter
 void updateSpeed(void) {
   // Code to update the speed variable goes here
+
+  // This is connected to a potentiometer for testing purposes only.
+  speed = map(analogRead(14), 0, 1023, 0, 99);
+  throttle = map(analogRead(14), 0, 1023, 0, 99);
+
 }
 
 // Function to update the battery range parameter
@@ -544,13 +530,21 @@ void updateBatteryRange(void) {
 }
 
 // Function to update the power parameter
-void updatePower(void) {
+void updatePower(void) {  
   // Code to update the power variable goes here
+  
+  // This is connected to a potentiometer for testing purposes only.
+  power = map(analogRead(14), 0, 1023, 0, 999);
+
 }
 
 // Function to update the temperature parameter
 void updateTemp(void) {
   // Code to update the temperature variable goes here
+  
+  // This is connected to a potentiometer for testing purposes only.
+  temp = map(analogRead(14), 0, 1023, 0, 99);
+
 }
 
 // Function to update the active regenerative braking method
@@ -561,13 +555,60 @@ void updateRegen(void) {
 // Function to update the display with the latest values
 void updateDisplay(void) {
 
-  // Clear the display buffer
-  display.clearDisplay();
+  itoa(speed, speed_string, 10);
+  itoa(throttle, throttle_string, 10);
+  itoa(regenMethod, regen_string, 10);
+  itoa(power, power_string, 10);
+  itoa(temp, temp_string, 10);
 
-  // Display the current speed value
-  display.println(speed);
+  speed_string_length = strlen(speed_string);
+  throttle_string_length = strlen(throttle_string);
+  power_string_length = strlen(power_string);
+  temp_string_length = strlen(temp_string);
 
-  // Send the buffer to the display to update it
-  display.display();
+  u8g2.firstPage();
+  do {
+
+    // u8g2.drawStr(6, 6, speed_string);
+    // u8g2.drawBitmap(2, 2, 24/8, 36, epd_bitmap_allArray[ speed_string[0] - 48]);
+    
+    for (int i = 0; i < speed_string_length; i++) {
+      u8g2.drawBitmap( (56 - speed_string_length * 28 ) + 30*i, 2, 24/8, 36, epd_bitmap_allArray1[ speed_string[i] - 48 ]);
+    }
+
+    for (int i = 0; i < throttle_string_length; i++) {
+      u8g2.drawBitmap( (20 - throttle_string_length * 10) + 10*i , 41, 8/8, 12, epd_bitmap_allArray2[ throttle_string[i] - 48 ]);
+    }
+
+    for (int i = 0; i < power_string_length; i++) {
+      // u8g2.drawBitmap( (56 - throttle_string_length * 28 ) + 30*i, 2, 24/8, 36, epd_bitmap_allArray[ speed_string[i] - 48 ]);
+      u8g2.drawBitmap( (102 - power_string_length * 4 ) + 6*i, 9, 8/8, 6, epd_bitmap_allArray3[ power_string[i] - 48 ]);
+    }
+
+    for (int i = 0; i < temp_string_length; i++) {
+      // u8g2.drawBitmap( (56 - throttle_string_length * 28 ) + 30*i, 2, 24/8, 36, epd_bitmap_allArray[ speed_string[i] - 48 ]);
+      u8g2.drawBitmap( (102 - temp_string_length * 4 ) + 6*i, 17, 8/8, 6, epd_bitmap_allArray3[ temp_string[i] - 48 ]);
+    }
+
+    u8g2.drawBitmap(80, 25, 48/8, 7, epd_bitmap_BATTERY_Label);
+    u8g2.drawBitmap(78, 0, 8/8, 64, epd_bitmap_Vert_Line);
+    u8g2.drawBitmap(0, 55, 88/8, 1, epd_bitmap_Lower_Horiz_Line);
+    u8g2.drawBitmap(80, 24, 48/8, 1, epd_bitmap_Upper_Horiz_Line);
+    u8g2.drawBitmap(59, 7, 24/8, 25, epd_bitmap_KM_HR_Sym);
+    u8g2.drawBitmap(22, 41, 16/8, 12, epd_bitmap_Throttle_Percentage_Sym);
+    u8g2.drawBitmap(35, 44, 48/8, 6, epd_bitmap_THROTTLE_Label);
+    u8g2.drawBitmap(-2, 58, 72/8, 6, epd_bitmap_ACTIVE_REGEN_Label);
+    u8g2.drawBitmap(92, 0, 32/8, 8, epd_bitmap_MOTOR_Label);
+    u8g2.drawBitmap(110, 8, 16/8, 7, epd_bitmap_Watts_Sym);
+    u8g2.drawBitmap(110, 17, 16/8, 6, epd_bitmap_Celsius_Sym);
+    u8g2.drawBitmap(93, 35, 32/8, 20, epd_bitmap_Battery_Level_Sym);
+    u8g2.drawBitmap(108, 57, 16/8, 6, epd_bitmap_Battery_Percentage_Sym);
+    
+    u8g2.drawStr(75, 64, regen_string);
+
+    // u8g2.drawStr(91, 10, power_string);
+
+  } while ( u8g2.nextPage() );
+
 
 }
