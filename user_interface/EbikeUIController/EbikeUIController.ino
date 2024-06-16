@@ -399,15 +399,32 @@ const unsigned char* epd_bitmap_allArray3[10] = {
 
 // Global variables to store different parameters
 int speed = 0;                    // Speed of the e-bike
+int throttle = 0;                 // Max throttle percentage
 int batteryRange = 0;             // Battery range of the e-bike
 int power = 0;                    // Power consumption of the e-bike
 int temp = 0;                     // Temperature of the e-bike system
 int regenMethod = 1;              // Regenerative braking method (1 or 2)
 
+// Variables to convert system parameters from int to display format
+char speed_string[10];
+int speed_string_length;
+
+char throttle_string[10];
+int throttle_string_length;
+
+int activeRegen = 2;
+char regen_string[6];
+
+char power_string[10];
+int power_string_length;
+
+char temp_string[10];
+int temp_string_length;
+
 // Create Toggle instances for buttons to increase throttle, decrease throttle, and toggle regenerative braking
-Toggle increaseThrottle(10);       // Button to increase throttle
-Toggle decreaseThrottle(11);       // Button to decrease throttle
-Toggle toggleRegen(12);            // Button to toggle regenerative braking method
+Toggle increaseThrottle(6);       // Button to increase throttle
+Toggle decreaseThrottle(7);       // Button to decrease throttle
+Toggle toggleRegen(8);            // Button to toggle regenerative braking method
 
 void setup() {
 
@@ -420,11 +437,17 @@ void setup() {
   } while (u8g2.nextPage());
 
   // Wait for 4 seconds to show the logo
-  // delay(4000);
+  delay(4000);
 
   u8g2.setFont(u8g2_font_courB08_tn);
   u8g2.setColorIndex(1);
 
+   // Initialize the button toggles
+  increaseThrottle.begin(0);
+  decreaseThrottle.begin(1);
+  toggleRegen.begin(2);
+
+  // This pin is connected to a potentiometer for testing purposes.
   pinMode(14, INPUT);
 
   }
