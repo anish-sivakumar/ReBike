@@ -20,6 +20,7 @@ extern "C" {
 #include "rb_control.h"
 #include "rb_hall.h"
 #include "rb_pwm.h"
+#include "rb_board_ui.h"
  
 typedef enum 
 {   
@@ -34,6 +35,7 @@ typedef enum
 RB_MOTOR_DATA PMSM;
 RB_FSM_STATE state;
 RB_BOOTSTRAP bootstrap;
+RB_BOARD_UI boardUI;
 
 bool bootstrapDone;
 
@@ -74,6 +76,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_FocInit(&PMSM);
             
             RB_FixedFrequencySinePWMInit(); //for testing
+            RB_BoardUIInit(&boardUI);
+            
             
             state = RBFSM_STARTUP;
             break;
@@ -98,8 +102,19 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
             // Sine Frequency = 1 / (X*(1/20000)*297)
             // RPM = 120*f/52
-            RB_FixedFrequencySinePWM(9);  // 9,10 tested
             
+            // This function will update the button states and the POT value. 
+            RB_BoardUIService(&boardUI);
+            // After calling it, the motor enable state can be obtained with:
+            boardUI.motorEnable.state;
+         
+            // Temporary solution to turn the motor off with button 1:
+            if (boardUI.motorEnable.state){
+                MCC_PWM_Disable();
+            }
+              
+            RB_FixedFrequencySinePWM(9);  // 9,10 tested
+              
             RB_HALL_Estimate();
           
             break;
