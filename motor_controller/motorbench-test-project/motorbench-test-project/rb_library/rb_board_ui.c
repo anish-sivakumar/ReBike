@@ -1,9 +1,11 @@
 #include "rb_board_ui.h"
 
 #include "system/pins.h"
+#include "adc/adc1.h"
 
 void RB_BoardUIInit(RB_BOARD_UI* boardUI) {
     boardUI->motorEnable.state = 0;
+    boardUI->potState = 0;
 }
 
 void RB_BoardUIButtonDebounce(RB_BUTTON* button, bool pressedHW) {
@@ -32,5 +34,7 @@ void RB_BoardUIService(RB_BOARD_UI* boardUI) {
     bool motorEnablePressedHW = !MCAF_BUTTON1_GetValue();
     RB_BoardUIButtonDebounce(&boardUI->motorEnable, motorEnablePressedHW);
 
+    // update potentiometer value
+    boardUI->potState = ADC1_ConversionResultGet(MCAF_ADC_POTENTIOMETER);
 
 }

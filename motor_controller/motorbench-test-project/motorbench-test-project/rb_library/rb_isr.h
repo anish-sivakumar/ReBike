@@ -105,8 +105,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
             // This function will update the button states and the POT value. 
             RB_BoardUIService(&boardUI);
-            // After calling it, the motor enable state can be obtained with:
+            // After calling it, these values are updated:
             boardUI.motorEnable.state;
+            boardUI.potState;
+            
+                  
          
             // Temporary solution to turn the motor off with button 1:
             if (boardUI.motorEnable.state){
