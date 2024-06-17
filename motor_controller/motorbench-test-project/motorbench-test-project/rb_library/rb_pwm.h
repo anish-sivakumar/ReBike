@@ -86,7 +86,7 @@ void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap);
 /**
  * Function to perform capacitor bootstrap charging during motor starting
  */
-bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap);
+void RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap);
 
 void RB_FixedFrequencySinePWMInit (void);
 

@@ -27,6 +27,7 @@ typedef enum
     RBFSM_INIT = 0,
     RBFSM_STARTUP,
     RBFSM_RUNNING,
+    RBFSM_STOPPING,
     RBFSM_FAULTED
         
 } RB_FSM_STATE; 
@@ -55,6 +56,13 @@ extern MCAF_SYSTEM_DATA systemData;
  */
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {
+    
+    // This function will update the button states and the POT value. 
+    RB_BoardUIService(&boardUI);
+    // After calling it, these values are updated:
+    boardUI.motorEnable.state;
+    boardUI.potState;
+            
     switch(state){
                 
         case RBFSM_INIT:
@@ -87,7 +95,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                // next, take current measurements to calculate offset over multiple steps
                RB_MeasureCurrentOffsetStepISR(&PMSM.currentCal); 
             
-            } else if(bootstrap.done && PMSM.currentCal.done)
+            } else if((bootstrap.done) && (PMSM.currentCal.done) && (boardUI.motorEnable.state))
             {
                 // get ready to output PWM 
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
@@ -102,27 +110,32 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         case RBFSM_RUNNING:         
             
             RB_ADCRead(&PMSM.currentCal, &PMSM.iabc, &PMSM.vDC);
-            
-            // Sine Frequency = 1 / (X*(1/20000)*297)
-            // RPM = 120*f/52
-            
-            // This function will update the button states and the POT value. 
-            RB_BoardUIService(&boardUI);
-            // After calling it, these values are updated:
-            boardUI.motorEnable.state;
-            boardUI.potState;
-            
-                  
-         
-            // Temporary solution to turn the motor off with button 1:
-            if (boardUI.motorEnable.state){
-                MCC_PWM_Disable();
-            }
-              
-            RB_FixedFrequencySinePWM(9);  // 9,10 tested
-              
             RB_HALL_Estimate();
-          
+            RB_FixedFrequencySinePWM(9);
+            
+            if (!boardUI.motorEnable.state){
+
+                //Maintains the low-side transistors at low dc and high-side OFF.
+                HAL_PWM_UpperTransistorsOverride_Low();
+                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MAX_DUTY_COUNTS);
+                MCAF_LED1_SetLow();
+                
+                state = RBFSM_STOPPING;
+            }
+
+            break;
+            
+        case RBFSM_STOPPING:
+            
+            if(boardUI.motorEnable.state)
+            {   
+                // get ready to output PWM 
+                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
+                HAL_PWM_UpperTransistorsOverride_Disable();
+                MCAF_LED1_SetHigh();
+                
+                state = RBFSM_RUNNING;
+            }
             break;
             
         case RBFSM_FAULTED:

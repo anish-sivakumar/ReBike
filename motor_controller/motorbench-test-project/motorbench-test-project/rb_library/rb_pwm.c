@@ -93,9 +93,7 @@ void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap) {
 }
 
 
-bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
-
-    bool bootstrapDone = false;
+void RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
 
     switch (pBootstrap->state) {
         case RBBS_IDLE:
@@ -174,7 +172,7 @@ bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
             break;  
             
         case RBBS_DONE:
-            bootstrapDone = true;
+            pBootstrap->done = true;
             break;
     }
     
@@ -189,7 +187,6 @@ bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap) {
         pBootstrap->delayCount--;
     }
     
-    return bootstrapDone;
 }
 
 void RB_FixedFrequencySinePWMInit (void)
