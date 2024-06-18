@@ -108,7 +108,7 @@ typedef struct
  * Initializes ADC scaling constants and offsets
  * @param pcalib
  */
-void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcalib);
+void RB_ADCCalibrationInit(RB_MEASURE_CURRENT_T *pcalib);
 
 
 /**
@@ -116,7 +116,7 @@ void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcalib);
  * over multiple ISR steps. Then, saves the offsets.
  * @param pcalib
  */
-void RB_MeasureCurrentOffsetStepISR(RB_MEASURE_CURRENT_T *pcalib);
+void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib);
 
 
 /**
@@ -125,7 +125,7 @@ void RB_MeasureCurrentOffsetStepISR(RB_MEASURE_CURRENT_T *pcalib);
  * @param piabc
  * @param pvDC
  */
-void RB_ADCRead(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC);
+void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC);
 
 
 /**

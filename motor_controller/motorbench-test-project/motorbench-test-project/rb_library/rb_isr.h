@@ -94,7 +94,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             } else if ((bootstrap.done) && (!PMSM.currentCalib.done))
             {
                // next, take current measurements to calculate offset over multiple steps
-               RB_MeasureCurrentOffsetStepISR(&PMSM.currentCalib); 
+               RB_ADCCalibrationStepISR(&PMSM.currentCalib); 
             
             } else if((bootstrap.done) && (PMSM.currentCalib.done) && (boardUI.motorEnable.state))
             {
@@ -113,7 +113,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
         case RBFSM_RUNNING:         
             
-            RB_ADCRead(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
             RB_HALL_Estimate(&hall);
             
             RB_FixedFrequencySinePWM(boardUI.potState);

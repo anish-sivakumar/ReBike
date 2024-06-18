@@ -3,7 +3,7 @@
 #include "adc/adc1.h"
 
 
-void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcalib)
+void RB_ADCCalibrationInit(RB_MEASURE_CURRENT_T *pcalib)
 {
     /* Scaling constants: Determined by calibration or hardware design. */
     pcalib->qKaa = C_KAA;
@@ -26,7 +26,7 @@ void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcalib)
 }
 
 
-void RB_MeasureCurrentOffsetStepISR(RB_MEASURE_CURRENT_T *pcalib)
+void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib)
 {
     
     // read phase A and B current into current compensation structure
@@ -53,7 +53,7 @@ void RB_MeasureCurrentOffsetStepISR(RB_MEASURE_CURRENT_T *pcalib)
 }
 
 
-void RB_ADCRead(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC)
+void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC)
 {
     //1. read phase A and B current into current compensation structure
     pcalib->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
