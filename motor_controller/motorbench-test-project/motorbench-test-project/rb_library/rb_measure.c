@@ -1,6 +1,6 @@
 #include "rb_measure.h"
-#include "../motorBench/hal/hardware_access_functions.h"
-#include "../mcc_generated_files/adc/adc1.h"
+#include "hal/hardware_access_functions.h"
+#include "adc/adc1.h"
 
 
 void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcal)

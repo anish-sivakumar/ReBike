@@ -197,8 +197,34 @@ void RB_FixedFrequencySinePWMInit (void)
     sinePWM.phaseCIndex = 198;
 }
 
-void RB_FixedFrequencySinePWM(uint16_t freqDivider)
+void RB_FixedFrequencySinePWM(uint16_t pot)
 {
+    uint16_t freqDivider;
+    
+     
+    if (pot < 33000)
+    {
+        freqDivider = 9;
+    } else if ((pot >= 33000) && (pot < 40000))
+    {
+        freqDivider = 8;  
+    } else if ((pot >= 40000) && (pot < 45000))
+    {
+        freqDivider = 7;  
+    } else if ((pot >= 45000) && (pot < 50000))
+    {
+        freqDivider = 5;  
+    } else if ((pot >= 50000) && (pot < 55000))
+    {
+        freqDivider = 5;  
+    } else if ((pot >= 55000) && (pot < 60000))
+    {
+        freqDivider = 4;  
+    } else if (pot >= 60000)
+    {
+        freqDivider = 3;
+    } 
+    
     sinePWM.runningStateCounter++;
             
     // Sine Frequency = 1/ (X*(1/20000)*297), where phaseIndex++ if RunningStateCounter >= X

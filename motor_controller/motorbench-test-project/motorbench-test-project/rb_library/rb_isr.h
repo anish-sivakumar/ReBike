@@ -37,6 +37,7 @@ RB_MOTOR_DATA PMSM;
 RB_FSM_STATE state;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
+uint16_t speedLevel = 9;
 
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
@@ -59,9 +60,6 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     
     // This function will update the button states and the POT value. 
     RB_BoardUIService(&boardUI);
-    // After calling it, these values are updated:
-    boardUI.motorEnable.state;
-    boardUI.potState;
             
     switch(state){
                 
@@ -111,7 +109,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
             RB_ADCRead(&PMSM.currentCal, &PMSM.iabc, &PMSM.vDC);
             RB_HALL_Estimate();
-            RB_FixedFrequencySinePWM(9);
+            
+            RB_FixedFrequencySinePWM(boardUI.potState);
             
             if (!boardUI.motorEnable.state){
 
