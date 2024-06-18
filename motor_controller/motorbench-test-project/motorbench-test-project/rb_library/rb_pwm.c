@@ -199,7 +199,7 @@ void RB_FixedFrequencySinePWMInit (void)
 
 void RB_FixedFrequencySinePWM(uint16_t pot)
 {
-    uint16_t freqDivider;
+    uint16_t freqDivider = 9; // 9 is safe for starting
     
      
     if (pot < 33000)

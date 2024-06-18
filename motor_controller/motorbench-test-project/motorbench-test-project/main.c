@@ -1,64 +1,21 @@
-/*
-� [2024] Microchip Technology Inc. and its subsidiaries.
+/* 
+ * File:   mc_hall.h
+ * Author: Chris Hyggen, Anish Sivakumar
+ *
+ */
 
-    Subject to your compliance with these terms, you may use Microchip 
-    software and any derivatives exclusively with Microchip products. 
-    You are responsible for complying with 3rd party license terms  
-    applicable to your use of 3rd party software (including open source  
-    software) that may accompany Microchip software. SOFTWARE IS ?AS IS.? 
-    NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS 
-    SOFTWARE, INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT,  
-    MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT 
-    WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
-    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY 
-    KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF 
-    MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE 
-    FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP?S 
-    TOTAL LIABILITY ON ALL CLAIMS RELATED TO THE SOFTWARE WILL NOT 
-    EXCEED AMOUNT OF FEES, IF ANY, YOU PAID DIRECTLY TO MICROCHIP FOR 
-    THIS SOFTWARE.
-*/
-#include "mcc_generated_files/motorBench/mcaf_main.h"
-#include "mcc_generated_files/system/system.h"
-#include "mcc_generated_files/system/pins.h"
 
-#include <stdbool.h>
-#include "board_service.h"
-#include "hal.h"
-#include "system_state.h"
-#include "state_machine.h"
-#include "system_init.h"
-#include "foc.h"
-#include "diagnostics.h"
-#include "monitor.h"
-#include "stall_detect.h"
-#include "recover.h"
-#include "mcaf_watchdog.h"
-#include "mcaf_traps.h"
-#include "ui.h"
-#include "parameters/init_params.h"
-#include "mcaf_main.h"
-#include "test_harness.h"
-#include "fault_detect.h"
-#include "mcapi.h"
-#include "mcaf_sample_application.h"
-#include "xc.h"
-#include "current_measure.h"
+#include "motorBench/timing.h"
+#include "hal/hardware_access_functions.h"
+#include "motorbench/diagnostics.h"
 
 #include "X2CScope.h"
 #include "rb_library/rb_hall.h"
 #include "rb_library/rb_control.h"
 #include "rb_library/rb_pwm.h"
 
-/* Global Variables */
-
-/** Global instance of the main set of system state variables */
-MCAF_SYSTEM_DATA sysData;
-
-extern volatile MCAF_WATCHDOG_T watchdog;
-
-void MainInit(void);
-
+void RB_MainInit(void);
+void RB_SystemStart(void);
 
 
 /*
@@ -66,7 +23,7 @@ void MainInit(void);
 */
 int main(void)
 {
-    MainInit();
+    RB_MainInit();
 
     while(1)
     {
@@ -86,7 +43,7 @@ int main(void)
  * and Control Parameters
  * @return initialization success 
  */
-void MainInit (void)
+void RB_MainInit (void)
 {
     SYSTEM_Initialize();
     
@@ -103,16 +60,57 @@ void MainInit (void)
     HAL_ADC_SignalsInit();
     HAL_ADC_ResolutionInit();
     HAL_ADC_Enable();
-    MCAF_DiagnosticsInit(); // UART and X2C scope
-    MCAF_SystemStart(&sysData);
+    MCAF_DiagnosticsInit();
+    RB_SystemStart();
     HAL_TMR_TICK_Start();
-    
-    // Configure Hall ISRs and data
-    RB_HALL_Init();
     
     MCC_TMR_PROFILE_Start(); // start timer 1
     
     // move to initialization state before ISR starts
     RB_ISR_StateInit();
     
+}
+
+
+/**
+ * Starts system - copy of MCAF function
+ * @return 
+ */
+void RB_SystemStart(void)
+{
+    /* Output a short pulse as a testpoint signal,
+     * enable PWMs,
+     * enable ADC interrupt,
+     * begin main loop timing,
+     * and start board timer */
+
+    HAL_TestpointGp1_Activate();
+    MCAF_DelayNanoseconds(500);
+    HAL_TestpointGp1_Deactivate();
+    HAL_PWM_ADCTrigger1AEnable();
+
+    if (MCAF_SingleChannelEnabled())
+    {
+        HAL_PWM_ModeDualEdgeSingleUpdate();
+        HAL_PWM_SelectLocalPhase();
+        HAL_PWM_ADCTrigger2BEnable();
+        HAL_PWM_ADCTrigger2CEnable();
+    }
+    else
+    {
+        HAL_PWM_SelectMasterPhase();
+        
+        if (MCAF_IsDoubleUpdatePwmAllowed())
+        {
+            HAL_PWM_ModeDoubleUpdate();
+        }      
+        else
+        {
+            HAL_PWM_ModeSingleUpdate();
+        }
+    }
+    
+    HAL_PWM_ModuleEnable();
+    HAL_ADC_InterruptFlag_Clear();
+    HAL_ADC_Interrupt_Enable();
 }

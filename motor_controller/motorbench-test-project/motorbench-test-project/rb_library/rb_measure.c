@@ -3,79 +3,68 @@
 #include "adc/adc1.h"
 
 
-void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcal)
+void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcalib)
 {
     /* Scaling constants: Determined by calibration or hardware design. */
-    pcal->qKaa = C_KAA;
-    pcal->qKab = C_KAB;         /* cross-axis gain compensation terms */
-    pcal->sumIa = 0;
-    pcal->offsetIa = 0;
+    pcalib->qKaa = C_KAA;
+    pcalib->qKab = C_KAB;         /* cross-axis gain compensation terms */
+    pcalib->sumIa = 0;
+    pcalib->offsetIa = 0;
     
-    pcal->qKba = C_KBA;         /* cross-axis gain compensation terms */
-    pcal->qKbb = C_KBB;
-    pcal->sumIb = 0;
-    pcal->offsetIb = 0;
+    pcalib->qKba = C_KBA;         /* cross-axis gain compensation terms */
+    pcalib->qKbb = C_KBB;
+    pcalib->sumIb = 0;
+    pcalib->offsetIb = 0;
     
-    pcal->qKidc = 0; // not sure for now, deal with Idc later
-    pcal->sumIdc = 0;
-    pcal->offsetIdc = 0;
+    pcalib->qKidc = 0; // not sure for now, deal with Idc later
+    pcalib->sumIdc = 0;
+    pcalib->offsetIdc = 0;
     
-    pcal->calCounter = 0;
-    pcal->done = false;
-            
-
+    pcalib->calibCounter = 0;
+    pcalib->done = false;
+           
 }
 
 
-
-/**
-*
-* @brief Function to compute current offset after measuring specified number of
-*        current samples and averaging them.      .
-* @param Pointer to the data structure containing measured current.
-*
-*/
-void RB_MeasureCurrentOffsetStepISR(RB_MEASURE_CURRENT_T *pcal)
+void RB_MeasureCurrentOffsetStepISR(RB_MEASURE_CURRENT_T *pcalib)
 {
-    bool calibrationComplete = false;
     
     // read phase A and B current into current compensation structure
-    pcal->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
-    pcal->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT);
+    pcalib->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
+    pcalib->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT);
     
     // sum current values
-    pcal->sumIa += pcal->rawIa;
-    pcal->sumIb += pcal->rawIb;
+    pcalib->sumIa += pcalib->rawIa;
+    pcalib->sumIb += pcalib->rawIb;
     
-    pcal->calCounter++;
+    pcalib->calibCounter++;
     
     // if we have summed enough samples, calculate offset average
-    if (pcal->calCounter >= CURRENT_OFFSET_COUNT_MAX)
+    if (pcalib->calibCounter >= CURRENT_OFFSET_COUNT_MAX)
     {
-        pcal->offsetIa = (int16_t)(pcal->sumIa >> CURRENT_OFFSET_COUNT_BITS);
-        pcal->offsetIb = (int16_t)(pcal->sumIb >> CURRENT_OFFSET_COUNT_BITS);
+        pcalib->offsetIa = (int16_t)(pcalib->sumIa >> CURRENT_OFFSET_COUNT_BITS);
+        pcalib->offsetIb = (int16_t)(pcalib->sumIb >> CURRENT_OFFSET_COUNT_BITS);
 
-        pcal->calCounter = 0;
-        pcal->sumIa = 0;
-        pcal->sumIb = 0;
-        pcal->done = true;
+        pcalib->calibCounter = 0;
+        pcalib->sumIa = 0;
+        pcalib->sumIb = 0;
+        pcalib->done = true;
     }
-   
 }
 
 
-void RB_ADCRead(RB_MEASURE_CURRENT_T *pcal, MC_ABC_T *piabc, int16_t *pvDC)
+void RB_ADCRead(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC)
 {
     //1. read phase A and B current into current compensation structure
-    pcal->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
-    pcal->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT); 
+    pcalib->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
+    pcalib->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT); 
     
     //2. apply current offset compensation
-    piabc->a = RB_ADCProcess(pcal->rawIa, pcal->offsetIa, pcal->qKaa);
-    piabc->b = RB_ADCProcess(pcal->rawIb, pcal->offsetIb, pcal->qKbb);
+    piabc->a = RB_ADCCompensate(pcalib->rawIa, pcalib->offsetIa, pcalib->qKaa);
+    piabc->b = RB_ADCCompensate(pcalib->rawIb, pcalib->offsetIb, pcalib->qKbb);
     
     //3. read DC link voltage
     uint16_t unsignedVdc = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_VOLTAGE));
-    *pvDC = unsignedVdc >> 1; //vDC is signed - I don't understand
-      
+    *pvDC = unsignedVdc >> 1; //vDC is signed - I don't understand   
 }
+

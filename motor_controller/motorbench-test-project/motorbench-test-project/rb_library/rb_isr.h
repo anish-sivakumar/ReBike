@@ -34,10 +34,13 @@ typedef enum
 
 /** ISR Variables - These are passed into library functions as needed*/
 RB_MOTOR_DATA PMSM;
+RB_HALL_DATA hall;
 RB_FSM_STATE state;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
-uint16_t speedLevel = 9;
+
+uint16_t TMR1_testing; //delete me
+
 
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
@@ -58,43 +61,46 @@ extern MCAF_SYSTEM_DATA systemData;
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {
     
+    TMR1_testing = TMR1;
+    
     // This function will update the button states and the POT value. 
     RB_BoardUIService(&boardUI);
             
     switch(state){
                 
         case RBFSM_INIT:
-            
+    
             MCAF_FaultDetectInit(&PMSM.faultDetect);
             RB_InitControlParameters(&PMSM);
-            //MCAF_MotorControllerOnRestartInit(pmotor); not sure if IMPORTANT?
+            //MCAF_MotorControllerOnRestartInit(pmotor); not sure if IMPORTANT
             MCAF_FaultDetectInit(&PMSM.faultDetect);
             RB_PWMCapBootstrapInit(&bootstrap);
             
             // might need this: HAL_PWM_FaultClearBegin();
             RB_FocInit(&PMSM);
-            
             RB_FixedFrequencySinePWMInit(); //for testing
             RB_BoardUIInit(&boardUI);
-            
             
             state = RBFSM_STARTUP;
             break;
             
         case RBFSM_STARTUP:
-           
+            
             if(!bootstrap.done)
             {   
                 // charge bootstrap capacitors over multiple ISR steps
                 RB_PWMCapBootstrapISRStep(&bootstrap);
                 
-            } else if ((bootstrap.done) && (!PMSM.currentCal.done))
+            } else if ((bootstrap.done) && (!PMSM.currentCalib.done))
             {
                // next, take current measurements to calculate offset over multiple steps
-               RB_MeasureCurrentOffsetStepISR(&PMSM.currentCal); 
+               RB_MeasureCurrentOffsetStepISR(&PMSM.currentCalib); 
             
-            } else if((bootstrap.done) && (PMSM.currentCal.done) && (boardUI.motorEnable.state))
+            } else if((bootstrap.done) && (PMSM.currentCalib.done) && (boardUI.motorEnable.state))
             {
+                // Configure Hall ISRs and data
+                RB_HALL_Init(&hall);
+                
                 // get ready to output PWM 
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
                 HAL_PWM_UpperTransistorsOverride_Disable();
@@ -107,8 +113,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
         case RBFSM_RUNNING:         
             
-            RB_ADCRead(&PMSM.currentCal, &PMSM.iabc, &PMSM.vDC);
-            RB_HALL_Estimate();
+            RB_ADCRead(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
+            RB_HALL_Estimate(&hall);
             
             RB_FixedFrequencySinePWM(boardUI.potState);
             
@@ -152,7 +158,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
  */
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0; // reset interrupt flag
-    RB_HALL_Reset();
+    RB_HALL_Reset(&hall);
 
 }
 
@@ -162,7 +168,7 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
  */
 void RB_HALL_ISR(void)
 {
-    RB_HALL_StateChange();
+    RB_HALL_StateChange(&hall);
     
 }
 

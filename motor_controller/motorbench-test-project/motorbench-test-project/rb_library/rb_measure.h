@@ -66,7 +66,7 @@ extern "C" {
     
     
 /**
- * Compensation for current measurements.
+ * Calibration/Compensation parameters for ADC current measurements.
  * 
  * These are applied as follows:
  * If Ia[0] and Ib[0] are the original ADC measurements, we calculate:
@@ -99,18 +99,43 @@ typedef struct
     int32_t                 sumIdc;        /* Accumulation of Idc to calculate offset*/
     int16_t                 offsetIdc;   /** DC link offset */
     
-    int16_t                 calCounter;  /** counted number of samples used to calc offset */
+    int16_t                 calibCounter;  /** counted number of samples used to calc offset */
     bool                    done; /** true when offset values have been calculated */
     
 } RB_MEASURE_CURRENT_T;
 
-void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcal);
+/**
+ * Initializes ADC scaling constants and offsets
+ * @param pcalib
+ */
+void RB_ADCCompensationInit(RB_MEASURE_CURRENT_T *pcalib);
 
-void RB_MeasureCurrentOffsetStepISR(RB_MEASURE_CURRENT_T *pcal);
 
-void RB_ADCRead(RB_MEASURE_CURRENT_T *pcal, MC_ABC_T *piabc, int16_t *pvDC);
+/**
+ * Measures average offset in ADC current reading at zero current flow
+ * over multiple ISR steps. Then, saves the offsets.
+ * @param pcalib
+ */
+void RB_MeasureCurrentOffsetStepISR(RB_MEASURE_CURRENT_T *pcalib);
 
-inline static int16_t RB_ADCProcess(int16_t measurement, int16_t offset, int16_t gain)
+
+/**
+ * Reads raw ADC values and applies compensation
+ * @param pcalib
+ * @param piabc
+ * @param pvDC
+ */
+void RB_ADCRead(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC);
+
+
+/**
+ * Apply current offset and scaling
+ * @param measurement
+ * @param offset
+ * @param gain
+ * @return 
+ */
+inline static int16_t RB_ADCCompensate(int16_t measurement, int16_t offset, int16_t gain)
 {
     int16_t temp;
     
@@ -124,7 +149,6 @@ inline static int16_t RB_ADCProcess(int16_t measurement, int16_t offset, int16_t
     
     return temp;
 }
-
 
 /**
  * 16 bit implementation of low pass filter
