@@ -55,6 +55,9 @@ typedef struct tagRB_BOOTSTRAP
     uint16_t dutyA;
     uint16_t dutyB;
     uint16_t dutyC;
+    
+    // true when bootstrap charging is complete
+    bool done;
 
     
 } RB_BOOTSTRAP;
@@ -83,7 +86,7 @@ void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap);
 /**
  * Function to perform capacitor bootstrap charging during motor starting
  */
-bool RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap);
+void RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap);
 
 void RB_FixedFrequencySinePWMInit (void);
 

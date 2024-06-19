@@ -70,19 +70,21 @@ typedef struct
 
 /**
  * initializes hall object
- * @param hall
+ * @param phall
  */    
-void RB_HALL_Init(void);
+void RB_HALL_Init(RB_HALL_DATA *phall);
 
 /**
  * Invalidates the hall data structure
+ * @param phall
  */
-void RB_HALL_Reset(void);
+void RB_HALL_Reset(RB_HALL_DATA *phall);
 
 /**
  * ISR for hall state change
+ * @param phall
  */
-void RB_HALL_StateChange(void);
+void RB_HALL_StateChange(RB_HALL_DATA *phall);
 
 
 /**
@@ -94,9 +96,9 @@ uint16_t RB_HALL_ValueRead(void);
 
 /**
  * Estimates electrical angle and rotor speed using hall bits
- *
+ * @param phall
  */
-int16_t RB_HALL_Estimate(void);
+int16_t RB_HALL_Estimate(RB_HALL_DATA *phall);
 
 
  

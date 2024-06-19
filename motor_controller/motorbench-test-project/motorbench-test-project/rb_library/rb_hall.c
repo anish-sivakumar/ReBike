@@ -8,35 +8,32 @@
 #include "rb_hall.h"
 #include "rb_isr.h"
 
-#include "../mcc_generated_files/motorBench/hal/hardware_access_functions.h"
-#include "../mcc_generated_files/motorBench/util.h"
-
-/** Global instance of the hall sensor variables */
-volatile RB_HALL_DATA hall;
+#include "hal/hardware_access_functions.h"
+#include "motorBench/util.h"
 
 
 /**
  * LUT for the calculation of six sector to equivalent angle in Q15 format.
  *              Here the angle is varying from -32768 to 32767. 
  */
-int16_t sectorToQ15Angle[8] =  // 3, 2, 6, 4, 5, 1
+int16_t sectorToQ15Angle[8] =  // 3, 1, 5, 4, 6, 2 is the fwd order from hall signals 
 {
     0,
-    21845,      // sector-1 =
-    -21864,     // sector-2 = (-32768+10922)
+    -21845,      // sector-1 =
+    21864,     // sector-2 = (-32768+10922)
     -32768,     // sector-3
     0,          // sector-4
-    10922,      // sector-5
-    -10924,     //sector-6
+    -10922,      // sector-5
+    10924,     //sector-6
     0
 };
 
 
-void RB_HALL_Init(void){
+void RB_HALL_Init(RB_HALL_DATA *phall){
    
-    hall.periodKFilter = Q15(0.005); //Q15(0.01);
+    phall->periodKFilter = Q15(0.005); //Q15(0.01);
     //hall.period = 0xFFF0; //65520
-    RB_HALL_Reset();
+    RB_HALL_Reset(phall);
     
     // Configure ISRs
     IO_RE8_SetInterruptHandler(&RB_HALL_ISR);
@@ -44,45 +41,49 @@ void RB_HALL_Init(void){
     IO_RE10_SetInterruptHandler(&RB_HALL_ISR);
 }
 
-void RB_HALL_Reset(void)
+
+void RB_HALL_Reset(RB_HALL_DATA *phall)
 {
-    hall.timedOut = true;
-    hall.minSpeedReached = false;
-    hall.speed = 0;
-    hall.period = 0xffff;
-    hall.periodStateVar = 0xffffffff;
-    hall.periodFilter = 0xffff;
-    hall.phaseInc = 0;
-    
+    phall->timedOut = true;
+    phall->minSpeedReached = false;
+    phall->speed = 0;
+    phall->period = 0xffff;
+    phall->periodStateVar = 0xffffffff;
+    phall->periodFilter = 0xffff;
+    phall->phaseInc = 0;
 }
 
 
-void RB_HALL_StateChange(void)
+void RB_HALL_StateChange(RB_HALL_DATA *phall)
 {
     uint16_t tmr1_tmp = TMR1; // store timer1 count value
-    TMR1 = 0; // reset timer 1 counter
-    
-    // Check if our TMR1 measurement was valid
-    if(hall.timedOut){
-        hall.timedOut = false;
-    }else{
-        hall.minSpeedReached = true;
-        hall.period = tmr1_tmp;
-    }
 
-    hall.sector = RB_HALL_ValueRead();
-    
-    // Instead of making abrupt correction to the angle corresponding to hall sector, find the error and make gentle correction  
-    hall.thetaError = (sectorToQ15Angle[hall.sector] + OFFSET_CORRECTION) - hall.theta;
-    
-    // Find the correction to be done in every step
-    // If "hallThetaError" is 2000, and "hallCorrectionFactor" = (2000/8) = 250
-    // So the error of 2000 will be corrected in 8 steps, with each step being 250
-    hall.correctionFactor = hall.thetaError >> HALL_CORRECTION_DIVISOR;
-    hall.correctionCounter = HALL_CORRECTION_STEPS;
-    
-    // Run this in main ISR
-    //HallBasedEstimation();  
+    // Some noise is causing the hall ISR to run more often that it should. 
+    // Only run the state change routine if we actually saw a change in the hall sector.
+    uint16_t sector_tmp = RB_HALL_ValueRead();
+    if (sector_tmp != phall->sector) {
+        TMR1 = 0;
+        phall->sector = sector_tmp;
+
+        // Check if our TMR1 measurement was valid
+        if(phall->timedOut){
+            phall->timedOut = false;
+        }else{
+            phall->minSpeedReached = true;
+            phall->period = tmr1_tmp;
+        }
+
+        phall->sector = RB_HALL_ValueRead();
+
+        // Instead of making abrupt correction to the angle corresponding to hall sector, find the error and make gentle correction  
+        phall->thetaError = (sectorToQ15Angle[phall->sector] + OFFSET_CORRECTION) - phall->theta;
+
+        // Find the correction to be done in every step
+        // If "hallThetaError" is 2000, and "hallCorrectionFactor" = (2000/8) = 250
+        // So the error of 2000 will be corrected in 8 steps, with each step being 250
+        phall->correctionFactor = phall->thetaError >> HALL_CORRECTION_DIVISOR;
+        phall->correctionCounter = HALL_CORRECTION_STEPS;
+    }
 }
 
 uint16_t RB_HALL_ValueRead(void) 
@@ -97,27 +98,30 @@ uint16_t RB_HALL_ValueRead(void)
     return hallValue;
 }
 
-// called by FOC ADC interrupt
-int16_t RB_HALL_Estimate(void) 
+
+int16_t RB_HALL_Estimate(RB_HALL_DATA *phall) 
 {
-    if (hall.minSpeedReached){
+    // used for FOC calculations
+    int16_t thetaElectrical;
+    
+    if (phall->minSpeedReached){
 
         /* calculate filtered period = delta_period x filter_gain. 
             right shift result to remove extra 2^15 factor from fixed point multiplication*/
-        hall.periodStateVar += (((int32_t)hall.period - (int32_t)hall.periodFilter)*(int16_t)(hall.periodKFilter));
-        hall.periodFilter = (int16_t)(hall.periodStateVar>>15);
+        phall->periodStateVar += (((int32_t)phall->period - (int32_t)phall->periodFilter)*(int16_t)(phall->periodKFilter));
+        phall->periodFilter = (int16_t)(phall->periodStateVar>>15);
 
-        hall.phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(uint16_t)(hall.periodFilter));
-        hall.speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(hall.periodFilter));
-        hall.theta = hall.theta + hall.phaseInc;
-
+        phall->phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(uint16_t)(phall->periodFilter));
+        phall->speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(phall->periodFilter));
+        phall->theta = phall->theta + phall->phaseInc;
     }
     
-    int16_t thetaElectrical = hall.theta; //thetaElectrical used for FOC calculations
-        if(hall.correctionCounter > 0)
+    thetaElectrical = phall->theta; 
+        if(phall->correctionCounter > 0)
         {
-            hall.theta = hall.theta + hall.correctionFactor;
-            hall.correctionCounter--;
+            phall->theta = phall->theta + phall->correctionFactor;
+            phall->correctionCounter--;
         }
+    
     return thetaElectrical;
 }

@@ -20,22 +20,26 @@ extern "C" {
 #include "rb_control.h"
 #include "rb_hall.h"
 #include "rb_pwm.h"
+#include "rb_board_ui.h"
  
 typedef enum 
 {   
     RBFSM_INIT = 0,
     RBFSM_STARTUP,
     RBFSM_RUNNING,
+    RBFSM_STOPPING,
     RBFSM_FAULTED
         
 } RB_FSM_STATE; 
 
-/** Global Variables */
+/** ISR Variables - These are passed into library functions as needed*/
 RB_MOTOR_DATA PMSM;
+RB_HALL_DATA hall;
 RB_FSM_STATE state;
 RB_BOOTSTRAP bootstrap;
+RB_BOARD_UI boardUI;
 
-bool bootstrapDone;
+uint16_t TMR1_testing; //delete me
 
 
 /** system data, accessed directly */
@@ -44,7 +48,6 @@ extern MCAF_SYSTEM_DATA systemData;
 /** watchdog state, accessed directly */
 //extern volatile MCAF_WATCHDOG_T watchdog;
 
-volatile uint16_t pot; //temp
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -58,50 +61,86 @@ volatile uint16_t pot; //temp
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {
     
-    switch(state){
-        
-        pot = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_POTENTIOMETER));
-        
-        case RBFSM_INIT:
+    TMR1_testing = TMR1;
+    
+    // This function will update the button states and the POT value. 
+    RB_BoardUIService(&boardUI);
             
+    switch(state){
+                
+        case RBFSM_INIT:
+    
             MCAF_FaultDetectInit(&PMSM.faultDetect);
             RB_InitControlParameters(&PMSM);
-            //MCAF_MotorControllerOnRestartInit(pmotor); not sure if IMPORTANT?
+            //MCAF_MotorControllerOnRestartInit(pmotor); not sure if IMPORTANT
             MCAF_FaultDetectInit(&PMSM.faultDetect);
             RB_PWMCapBootstrapInit(&bootstrap);
             
             // might need this: HAL_PWM_FaultClearBegin();
             RB_FocInit(&PMSM);
-            
             RB_FixedFrequencySinePWMInit(); //for testing
+            RB_BoardUIInit(&boardUI);
             
             state = RBFSM_STARTUP;
             break;
             
         case RBFSM_STARTUP:
             
-            bootstrapDone = RB_PWMCapBootstrapISRStep(&bootstrap);
-            
-            if (bootstrapDone) {
-                // calibrate ADC offsets before Running
-                state = RBFSM_RUNNING;
+            if(!bootstrap.done)
+            {   
+                // charge bootstrap capacitors over multiple ISR steps
+                RB_PWMCapBootstrapISRStep(&bootstrap);
                 
-                // get ready to output PWM
+            } else if ((bootstrap.done) && (!PMSM.currentCalib.done))
+            {
+               // next, take current measurements to calculate offset over multiple steps
+               RB_ADCCalibrationStepISR(&PMSM.currentCalib); 
+            
+            } else if((bootstrap.done) && (PMSM.currentCalib.done) && (boardUI.motorEnable.state))
+            {
+                // Configure Hall ISRs and data
+                RB_HALL_Init(&hall);
+                
+                // get ready to output PWM 
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
                 HAL_PWM_UpperTransistorsOverride_Disable();
                 MCAF_LED1_SetHigh();
+                
+                state = RBFSM_RUNNING;
             }
             
             break;
             
         case RBFSM_RUNNING:         
             
-            // Sine Frequency = 1 / (X*(1/20000)*297)
-            // RPM = 120*f/52
-            RB_FixedFrequencySinePWM(9);  // 9,10 tested
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
+            RB_HALL_Estimate(&hall);
             
-            RB_HALL_Estimate();
-          
+            RB_FixedFrequencySinePWM(boardUI.potState);
+            
+            if (!boardUI.motorEnable.state){
+
+                //Maintains the low-side transistors at low dc and high-side OFF.
+                HAL_PWM_UpperTransistorsOverride_Low();
+                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MAX_DUTY_COUNTS);
+                MCAF_LED1_SetLow();
+                
+                state = RBFSM_STOPPING;
+            }
+
+            break;
+            
+        case RBFSM_STOPPING:
+            
+            if(boardUI.motorEnable.state)
+            {   
+                // get ready to output PWM 
+                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
+                HAL_PWM_UpperTransistorsOverride_Disable();
+                MCAF_LED1_SetHigh();
+                
+                state = RBFSM_RUNNING;
+            }
             break;
             
         case RBFSM_FAULTED:
@@ -119,7 +158,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
  */
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0; // reset interrupt flag
-    RB_HALL_Reset();
+    RB_HALL_Reset(&hall);
 
 }
 
@@ -129,7 +168,7 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
  */
 void RB_HALL_ISR(void)
 {
-    RB_HALL_StateChange();
+    RB_HALL_StateChange(&hall);
     
 }
 

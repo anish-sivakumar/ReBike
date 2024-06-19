@@ -49,7 +49,7 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
     pPMSM->adcSelect = HADC_POTENTIOMETER;
     
     /* initialize ADC compensation parameters  */
-    RB_ADCCompensationInit(&pPMSM->currentCalibration); 
+    RB_ADCCalibrationInit(&pPMSM->currentCalib); 
     
     //pPMSM->rVdc = MCAF_ComputeReciprocalDCLinkVoltage(INT16_MAX);
     
