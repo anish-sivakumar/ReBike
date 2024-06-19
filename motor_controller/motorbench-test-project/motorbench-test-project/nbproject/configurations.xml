@@ -134,6 +134,10 @@
           <itemPath>mcc_generated_files/qei/qei_interface.h</itemPath>
           <itemPath>mcc_generated_files/qei/qei_types.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="spi_host" displayName="spi_host" projectFiles="true">
+          <itemPath>mcc_generated_files/spi_host/spi_host_interface.h</itemPath>
+          <itemPath>mcc_generated_files/spi_host/spi1.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <itemPath>mcc_generated_files/system/interrupt.h</itemPath>
           <itemPath>mcc_generated_files/system/reset_types.h</itemPath>
@@ -251,6 +255,11 @@
         <logicalFolder name="qei" displayName="qei" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/qei/src/qei1.c</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="spi_host" displayName="spi_host" projectFiles="true">
+          <logicalFolder name="src" displayName="src" projectFiles="true">
+            <itemPath>mcc_generated_files/spi_host/src/spi1.c</itemPath>
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">

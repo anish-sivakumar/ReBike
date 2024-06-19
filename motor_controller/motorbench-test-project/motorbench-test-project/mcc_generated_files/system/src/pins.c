@@ -63,7 +63,7 @@ void PINS_Initialize(void)
     TRISA = 0x001F;
     TRISB = 0x0FFF;
     TRISC = 0xFFFF;
-    TRISD = 0xDFFC;
+    TRISD = 0xD7FC;
     TRISE = 0xFF2F;
 
 
@@ -98,7 +98,7 @@ void PINS_Initialize(void)
     ANSELA = 0x001F;
     ANSELB = 0x039F;
     ANSELC = 0x00CF;
-    ANSELD = 0x0C00;
+    ANSELD = 0x0000;
     ANSELE = 0x000F;
 
     /****************************************************************************
@@ -110,7 +110,11 @@ void PINS_Initialize(void)
         RPINR14bits.QEIA1R = 0x003C; //RC12->QEI1:QEA1;
         RPINR14bits.QEIB1R = 0x003D; //RC13->QEI1:QEB1;
         RPINR18bits.U1RXR = 0x004E; //RD14->UART1:U1RX;
+        RPINR20bits.SDI1R = 0x004A; //RD10->SPI1:SDI1;
         RPOR22bits.RP77R = 0x0001;  //RD13->UART1:U1TX;
+        RPOR21bits.RP75R = 0x0005;  //RD11->SPI1:SDO1;
+        RPINR20bits.SCK1R = 0x004C;  //RD12->SPI1:SCK1IN;
+        RPOR22bits.RP76R = 0x0006;  //RD12->SPI1:SCK1OUT;
 
      __builtin_write_RPCON(0x0800); // lock PPS
 
