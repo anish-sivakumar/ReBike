@@ -57,26 +57,33 @@ void RB_HALL_Reset(RB_HALL_DATA *phall)
 void RB_HALL_StateChange(RB_HALL_DATA *phall)
 {
     uint16_t tmr1_tmp = TMR1; // store timer1 count value
-    TMR1 = 0; // reset timer 1 counter
-    
-    // Check if our TMR1 measurement was valid
-    if(phall->timedOut){
-        phall->timedOut = false;
-    }else{
-        phall->minSpeedReached = true;
-        phall->period = tmr1_tmp;
-    }
 
-    phall->sector = RB_HALL_ValueRead();
-    
-    // Instead of making abrupt correction to the angle corresponding to hall sector, find the error and make gentle correction  
-    phall->thetaError = (sectorToQ15Angle[phall->sector] + OFFSET_CORRECTION) - phall->theta;
-    
-    // Find the correction to be done in every step
-    // If "hallThetaError" is 2000, and "hallCorrectionFactor" = (2000/8) = 250
-    // So the error of 2000 will be corrected in 8 steps, with each step being 250
-    phall->correctionFactor = phall->thetaError >> HALL_CORRECTION_DIVISOR;
-    phall->correctionCounter = HALL_CORRECTION_STEPS;
+    // Some noise is causing the hall ISR to run more often that it should. 
+    // Only run the state change routine if we actually saw a change in the hall sector.
+    uint16_t sector_tmp = RB_HALL_ValueRead();
+    if (sector_tmp != phall->sector) {
+        TMR1 = 0;
+        phall->sector = sector_tmp;
+
+        // Check if our TMR1 measurement was valid
+        if(phall->timedOut){
+            phall->timedOut = false;
+        }else{
+            phall->minSpeedReached = true;
+            phall->period = tmr1_tmp;
+        }
+
+        phall->sector = RB_HALL_ValueRead();
+
+        // Instead of making abrupt correction to the angle corresponding to hall sector, find the error and make gentle correction  
+        phall->thetaError = (sectorToQ15Angle[phall->sector] + OFFSET_CORRECTION) - phall->theta;
+
+        // Find the correction to be done in every step
+        // If "hallThetaError" is 2000, and "hallCorrectionFactor" = (2000/8) = 250
+        // So the error of 2000 will be corrected in 8 steps, with each step being 250
+        phall->correctionFactor = phall->thetaError >> HALL_CORRECTION_DIVISOR;
+        phall->correctionCounter = HALL_CORRECTION_STEPS;
+    }
 }
 
 uint16_t RB_HALL_ValueRead(void) 
