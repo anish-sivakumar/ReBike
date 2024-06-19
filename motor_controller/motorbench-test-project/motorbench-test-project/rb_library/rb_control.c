@@ -37,16 +37,14 @@ void RB_InitControlParameters(RB_MOTOR_DATA *pPMSM)
     pPMSM->bridgeTemperature.filter.output = 0;
     pPMSM->bridgeTemperature.filter.slewRate = RB_BRIDGE_TEMPERATURE_SLEW_RATE;
 
-    MCAF_FilterLowPassS16Init(&pPMSM->vqFiltered, RB_FILTER_COEFF_VQ);
 }
 
 bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 {
     RB_InitControlLoopState(pPMSM);
-    pPMSM->controlFlags = 0; 
-    
+      
     /* initialize the mux'd channel (doesn't matter which setting is first) */
-    pPMSM->adcSelect = HADC_POTENTIOMETER;
+    //pPMSM->adcSelect = HADC_POTENTIOMETER; Anish removed this variable from PMSM
     
     /* initialize ADC compensation parameters  */
     RB_ADCCalibrationInit(&pPMSM->currentCalib); 

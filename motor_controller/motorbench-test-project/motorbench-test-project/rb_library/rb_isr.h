@@ -39,15 +39,6 @@ RB_FSM_STATE state;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 
-uint16_t TMR1_testing; //delete me
-
-
-/** system data, accessed directly */
-extern MCAF_SYSTEM_DATA systemData;
-
-/** watchdog state, accessed directly */
-//extern volatile MCAF_WATCHDOG_T watchdog;
-
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -60,12 +51,7 @@ extern MCAF_SYSTEM_DATA systemData;
  */
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {
-    
-    TMR1_testing = TMR1;
-    
-    // This function will update the button states and the POT value. 
-    RB_BoardUIService(&boardUI);
-            
+          
     switch(state){
                 
         case RBFSM_INIT:
@@ -75,7 +61,6 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             //MCAF_MotorControllerOnRestartInit(pmotor); not sure if IMPORTANT
             MCAF_FaultDetectInit(&PMSM.faultDetect);
             RB_PWMCapBootstrapInit(&bootstrap);
-            
             // might need this: HAL_PWM_FaultClearBegin();
             RB_FocInit(&PMSM);
             RB_FixedFrequencySinePWMInit(); //for testing
@@ -114,8 +99,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         case RBFSM_RUNNING:         
             
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
+            HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
             RB_HALL_Estimate(&hall);
-            
             RB_FixedFrequencySinePWM(boardUI.potState);
             
             if (!boardUI.motorEnable.state){
@@ -148,10 +133,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         
     }
     
-    HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
+    /* Low-priority tasks at the end */
     X2CScope_Update();
-     
+    RB_BoardUIService(&boardUI); // update the button states and the POT value
 }
+
 
 /**
  * TMR1 timeout routine
@@ -159,8 +145,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0; // reset interrupt flag
     RB_HALL_Reset(&hall);
-
 }
+
 
 /**
  * Hall sensor interrupt
@@ -169,12 +155,13 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
 void RB_HALL_ISR(void)
 {
     RB_HALL_StateChange(&hall);
-    
 }
 
+/**
+ * Start state machine in initialization state
+ */
 void RB_ISR_StateInit(void){
-    state = RBFSM_INIT;
-    
+    state = RBFSM_INIT;  
 }
 
 #ifdef	__cplusplus
