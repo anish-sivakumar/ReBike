@@ -78,6 +78,12 @@ typedef struct
 void RB_HALL_Init(RB_HALL_DATA *phall);
 
 /**
+ * Uses the previous hall sector to predict the next sector.
+ * @param prev: previous hall sector
+ * @return: next hall sector
+ */
+uint16_t RB_HALL_NextSector(uint16_t prev);
+/**
  * Invalidates the hall data structure
  * @param phall
  */
