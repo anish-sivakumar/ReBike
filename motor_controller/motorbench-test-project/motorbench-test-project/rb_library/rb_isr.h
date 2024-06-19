@@ -158,8 +158,15 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
  */
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0; // reset interrupt flag
-    RB_HALL_Reset(&hall);
+//    RB_HALL_Reset(&hall);
+}
 
+/**
+ * Hall timer (SCCP4) expiry routine
+ */
+void RB_HALL_TIMEOUT_ISR(void)
+{
+    RB_HALL_Reset(&hall);
 }
 
 /**
