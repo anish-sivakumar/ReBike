@@ -21,6 +21,7 @@ extern "C" {
 #include "rb_hall.h"
 #include "rb_pwm.h"
 #include "rb_board_ui.h"
+#include "timer/sccp4.h"
  
 typedef enum 
 {   
@@ -39,7 +40,7 @@ RB_FSM_STATE state;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 
-uint16_t TMR1_testing; //delete me
+uint16_t TMR4_testing; //delete me
 
 
 /** system data, accessed directly */
@@ -61,7 +62,7 @@ extern MCAF_SYSTEM_DATA systemData;
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {
     
-    TMR1_testing = TMR1;
+    TMR4_testing = SCCP4_Timer_Counter16BitGet();
     
     // This function will update the button states and the POT value. 
     RB_BoardUIService(&boardUI);
@@ -153,13 +154,13 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
      
 }
 
-/**
- * TMR1 timeout routine
- */
-void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
-    IFS0bits.T1IF = 0; // reset interrupt flag
-//    RB_HALL_Reset(&hall);
-}
+// /**
+//  * TMR1 timeout routine (currently unused)
+//  */
+// void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
+//     IFS0bits.T1IF = 0; // reset interrupt flag
+// //    RB_HALL_Reset(&hall);
+// }
 
 /**
  * Hall timer (SCCP4) expiry routine

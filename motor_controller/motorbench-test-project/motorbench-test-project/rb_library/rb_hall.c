@@ -40,7 +40,11 @@ void RB_HALL_Init(RB_HALL_DATA *phall){
     IO_RE8_SetInterruptHandler(&RB_HALL_ISR);
     IO_RE9_SetInterruptHandler(&RB_HALL_ISR);
     IO_RE10_SetInterruptHandler(&RB_HALL_ISR);
-    SCCP1_Timer_TimeoutCallbackRegister(&RB_HALL_TIMEOUT_ISR);
+    
+    SCCP4_Timer_Stop();
+    SCCP4_Timer_PeriodSet(RB_HALL_TMR4_PERIOD);
+    SCCP4_Timer_TimeoutCallbackRegister(&RB_HALL_TIMEOUT_ISR);
+    SCCP4_Timer_Start();
 }
 
 
