@@ -57,3 +57,19 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 }
 
 
+void RB_SetCurrentReference(uint16_t potVal, MC_DQ_T *pidqRef)
+{
+    // d-axis current controlled at zero
+    pidqRef->d = 0;
+    
+    pidqRef->q = potVal; 
+
+}
+
+
+void RB_ControlDStepISR(MC_DQ_T idqFdb, MC_DQ_T idqRef, 
+        MC_PISTATE_T *pidCtrl, MC_DQ_T *pvdqCmd)
+{
+    uint16_t temp;
+    
+}

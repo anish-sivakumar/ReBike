@@ -99,11 +99,8 @@ uint16_t RB_HALL_ValueRead(void)
 }
 
 
-int16_t RB_HALL_Estimate(RB_HALL_DATA *phall) 
-{
-    // used for FOC calculations
-    int16_t thetaElectrical;
-    
+void RB_HALL_Estimate(RB_HALL_DATA *phall) 
+{    
     if (phall->minSpeedReached){
 
         /* calculate filtered period = delta_period x filter_gain. 
@@ -116,12 +113,9 @@ int16_t RB_HALL_Estimate(RB_HALL_DATA *phall)
         phall->theta = phall->theta + phall->phaseInc;
     }
     
-    thetaElectrical = phall->theta; 
         if(phall->correctionCounter > 0)
         {
             phall->theta = phall->theta + phall->correctionFactor;
             phall->correctionCounter--;
         }
-    
-    return thetaElectrical;
 }

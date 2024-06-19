@@ -50,7 +50,7 @@ extern "C" {
      int16_t    omegaElectrical;        /** estimated rotor velocity (electrical) */
  } RB_HALL_ESTIMATOR_T;
      
-    
+
 /**
  * Motor state data
  */
@@ -60,14 +60,14 @@ typedef struct tagPMSM
     RB_MOTOR_PARAMS_T           motorParams; /** Kv and Rs*/  
     
     /* Current loop command */
-    MC_DQ_T                     idqCmdRaw;  /** Input command for the current loops, prior to rate limiting */
-    MC_DQ_T                     idqCmd;     /** Input command for the current loops */
+    //MC_DQ_T                     idqCmdRaw;  /** Input command for the current loops, prior to rate limiting */
+    MC_DQ_T                     idqRef;     /** Input command for the current loops */
     
     /* Current feedback path */
     MC_ABC_T                    iabc;       /** phase current measurements */
     MC_ALPHABETA_T              ialphabeta; /** stationary (alphabeta) frame current measurements */
     int16_t                     i0;         /** zero-sequence current = (Ia + Ib + Ic)/3 */
-    int16_t                     idq;        /** rotating (dq) frame current measurements */
+    MC_DQ_T                     idqFdb;        /** rotating (dq) frame current measurements */
     
     /* Current controllers */
     MC_PISTATE_T                idCtrl;  /** controller state for the D axis */
@@ -81,18 +81,14 @@ typedef struct tagPMSM
     
     /* Current loop forward path */
     MC_DQ_T                     vdqCmd;     /** desired dq-frame voltage, output of current loop */
-    MC_DQ_T                     vdq;        /** desired dq-frame voltage */
-    MC_ALPHABETA_T              valphabeta; /** desired alphabeta-frame voltage */
-    MC_ALPHABETA_T              valphabetaPerturbed; /** desired alphabeta-frame voltage, after perturbation */
-    MC_ABC_T                    vabc;       /** desired phase voltage */
+    MC_ALPHABETA_T              valphabetaCmd; /** desired alphabeta-frame voltage */
+    MC_ABC_T                    vabcCmd;       /** desired phase voltage */
     int16_t                     rVdc;       /** reciprocal of DC link voltage */
-    MC_ABC_T                    dabcRaw;    /** scaled duty cycle, per-unit, before dead-time compensation */
-    MC_ABC_T                    dabcUnshifted;  /** scaled duty cycle, per-unit, prior to ZSM and clipping */
     MC_ABC_T                    dabc;       /** after ZSM + clip */
     MC_ABC_T                    pwmDutycycle;   /** PWM count */
     int16_t                     thetaElectrical;  /** electrical angle */
     int16_t                     omegaElectrical;  /** electrical frequency */
-    MC_SINCOS_T                 sincos;     /** sine and cosine of electrical angle */
+    MC_SINCOS_T                 sincosTheta;     /** sine and cosine of electrical angle */
     
     /** Safety Related */
     MCAF_BRIDGE_TEMPERATURE bridgeTemperature;  /** bridge temperature */
@@ -125,9 +121,26 @@ inline static void RB_InitControlLoopState(RB_MOTOR_DATA *pPMSM)
     pPMSM->iqCtrl.integrator = 0;
     pPMSM->vdqCmd.d = 0;
     pPMSM->vdqCmd.q = 0;
-    pPMSM->idqCmdRaw.d = 0;
-    pPMSM->idqCmdRaw.q = 0;
+    pPMSM->idqRef.d = 0;
+    pPMSM->idqRef.q = 0;
 }
+
+/**
+ * Calculate current reference values from pot input
+ * @param potVal
+ * @param pidqRef
+ */
+void RB_SetCurrentReference(uint16_t potVal, MC_DQ_T *pidqRef);
+
+/**
+ * Step PI controller 
+ * @param idqFdb
+ * @param idqRef
+ * @param pidCtrl
+ * @param pvdqCmd
+ */
+void RB_ControlStepISR(MC_DQ_T idqFdb, MC_DQ_T idqRef, MC_PISTATE_T *pidCtrl, 
+        MC_DQ_T *pvdqCmd);
 
 #ifdef	__cplusplus
 }

@@ -43,7 +43,6 @@ extern "C" {
  * = [fraction of revolution b/w hall changes] / [time b/w hall changes]
  * = { [(1/(POLEPAIRS*6)] / [TMR1/(FOSC_OVER_2/TIMER1_PRESCALER)] } * 60s/min
  * = ((FOSC_OVER_2*60)/(TIMER_PRESCALER*6*POLEPAIRS))
- * 
  */
 #define SPEED_MULTI     (unsigned long)((float)(FOSC_OVER_2/(float)(TIMER1_PRESCALER*6*POLEPAIRS)))*(float)(60)    
 
@@ -108,7 +107,7 @@ uint16_t RB_HALL_ValueRead(void);
  * Estimates electrical angle and rotor speed using hall bits
  * @param phall
  */
-int16_t RB_HALL_Estimate(RB_HALL_DATA *phall);
+void RB_HALL_Estimate(RB_HALL_DATA *phall);
 
 
  
