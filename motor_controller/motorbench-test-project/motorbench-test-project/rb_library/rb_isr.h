@@ -22,6 +22,7 @@ extern "C" {
 #include "rb_pwm.h"
 #include "rb_board_ui.h"
 #include "timer/sccp4.h"
+#include "spi_host/spi1.h"
  
 typedef enum 
 {   
@@ -148,6 +149,9 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             break;      
         
     }
+    
+    //try to send SPI to can controller
+    
     
     HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
     X2CScope_Update();
