@@ -35,14 +35,17 @@ extern "C" {
 
 #define PWMFREQUENCY_HZ         20000
 #define FOSC_OVER_2             100000000
-#define TIMER1_PRESCALER        64
+#define TIMER4_PRESCALER        64
+// Corresponds to a timer period of roughly 40ms
+#define RB_HALL_TMR4_PERIOD 0xFFFF
+
 
 /**  SPEED MULTIPLIER CALCULATION = ((FOSC*60)/(TIMER_PRESCALER*6))
  * This is to calculate speed in electrical RPM  */
-#define SPEED_MULTI     (unsigned long)((float)(FOSC_OVER_2/(float)(TIMER1_PRESCALER*6)))*(float)(60)    
+#define SPEED_MULTI     (unsigned long)((float)(FOSC_OVER_2/(float)(TIMER4_PRESCALER*6)))*(float)(60)    
 
 /** PHASE INCREMENT MULTIPLIER = (FCY/(TIMER_PRESCALER*PWM_FREQUENCY))(65536/6)*/
-#define PHASE_INC_MULTI    (unsigned long)((float)FOSC_OVER_2/((float)(TIMER1_PRESCALER)*(float)(PWMFREQUENCY_HZ))*(float)(65536/6))
+#define PHASE_INC_MULTI    (unsigned long)((float)FOSC_OVER_2/((float)(TIMER4_PRESCALER)*(float)(PWMFREQUENCY_HZ))*(float)(65536/6))
 
 typedef struct
 {
@@ -50,7 +53,7 @@ typedef struct
     uint16_t speed; // rotor speed in RPM using filtered period 
     int16_t theta; // angle of estimation
 
-    uint16_t period; // captures raw timer1 value 
+    uint16_t period; // captures raw timer4 value 
     uint32_t periodStateVar; // intermediate result for filtered period calculation
     uint16_t periodFilter; // filtered period using moving average filtering method
     uint16_t periodKFilter; // period filter gain
@@ -74,6 +77,12 @@ typedef struct
  */    
 void RB_HALL_Init(RB_HALL_DATA *phall);
 
+/**
+ * Uses the previous hall sector to predict the next sector.
+ * @param prev: previous hall sector
+ * @return: next hall sector
+ */
+uint16_t RB_HALL_NextSector(uint16_t prev);
 /**
  * Invalidates the hall data structure
  * @param phall

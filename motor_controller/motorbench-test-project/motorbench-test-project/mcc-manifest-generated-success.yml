@@ -2,7 +2,7 @@
 
 manifest_file_version: 1.0.0
 project: sample-mb-33ck256mp508
-creation_date: 2024-05-30T15:58:21.354-07:00[America/Los_Angeles]
+creation_date: 2024-06-19T10:47:17.856-07:00[America/Los_Angeles]
 operating_system: Windows 10
 mcc_mode: IDE
 mcc_mode_version: v6.20
@@ -40,5 +40,6 @@ modules:
 - {name: '@mchp-mcc/pic24-dspic33-uart-protocol-upb', type: MELODY, version: 1.4.0}
 - {name: '@mchp-mcc/pic24-dspic33-wdt-upb-v1', type: MELODY, version: 1.1.0}
 - {name: '@mchp-mcc/pin-content-processor', type: MELODY, version: 3.5.0}
+- {name: '@mchp-mcc/timer', type: MELODY, version: 1.2.1}
 - {name: '@mchp-mcc/uart-driver', type: MELODY, version: 1.8.0}
 - {name: '@mchp-mcc/wdt-16bit-driver', type: MELODY, version: 1.0.5}
