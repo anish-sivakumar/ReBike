@@ -1,4 +1,4 @@
-#include <U8g2lib.h>
+#include <U8g2lib.h>              // Library for handling OLED display
 #include <SPI.h>                  // Include the SPI library for communication with the CAN module
 #include <Wire.h>                 // Include the Wire library for I2C communication
 #include <Toggle.h>               // Include the Toggle library for handling button states
@@ -153,7 +153,6 @@ const unsigned char epd_bitmap_Vert_Line [] PROGMEM = {
 const unsigned char epd_bitmap_Watts_Sym [] PROGMEM = {
 	0x00, 0x00, 0x80, 0x80, 0x88, 0x80, 0x88, 0x80, 0x88, 0x80, 0x88, 0x80, 0x7f, 0x00
 };
-
 // Array of all bitmaps for convenience. (Total bytes used to store images in PROGMEM = 688)
 // const unsigned char* epd_bitmap_allArray[13] = {
 // 	epd_bitmap_ACTIVE_REGEN_Label,
@@ -271,7 +270,6 @@ const unsigned char epd_bitmap_speed_digit_9 [] PROGMEM = {
 	0x3f, 0x00, 0x00, 0x3f, 0x00, 0x00, 0x3f, 0x00, 0x00, 0x3f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
 	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 };
-
 // Array of all bitmaps for convenience. (Total bytes used to store images in PROGMEM = 1280)
 // const int epd_bitmap_allArray_LEN = 10;
 const unsigned char* epd_bitmap_allArray1[10] = {
@@ -327,7 +325,6 @@ const unsigned char epd_bitmap_throttle_digit_8 [] PROGMEM = {
 const unsigned char epd_bitmap_throttle_digit_9 [] PROGMEM = {
 	0xff, 0xff, 0xc3, 0xc3, 0xc3, 0xc3, 0xff, 0xff, 0x03, 0x03, 0xff, 0xff
 };
-
 // Array of all bitmaps for convenience. (Total bytes used to store images in PROGMEM = 320)
 const int epd_bitmap_allArray_LEN = 10;
 const unsigned char* epd_bitmap_allArray2[10] = {
@@ -383,7 +380,6 @@ const unsigned char epd_bitmap_motor_digit_8 [] PROGMEM = {
 const unsigned char epd_bitmap_motor_digit_9 [] PROGMEM = {
 	0x3c, 0x24, 0x24, 0x3c, 0x04, 0x3c
 };
-
 const unsigned char* epd_bitmap_allArray3[10] = {
 	epd_bitmap_motor_digit_0,
 	epd_bitmap_motor_digit_1,
@@ -397,12 +393,71 @@ const unsigned char* epd_bitmap_allArray3[10] = {
 	epd_bitmap_motor_digit_9
 };
 
+// 'Battery Level Sym 0%', 32x20px
+const unsigned char epd_bitmap_Battery_Level_Sym_0_ [] PROGMEM = {
+	0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 
+	0x00, 0x00, 0x3c, 0x90, 0x00, 0x00, 0x24, 0x90, 0x00, 0x00, 0x24, 0x90, 0x00, 0x00, 0x24, 0x90, 
+	0x00, 0x0f, 0x24, 0x90, 0x00, 0x09, 0x24, 0x90, 0x00, 0x09, 0x24, 0x90, 0x00, 0x09, 0x24, 0x90, 
+	0x03, 0xc9, 0x24, 0x90, 0x02, 0x49, 0x24, 0x90, 0x02, 0x49, 0x24, 0x90, 0x02, 0x49, 0x24, 0x90, 
+	0xf2, 0x49, 0x24, 0x90, 0x92, 0x49, 0x24, 0x90, 0x92, 0x49, 0x24, 0x90, 0xf3, 0xcf, 0x3c, 0xf0
+};
+// 'Battery Level Sym 20%', 32x20px
+const unsigned char epd_bitmap_Battery_Level_Sym_20_ [] PROGMEM = {
+	0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 
+	0x00, 0x00, 0x3c, 0x90, 0x00, 0x00, 0x24, 0x90, 0x00, 0x00, 0x24, 0x90, 0x00, 0x00, 0x24, 0x90, 
+	0x00, 0x0f, 0x24, 0x90, 0x00, 0x09, 0x24, 0x90, 0x00, 0x09, 0x24, 0x90, 0x00, 0x09, 0x24, 0x90, 
+	0x03, 0xc9, 0x24, 0x90, 0x02, 0x49, 0x24, 0x90, 0x02, 0x49, 0x24, 0x90, 0x02, 0x49, 0x24, 0x90, 
+	0xf2, 0x49, 0x24, 0x90, 0xf2, 0x49, 0x24, 0x90, 0xf2, 0x49, 0x24, 0x90, 0xf3, 0xcf, 0x3c, 0xf0
+};
+// 'Battery Level Sym 40%', 32x20px
+const unsigned char epd_bitmap_Battery_Level_Sym_40_ [] PROGMEM = {
+	0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 
+	0x00, 0x00, 0x3c, 0x90, 0x00, 0x00, 0x24, 0x90, 0x00, 0x00, 0x24, 0x90, 0x00, 0x00, 0x24, 0x90, 
+	0x00, 0x0f, 0x24, 0x90, 0x00, 0x09, 0x24, 0x90, 0x00, 0x09, 0x24, 0x90, 0x00, 0x09, 0x24, 0x90, 
+	0x03, 0xc9, 0x24, 0x90, 0x03, 0xc9, 0x24, 0x90, 0x03, 0xc9, 0x24, 0x90, 0x03, 0xc9, 0x24, 0x90, 
+	0xf3, 0xc9, 0x24, 0x90, 0xf3, 0xc9, 0x24, 0x90, 0xf3, 0xc9, 0x24, 0x90, 0xf3, 0xcf, 0x3c, 0xf0
+};
+// 'Battery Level Sym 60%', 32x20px
+const unsigned char epd_bitmap_Battery_Level_Sym_60_ [] PROGMEM = {
+	0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 
+	0x00, 0x00, 0x3c, 0x90, 0x00, 0x00, 0x24, 0x90, 0x00, 0x00, 0x24, 0x90, 0x00, 0x00, 0x24, 0x90, 
+	0x00, 0x0f, 0x24, 0x90, 0x00, 0x0f, 0x24, 0x90, 0x00, 0x0f, 0x24, 0x90, 0x00, 0x0f, 0x24, 0x90, 
+	0x03, 0xcf, 0x24, 0x90, 0x03, 0xcf, 0x24, 0x90, 0x03, 0xcf, 0x24, 0x90, 0x03, 0xcf, 0x24, 0x90, 
+	0xf3, 0xcf, 0x24, 0x90, 0xf3, 0xcf, 0x24, 0x90, 0xf3, 0xcf, 0x24, 0x90, 0xf3, 0xcf, 0x3c, 0xf0
+};
+// 'Battery Level Sym 80%', 32x20px
+const unsigned char epd_bitmap_Battery_Level_Sym_80_ [] PROGMEM = {
+	0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x90, 
+	0x00, 0x00, 0x3c, 0x90, 0x00, 0x00, 0x3c, 0x90, 0x00, 0x00, 0x3c, 0x90, 0x00, 0x00, 0x3c, 0x90, 
+	0x00, 0x0f, 0x3c, 0x90, 0x00, 0x0f, 0x3c, 0x90, 0x00, 0x0f, 0x3c, 0x90, 0x00, 0x0f, 0x3c, 0x90, 
+	0x03, 0xcf, 0x3c, 0x90, 0x03, 0xcf, 0x3c, 0x90, 0x03, 0xcf, 0x3c, 0x90, 0x03, 0xcf, 0x3c, 0x90, 
+	0xf3, 0xcf, 0x3c, 0x90, 0xf3, 0xcf, 0x3c, 0x90, 0xf3, 0xcf, 0x3c, 0x90, 0xf3, 0xcf, 0x3c, 0xf0
+};
+// 'Battery Level Sym 100%', 32x20px
+const unsigned char epd_bitmap_Battery_Level_Sym_100_ [] PROGMEM = {
+	0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0xf0, 
+	0x00, 0x00, 0x3c, 0xf0, 0x00, 0x00, 0x3c, 0xf0, 0x00, 0x00, 0x3c, 0xf0, 0x00, 0x00, 0x3c, 0xf0, 
+	0x00, 0x0f, 0x3c, 0xf0, 0x00, 0x0f, 0x3c, 0xf0, 0x00, 0x0f, 0x3c, 0xf0, 0x00, 0x0f, 0x3c, 0xf0, 
+	0x03, 0xcf, 0x3c, 0xf0, 0x03, 0xcf, 0x3c, 0xf0, 0x03, 0xcf, 0x3c, 0xf0, 0x03, 0xcf, 0x3c, 0xf0, 
+	0xf3, 0xcf, 0x3c, 0xf0, 0xf3, 0xcf, 0x3c, 0xf0, 0xf3, 0xcf, 0x3c, 0xf0, 0xf3, 0xcf, 0x3c, 0xf0
+};
+// Array of all bitmaps for convenience. (Total bytes used to store images in PROGMEM = 624)
+// const int epd_bitmap_allArray_LEN = 6;
+// const unsigned char* epd_bitmap_allArray[6] = {
+// 	epd_bitmap_Battery_Level_Sym_0_,
+// 	epd_bitmap_Battery_Level_Sym_100_,
+// 	epd_bitmap_Battery_Level_Sym_20_,
+// 	epd_bitmap_Battery_Level_Sym_40_,
+// 	epd_bitmap_Battery_Level_Sym_60_,
+// 	epd_bitmap_Battery_Level_Sym_80_
+// };
+
 // Global variables to store different parameters
 int speed = 0;                    // Speed of the e-bike
 int throttle = 0;                 // Max throttle percentage
-int batteryRange = 0;             // Battery range of the e-bike
-int power = 0;                    // Power consumption of the e-bike
+int power = 0;                    // E-bike power output OR regenerative power
 int temp = 0;                     // Temperature of the e-bike system
+int batteryRange = 0;             // Battery range of the e-bike
 int regenMethod = 1;              // Regenerative braking method (1 or 2)
 
 // Variables to convert system parameters from int to display format
@@ -412,14 +467,16 @@ int speed_string_length;
 char throttle_string[10];
 int throttle_string_length;
 
-int activeRegen = 2;
-char regen_string[6];
-
 char power_string[10];
 int power_string_length;
 
 char temp_string[10];
 int temp_string_length;
+
+char battery_string[10];
+int battery_string_length;
+
+int activeRegen = 1;
 
 // Create Toggle instances for buttons to increase throttle, decrease throttle, and toggle regenerative braking
 Toggle increaseThrottle(6);       // Button to increase throttle
@@ -428,7 +485,9 @@ Toggle toggleRegen(8);            // Button to toggle regenerative braking metho
 
 void setup() {
 
+  // Initialize the OLED display
   u8g2.begin();
+
   // Display the logo during setup
   u8g2.firstPage();
   do {
@@ -438,9 +497,6 @@ void setup() {
 
   // Wait for 4 seconds to show the logo
   delay(4000);
-
-  u8g2.setFont(u8g2_font_courB08_tn);
-  u8g2.setColorIndex(1);
 
    // Initialize the button toggles
   increaseThrottle.begin(0);
@@ -459,37 +515,28 @@ void loop() {
   decreaseThrottle.poll();
   toggleRegen.poll();
 
-  // Update various parameters (speed, battery range, power, temperature)
+  // Functions to read incoming signals from the motor controller and BMS to update various
+  // system parameters for UI display (speed, power, temperature, battery range)
   updateSpeed();
-  updateBatteryRange();
   updatePower();
   updateTemp();
-
+  updateBatteryRange();
+  
   // Check if the increase throttle button has been pressed
   if (increaseThrottle.onPress()) {
-    speed = speed + 1;
-    // updateDisplay();
-    // Adjust the speed request by increasing it
-    // adjustSpeedRequest(+1);
-    Serial.println("Request to increase motor speed sent to Motor Controller via CAN");
-    // Serial.write("Request to increase motor speed sent to Motor Controller via CAN");
 
-    // Optionally, turn on the built-in LED to indicate the button press
-    // digitalWrite(LED_BUILTIN, HIGH);
+    // Adjust the current speed by sending an increase speed request to motor controller
+    adjustSpeedRequest(+1);
+    Serial.println("Request to increase motor speed sent to Motor Controller via CAN");
 
   }
 
   // Check if the decrease throttle button has been pressed
   if (decreaseThrottle.onPress()) {
-    speed = speed - 1;
-    // updateDisplay();
-    // Adjust the speed request by decreasing it
-    // adjustSpeedRequest(-1);
-    Serial.println("Request to decrease motor speed sent to Motor Controller via CAN");
-    // Serial.write("Request to decrease motor speed sent to Motor Controller via CAN");
 
-    // Turn on the built-in LED to indicate the button press
-    // digitalWrite(LED_BUILTIN, HIGH);
+    // Adjust the current speed by sending a decrease speed request to motor controller
+    adjustSpeedRequest(-1);
+    Serial.println("Request to decrease motor speed sent to Motor Controller via CAN");
 
   }
 
@@ -497,15 +544,11 @@ void loop() {
   if (toggleRegen.onPress()) {
 
     // Change the active regenerative braking method
-    // changeActiveRegenRequest();
+    changeActiveRegenRequest();
     Serial.println("Request to change the active regenerative braking method has been sent to Motor Controller via CAN");
-    // Serial.write("Request to change the active regenerative braking method has been sent to Motor Controller via CAN");
 
     // Update the display to show the new regenerative braking method
     updateRegen();
-
-    // Turn on the built-in LED to indicate the button press
-    // digitalWrite(LED_BUILTIN, HIGH);
 
   }
 
@@ -514,9 +557,37 @@ void loop() {
   
 }
 
-// Function to update the speed parameter
+// Function to update the current speed
+void adjustSpeedRequest(int adjustment) {
+
+  // Code to send request to motor controller FW to adjust the current speed goes here
+
+  if (adjustment == 1) {
+    // Send increase speed request to motor controller
+
+    if (throttle == 100) {
+      return;
+    } else {
+      throttle += 5;
+    }
+
+  } else if (adjustment == -1) {
+    // Send decrease speed request to motor controller
+    
+    if (throttle == 0) {
+      return;
+    } else {
+      throttle -= 5;
+    }
+  
+  }
+
+}
+
+// Function to update the display variable that shows the current speed
 void updateSpeed(void) {
-  // Code to update the speed variable goes here
+
+  // Code to read the current speed signal from the motor controller and update the speed variable goes here
 
   // This is connected to a potentiometer for testing purposes only.
   speed = map(analogRead(14), 0, 1023, 0, 99);
@@ -524,32 +595,53 @@ void updateSpeed(void) {
 
 }
 
-// Function to update the battery range parameter
-void updateBatteryRange(void) {
-  // Code to update the battery range variable goes here
-}
-
-// Function to update the power parameter
+// Function to update the display variable that shows the current power output
 void updatePower(void) {  
-  // Code to update the power variable goes here
+
+  // Code to read the current motor power output signal from the motor controller and update the power variable goes here
   
   // This is connected to a potentiometer for testing purposes only.
   power = map(analogRead(14), 0, 1023, 0, 999);
 
 }
 
-// Function to update the temperature parameter
+// Function to update the display variable that shows the current motor temperature
 void updateTemp(void) {
-  // Code to update the temperature variable goes here
+
+  // Code to read the current motor temperature signal from the motor controller and update the temperature variable goes here
   
   // This is connected to a potentiometer for testing purposes only.
   temp = map(analogRead(14), 0, 1023, 0, 99);
 
 }
 
+// Function to update the display variable that shows the current battery range
+void updateBatteryRange(void) {
+
+  // Code to read the current battery range signal from the BMS and update the battery range variable goes here
+
+  // This is connected to a potentiometer for testing purposes only.
+  batteryRange = map(analogRead(14), 0, 1023, 0, 99);
+
+}
+
 // Function to update the active regenerative braking method
+void changeActiveRegenRequest(void) {
+
+  // Code to send request to motor controller FW to toggle the active regenerative braking method goes here
+
+}
+
+// Function to update the display variable that shows the active regenerative braking method
 void updateRegen(void) {
+
   // Code to update the active regenerative braking method variable goes here
+  if (activeRegen == 1) {
+    activeRegen = 2;
+  } else {
+    activeRegen = 1;
+  }
+
 }
 
 // Function to update the display with the latest values
@@ -557,20 +649,18 @@ void updateDisplay(void) {
 
   itoa(speed, speed_string, 10);
   itoa(throttle, throttle_string, 10);
-  itoa(regenMethod, regen_string, 10);
   itoa(power, power_string, 10);
   itoa(temp, temp_string, 10);
+  itoa(batteryRange, battery_string, 10);
 
   speed_string_length = strlen(speed_string);
   throttle_string_length = strlen(throttle_string);
   power_string_length = strlen(power_string);
   temp_string_length = strlen(temp_string);
+  battery_string_length = strlen(battery_string);
 
   u8g2.firstPage();
   do {
-
-    // u8g2.drawStr(6, 6, speed_string);
-    // u8g2.drawBitmap(2, 2, 24/8, 36, epd_bitmap_allArray[ speed_string[0] - 48]);
     
     for (int i = 0; i < speed_string_length; i++) {
       u8g2.drawBitmap( (56 - speed_string_length * 28 ) + 30*i, 2, 24/8, 36, epd_bitmap_allArray1[ speed_string[i] - 48 ]);
@@ -581,13 +671,15 @@ void updateDisplay(void) {
     }
 
     for (int i = 0; i < power_string_length; i++) {
-      // u8g2.drawBitmap( (56 - throttle_string_length * 28 ) + 30*i, 2, 24/8, 36, epd_bitmap_allArray[ speed_string[i] - 48 ]);
       u8g2.drawBitmap( (102 - power_string_length * 4 ) + 6*i, 9, 8/8, 6, epd_bitmap_allArray3[ power_string[i] - 48 ]);
     }
 
     for (int i = 0; i < temp_string_length; i++) {
-      // u8g2.drawBitmap( (56 - throttle_string_length * 28 ) + 30*i, 2, 24/8, 36, epd_bitmap_allArray[ speed_string[i] - 48 ]);
       u8g2.drawBitmap( (102 - temp_string_length * 4 ) + 6*i, 17, 8/8, 6, epd_bitmap_allArray3[ temp_string[i] - 48 ]);
+    }
+
+    for (int i = 0; i < battery_string_length; i++) {
+      u8g2.drawBitmap( (102 - battery_string_length * 4 ) + 6*i, 58, 8/8, 6, epd_bitmap_allArray3[ battery_string[i] - 48 ]);
     }
 
     u8g2.drawBitmap(80, 25, 48/8, 7, epd_bitmap_BATTERY_Label);
@@ -601,14 +693,28 @@ void updateDisplay(void) {
     u8g2.drawBitmap(92, 0, 32/8, 8, epd_bitmap_MOTOR_Label);
     u8g2.drawBitmap(110, 8, 16/8, 7, epd_bitmap_Watts_Sym);
     u8g2.drawBitmap(110, 17, 16/8, 6, epd_bitmap_Celsius_Sym);
-    u8g2.drawBitmap(93, 35, 32/8, 20, epd_bitmap_Battery_Level_Sym);
     u8g2.drawBitmap(108, 57, 16/8, 6, epd_bitmap_Battery_Percentage_Sym);
     
-    u8g2.drawStr(75, 64, regen_string);
+    if (batteryRange > 80) {
+      u8g2.drawBitmap(93, 36, 32/8, 20, epd_bitmap_Battery_Level_Sym_100_);
+    } else if (batteryRange > 60 && batteryRange <= 80) {
+      u8g2.drawBitmap(93, 36, 32/8, 20, epd_bitmap_Battery_Level_Sym_80_);
+    } else if (batteryRange > 40 && batteryRange <= 60) {
+      u8g2.drawBitmap(93, 36, 32/8, 20, epd_bitmap_Battery_Level_Sym_60_);
+    } else if (batteryRange > 20 && batteryRange <= 40) {
+      u8g2.drawBitmap(93, 36, 32/8, 20, epd_bitmap_Battery_Level_Sym_40_);
+    } else if (batteryRange > 5 && batteryRange <= 20) {        
+      u8g2.drawBitmap(93, 36, 32/8, 20, epd_bitmap_Battery_Level_Sym_20_);
+    } else {
+      u8g2.drawBitmap(93, 36, 32/8, 20, epd_bitmap_Battery_Level_Sym_0_);
+    }
 
-    // u8g2.drawStr(91, 10, power_string);
+    if (activeRegen == 1) {
+      u8g2.drawBitmap(73, 58, 8/8, 6, epd_bitmap_motor_digit_1);
+    } else {
+      u8g2.drawBitmap(73, 58, 8/8, 6, epd_bitmap_motor_digit_2);
+    }
 
   } while ( u8g2.nextPage() );
-
 
 }
