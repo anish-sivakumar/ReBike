@@ -43,6 +43,9 @@ RB_BOARD_UI boardUI;
 
 uint16_t TMR4_testing; //delete me
 
+uint16_t SPI_counter;
+uint8_t  SPI_received;
+
 
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
@@ -83,6 +86,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_FixedFrequencySinePWMInit(); //for testing
             RB_BoardUIInit(&boardUI);
             
+            SPI_counter = 0;
             state = RBFSM_STARTUP;
             break;
             
@@ -150,7 +154,22 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         
     }
     
-    //try to send SPI to can controller
+    // try to send SPI to can controller
+    SPI_counter++;
+    if (SPI_counter > 20000 && SPI1_IsTxReady())
+    {
+        SPI_counter = 0;
+        
+        uint8_t buf[2] = {0b00000011,0b00001111};
+        SPI1_Open(0);
+        SPI1_BufferWrite(buf,2);
+    }
+    if (SPI1_IsRxReady())
+    {
+        SPI_received = SPI1_ByteRead();
+        SPI1_Close();
+    }
+    
     
     
     HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer

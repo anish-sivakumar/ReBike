@@ -169,6 +169,7 @@
       <itemPath>rb_library/rb_isr.h</itemPath>
       <itemPath>rb_library/rb_pwm.h</itemPath>
       <itemPath>rb_library/rb_board_ui.h</itemPath>
+      <itemPath>rb_library/rb_can_defs.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

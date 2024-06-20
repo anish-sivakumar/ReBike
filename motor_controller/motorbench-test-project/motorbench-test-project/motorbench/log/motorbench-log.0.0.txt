@@ -5518,3 +5518,2612 @@
   <thread>287</thread>
   <message>time to prepare PITuneByPhase velocity loop: 2897us, time to autotune: 832us, number of calls: ???</message>
 </record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547226</millis>
+  <sequence>2916</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547241</millis>
+  <sequence>2918</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547255</millis>
+  <sequence>2920</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547268</millis>
+  <sequence>2922</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547275</millis>
+  <sequence>2924</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547332</millis>
+  <sequence>2926</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547341</millis>
+  <sequence>2928</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547351</millis>
+  <sequence>2930</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547355</millis>
+  <sequence>2932</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547359</millis>
+  <sequence>2934</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547362</millis>
+  <sequence>2936</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547368</millis>
+  <sequence>2938</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547376</millis>
+  <sequence>2940</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547389</millis>
+  <sequence>2942</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547400</millis>
+  <sequence>2944</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547405</millis>
+  <sequence>2946</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547409</millis>
+  <sequence>2948</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547416</millis>
+  <sequence>2950</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547509</millis>
+  <sequence>2958</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547518</millis>
+  <sequence>2966</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547534</millis>
+  <sequence>2974</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547554</millis>
+  <sequence>2982</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547570</millis>
+  <sequence>2989</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547587</millis>
+  <sequence>2997</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547662</millis>
+  <sequence>3007</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547674</millis>
+  <sequence>3015</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547691</millis>
+  <sequence>3023</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547705</millis>
+  <sequence>3031</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547723</millis>
+  <sequence>3039</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547739</millis>
+  <sequence>3047</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547755</millis>
+  <sequence>3055</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547770</millis>
+  <sequence>3063</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547827</millis>
+  <sequence>3070</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547838</millis>
+  <sequence>3078</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547855</millis>
+  <sequence>3086</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547873</millis>
+  <sequence>3094</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:27</date>
+  <millis>1718846547984</millis>
+  <sequence>3102</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:28</date>
+  <millis>1718846548009</millis>
+  <sequence>3110</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:28</date>
+  <millis>1718846548035</millis>
+  <sequence>3118</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:28</date>
+  <millis>1718846548056</millis>
+  <sequence>3126</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:28</date>
+  <millis>1718846548078</millis>
+  <sequence>3134</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:30</date>
+  <millis>1718846550985</millis>
+  <sequence>3538</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551019</millis>
+  <sequence>3546</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551048</millis>
+  <sequence>3554</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551074</millis>
+  <sequence>3562</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551101</millis>
+  <sequence>3570</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551130</millis>
+  <sequence>3578</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551156</millis>
+  <sequence>3586</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551185</millis>
+  <sequence>3594</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551208</millis>
+  <sequence>3604</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551236</millis>
+  <sequence>3612</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551258</millis>
+  <sequence>3620</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551290</millis>
+  <sequence>3627</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551370</millis>
+  <sequence>3634</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551395</millis>
+  <sequence>3642</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551421</millis>
+  <sequence>3650</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551454</millis>
+  <sequence>3658</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551486</millis>
+  <sequence>3666</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551515</millis>
+  <sequence>3674</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551544</millis>
+  <sequence>3682</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551574</millis>
+  <sequence>3690</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551610</millis>
+  <sequence>3698</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551641</millis>
+  <sequence>3706</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551673</millis>
+  <sequence>3714</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551703</millis>
+  <sequence>3722</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551730</millis>
+  <sequence>3730</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551762</millis>
+  <sequence>3738</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:31</date>
+  <millis>1718846551792</millis>
+  <sequence>3746</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreController</logger>
+  <level>WARNING</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreController</class>
+  <method>validateWdtClockSource</method>
+  <thread>287</thread>
+  <message>No value present</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:53</date>
+  <millis>1718846573788</millis>
+  <sequence>4239</sequence>
+  <logger>com.microchip.motorbench.mcc.custom.CustomizeModel</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.mcc.custom.CustomizeModel</class>
+  <method>log</method>
+  <thread>287</thread>
+  <message>event received: motorBench.init:{"MCAF":{"commit_id":"116330","build_time_str":"2023 Feb 09 16:21","version":"R7/RC37","build":{"commit_id":"116330","time_iso":"2023-02-09T16:21:15.677394","version":"R7/RC37","time":1675959675.677394,"type":"release","username":"jenkins","hostname":"motor-control-mcaf-tags-builder-r7-2frc37-1-0ws3m-smcgr-kthrw","date_str":"2023 Feb 09","time_str":"2023 Feb 09 16:21"},"build_time_iso":"2023-02-09T16:21:15.677394","build_time":1675959675.677394}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:53</date>
+  <millis>1718846573789</millis>
+  <sequence>4240</sequence>
+  <logger>com.microchip.motorbench.mcc.custom.CustomizeModel</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.mcc.custom.CustomizeModel</class>
+  <method>log</method>
+  <thread>287</thread>
+  <message>event received: motorBench.ready</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:53</date>
+  <millis>1718846573789</millis>
+  <sequence>4241</sequence>
+  <logger>com.microchip.motorbench.mcc.custom.CustomizeModel</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.mcc.custom.CustomizeModel</class>
+  <method>log</method>
+  <thread>287</thread>
+  <message>Hmm, we just got our first ready event, but we had already set up debug behavior; timeoutFlag=true</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:53</date>
+  <millis>1718846573799</millis>
+  <sequence>4242</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>Calling get_transfer_function...</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:53</date>
+  <millis>1718846573799</millis>
+  <sequence>4243</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>uiState: {"config":{"ui":{"content":{"current_measure-method":"dual_channel","current_measure-single_channel-minimumTime":2.0,"current_measure-single_channel-sampleDelay":0.0,"current_measure-opamp-full_input_range":true,"estimator-type":"pll","estimator-active-pll":false,"estimator-active-qei":false,"estimator-active-atpll":false,"estimator-active-zsmt":false,"estimator-active-ideal":false,"operation-min_velocity_ratio":0.25,"operation-startup_velocity_ratio":0.2744,"operation-max_velocity_ratio":1.25,"operation-fullscale_base_ratio":1.5,"operation-outer_loop_type":"velocity","operation-saliency-threshold":1.25,"operation-slewrate-accel":0.5,"operation-slewrate-decel":1.0,"operation-dyn_current_type":"none","operation-stopping-type":"minimal_impact","operation-stopping-closed_loop_parameters-speed":0.05,"operation-stopping-closed_loop_parameters-time":0.5,"operation-coastdown-end_velocity":0.05,"operation-coastdown-time":1.2,"fault_inject-get_tf-div0":false,"fault_inject-get_tf-missing_data":false,"fault_inject-get_tf-raise_value_error":false,"fault_inject-get_tf-raise_custom_error":false,"fault_inject-tf-tf_null":false,"fault_inject-tf-tf_jy":false,"fault_inject-tf-tf_jyex":false,"fault_inject-tf-div0":false,"fault_inject-tf-tau":0.0,"flux_control-method":"none","flux_control-eqn_based-ilimit-region_type":"quadratic","flux_control-eqn_based-ilimit-id_limit":0.7,"flux_control-eqn_based-ilimit-iq_limit":0.95,"flux_control-eqn_based-fluxweak_enable":false,"flux_control-eqn_based-fw-vdq_limit":0.95,"flux_control-eqn_based-mtpa_enable":false,"deadtimecomp-method":"none","deadtimecomp-perphase-current_sign_band":0.02,"deadtimecomp-perphase-forward_gain":0.0,"deadtimecomp-perphase-feedback_gain":0.0,"fault_detect-margin_uv":2.0,"fault_detect-margin_ov":2.0,"fault_detect-stall_detect_enable":true,"startup-Istartup":0.75,"startup-t_rampup":25.0,"startup-t_align":0.0,"startup-min_total_accel_time":250.0,"startup-torque_scale_accel":0.15,"startup-torque_scale_slow_accel":0.2,"startup-t_hold":0.0,"startup-omega0":0.2,"startup-theta_converge_rate":1.0,"startup-method":"classic","startup-damping-Imax":0.1,"startup-damping-gainmax":40.0,"startup-damping-omega_min":0.4,"overmodulation-vd_limit":1.0,"overmodulation-vq_limit":1.15,"overmodulation-include_duty_clipping":true,"pll-tau":2.19,"pll-omega1":116.5,"pll-velocity_filter_threshold":1.0,"encoder-lines":250.0,"encoder-index_present":false,"encoder-tracking_loop-tau":1.5,"encoder-qei_sync-method":"align","encoder-qei_sync-align-t_align":0.5,"encoder-qei_sync-align-angle_shift":30.0,"encoder-qei_sync-align-angle_init":-30.0,"encoder-qei_sync-align_sweep-sweep_rate_pow":1.0,"encoder-qei_sync-align_sweep-setup_angle":45.0,"encoder-qei_sync-pullout-pullout_slip":0.117,"zsmt-excitation-kV":0.12,"zsmt-excitation-kI":0.1,"zsmt-pll-zeta":1.5,"zsmt-pll-tau":10.0,"zsmt-pll-tau_lpf":0.0,"zsmt-pll-execution_divider":2.0,"zsmt-startup-align_delay":1.0,"zsmt-startup-pll_lock_time":1.0,"zsmt-startup-speed_limit":0.015,"zsmt-startup-current_limit":0.3,"zsmt-startup-probe_duration":10.0,"zsmt-startup-probe_slew_time":1.5,"zsmt-startup-probe_blanking_time":4.0,"zsmt-hybrid-type":"minotaur","zsmt-minotaur-voltage_limit-vd":0.45,"zsmt-minotaur-voltage_limit-vq":0.78,"zsmt-minotaur-converge-angle":10.0,"zsmt-minotaur-converge-duration":2.0,"zsmt-minotaur-velocity_threshold-slow":0.15,"zsmt-minotaur-velocity_threshold-transition":0.2,"zsmt-minotaur-velocity_threshold-fast":0.25,"zsmt-angle_correction-current_gain":0.0,"dyn_current1-peak_factor":1.0,"dyn_current1-horizon_factor":1.05,"dyn_current1-tau":5.0,"dyn_current1-nsamples":128.0,"voltage_outerloop-tau_lpf":2.0,"voltage_outerloop-Kp":0.1,"voltage_outerloop-tau":100.0,"mcapi-isSquaredTau":1.0,"mcapi-iqTau":1.0,"mcapi-adcIsrUserFunctions_enable":false,"board_service-uiServiceTiming":1.0,"board_service-uiButtonDebounceTime":7.0,"board_service-uiButtonLongPressTime":2.5,"test_harness-perturbation_asymmetric":false,"adc-vtempbridge":false,"adc-temp_bridge_params-threshold":50.0,"adc-temp_bridge_params-tau_lpf":10.0,"adc-temp_bridge_params-slewrate":4.0,"adc-vabsref":false,"adc-vphasea":false,"adc-vphaseb":false,"adc-vphasec":false},"version":{"schema":4.0,"motorBench":"2.45.0","MCAF":"R7"},"status":{"valid":true}}}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:53</date>
+  <millis>1718846573800</millis>
+  <sequence>4244</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>model: {"motor":{"Tfr":0.0048125,"B":3.22134E-5,"Lq":3.49495E-4,"poleCount":10,"rated_current":4.53,"J":1.8079199999999998E-5,"velocity":{"nominal":381.5987877,"maximum":628.3185307,"units":"rad/s"},"L":3.5898099999999997E-4,"R":0.37160175,"current":{"maximum":{"continuous":4.53,"peak":4.53},"units":"A"},"Ld":3.68467E-4,"Ke":0.037146886986834084,"id":"Hurst300"},"controller":{},"metadata":{"data_model":{"schema_version":5},"motorBench":{"commit_id":"6062ee969f17e173cb8502638f1e3c8ee7bea3fb","version":"2.45.0"},"MCC":{"peripherals":{"instances":[{"name":"ADC1","type":"adc"},{"name":"PWM","type":"pwm_hs"},{"name":"QEI1","type":"qei"},{"name":"TMR1","type":"timer"},{"name":"SCCP1","type":"timer"},{"name":"UART1","type":"uart"},{"name":"OPA1","type":"opa"},{"name":"OPA2","type":"opa"},{"name":"OPA3","type":"opa"}]},"version":"5.7.0","peripheral_library":{"name":"melody","version":"NA"},"architecture":"melody"}},"operating_range":{"velocity":{"units_qualifier":"mechanical","units":"rad/s","minimum":104.7198}},"scdata":{"setup":{"communications":{"baudrate":625000},"analysis":{"spindown_time":{"units":"s","value":1.0},"max_motor_speed":{"units":"rad/s mechanical","value":2094.4}},"calibration":{"vdc":{"units":"V","value":24.0},"resistor":{"units":"ohms","value":12.0}}}},"drive":{"metadata":{"name":"dsPIC33CK Low Voltage Motor Control Board","id":"lvmc-33ck"},"estimator":{"omega1":732.0,"tau":0.00219,"type":"pll"},"iout":{"time_constant":1.8413E-7,"fullscale":21.83,"maximum":{"continuous":14.1421},"units":"A","measurement":{"compensation":{"channels":["a","b"],"values":{"a":[1.0,0.0],"b":[0.0,1.0]}}}},"vdc":{"nominal":24.0,"time_constant":3.147E-4,"fullscale":71.3,"maximum":48.0,"units":"V","minimum":12.0},"configuration":{"metadata":{"capability":{"adc":{"channel":{"PHASEB_VOLTAGE":"AN23","PHASEB_CURRENT":"AN1","PHASEA_VOLTAGE":"AN17","PHASEC_CURRENT":"AN10","POTENTIOMETER":"AN11","BRIDGE_TEMPERATURE":"AN12","DCLINK_VOLTAGE":"AN15","PHASEA_CURRENT":"AN0","PHASEC_VOLTAGE":"AN22","DCLINK_CURRENT":"AN4"}},"opamp":"internal","buttonCount":2.0,"current_measure":{"a":true,"b":true,"c":true,"dc":true}},"scaling":{"temperature":{"bridge":{"offset":5000.0,"gain":0.50354}}},"peripherals":{"adc":{"core":{"names":["Core0","Core1","SharedCore"]}}},"pim":{"algorithm":{"single_channel":{"supported":true}}},"device":"33ck256mp508","board":{"id":"lvmc-33ck"}},"peripherals":{"adc":{"requestedDedCoreSamplingTimeData":[{"core":"Core0","requestedSamplingTime_us":0.3},{"core":"Core1","requestedSamplingTime_us":0.3}],"dataOutputFormat":"Fractional","channelConfig":[{"channel":"AN0","sign":"signed","core":"Core0","customName":"MCAF_ADC_PHASEA_CURRENT","inverted":true},{"channel":"AN1","sign":"signed","core":"Core1","customName":"MCAF_ADC_PHASEB_CURRENT","inverted":true},{"channel":"AN10","sign":"signed","core":"Shared","customName":"MCAF_ADC_PHASEC_CURRENT","inverted":true},{"channel":"AN4","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_CURRENT","inverted":false},{"channel":"AN15","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_VOLTAGE"},{"channel":"AN11","sign":"signed","core":"Shared","customName":"MCAF_ADC_POTENTIOMETER"},{"channel":"AN12","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_BRIDGE_TEMPERATURE"},{"channel":"AN17","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEA_VOLTAGE"},{"channel":"AN23","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEB_VOLTAGE"},{"channel":"AN22","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEC_VOLTAGE"}],"customName":"MCC_ADC","interruptDriven":false,"requestedSharedSamplingTime_us":0.3,"resolution":12.0},"comparator":{"customName":"MCC_CMP","dacOutputEnable":false,"nonInvertedSourceSelected":"CMP1C","outputPolarity":"Non-Inverted","dacDataValues":{"dataHigh":3205.0},"interruptDriven":false},"timer":[{"requestedTimerPeriod_ms":1.0,"customName":"MCC_TMR_TICK","interruptDriven":true},{"clkSrc":"FCY","customName":"MCC_TMR_PROFILE","interruptDriven":false,"clkPrescaler":1.0,"periodCount":65535.0}],"oscillator":{"clockSource":"FRC Oscillator with PLL","requestedSystemFrequency_Hz":0.0,"defaultValue":"max-frequency","setMaximumSystemFrequency":true,"clockSourceFrequency":8000000.0},"opamp":[{"instance":1.0,"enable":true,"customName":"MCC_OPA_IA"},{"instance":2.0,"enable":true,"customName":"MCC_OPA_IB"},{"instance":3.0,"enable":true,"customName":"MCC_OPA_IDC"}],"qei":[{"noiseFilterEnable":false,"pinMapping":[{"pin":"RC12","functionName":"A","direction":"input"},{"pin":"RC13","functionName":"B","direction":"input"},{"pin":"RC14","functionName":"INDX","direction":"input"}],"qeiOperationMode":"Modulo Count mode","indexPulseCaptureEnable":false,"homePulseCaptureEnable":false,"homePulsePolarity":false,"customName":"MCC_QEI","indexPulsePolarity":false}],"wdt":{"wdtEnable":true,"requestedWdtPeriod_ms":1.0,"wdtMode":"Non-Window mode","wdtEnableType":"Software"},"pwm":{"synchronousUpdate":true,"duty_cycle":{"maximum":0.975,"minimum":0.009},"requestedDeadTime_us":{"defaultValue":1.0,"maximum":6.0,"minimum":0.67},"customName":"MCC_PWM","generatorMapping":[{"name":"MOTOR1_PHASE_A","generator":1.0},{"name":"MOTOR1_PHASE_B","generator":2.0},{"name":"MOTOR1_PHASE_C","generator":4.0}],"interruptDriven":false,"faultInputPolarity":"Active-high","faultInput":{},"frequency":{"defaultValue":20000.0,"maximum":100000.0,"minimum":1000.0},"faultInputSource":"CMP1 Output","polarity":{"lower":"Active-high","upper":"Active-high"}},"uart":{"baudRate":115200.0,"pinMapping":[{"name":"TX","pinSelected":"RD13"},{"name":"RX","pinSelected":"RD14"}],"stopBits":1.0,"parity":"None","dataSize":8.0,"customName":"MCC_UART","interruptDriven":false},"gpio":[{"isWeakPullUp":false,"pinSelected":"RE6","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED1","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE7","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED2","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE11","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON1","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE12","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON2","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE4","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_TESTPOINT1","isAnalogPin":false,"direction":"output","isOpenDrain":false}]},"displayName":"dsPIC33CK LVMC","name":"dsPIC33CK Low Voltage Motor Control (LVMC) Development Board","partNumber":"DM330031","id":"lvmc-33ck","supportedPim":[]},"pwm":{"period":5.0E-5,"duty_cycle":{"maximum":0.975,"minimum":0.009000000000000001},"deadtime":1.0E-6},"idc":{"maximum":2.9,"units":"A"},"sampling_time":{"current":5.0E-5,"velocity":0.001},"processor":{"clock_frequency":1.0E8,"pim":"PIM/DIM Not Applicable","familyName":"dsPIC33CK256MP508","device":"dsPIC33CK256MP508"},"vbus":24.0}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:53</date>
+  <millis>1718846573805</millis>
+  <sequence>4245</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</class>
+  <method>log</method>
+  <thread>287</thread>
+  <message>time to get get_transfer_function = 6us, time to construct PyObjects = 1844us, time to call get_transfer_function = 2692us</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:53</date>
+  <millis>1718846573809</millis>
+  <sequence>4246</sequence>
+  <logger>com.microchip.motorbench.at.VelocityTransferFunction</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.VelocityTransferFunction</class>
+  <method>getTuneResult</method>
+  <thread>287</thread>
+  <message>time to prepare PITuneByPhase velocity loop: 2106us, time to autotune: 598us, number of calls: ???</message>
+</record>
+<record>
+  <date>2024-06-19T18:22:53</date>
+  <millis>1718846573818</millis>
+  <sequence>4247</sequence>
+  <logger>com.microchip.motorbench.mcc.custom.CustomizeModel</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.mcc.custom.CustomizeModel</class>
+  <method>log</method>
+  <thread>287</thread>
+  <message>Updating with expected schema version 4,  updateCount =1
+{"config":{"ui":{"content":{"current_measure-method":"dual_channel","current_measure-single_channel-minimumTime":2,"current_measure-single_channel-sampleDelay":0,"current_measure-opamp-full_input_range":true,"estimator-type":"pll","estimator-active-pll":false,"estimator-active-qei":false,"estimator-active-atpll":false,"estimator-active-zsmt":false,"estimator-active-ideal":false,"operation-min_velocity_ratio":0.25,"operation-startup_velocity_ratio":0.2744,"operation-max_velocity_ratio":1.25,"operation-fullscale_base_ratio":1.5,"operation-outer_loop_type":"velocity","operation-saliency-threshold":1.25,"operation-slewrate-accel":0.5,"operation-slewrate-decel":1,"operation-dyn_current_type":"none","operation-stopping-type":"minimal_impact","operation-stopping-closed_loop_parameters-speed":0.05,"operation-stopping-closed_loop_parameters-time":0.5,"operation-coastdown-end_velocity":0.05,"operation-coastdown-time":1.2,"fault_inject-get_tf-div0":false,"fault_inject-get_tf-missing_data":false,"fault_inject-get_tf-raise_value_error":false,"fault_inject-get_tf-raise_custom_error":false,"fault_inject-tf-tf_null":false,"fault_inject-tf-tf_jy":false,"fault_inject-tf-tf_jyex":false,"fault_inject-tf-div0":false,"fault_inject-tf-tau":0,"flux_control-method":"none","flux_control-eqn_based-ilimit-region_type":"quadratic","flux_control-eqn_based-ilimit-id_limit":0.7,"flux_control-eqn_based-ilimit-iq_limit":0.95,"flux_control-eqn_based-fluxweak_enable":false,"flux_control-eqn_based-fw-vdq_limit":0.95,"flux_control-eqn_based-mtpa_enable":false,"deadtimecomp-method":"none","deadtimecomp-perphase-current_sign_band":0.02,"deadtimecomp-perphase-forward_gain":0,"deadtimecomp-perphase-feedback_gain":0,"fault_detect-margin_uv":2,"fault_detect-margin_ov":2,"fault_detect-stall_detect_enable":true,"startup-Istartup":0.75,"startup-t_rampup":25,"startup-t_align":0,"startup-min_total_accel_time":250,"startup-torque_scale_accel":0.15,"startup-torque_scale_slow_accel":0.2,"startup-t_hold":0,"startup-omega0":0.2,"startup-theta_converge_rate":1,"startup-method":"classic","startup-damping-Imax":0.1,"startup-damping-gainmax":40,"startup-damping-omega_min":0.4,"overmodulation-vd_limit":1,"overmodulation-vq_limit":1.15,"overmodulation-include_duty_clipping":true,"pll-tau":2.19,"pll-omega1":116.5,"pll-velocity_filter_threshold":1,"encoder-lines":250,"encoder-index_present":false,"encoder-tracking_loop-tau":1.5,"encoder-qei_sync-method":"align","encoder-qei_sync-align-t_align":0.5,"encoder-qei_sync-align-angle_shift":30,"encoder-qei_sync-align-angle_init":-30,"encoder-qei_sync-align_sweep-sweep_rate_pow":1,"encoder-qei_sync-align_sweep-setup_angle":45,"encoder-qei_sync-pullout-pullout_slip":0.117,"zsmt-excitation-kV":0.12,"zsmt-excitation-kI":0.1,"zsmt-pll-zeta":1.5,"zsmt-pll-tau":10,"zsmt-pll-tau_lpf":0,"zsmt-pll-execution_divider":2,"zsmt-startup-align_delay":1,"zsmt-startup-pll_lock_time":1,"zsmt-startup-speed_limit":0.015,"zsmt-startup-current_limit":0.3,"zsmt-startup-probe_duration":10,"zsmt-startup-probe_slew_time":1.5,"zsmt-startup-probe_blanking_time":4,"zsmt-hybrid-type":"minotaur","zsmt-minotaur-voltage_limit-vd":0.45,"zsmt-minotaur-voltage_limit-vq":0.78,"zsmt-minotaur-converge-angle":10,"zsmt-minotaur-converge-duration":2,"zsmt-minotaur-velocity_threshold-slow":0.15,"zsmt-minotaur-velocity_threshold-transition":0.2,"zsmt-minotaur-velocity_threshold-fast":0.25,"zsmt-angle_correction-current_gain":0,"dyn_current1-peak_factor":1,"dyn_current1-horizon_factor":1.05,"dyn_current1-tau":5,"dyn_current1-nsamples":128,"voltage_outerloop-tau_lpf":2,"voltage_outerloop-Kp":0.1,"voltage_outerloop-tau":100,"mcapi-isSquaredTau":1,"mcapi-iqTau":1,"mcapi-adcIsrUserFunctions_enable":false,"board_service-uiServiceTiming":1,"board_service-uiButtonDebounceTime":7,"board_service-uiButtonLongPressTime":2.5,"test_harness-perturbation_asymmetric":false,"adc-vtempbridge":false,"adc-temp_bridge_params-threshold":50,"adc-temp_bridge_params-tau_lpf":10,"adc-temp_bridge_params-slewrate":4,"adc-vabsref":false,"adc-vphasea":false,"adc-vphaseb":false,"adc-vphasec":false},"version":{"schema":4,"motorBench":"2.45.0","MCAF":"R7"},"status":{"valid":true}}}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882685</millis>
+  <sequence>4396</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>Calling get_transfer_function...</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882687</millis>
+  <sequence>4397</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>uiState: {"config":{"ui":{"content":{"current_measure-method":"dual_channel","current_measure-single_channel-minimumTime":2.0,"current_measure-single_channel-sampleDelay":0.0,"current_measure-opamp-full_input_range":true,"estimator-type":"pll","estimator-active-pll":false,"estimator-active-qei":false,"estimator-active-atpll":false,"estimator-active-zsmt":false,"estimator-active-ideal":false,"operation-min_velocity_ratio":0.25,"operation-startup_velocity_ratio":0.2744,"operation-max_velocity_ratio":1.25,"operation-fullscale_base_ratio":1.5,"operation-outer_loop_type":"velocity","operation-saliency-threshold":1.25,"operation-slewrate-accel":0.5,"operation-slewrate-decel":1.0,"operation-dyn_current_type":"none","operation-stopping-type":"minimal_impact","operation-stopping-closed_loop_parameters-speed":0.05,"operation-stopping-closed_loop_parameters-time":0.5,"operation-coastdown-end_velocity":0.05,"operation-coastdown-time":1.2,"fault_inject-get_tf-div0":false,"fault_inject-get_tf-missing_data":false,"fault_inject-get_tf-raise_value_error":false,"fault_inject-get_tf-raise_custom_error":false,"fault_inject-tf-tf_null":false,"fault_inject-tf-tf_jy":false,"fault_inject-tf-tf_jyex":false,"fault_inject-tf-div0":false,"fault_inject-tf-tau":0.0,"flux_control-method":"none","flux_control-eqn_based-ilimit-region_type":"quadratic","flux_control-eqn_based-ilimit-id_limit":0.7,"flux_control-eqn_based-ilimit-iq_limit":0.95,"flux_control-eqn_based-fluxweak_enable":false,"flux_control-eqn_based-fw-vdq_limit":0.95,"flux_control-eqn_based-mtpa_enable":false,"deadtimecomp-method":"none","deadtimecomp-perphase-current_sign_band":0.02,"deadtimecomp-perphase-forward_gain":0.0,"deadtimecomp-perphase-feedback_gain":0.0,"fault_detect-margin_uv":2.0,"fault_detect-margin_ov":2.0,"fault_detect-stall_detect_enable":true,"startup-Istartup":0.75,"startup-t_rampup":25.0,"startup-t_align":0.0,"startup-min_total_accel_time":250.0,"startup-torque_scale_accel":0.15,"startup-torque_scale_slow_accel":0.2,"startup-t_hold":0.0,"startup-omega0":0.2,"startup-theta_converge_rate":1.0,"startup-method":"classic","startup-damping-Imax":0.1,"startup-damping-gainmax":40.0,"startup-damping-omega_min":0.4,"overmodulation-vd_limit":1.0,"overmodulation-vq_limit":1.15,"overmodulation-include_duty_clipping":true,"pll-tau":2.19,"pll-omega1":116.5,"pll-velocity_filter_threshold":1.0,"encoder-lines":250.0,"encoder-index_present":false,"encoder-tracking_loop-tau":1.5,"encoder-qei_sync-method":"align","encoder-qei_sync-align-t_align":0.5,"encoder-qei_sync-align-angle_shift":30.0,"encoder-qei_sync-align-angle_init":-30.0,"encoder-qei_sync-align_sweep-sweep_rate_pow":1.0,"encoder-qei_sync-align_sweep-setup_angle":45.0,"encoder-qei_sync-pullout-pullout_slip":0.117,"zsmt-excitation-kV":0.12,"zsmt-excitation-kI":0.1,"zsmt-pll-zeta":1.5,"zsmt-pll-tau":10.0,"zsmt-pll-tau_lpf":0.0,"zsmt-pll-execution_divider":2.0,"zsmt-startup-align_delay":1.0,"zsmt-startup-pll_lock_time":1.0,"zsmt-startup-speed_limit":0.015,"zsmt-startup-current_limit":0.3,"zsmt-startup-probe_duration":10.0,"zsmt-startup-probe_slew_time":1.5,"zsmt-startup-probe_blanking_time":4.0,"zsmt-hybrid-type":"minotaur","zsmt-minotaur-voltage_limit-vd":0.45,"zsmt-minotaur-voltage_limit-vq":0.78,"zsmt-minotaur-converge-angle":10.0,"zsmt-minotaur-converge-duration":2.0,"zsmt-minotaur-velocity_threshold-slow":0.15,"zsmt-minotaur-velocity_threshold-transition":0.2,"zsmt-minotaur-velocity_threshold-fast":0.25,"zsmt-angle_correction-current_gain":0.0,"dyn_current1-peak_factor":1.0,"dyn_current1-horizon_factor":1.05,"dyn_current1-tau":5.0,"dyn_current1-nsamples":128.0,"voltage_outerloop-tau_lpf":2.0,"voltage_outerloop-Kp":0.1,"voltage_outerloop-tau":100.0,"mcapi-isSquaredTau":1.0,"mcapi-iqTau":1.0,"mcapi-adcIsrUserFunctions_enable":false,"board_service-uiServiceTiming":1.0,"board_service-uiButtonDebounceTime":7.0,"board_service-uiButtonLongPressTime":2.5,"test_harness-perturbation_asymmetric":false,"adc-vtempbridge":false,"adc-temp_bridge_params-threshold":50.0,"adc-temp_bridge_params-tau_lpf":10.0,"adc-temp_bridge_params-slewrate":4.0,"adc-vabsref":false,"adc-vphasea":false,"adc-vphaseb":false,"adc-vphasec":false},"version":{"schema":4.0,"motorBench":"2.45.0","MCAF":"R7"},"status":{"valid":true}}}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882688</millis>
+  <sequence>4398</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>model: {"motor":{"Tfr":0.0048125,"B":3.22134E-5,"Lq":3.49495E-4,"poleCount":10,"rated_current":4.53,"J":1.8079199999999998E-5,"velocity":{"nominal":381.5987877,"maximum":628.3185307,"units":"rad/s"},"L":3.5898099999999997E-4,"R":0.37160175,"current":{"maximum":{"continuous":4.53,"peak":4.53},"units":"A"},"Ld":3.68467E-4,"Ke":0.037146886986834084,"id":"Hurst300"},"controller":{},"metadata":{"data_model":{"schema_version":5},"motorBench":{"commit_id":"6062ee969f17e173cb8502638f1e3c8ee7bea3fb","version":"2.45.0"},"MCC":{"peripherals":{"instances":[{"name":"ADC1","type":"adc"},{"name":"PWM","type":"pwm_hs"},{"name":"QEI1","type":"qei"},{"name":"TMR1","type":"timer"},{"name":"SCCP1","type":"timer"},{"name":"UART1","type":"uart"},{"name":"OPA1","type":"opa"},{"name":"OPA2","type":"opa"},{"name":"OPA3","type":"opa"}]},"version":"5.7.0","peripheral_library":{"name":"melody","version":"NA"},"architecture":"melody"}},"operating_range":{"velocity":{"units_qualifier":"mechanical","units":"rad/s","minimum":104.7198}},"scdata":{"setup":{"communications":{"baudrate":625000},"analysis":{"spindown_time":{"units":"s","value":1.0},"max_motor_speed":{"units":"rad/s mechanical","value":2094.4}},"calibration":{"vdc":{"units":"V","value":24.0},"resistor":{"units":"ohms","value":12.0}}}},"drive":{"metadata":{"name":"dsPIC33CK Low Voltage Motor Control Board","id":"lvmc-33ck"},"estimator":{"omega1":732.0,"tau":0.00219,"type":"pll"},"iout":{"time_constant":1.8413E-7,"fullscale":21.83,"maximum":{"continuous":14.1421},"units":"A","measurement":{"compensation":{"channels":["a","b"],"values":{"a":[1.0,0.0],"b":[0.0,1.0]}}}},"vdc":{"nominal":24.0,"time_constant":3.147E-4,"fullscale":71.3,"maximum":48.0,"units":"V","minimum":12.0},"configuration":{"metadata":{"capability":{"adc":{"channel":{"PHASEB_VOLTAGE":"AN23","PHASEB_CURRENT":"AN1","PHASEA_VOLTAGE":"AN17","PHASEC_CURRENT":"AN10","POTENTIOMETER":"AN11","BRIDGE_TEMPERATURE":"AN12","DCLINK_VOLTAGE":"AN15","PHASEA_CURRENT":"AN0","PHASEC_VOLTAGE":"AN22","DCLINK_CURRENT":"AN4"}},"opamp":"internal","buttonCount":2.0,"current_measure":{"a":true,"b":true,"c":true,"dc":true}},"scaling":{"temperature":{"bridge":{"offset":5000.0,"gain":0.50354}}},"peripherals":{"adc":{"core":{"names":["Core0","Core1","SharedCore"]}}},"pim":{"algorithm":{"single_channel":{"supported":true}}},"device":"33ck256mp508","board":{"id":"lvmc-33ck"}},"peripherals":{"adc":{"requestedDedCoreSamplingTimeData":[{"core":"Core0","requestedSamplingTime_us":0.3},{"core":"Core1","requestedSamplingTime_us":0.3}],"dataOutputFormat":"Fractional","channelConfig":[{"channel":"AN0","sign":"signed","core":"Core0","customName":"MCAF_ADC_PHASEA_CURRENT","inverted":true},{"channel":"AN1","sign":"signed","core":"Core1","customName":"MCAF_ADC_PHASEB_CURRENT","inverted":true},{"channel":"AN10","sign":"signed","core":"Shared","customName":"MCAF_ADC_PHASEC_CURRENT","inverted":true},{"channel":"AN4","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_CURRENT","inverted":false},{"channel":"AN15","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_VOLTAGE"},{"channel":"AN11","sign":"signed","core":"Shared","customName":"MCAF_ADC_POTENTIOMETER"},{"channel":"AN12","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_BRIDGE_TEMPERATURE"},{"channel":"AN17","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEA_VOLTAGE"},{"channel":"AN23","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEB_VOLTAGE"},{"channel":"AN22","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEC_VOLTAGE"}],"customName":"MCC_ADC","interruptDriven":false,"requestedSharedSamplingTime_us":0.3,"resolution":12.0},"comparator":{"customName":"MCC_CMP","dacOutputEnable":false,"nonInvertedSourceSelected":"CMP1C","outputPolarity":"Non-Inverted","dacDataValues":{"dataHigh":3205.0},"interruptDriven":false},"timer":[{"requestedTimerPeriod_ms":1.0,"customName":"MCC_TMR_TICK","interruptDriven":true},{"clkSrc":"FCY","customName":"MCC_TMR_PROFILE","interruptDriven":false,"clkPrescaler":1.0,"periodCount":65535.0}],"oscillator":{"clockSource":"FRC Oscillator with PLL","requestedSystemFrequency_Hz":0.0,"defaultValue":"max-frequency","setMaximumSystemFrequency":true,"clockSourceFrequency":8000000.0},"opamp":[{"instance":1.0,"enable":true,"customName":"MCC_OPA_IA"},{"instance":2.0,"enable":true,"customName":"MCC_OPA_IB"},{"instance":3.0,"enable":true,"customName":"MCC_OPA_IDC"}],"qei":[{"noiseFilterEnable":false,"pinMapping":[{"pin":"RC12","functionName":"A","direction":"input"},{"pin":"RC13","functionName":"B","direction":"input"},{"pin":"RC14","functionName":"INDX","direction":"input"}],"qeiOperationMode":"Modulo Count mode","indexPulseCaptureEnable":false,"homePulseCaptureEnable":false,"homePulsePolarity":false,"customName":"MCC_QEI","indexPulsePolarity":false}],"wdt":{"wdtEnable":true,"requestedWdtPeriod_ms":1.0,"wdtMode":"Non-Window mode","wdtEnableType":"Software"},"pwm":{"synchronousUpdate":true,"duty_cycle":{"maximum":0.975,"minimum":0.009},"requestedDeadTime_us":{"defaultValue":1.0,"maximum":6.0,"minimum":0.67},"customName":"MCC_PWM","generatorMapping":[{"name":"MOTOR1_PHASE_A","generator":1.0},{"name":"MOTOR1_PHASE_B","generator":2.0},{"name":"MOTOR1_PHASE_C","generator":4.0}],"interruptDriven":false,"faultInputPolarity":"Active-high","faultInput":{},"frequency":{"defaultValue":20000.0,"maximum":100000.0,"minimum":1000.0},"faultInputSource":"CMP1 Output","polarity":{"lower":"Active-high","upper":"Active-high"}},"uart":{"baudRate":115200.0,"pinMapping":[{"name":"TX","pinSelected":"RD13"},{"name":"RX","pinSelected":"RD14"}],"stopBits":1.0,"parity":"None","dataSize":8.0,"customName":"MCC_UART","interruptDriven":false},"gpio":[{"isWeakPullUp":false,"pinSelected":"RE6","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED1","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE7","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED2","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE11","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON1","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE12","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON2","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE4","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_TESTPOINT1","isAnalogPin":false,"direction":"output","isOpenDrain":false}]},"displayName":"dsPIC33CK LVMC","name":"dsPIC33CK Low Voltage Motor Control (LVMC) Development Board","partNumber":"DM330031","id":"lvmc-33ck","supportedPim":[]},"pwm":{"period":5.0E-5,"duty_cycle":{"maximum":0.975,"minimum":0.009000000000000001},"deadtime":1.0E-6},"idc":{"maximum":2.9,"units":"A"},"sampling_time":{"current":5.0E-5,"velocity":0.001},"processor":{"clock_frequency":1.0E8,"pim":"PIM/DIM Not Applicable","familyName":"dsPIC33CK256MP508","device":"dsPIC33CK256MP508"},"vbus":24.0}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882698</millis>
+  <sequence>4399</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</class>
+  <method>log</method>
+  <thread>287</thread>
+  <message>time to get get_transfer_function = 96us, time to construct PyObjects = 3134us, time to call get_transfer_function = 6440us</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882702</millis>
+  <sequence>4400</sequence>
+  <logger>com.microchip.motorbench.at.VelocityTransferFunction</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.VelocityTransferFunction</class>
+  <method>getTuneResult</method>
+  <thread>287</thread>
+  <message>time to prepare PITuneByPhase velocity loop: 1471us, time to autotune: 308us, number of calls: ???</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882705</millis>
+  <sequence>4401</sequence>
+  <logger>com.microchip.motorbench.at.VelocityTransferFunction</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.VelocityTransferFunction</class>
+  <method>getTuneResult</method>
+  <thread>287</thread>
+  <message>time to prepare PITuneByPhase velocity loop: 1818us, time to autotune: 332us, number of calls: ???</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882752</millis>
+  <sequence>4402</sequence>
+  <logger>com.microchip.motorbench.fw.FirmwarePackageManagerImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.fw.FirmwarePackageManagerImpl</class>
+  <method>turnCrank</method>
+  <thread>287</thread>
+  <message>State set to READY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882763</millis>
+  <sequence>4403</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>Calling get_transfer_function...</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882764</millis>
+  <sequence>4404</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>uiState: {"config":{"ui":{"content":{"current_measure-method":"dual_channel","current_measure-single_channel-minimumTime":2.0,"current_measure-single_channel-sampleDelay":0.0,"current_measure-opamp-full_input_range":true,"estimator-type":"pll","estimator-active-pll":false,"estimator-active-qei":false,"estimator-active-atpll":false,"estimator-active-zsmt":false,"estimator-active-ideal":false,"operation-min_velocity_ratio":0.25,"operation-startup_velocity_ratio":0.2744,"operation-max_velocity_ratio":1.25,"operation-fullscale_base_ratio":1.5,"operation-outer_loop_type":"velocity","operation-saliency-threshold":1.25,"operation-slewrate-accel":0.5,"operation-slewrate-decel":1.0,"operation-dyn_current_type":"none","operation-stopping-type":"minimal_impact","operation-stopping-closed_loop_parameters-speed":0.05,"operation-stopping-closed_loop_parameters-time":0.5,"operation-coastdown-end_velocity":0.05,"operation-coastdown-time":1.2,"fault_inject-get_tf-div0":false,"fault_inject-get_tf-missing_data":false,"fault_inject-get_tf-raise_value_error":false,"fault_inject-get_tf-raise_custom_error":false,"fault_inject-tf-tf_null":false,"fault_inject-tf-tf_jy":false,"fault_inject-tf-tf_jyex":false,"fault_inject-tf-div0":false,"fault_inject-tf-tau":0.0,"flux_control-method":"none","flux_control-eqn_based-ilimit-region_type":"quadratic","flux_control-eqn_based-ilimit-id_limit":0.7,"flux_control-eqn_based-ilimit-iq_limit":0.95,"flux_control-eqn_based-fluxweak_enable":false,"flux_control-eqn_based-fw-vdq_limit":0.95,"flux_control-eqn_based-mtpa_enable":false,"deadtimecomp-method":"none","deadtimecomp-perphase-current_sign_band":0.02,"deadtimecomp-perphase-forward_gain":0.0,"deadtimecomp-perphase-feedback_gain":0.0,"fault_detect-margin_uv":2.0,"fault_detect-margin_ov":2.0,"fault_detect-stall_detect_enable":true,"startup-Istartup":0.75,"startup-t_rampup":25.0,"startup-t_align":0.0,"startup-min_total_accel_time":250.0,"startup-torque_scale_accel":0.15,"startup-torque_scale_slow_accel":0.2,"startup-t_hold":0.0,"startup-omega0":0.2,"startup-theta_converge_rate":1.0,"startup-method":"classic","startup-damping-Imax":0.1,"startup-damping-gainmax":40.0,"startup-damping-omega_min":0.4,"overmodulation-vd_limit":1.0,"overmodulation-vq_limit":1.15,"overmodulation-include_duty_clipping":true,"pll-tau":2.19,"pll-omega1":116.5,"pll-velocity_filter_threshold":1.0,"encoder-lines":250.0,"encoder-index_present":false,"encoder-tracking_loop-tau":1.5,"encoder-qei_sync-method":"align","encoder-qei_sync-align-t_align":0.5,"encoder-qei_sync-align-angle_shift":30.0,"encoder-qei_sync-align-angle_init":-30.0,"encoder-qei_sync-align_sweep-sweep_rate_pow":1.0,"encoder-qei_sync-align_sweep-setup_angle":45.0,"encoder-qei_sync-pullout-pullout_slip":0.117,"zsmt-excitation-kV":0.12,"zsmt-excitation-kI":0.1,"zsmt-pll-zeta":1.5,"zsmt-pll-tau":10.0,"zsmt-pll-tau_lpf":0.0,"zsmt-pll-execution_divider":2.0,"zsmt-startup-align_delay":1.0,"zsmt-startup-pll_lock_time":1.0,"zsmt-startup-speed_limit":0.015,"zsmt-startup-current_limit":0.3,"zsmt-startup-probe_duration":10.0,"zsmt-startup-probe_slew_time":1.5,"zsmt-startup-probe_blanking_time":4.0,"zsmt-hybrid-type":"minotaur","zsmt-minotaur-voltage_limit-vd":0.45,"zsmt-minotaur-voltage_limit-vq":0.78,"zsmt-minotaur-converge-angle":10.0,"zsmt-minotaur-converge-duration":2.0,"zsmt-minotaur-velocity_threshold-slow":0.15,"zsmt-minotaur-velocity_threshold-transition":0.2,"zsmt-minotaur-velocity_threshold-fast":0.25,"zsmt-angle_correction-current_gain":0.0,"dyn_current1-peak_factor":1.0,"dyn_current1-horizon_factor":1.05,"dyn_current1-tau":5.0,"dyn_current1-nsamples":128.0,"voltage_outerloop-tau_lpf":2.0,"voltage_outerloop-Kp":0.1,"voltage_outerloop-tau":100.0,"mcapi-isSquaredTau":1.0,"mcapi-iqTau":1.0,"mcapi-adcIsrUserFunctions_enable":false,"board_service-uiServiceTiming":1.0,"board_service-uiButtonDebounceTime":7.0,"board_service-uiButtonLongPressTime":2.5,"test_harness-perturbation_asymmetric":false,"adc-vtempbridge":false,"adc-temp_bridge_params-threshold":50.0,"adc-temp_bridge_params-tau_lpf":10.0,"adc-temp_bridge_params-slewrate":4.0,"adc-vabsref":false,"adc-vphasea":false,"adc-vphaseb":false,"adc-vphasec":false},"version":{"schema":4.0,"motorBench":"2.45.0","MCAF":"R7"},"status":{"valid":true}}}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882764</millis>
+  <sequence>4405</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>model: {"motor":{"Tfr":0.0048125,"B":3.22134E-5,"Lq":3.49495E-4,"poleCount":10,"rated_current":4.53,"J":1.8079199999999998E-5,"velocity":{"nominal":381.5987877,"maximum":628.3185307,"units":"rad/s"},"L":3.5898099999999997E-4,"R":0.37160175,"current":{"maximum":{"continuous":4.53,"peak":4.53},"units":"A"},"Ld":3.68467E-4,"Ke":0.037146886986834084,"id":"Hurst300"},"controller":{},"metadata":{"data_model":{"schema_version":5},"motorBench":{"commit_id":"6062ee969f17e173cb8502638f1e3c8ee7bea3fb","version":"2.45.0"},"MCC":{"peripherals":{"instances":[{"name":"ADC1","type":"adc"},{"name":"PWM","type":"pwm_hs"},{"name":"QEI1","type":"qei"},{"name":"TMR1","type":"timer"},{"name":"SCCP1","type":"timer"},{"name":"UART1","type":"uart"},{"name":"OPA1","type":"opa"},{"name":"OPA2","type":"opa"},{"name":"OPA3","type":"opa"}]},"version":"5.7.0","peripheral_library":{"name":"melody","version":"NA"},"architecture":"melody"}},"operating_range":{"velocity":{"units_qualifier":"mechanical","units":"rad/s","minimum":104.7198}},"scdata":{"setup":{"communications":{"baudrate":625000},"analysis":{"spindown_time":{"units":"s","value":1.0},"max_motor_speed":{"units":"rad/s mechanical","value":2094.4}},"calibration":{"vdc":{"units":"V","value":24.0},"resistor":{"units":"ohms","value":12.0}}}},"drive":{"metadata":{"name":"dsPIC33CK Low Voltage Motor Control Board","id":"lvmc-33ck"},"estimator":{"omega1":732.0,"tau":0.00219,"type":"pll"},"iout":{"time_constant":1.8413E-7,"fullscale":21.83,"maximum":{"continuous":14.1421},"units":"A","measurement":{"compensation":{"channels":["a","b"],"values":{"a":[1.0,0.0],"b":[0.0,1.0]}}}},"vdc":{"nominal":24.0,"time_constant":3.147E-4,"fullscale":71.3,"maximum":48.0,"units":"V","minimum":12.0},"configuration":{"metadata":{"capability":{"adc":{"channel":{"PHASEB_VOLTAGE":"AN23","PHASEB_CURRENT":"AN1","PHASEA_VOLTAGE":"AN17","PHASEC_CURRENT":"AN10","POTENTIOMETER":"AN11","BRIDGE_TEMPERATURE":"AN12","DCLINK_VOLTAGE":"AN15","PHASEA_CURRENT":"AN0","PHASEC_VOLTAGE":"AN22","DCLINK_CURRENT":"AN4"}},"opamp":"internal","buttonCount":2.0,"current_measure":{"a":true,"b":true,"c":true,"dc":true}},"scaling":{"temperature":{"bridge":{"offset":5000.0,"gain":0.50354}}},"peripherals":{"adc":{"core":{"names":["Core0","Core1","SharedCore"]}}},"pim":{"algorithm":{"single_channel":{"supported":true}}},"device":"33ck256mp508","board":{"id":"lvmc-33ck"}},"peripherals":{"adc":{"requestedDedCoreSamplingTimeData":[{"core":"Core0","requestedSamplingTime_us":0.3},{"core":"Core1","requestedSamplingTime_us":0.3}],"dataOutputFormat":"Fractional","channelConfig":[{"channel":"AN0","sign":"signed","core":"Core0","customName":"MCAF_ADC_PHASEA_CURRENT","inverted":true},{"channel":"AN1","sign":"signed","core":"Core1","customName":"MCAF_ADC_PHASEB_CURRENT","inverted":true},{"channel":"AN10","sign":"signed","core":"Shared","customName":"MCAF_ADC_PHASEC_CURRENT","inverted":true},{"channel":"AN4","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_CURRENT","inverted":false},{"channel":"AN15","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_VOLTAGE"},{"channel":"AN11","sign":"signed","core":"Shared","customName":"MCAF_ADC_POTENTIOMETER"},{"channel":"AN12","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_BRIDGE_TEMPERATURE"},{"channel":"AN17","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEA_VOLTAGE"},{"channel":"AN23","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEB_VOLTAGE"},{"channel":"AN22","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEC_VOLTAGE"}],"customName":"MCC_ADC","interruptDriven":false,"requestedSharedSamplingTime_us":0.3,"resolution":12.0},"comparator":{"customName":"MCC_CMP","dacOutputEnable":false,"nonInvertedSourceSelected":"CMP1C","outputPolarity":"Non-Inverted","dacDataValues":{"dataHigh":3205.0},"interruptDriven":false},"timer":[{"requestedTimerPeriod_ms":1.0,"customName":"MCC_TMR_TICK","interruptDriven":true},{"clkSrc":"FCY","customName":"MCC_TMR_PROFILE","interruptDriven":false,"clkPrescaler":1.0,"periodCount":65535.0}],"oscillator":{"clockSource":"FRC Oscillator with PLL","requestedSystemFrequency_Hz":0.0,"defaultValue":"max-frequency","setMaximumSystemFrequency":true,"clockSourceFrequency":8000000.0},"opamp":[{"instance":1.0,"enable":true,"customName":"MCC_OPA_IA"},{"instance":2.0,"enable":true,"customName":"MCC_OPA_IB"},{"instance":3.0,"enable":true,"customName":"MCC_OPA_IDC"}],"qei":[{"noiseFilterEnable":false,"pinMapping":[{"pin":"RC12","functionName":"A","direction":"input"},{"pin":"RC13","functionName":"B","direction":"input"},{"pin":"RC14","functionName":"INDX","direction":"input"}],"qeiOperationMode":"Modulo Count mode","indexPulseCaptureEnable":false,"homePulseCaptureEnable":false,"homePulsePolarity":false,"customName":"MCC_QEI","indexPulsePolarity":false}],"wdt":{"wdtEnable":true,"requestedWdtPeriod_ms":1.0,"wdtMode":"Non-Window mode","wdtEnableType":"Software"},"pwm":{"synchronousUpdate":true,"duty_cycle":{"maximum":0.975,"minimum":0.009},"requestedDeadTime_us":{"defaultValue":1.0,"maximum":6.0,"minimum":0.67},"customName":"MCC_PWM","generatorMapping":[{"name":"MOTOR1_PHASE_A","generator":1.0},{"name":"MOTOR1_PHASE_B","generator":2.0},{"name":"MOTOR1_PHASE_C","generator":4.0}],"interruptDriven":false,"faultInputPolarity":"Active-high","faultInput":{},"frequency":{"defaultValue":20000.0,"maximum":100000.0,"minimum":1000.0},"faultInputSource":"CMP1 Output","polarity":{"lower":"Active-high","upper":"Active-high"}},"uart":{"baudRate":115200.0,"pinMapping":[{"name":"TX","pinSelected":"RD13"},{"name":"RX","pinSelected":"RD14"}],"stopBits":1.0,"parity":"None","dataSize":8.0,"customName":"MCC_UART","interruptDriven":false},"gpio":[{"isWeakPullUp":false,"pinSelected":"RE6","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED1","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE7","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED2","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE11","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON1","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE12","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON2","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE4","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_TESTPOINT1","isAnalogPin":false,"direction":"output","isOpenDrain":false}]},"displayName":"dsPIC33CK LVMC","name":"dsPIC33CK Low Voltage Motor Control (LVMC) Development Board","partNumber":"DM330031","id":"lvmc-33ck","supportedPim":[]},"pwm":{"period":5.0E-5,"duty_cycle":{"maximum":0.975,"minimum":0.009000000000000001},"deadtime":1.0E-6},"idc":{"maximum":2.9,"units":"A"},"sampling_time":{"current":5.0E-5,"velocity":0.001},"processor":{"clock_frequency":1.0E8,"pim":"PIM/DIM Not Applicable","familyName":"dsPIC33CK256MP508","device":"dsPIC33CK256MP508"},"vbus":24.0}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882765</millis>
+  <sequence>4406</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</class>
+  <method>log</method>
+  <thread>287</thread>
+  <message>time to get get_transfer_function = 4us, time to construct PyObjects = 201us, time to call get_transfer_function = 468us</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882767</millis>
+  <sequence>4407</sequence>
+  <logger>com.microchip.motorbench.at.VelocityTransferFunction</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.VelocityTransferFunction</class>
+  <method>getTuneResult</method>
+  <thread>287</thread>
+  <message>time to prepare PITuneByPhase velocity loop: 1172us, time to autotune: 253us, number of calls: ???</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882769</millis>
+  <sequence>4408</sequence>
+  <logger>com.microchip.mcc.motorbench.core.MotorBenchCoreGeneratorImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.mcc.motorbench.core.MotorBenchCoreGeneratorImpl</class>
+  <method>takeSnapshot</method>
+  <thread>287</thread>
+  <message>Data model snapshot: on-generate-clicked</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882847</millis>
+  <sequence>4409</sequence>
+  <logger>com.microchip.motorbench.template.processor.McguiTemplateTool</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.McguiTemplateTool</class>
+  <method>generate</method>
+  <thread>287</thread>
+  <message>template-processor version 0.4.2</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882847</millis>
+  <sequence>4410</sequence>
+  <logger>com.microchip.motorbench.template.processor.McguiTemplateTool</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.McguiTemplateTool</class>
+  <method>getTemplateConfigurationFile</method>
+  <thread>287</thread>
+  <message>Reading config file C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\templating\config.yaml</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882900</millis>
+  <sequence>4411</sequence>
+  <logger>com.microchip.motorbench.template.processor.McguiTemplateTool</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.McguiTemplateTool</class>
+  <method>getCodeGenerationInitializer</method>
+  <thread>287</thread>
+  <message>Initializing code generation....</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882901</millis>
+  <sequence>4412</sequence>
+  <logger>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer$Builder</class>
+  <method>build</method>
+  <thread>287</thread>
+  <message>Preparing for Python imports</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882902</millis>
+  <sequence>4413</sequence>
+  <logger>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer$Builder</class>
+  <method>build</method>
+  <thread>287</thread>
+  <message>Initializing Jython</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882905</millis>
+  <sequence>4414</sequence>
+  <logger>com.microchip.motorbench.template.processor.McguiTemplateTool</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.McguiTemplateTool</class>
+  <method>getDefaultCodeGenerator</method>
+  <thread>287</thread>
+  <message>Creating list of items</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882944</millis>
+  <sequence>4415</sequence>
+  <logger>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</class>
+  <method>initialize</method>
+  <thread>287</thread>
+  <message>Getting application-specific data</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882948</millis>
+  <sequence>4416</sequence>
+  <logger>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</class>
+  <method>initialize</method>
+  <thread>287</thread>
+  <message>Combining data model</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882955</millis>
+  <sequence>4417</sequence>
+  <logger>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</class>
+  <method>initialize</method>
+  <thread>287</thread>
+  <message>Importing java objects</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882957</millis>
+  <sequence>4418</sequence>
+  <logger>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</class>
+  <method>initialize</method>
+  <thread>287</thread>
+  <message>Wrapping data model</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:02</date>
+  <millis>1718846882961</millis>
+  <sequence>4419</sequence>
+  <logger>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</class>
+  <method>initialize</method>
+  <thread>287</thread>
+  <message>Importing Jython objects</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:10</date>
+  <millis>1718846890842</millis>
+  <sequence>4420</sequence>
+  <logger>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</class>
+  <method>initialize</method>
+  <thread>287</thread>
+  <message>Running Jython initializers</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892056</millis>
+  <sequence>4421</sequence>
+  <logger>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.DefaultCodeGenerationInitializer</class>
+  <method>initialize</method>
+  <thread>287</thread>
+  <message>Running Jython application data processors</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892060</millis>
+  <sequence>4422</sequence>
+  <logger>com.microchip.motorbench.template.processor.McguiTemplateTool</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.McguiTemplateTool</class>
+  <method>callCodeGenerationTasks</method>
+  <thread>287</thread>
+  <message>Generating code</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892060</millis>
+  <sequence>4423</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\LICENSE.txt, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\LICENSE.txt, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892064</millis>
+  <sequence>4424</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\adc_compensation.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\adc_compensation.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892067</millis>
+  <sequence>4425</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\adc_compensation.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\adc_compensation.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892069</millis>
+  <sequence>4426</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\adc_compensation_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\adc_compensation_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892071</millis>
+  <sequence>4427</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\aux-files\parameters.html.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\aux-files\parameters.html, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892210</millis>
+  <sequence>4428</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\aux-files\report.html.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\aux-files\report.html, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892269</millis>
+  <sequence>4429</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\aux-files\report.json.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\aux-files\report.json, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892284</millis>
+  <sequence>4430</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\aux-files\report.xml.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\aux-files\report.xml.txt, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892300</millis>
+  <sequence>4431</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\board_service.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\board_service.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892305</millis>
+  <sequence>4432</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\board_service.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\board_service.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892309</millis>
+  <sequence>4433</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\board_service_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\board_service_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892312</millis>
+  <sequence>4434</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\commutation.c.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\commutation.c, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892335</millis>
+  <sequence>4435</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\commutation.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\commutation.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892339</millis>
+  <sequence>4436</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\commutation_excitation.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\commutation_excitation.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892345</millis>
+  <sequence>4437</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\commutation\common.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\commutation\common.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892349</millis>
+  <sequence>4438</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\commutation\pll.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\commutation\pll.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892355</millis>
+  <sequence>4439</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\commutation\pll.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\commutation\pll.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892359</millis>
+  <sequence>4440</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\commutation_types.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\commutation_types.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892367</millis>
+  <sequence>4441</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\current_measure\multi_channel\current_measure.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\current_measure.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892370</millis>
+  <sequence>4442</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\current_measure\multi_channel\current_measure.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\current_measure.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892374</millis>
+  <sequence>4443</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\current_measure\multi_channel\current_measure_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\current_measure_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892377</millis>
+  <sequence>4444</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\deadtimecomp\none\deadtimecomp.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\deadtimecomp.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892381</millis>
+  <sequence>4445</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\deadtimecomp\none\deadtimecomp_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\deadtimecomp_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892385</millis>
+  <sequence>4446</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\diagnostics.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\diagnostics.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892389</millis>
+  <sequence>4447</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\diagnostics_x2cscope.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\diagnostics.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892392</millis>
+  <sequence>4448</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\dyn_current\none\dyn_current.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\dyn_current.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892395</millis>
+  <sequence>4449</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\dyn_current\none\dyn_current_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\dyn_current_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892398</millis>
+  <sequence>4450</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\error_codes.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\error_codes.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892400</millis>
+  <sequence>4451</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\fault_detect.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\fault_detect.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892403</millis>
+  <sequence>4452</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\fault_detect.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\fault_detect.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892406</millis>
+  <sequence>4453</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\fault_detect_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\fault_detect_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892408</millis>
+  <sequence>4454</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\filter.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\filter.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892410</millis>
+  <sequence>4455</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\filter_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\filter_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892413</millis>
+  <sequence>4456</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\flux_control\none\flux_control.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\flux_control.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892416</millis>
+  <sequence>4457</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\flux_control\none\flux_control_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\flux_control_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892419</millis>
+  <sequence>4458</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\foc.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\foc.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892422</millis>
+  <sequence>4459</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\foc.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\foc.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892425</millis>
+  <sequence>4460</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\foc_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\foc_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892427</millis>
+  <sequence>4461</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\hal.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\hal.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892429</millis>
+  <sequence>4462</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\hal\hal-33ck\hardware_access_functions.c.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\hal\hardware_access_functions.c, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892438</millis>
+  <sequence>4463</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\hal\hal-33ck\hardware_access_functions.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\hal\hardware_access_functions.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892467</millis>
+  <sequence>4464</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\hal\hal-33ck\mcaf_pin_manager.c.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\hal\mcaf_pin_manager.c, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892472</millis>
+  <sequence>4465</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\hal\hal-common\hardware_access_functions_params.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\hal\hardware_access_functions_params.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892475</millis>
+  <sequence>4466</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\hal\hal-common\hardware_access_functions_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\hal\hardware_access_functions_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892478</millis>
+  <sequence>4467</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\hal\hal-common\mcaf_pin_manager.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\hal\mcaf_pin_manager.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892482</millis>
+  <sequence>4468</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\isr.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\isr.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892485</millis>
+  <sequence>4469</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\math_asm.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\math_asm.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892488</millis>
+  <sequence>4470</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\math_asm.s, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\math_asm.s, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892490</millis>
+  <sequence>4471</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\application\mcaf_sample_application.c.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcaf_sample_application.c, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892496</millis>
+  <sequence>4472</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\application\mcaf_sample_application.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcaf_sample_application.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892499</millis>
+  <sequence>4473</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\mcaf_main.c.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcaf_main.c, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892503</millis>
+  <sequence>4474</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\mcaf_main.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcaf_main.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892507</millis>
+  <sequence>4475</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\mcaf_traps.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcaf_traps.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892511</millis>
+  <sequence>4476</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\mcaf_traps.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcaf_traps.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892514</millis>
+  <sequence>4477</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\mcaf_watchdog.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcaf_watchdog.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892518</millis>
+  <sequence>4478</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\mcapi.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcapi.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892521</millis>
+  <sequence>4479</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\mcapi.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcapi.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892523</millis>
+  <sequence>4480</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\mcapi_internal.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcapi_internal.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892526</millis>
+  <sequence>4481</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\mcapi_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\mcapi_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892528</millis>
+  <sequence>4482</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\metadata\data_model_snapshot.c.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\metadata\data_model_snapshot.c, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892548</millis>
+  <sequence>4483</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\monitor.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\monitor.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892551</millis>
+  <sequence>4484</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\monitor.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\monitor.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892555</millis>
+  <sequence>4485</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\monitor_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\monitor_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892558</millis>
+  <sequence>4486</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\motor_control_function_mapping.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\motor_control_function_mapping.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892562</millis>
+  <sequence>4487</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\motor_control_noinline.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\motor_control_noinline.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892565</millis>
+  <sequence>4488</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\adc_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\adc_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892582</millis>
+  <sequence>4489</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\commutation_params.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\commutation_params.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892586</millis>
+  <sequence>4490</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\fault_detect_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\fault_detect_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892608</millis>
+  <sequence>4491</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\foc_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\foc_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892634</millis>
+  <sequence>4492</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\hal_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\hal_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892645</millis>
+  <sequence>4493</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\init_params.c.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\init_params.c, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892649</millis>
+  <sequence>4494</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\init_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\init_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892655</millis>
+  <sequence>4495</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\mcapi_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\mcapi_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892663</millis>
+  <sequence>4496</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\motor_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\motor_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892688</millis>
+  <sequence>4497</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\operating_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\operating_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892699</millis>
+  <sequence>4498</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\options.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\options.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892708</millis>
+  <sequence>4499</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\outerloop_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\outerloop_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892713</millis>
+  <sequence>4500</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\pll_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\pll_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892722</millis>
+  <sequence>4501</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\recover_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\recover_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892728</millis>
+  <sequence>4502</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\sat_PI_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\sat_PI_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892737</millis>
+  <sequence>4503</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\startup_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\startup_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892758</millis>
+  <sequence>4504</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\parameters\timing_params.h.template, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\parameters\timing_params.h, RENDER</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892768</millis>
+  <sequence>4505</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\recover.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\recover.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892772</millis>
+  <sequence>4506</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\recover.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\recover.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892775</millis>
+  <sequence>4507</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\sat_PI.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\sat_PI.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892779</millis>
+  <sequence>4508</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\sat_PI.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\sat_PI.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892781</millis>
+  <sequence>4509</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\sat_PI_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\sat_PI_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892784</millis>
+  <sequence>4510</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\stall_detect.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\stall_detect.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892786</millis>
+  <sequence>4511</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\stall_detect.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\stall_detect.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892788</millis>
+  <sequence>4512</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\stall_detect_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\stall_detect_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892790</millis>
+  <sequence>4513</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\startup\classic\startup.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\startup.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892793</millis>
+  <sequence>4514</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\startup\classic\startup.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\startup.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892795</millis>
+  <sequence>4515</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\startup\classic\startup_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\startup_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892798</millis>
+  <sequence>4516</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\state_machine.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\state_machine.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892800</millis>
+  <sequence>4517</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\state_machine.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\state_machine.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892802</millis>
+  <sequence>4518</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\state_machine_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\state_machine_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892805</millis>
+  <sequence>4519</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\system_init.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\system_init.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892808</millis>
+  <sequence>4520</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\system_init.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\system_init.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892810</millis>
+  <sequence>4521</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\system_state.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\system_state.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892812</millis>
+  <sequence>4522</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\system_state.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\system_state.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892815</millis>
+  <sequence>4523</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\test_harness.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\test_harness.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892818</millis>
+  <sequence>4524</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\test_harness.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\test_harness.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892821</millis>
+  <sequence>4525</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\test_harness_timestamps.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\test_harness_timestamps.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892823</millis>
+  <sequence>4526</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\test_harness_timestamps.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\test_harness_timestamps.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892826</millis>
+  <sequence>4527</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\timing.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\timing.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892828</millis>
+  <sequence>4528</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\ui.c, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\ui.c, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892830</millis>
+  <sequence>4529</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\ui.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\ui.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892832</millis>
+  <sequence>4530</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\ui_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\ui_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892834</millis>
+  <sequence>4531</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\units.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\units.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892837</millis>
+  <sequence>4532</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\source\util.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\util.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892840</millis>
+  <sequence>4533</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\mc-library\libmotor_control_dspic-elf.a, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\mc-library\libmotor_control_dspic-elf.a, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892844</millis>
+  <sequence>4534</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\mc-library\motor_control.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\mc-library\motor_control.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892847</millis>
+  <sequence>4535</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\mc-library\motor_control_declarations.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\mc-library\motor_control_declarations.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892849</millis>
+  <sequence>4536</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\mc-library\motor_control_dsp.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\mc-library\motor_control_dsp.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892851</millis>
+  <sequence>4537</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\mc-library\motor_control_inline_declarations.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\mc-library\motor_control_inline_declarations.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892853</millis>
+  <sequence>4538</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\mc-library\motor_control_inline_dspic.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\mc-library\motor_control_inline_dspic.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892856</millis>
+  <sequence>4539</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\mc-library\motor_control_inline_internal.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\mc-library\motor_control_inline_internal.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892858</millis>
+  <sequence>4540</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\mc-library\motor_control_types.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\mc-library\motor_control_types.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892860</millis>
+  <sequence>4541</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\mc-library\motor_control_util.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\mc-library\motor_control_util.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892862</millis>
+  <sequence>4542</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\x2cscope\X2CScope.h, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\x2cscope\X2CScope.h, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892865</millis>
+  <sequence>4543</sequence>
+  <logger>com.microchip.motorbench.template.processor.AbstractCodeGenerator</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.template.processor.AbstractCodeGenerator$1</class>
+  <method>call</method>
+  <thread>287</thread>
+  <message>source=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\template\library\x2cscope\libx2cscope-dspic-elf.a, destination=C:\Users\chygg\AppData\Local\Temp\mplab_ide\pmsm-foc-framework\target\library\x2cscope\libx2cscope-dspic-elf.a, COPY</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892871</millis>
+  <sequence>4544</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>Calling get_transfer_function...</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892872</millis>
+  <sequence>4545</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>uiState: {"config":{"ui":{"content":{"current_measure-method":"dual_channel","current_measure-single_channel-minimumTime":2.0,"current_measure-single_channel-sampleDelay":0.0,"current_measure-opamp-full_input_range":true,"estimator-type":"pll","estimator-active-pll":false,"estimator-active-qei":false,"estimator-active-atpll":false,"estimator-active-zsmt":false,"estimator-active-ideal":false,"operation-min_velocity_ratio":0.25,"operation-startup_velocity_ratio":0.2744,"operation-max_velocity_ratio":1.25,"operation-fullscale_base_ratio":1.5,"operation-outer_loop_type":"velocity","operation-saliency-threshold":1.25,"operation-slewrate-accel":0.5,"operation-slewrate-decel":1.0,"operation-dyn_current_type":"none","operation-stopping-type":"minimal_impact","operation-stopping-closed_loop_parameters-speed":0.05,"operation-stopping-closed_loop_parameters-time":0.5,"operation-coastdown-end_velocity":0.05,"operation-coastdown-time":1.2,"fault_inject-get_tf-div0":false,"fault_inject-get_tf-missing_data":false,"fault_inject-get_tf-raise_value_error":false,"fault_inject-get_tf-raise_custom_error":false,"fault_inject-tf-tf_null":false,"fault_inject-tf-tf_jy":false,"fault_inject-tf-tf_jyex":false,"fault_inject-tf-div0":false,"fault_inject-tf-tau":0.0,"flux_control-method":"none","flux_control-eqn_based-ilimit-region_type":"quadratic","flux_control-eqn_based-ilimit-id_limit":0.7,"flux_control-eqn_based-ilimit-iq_limit":0.95,"flux_control-eqn_based-fluxweak_enable":false,"flux_control-eqn_based-fw-vdq_limit":0.95,"flux_control-eqn_based-mtpa_enable":false,"deadtimecomp-method":"none","deadtimecomp-perphase-current_sign_band":0.02,"deadtimecomp-perphase-forward_gain":0.0,"deadtimecomp-perphase-feedback_gain":0.0,"fault_detect-margin_uv":2.0,"fault_detect-margin_ov":2.0,"fault_detect-stall_detect_enable":true,"startup-Istartup":0.75,"startup-t_rampup":25.0,"startup-t_align":0.0,"startup-min_total_accel_time":250.0,"startup-torque_scale_accel":0.15,"startup-torque_scale_slow_accel":0.2,"startup-t_hold":0.0,"startup-omega0":0.2,"startup-theta_converge_rate":1.0,"startup-method":"classic","startup-damping-Imax":0.1,"startup-damping-gainmax":40.0,"startup-damping-omega_min":0.4,"overmodulation-vd_limit":1.0,"overmodulation-vq_limit":1.15,"overmodulation-include_duty_clipping":true,"pll-tau":2.19,"pll-omega1":116.5,"pll-velocity_filter_threshold":1.0,"encoder-lines":250.0,"encoder-index_present":false,"encoder-tracking_loop-tau":1.5,"encoder-qei_sync-method":"align","encoder-qei_sync-align-t_align":0.5,"encoder-qei_sync-align-angle_shift":30.0,"encoder-qei_sync-align-angle_init":-30.0,"encoder-qei_sync-align_sweep-sweep_rate_pow":1.0,"encoder-qei_sync-align_sweep-setup_angle":45.0,"encoder-qei_sync-pullout-pullout_slip":0.117,"zsmt-excitation-kV":0.12,"zsmt-excitation-kI":0.1,"zsmt-pll-zeta":1.5,"zsmt-pll-tau":10.0,"zsmt-pll-tau_lpf":0.0,"zsmt-pll-execution_divider":2.0,"zsmt-startup-align_delay":1.0,"zsmt-startup-pll_lock_time":1.0,"zsmt-startup-speed_limit":0.015,"zsmt-startup-current_limit":0.3,"zsmt-startup-probe_duration":10.0,"zsmt-startup-probe_slew_time":1.5,"zsmt-startup-probe_blanking_time":4.0,"zsmt-hybrid-type":"minotaur","zsmt-minotaur-voltage_limit-vd":0.45,"zsmt-minotaur-voltage_limit-vq":0.78,"zsmt-minotaur-converge-angle":10.0,"zsmt-minotaur-converge-duration":2.0,"zsmt-minotaur-velocity_threshold-slow":0.15,"zsmt-minotaur-velocity_threshold-transition":0.2,"zsmt-minotaur-velocity_threshold-fast":0.25,"zsmt-angle_correction-current_gain":0.0,"dyn_current1-peak_factor":1.0,"dyn_current1-horizon_factor":1.05,"dyn_current1-tau":5.0,"dyn_current1-nsamples":128.0,"voltage_outerloop-tau_lpf":2.0,"voltage_outerloop-Kp":0.1,"voltage_outerloop-tau":100.0,"mcapi-isSquaredTau":1.0,"mcapi-iqTau":1.0,"mcapi-adcIsrUserFunctions_enable":false,"board_service-uiServiceTiming":1.0,"board_service-uiButtonDebounceTime":7.0,"board_service-uiButtonLongPressTime":2.5,"test_harness-perturbation_asymmetric":false,"adc-vtempbridge":false,"adc-temp_bridge_params-threshold":50.0,"adc-temp_bridge_params-tau_lpf":10.0,"adc-temp_bridge_params-slewrate":4.0,"adc-vabsref":false,"adc-vphasea":false,"adc-vphaseb":false,"adc-vphasec":false},"version":{"schema":4.0,"motorBench":"2.45.0","MCAF":"R7"},"status":{"valid":true}}}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892872</millis>
+  <sequence>4546</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>model: {"motor":{"Tfr":0.0048125,"B":3.22134E-5,"Lq":3.49495E-4,"poleCount":10,"rated_current":4.53,"J":1.8079199999999998E-5,"velocity":{"nominal":381.5987877,"maximum":628.3185307,"units":"rad/s"},"L":3.5898099999999997E-4,"R":0.37160175,"current":{"maximum":{"continuous":4.53,"peak":4.53},"units":"A"},"Ld":3.68467E-4,"Ke":0.037146886986834084,"id":"Hurst300"},"controller":{},"metadata":{"data_model":{"schema_version":5},"motorBench":{"commit_id":"6062ee969f17e173cb8502638f1e3c8ee7bea3fb","version":"2.45.0"},"MCC":{"peripherals":{"instances":[{"name":"ADC1","type":"adc"},{"name":"PWM","type":"pwm_hs"},{"name":"QEI1","type":"qei"},{"name":"TMR1","type":"timer"},{"name":"SCCP1","type":"timer"},{"name":"UART1","type":"uart"},{"name":"OPA1","type":"opa"},{"name":"OPA2","type":"opa"},{"name":"OPA3","type":"opa"}]},"version":"5.7.0","peripheral_library":{"name":"melody","version":"NA"},"architecture":"melody"}},"operating_range":{"velocity":{"units_qualifier":"mechanical","units":"rad/s","minimum":104.7198}},"scdata":{"setup":{"communications":{"baudrate":625000},"analysis":{"spindown_time":{"units":"s","value":1.0},"max_motor_speed":{"units":"rad/s mechanical","value":2094.4}},"calibration":{"vdc":{"units":"V","value":24.0},"resistor":{"units":"ohms","value":12.0}}}},"drive":{"metadata":{"name":"dsPIC33CK Low Voltage Motor Control Board","id":"lvmc-33ck"},"estimator":{"omega1":732.0,"tau":0.00219,"type":"pll"},"iout":{"time_constant":1.8413E-7,"fullscale":21.83,"maximum":{"continuous":14.1421},"units":"A","measurement":{"compensation":{"channels":["a","b"],"values":{"a":[1.0,0.0],"b":[0.0,1.0]}}}},"vdc":{"nominal":24.0,"time_constant":3.147E-4,"fullscale":71.3,"maximum":48.0,"units":"V","minimum":12.0},"configuration":{"metadata":{"capability":{"adc":{"channel":{"PHASEB_VOLTAGE":"AN23","PHASEB_CURRENT":"AN1","PHASEA_VOLTAGE":"AN17","PHASEC_CURRENT":"AN10","POTENTIOMETER":"AN11","BRIDGE_TEMPERATURE":"AN12","DCLINK_VOLTAGE":"AN15","PHASEA_CURRENT":"AN0","PHASEC_VOLTAGE":"AN22","DCLINK_CURRENT":"AN4"}},"opamp":"internal","buttonCount":2.0,"current_measure":{"a":true,"b":true,"c":true,"dc":true}},"scaling":{"temperature":{"bridge":{"offset":5000.0,"gain":0.50354}}},"peripherals":{"adc":{"core":{"names":["Core0","Core1","SharedCore"]}}},"pim":{"algorithm":{"single_channel":{"supported":true}}},"device":"33ck256mp508","board":{"id":"lvmc-33ck"}},"peripherals":{"adc":{"requestedDedCoreSamplingTimeData":[{"core":"Core0","requestedSamplingTime_us":0.3},{"core":"Core1","requestedSamplingTime_us":0.3}],"dataOutputFormat":"Fractional","channelConfig":[{"channel":"AN0","sign":"signed","core":"Core0","customName":"MCAF_ADC_PHASEA_CURRENT","inverted":true},{"channel":"AN1","sign":"signed","core":"Core1","customName":"MCAF_ADC_PHASEB_CURRENT","inverted":true},{"channel":"AN10","sign":"signed","core":"Shared","customName":"MCAF_ADC_PHASEC_CURRENT","inverted":true},{"channel":"AN4","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_CURRENT","inverted":false},{"channel":"AN15","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_VOLTAGE"},{"channel":"AN11","sign":"signed","core":"Shared","customName":"MCAF_ADC_POTENTIOMETER"},{"channel":"AN12","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_BRIDGE_TEMPERATURE"},{"channel":"AN17","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEA_VOLTAGE"},{"channel":"AN23","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEB_VOLTAGE"},{"channel":"AN22","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEC_VOLTAGE"}],"customName":"MCC_ADC","interruptDriven":false,"requestedSharedSamplingTime_us":0.3,"resolution":12.0},"comparator":{"customName":"MCC_CMP","dacOutputEnable":false,"nonInvertedSourceSelected":"CMP1C","outputPolarity":"Non-Inverted","dacDataValues":{"dataHigh":3205.0},"interruptDriven":false},"timer":[{"requestedTimerPeriod_ms":1.0,"customName":"MCC_TMR_TICK","interruptDriven":true},{"clkSrc":"FCY","customName":"MCC_TMR_PROFILE","interruptDriven":false,"clkPrescaler":1.0,"periodCount":65535.0}],"oscillator":{"clockSource":"FRC Oscillator with PLL","requestedSystemFrequency_Hz":0.0,"defaultValue":"max-frequency","setMaximumSystemFrequency":true,"clockSourceFrequency":8000000.0},"opamp":[{"instance":1.0,"enable":true,"customName":"MCC_OPA_IA"},{"instance":2.0,"enable":true,"customName":"MCC_OPA_IB"},{"instance":3.0,"enable":true,"customName":"MCC_OPA_IDC"}],"qei":[{"noiseFilterEnable":false,"pinMapping":[{"pin":"RC12","functionName":"A","direction":"input"},{"pin":"RC13","functionName":"B","direction":"input"},{"pin":"RC14","functionName":"INDX","direction":"input"}],"qeiOperationMode":"Modulo Count mode","indexPulseCaptureEnable":false,"homePulseCaptureEnable":false,"homePulsePolarity":false,"customName":"MCC_QEI","indexPulsePolarity":false}],"wdt":{"wdtEnable":true,"requestedWdtPeriod_ms":1.0,"wdtMode":"Non-Window mode","wdtEnableType":"Software"},"pwm":{"synchronousUpdate":true,"duty_cycle":{"maximum":0.975,"minimum":0.009},"requestedDeadTime_us":{"defaultValue":1.0,"maximum":6.0,"minimum":0.67},"customName":"MCC_PWM","generatorMapping":[{"name":"MOTOR1_PHASE_A","generator":1.0},{"name":"MOTOR1_PHASE_B","generator":2.0},{"name":"MOTOR1_PHASE_C","generator":4.0}],"interruptDriven":false,"faultInputPolarity":"Active-high","faultInput":{},"frequency":{"defaultValue":20000.0,"maximum":100000.0,"minimum":1000.0},"faultInputSource":"CMP1 Output","polarity":{"lower":"Active-high","upper":"Active-high"}},"uart":{"baudRate":115200.0,"pinMapping":[{"name":"TX","pinSelected":"RD13"},{"name":"RX","pinSelected":"RD14"}],"stopBits":1.0,"parity":"None","dataSize":8.0,"customName":"MCC_UART","interruptDriven":false},"gpio":[{"isWeakPullUp":false,"pinSelected":"RE6","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED1","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE7","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED2","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE11","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON1","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE12","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON2","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE4","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_TESTPOINT1","isAnalogPin":false,"direction":"output","isOpenDrain":false}]},"displayName":"dsPIC33CK LVMC","name":"dsPIC33CK Low Voltage Motor Control (LVMC) Development Board","partNumber":"DM330031","id":"lvmc-33ck","supportedPim":[]},"pwm":{"period":5.0E-5,"duty_cycle":{"maximum":0.975,"minimum":0.009000000000000001},"deadtime":1.0E-6},"idc":{"maximum":2.9,"units":"A"},"sampling_time":{"current":5.0E-5,"velocity":0.001},"processor":{"clock_frequency":1.0E8,"pim":"PIM/DIM Not Applicable","familyName":"dsPIC33CK256MP508","device":"dsPIC33CK256MP508"},"vbus":24.0}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892874</millis>
+  <sequence>4547</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</class>
+  <method>log</method>
+  <thread>287</thread>
+  <message>time to get get_transfer_function = 4us, time to construct PyObjects = 440us, time to call get_transfer_function = 1221us</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892876</millis>
+  <sequence>4548</sequence>
+  <logger>com.microchip.motorbench.at.VelocityTransferFunction</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.VelocityTransferFunction</class>
+  <method>getTuneResult</method>
+  <thread>287</thread>
+  <message>time to prepare PITuneByPhase velocity loop: 1364us, time to autotune: 292us, number of calls: ???</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892879</millis>
+  <sequence>4549</sequence>
+  <logger>com.microchip.motorbench.at.VelocityTransferFunction</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.VelocityTransferFunction</class>
+  <method>getTuneResult</method>
+  <thread>287</thread>
+  <message>time to prepare PITuneByPhase velocity loop: 1180us, time to autotune: 223us, number of calls: ???</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892986</millis>
+  <sequence>5134</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>Calling get_transfer_function...</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892986</millis>
+  <sequence>5135</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>uiState: {"config":{"ui":{"content":{"current_measure-method":"dual_channel","current_measure-single_channel-minimumTime":2.0,"current_measure-single_channel-sampleDelay":0.0,"current_measure-opamp-full_input_range":true,"estimator-type":"pll","estimator-active-pll":false,"estimator-active-qei":false,"estimator-active-atpll":false,"estimator-active-zsmt":false,"estimator-active-ideal":false,"operation-min_velocity_ratio":0.25,"operation-startup_velocity_ratio":0.2744,"operation-max_velocity_ratio":1.25,"operation-fullscale_base_ratio":1.5,"operation-outer_loop_type":"velocity","operation-saliency-threshold":1.25,"operation-slewrate-accel":0.5,"operation-slewrate-decel":1.0,"operation-dyn_current_type":"none","operation-stopping-type":"minimal_impact","operation-stopping-closed_loop_parameters-speed":0.05,"operation-stopping-closed_loop_parameters-time":0.5,"operation-coastdown-end_velocity":0.05,"operation-coastdown-time":1.2,"fault_inject-get_tf-div0":false,"fault_inject-get_tf-missing_data":false,"fault_inject-get_tf-raise_value_error":false,"fault_inject-get_tf-raise_custom_error":false,"fault_inject-tf-tf_null":false,"fault_inject-tf-tf_jy":false,"fault_inject-tf-tf_jyex":false,"fault_inject-tf-div0":false,"fault_inject-tf-tau":0.0,"flux_control-method":"none","flux_control-eqn_based-ilimit-region_type":"quadratic","flux_control-eqn_based-ilimit-id_limit":0.7,"flux_control-eqn_based-ilimit-iq_limit":0.95,"flux_control-eqn_based-fluxweak_enable":false,"flux_control-eqn_based-fw-vdq_limit":0.95,"flux_control-eqn_based-mtpa_enable":false,"deadtimecomp-method":"none","deadtimecomp-perphase-current_sign_band":0.02,"deadtimecomp-perphase-forward_gain":0.0,"deadtimecomp-perphase-feedback_gain":0.0,"fault_detect-margin_uv":2.0,"fault_detect-margin_ov":2.0,"fault_detect-stall_detect_enable":true,"startup-Istartup":0.75,"startup-t_rampup":25.0,"startup-t_align":0.0,"startup-min_total_accel_time":250.0,"startup-torque_scale_accel":0.15,"startup-torque_scale_slow_accel":0.2,"startup-t_hold":0.0,"startup-omega0":0.2,"startup-theta_converge_rate":1.0,"startup-method":"classic","startup-damping-Imax":0.1,"startup-damping-gainmax":40.0,"startup-damping-omega_min":0.4,"overmodulation-vd_limit":1.0,"overmodulation-vq_limit":1.15,"overmodulation-include_duty_clipping":true,"pll-tau":2.19,"pll-omega1":116.5,"pll-velocity_filter_threshold":1.0,"encoder-lines":250.0,"encoder-index_present":false,"encoder-tracking_loop-tau":1.5,"encoder-qei_sync-method":"align","encoder-qei_sync-align-t_align":0.5,"encoder-qei_sync-align-angle_shift":30.0,"encoder-qei_sync-align-angle_init":-30.0,"encoder-qei_sync-align_sweep-sweep_rate_pow":1.0,"encoder-qei_sync-align_sweep-setup_angle":45.0,"encoder-qei_sync-pullout-pullout_slip":0.117,"zsmt-excitation-kV":0.12,"zsmt-excitation-kI":0.1,"zsmt-pll-zeta":1.5,"zsmt-pll-tau":10.0,"zsmt-pll-tau_lpf":0.0,"zsmt-pll-execution_divider":2.0,"zsmt-startup-align_delay":1.0,"zsmt-startup-pll_lock_time":1.0,"zsmt-startup-speed_limit":0.015,"zsmt-startup-current_limit":0.3,"zsmt-startup-probe_duration":10.0,"zsmt-startup-probe_slew_time":1.5,"zsmt-startup-probe_blanking_time":4.0,"zsmt-hybrid-type":"minotaur","zsmt-minotaur-voltage_limit-vd":0.45,"zsmt-minotaur-voltage_limit-vq":0.78,"zsmt-minotaur-converge-angle":10.0,"zsmt-minotaur-converge-duration":2.0,"zsmt-minotaur-velocity_threshold-slow":0.15,"zsmt-minotaur-velocity_threshold-transition":0.2,"zsmt-minotaur-velocity_threshold-fast":0.25,"zsmt-angle_correction-current_gain":0.0,"dyn_current1-peak_factor":1.0,"dyn_current1-horizon_factor":1.05,"dyn_current1-tau":5.0,"dyn_current1-nsamples":128.0,"voltage_outerloop-tau_lpf":2.0,"voltage_outerloop-Kp":0.1,"voltage_outerloop-tau":100.0,"mcapi-isSquaredTau":1.0,"mcapi-iqTau":1.0,"mcapi-adcIsrUserFunctions_enable":false,"board_service-uiServiceTiming":1.0,"board_service-uiButtonDebounceTime":7.0,"board_service-uiButtonLongPressTime":2.5,"test_harness-perturbation_asymmetric":false,"adc-vtempbridge":false,"adc-temp_bridge_params-threshold":50.0,"adc-temp_bridge_params-tau_lpf":10.0,"adc-temp_bridge_params-slewrate":4.0,"adc-vabsref":false,"adc-vphasea":false,"adc-vphaseb":false,"adc-vphasec":false},"version":{"schema":4.0,"motorBench":"2.45.0","MCAF":"R7"},"status":{"valid":true}}}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892986</millis>
+  <sequence>5136</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ScriptedTransferFunctionImpl</class>
+  <method>makeExternalTransferFunction</method>
+  <thread>287</thread>
+  <message>model: {"motor":{"Tfr":0.0048125,"B":3.22134E-5,"Lq":3.49495E-4,"poleCount":10,"rated_current":4.53,"J":1.8079199999999998E-5,"velocity":{"nominal":381.5987877,"maximum":628.3185307,"units":"rad/s"},"L":3.5898099999999997E-4,"R":0.37160175,"current":{"maximum":{"continuous":4.53,"peak":4.53},"units":"A"},"Ld":3.68467E-4,"Ke":0.037146886986834084,"id":"Hurst300"},"controller":{},"metadata":{"data_model":{"schema_version":5},"motorBench":{"commit_id":"6062ee969f17e173cb8502638f1e3c8ee7bea3fb","version":"2.45.0"},"MCC":{"peripherals":{"instances":[{"name":"ADC1","type":"adc"},{"name":"PWM","type":"pwm_hs"},{"name":"QEI1","type":"qei"},{"name":"TMR1","type":"timer"},{"name":"SCCP1","type":"timer"},{"name":"UART1","type":"uart"},{"name":"OPA1","type":"opa"},{"name":"OPA2","type":"opa"},{"name":"OPA3","type":"opa"}]},"version":"5.7.0","peripheral_library":{"name":"melody","version":"NA"},"architecture":"melody"}},"operating_range":{"velocity":{"units_qualifier":"mechanical","units":"rad/s","minimum":104.7198}},"scdata":{"setup":{"communications":{"baudrate":625000},"analysis":{"spindown_time":{"units":"s","value":1.0},"max_motor_speed":{"units":"rad/s mechanical","value":2094.4}},"calibration":{"vdc":{"units":"V","value":24.0},"resistor":{"units":"ohms","value":12.0}}}},"drive":{"metadata":{"name":"dsPIC33CK Low Voltage Motor Control Board","id":"lvmc-33ck"},"estimator":{"omega1":732.0,"tau":0.00219,"type":"pll"},"iout":{"time_constant":1.8413E-7,"fullscale":21.83,"maximum":{"continuous":14.1421},"units":"A","measurement":{"compensation":{"channels":["a","b"],"values":{"a":[1.0,0.0],"b":[0.0,1.0]}}}},"vdc":{"nominal":24.0,"time_constant":3.147E-4,"fullscale":71.3,"maximum":48.0,"units":"V","minimum":12.0},"configuration":{"metadata":{"capability":{"adc":{"channel":{"PHASEB_VOLTAGE":"AN23","PHASEB_CURRENT":"AN1","PHASEA_VOLTAGE":"AN17","PHASEC_CURRENT":"AN10","POTENTIOMETER":"AN11","BRIDGE_TEMPERATURE":"AN12","DCLINK_VOLTAGE":"AN15","PHASEA_CURRENT":"AN0","PHASEC_VOLTAGE":"AN22","DCLINK_CURRENT":"AN4"}},"opamp":"internal","buttonCount":2.0,"current_measure":{"a":true,"b":true,"c":true,"dc":true}},"scaling":{"temperature":{"bridge":{"offset":5000.0,"gain":0.50354}}},"peripherals":{"adc":{"core":{"names":["Core0","Core1","SharedCore"]}}},"pim":{"algorithm":{"single_channel":{"supported":true}}},"device":"33ck256mp508","board":{"id":"lvmc-33ck"}},"peripherals":{"adc":{"requestedDedCoreSamplingTimeData":[{"core":"Core0","requestedSamplingTime_us":0.3},{"core":"Core1","requestedSamplingTime_us":0.3}],"dataOutputFormat":"Fractional","channelConfig":[{"channel":"AN0","sign":"signed","core":"Core0","customName":"MCAF_ADC_PHASEA_CURRENT","inverted":true},{"channel":"AN1","sign":"signed","core":"Core1","customName":"MCAF_ADC_PHASEB_CURRENT","inverted":true},{"channel":"AN10","sign":"signed","core":"Shared","customName":"MCAF_ADC_PHASEC_CURRENT","inverted":true},{"channel":"AN4","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_CURRENT","inverted":false},{"channel":"AN15","sign":"signed","core":"Shared","customName":"MCAF_ADC_DCLINK_VOLTAGE"},{"channel":"AN11","sign":"signed","core":"Shared","customName":"MCAF_ADC_POTENTIOMETER"},{"channel":"AN12","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_BRIDGE_TEMPERATURE"},{"channel":"AN17","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEA_VOLTAGE"},{"channel":"AN23","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEB_VOLTAGE"},{"channel":"AN22","sign":"unsigned","core":"Shared","customName":"MCAF_ADC_PHASEC_VOLTAGE"}],"customName":"MCC_ADC","interruptDriven":false,"requestedSharedSamplingTime_us":0.3,"resolution":12.0},"comparator":{"customName":"MCC_CMP","dacOutputEnable":false,"nonInvertedSourceSelected":"CMP1C","outputPolarity":"Non-Inverted","dacDataValues":{"dataHigh":3205.0},"interruptDriven":false},"timer":[{"requestedTimerPeriod_ms":1.0,"customName":"MCC_TMR_TICK","interruptDriven":true},{"clkSrc":"FCY","customName":"MCC_TMR_PROFILE","interruptDriven":false,"clkPrescaler":1.0,"periodCount":65535.0}],"oscillator":{"clockSource":"FRC Oscillator with PLL","requestedSystemFrequency_Hz":0.0,"defaultValue":"max-frequency","setMaximumSystemFrequency":true,"clockSourceFrequency":8000000.0},"opamp":[{"instance":1.0,"enable":true,"customName":"MCC_OPA_IA"},{"instance":2.0,"enable":true,"customName":"MCC_OPA_IB"},{"instance":3.0,"enable":true,"customName":"MCC_OPA_IDC"}],"qei":[{"noiseFilterEnable":false,"pinMapping":[{"pin":"RC12","functionName":"A","direction":"input"},{"pin":"RC13","functionName":"B","direction":"input"},{"pin":"RC14","functionName":"INDX","direction":"input"}],"qeiOperationMode":"Modulo Count mode","indexPulseCaptureEnable":false,"homePulseCaptureEnable":false,"homePulsePolarity":false,"customName":"MCC_QEI","indexPulsePolarity":false}],"wdt":{"wdtEnable":true,"requestedWdtPeriod_ms":1.0,"wdtMode":"Non-Window mode","wdtEnableType":"Software"},"pwm":{"synchronousUpdate":true,"duty_cycle":{"maximum":0.975,"minimum":0.009},"requestedDeadTime_us":{"defaultValue":1.0,"maximum":6.0,"minimum":0.67},"customName":"MCC_PWM","generatorMapping":[{"name":"MOTOR1_PHASE_A","generator":1.0},{"name":"MOTOR1_PHASE_B","generator":2.0},{"name":"MOTOR1_PHASE_C","generator":4.0}],"interruptDriven":false,"faultInputPolarity":"Active-high","faultInput":{},"frequency":{"defaultValue":20000.0,"maximum":100000.0,"minimum":1000.0},"faultInputSource":"CMP1 Output","polarity":{"lower":"Active-high","upper":"Active-high"}},"uart":{"baudRate":115200.0,"pinMapping":[{"name":"TX","pinSelected":"RD13"},{"name":"RX","pinSelected":"RD14"}],"stopBits":1.0,"parity":"None","dataSize":8.0,"customName":"MCC_UART","interruptDriven":false},"gpio":[{"isWeakPullUp":false,"pinSelected":"RE6","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED1","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE7","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_LED2","isAnalogPin":false,"direction":"output","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE11","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON1","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE12","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_BUTTON2","isAnalogPin":false,"direction":"input","isOpenDrain":false},{"isWeakPullUp":false,"pinSelected":"RE4","interruptOnChange":"none","isWeakPullDown":false,"customName":"MCAF_TESTPOINT1","isAnalogPin":false,"direction":"output","isOpenDrain":false}]},"displayName":"dsPIC33CK LVMC","name":"dsPIC33CK Low Voltage Motor Control (LVMC) Development Board","partNumber":"DM330031","id":"lvmc-33ck","supportedPim":[]},"pwm":{"period":5.0E-5,"duty_cycle":{"maximum":0.975,"minimum":0.009000000000000001},"deadtime":1.0E-6},"idc":{"maximum":2.9,"units":"A"},"sampling_time":{"current":5.0E-5,"velocity":0.001},"processor":{"clock_frequency":1.0E8,"pim":"PIM/DIM Not Applicable","familyName":"dsPIC33CK256MP508","device":"dsPIC33CK256MP508"},"vbus":24.0}}</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892987</millis>
+  <sequence>5137</sequence>
+  <logger>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.transferfunctions.ThreePhaseBenchMarkerIImpl</class>
+  <method>log</method>
+  <thread>287</thread>
+  <message>time to get get_transfer_function = 4us, time to construct PyObjects = 241us, time to call get_transfer_function = 489us</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892989</millis>
+  <sequence>5138</sequence>
+  <logger>com.microchip.motorbench.at.VelocityTransferFunction</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.VelocityTransferFunction</class>
+  <method>getTuneResult</method>
+  <thread>287</thread>
+  <message>time to prepare PITuneByPhase velocity loop: 1216us, time to autotune: 257us, number of calls: ???</message>
+</record>
+<record>
+  <date>2024-06-19T18:28:12</date>
+  <millis>1718846892992</millis>
+  <sequence>5139</sequence>
+  <logger>com.microchip.motorbench.at.VelocityTransferFunction</logger>
+  <level>INFO</level>
+  <class>com.microchip.motorbench.at.VelocityTransferFunction</class>
+  <method>getTuneResult</method>
+  <thread>287</thread>
+  <message>time to prepare PITuneByPhase velocity loop: 1256us, time to autotune: 263us, number of calls: ???</message>
+</record>
+</log>
