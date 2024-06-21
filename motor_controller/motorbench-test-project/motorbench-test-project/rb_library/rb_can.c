@@ -22,7 +22,7 @@ uint16_t RB_CAN_Init(void) {
     // TODO: MCP2515 arduino lib has a delay here, likely need something similar
     // Datasheet says it takes 2us to reset
     uint8_t zeros[14];
-    memset(zeros, 0, sizeof(zeros));
+    memset(zeros, 0, sizeof (zeros));
     errors += !RB_CAN_McpSetRegs(MCP_REG_TXB0CTRL, zeros, 14);
     errors += !RB_CAN_McpSetRegs(MCP_REG_TXB1CTRL, zeros, 14);
     errors += !RB_CAN_McpSetRegs(MCP_REG_TXB2CTRL, zeros, 14);
@@ -45,7 +45,7 @@ uint16_t RB_CAN_Init(void) {
             MCP_MASK_RXBnCTRL_RXM | MCP_MASK_RXB1CTRL_FILHIT,
             MCP_RXBnCTRL_RXM_STDEXT | MCP_RXB1CTRL_FILHIT
             );
-    
+
     // TODO: set message filter settings here
 
     return errors;
@@ -88,6 +88,20 @@ bool RB_CAN_McpModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data) {
         SPI1_ByteWrite(reg);
         SPI1_ByteWrite(mask);
         SPI1_ByteWrite(data);
+        EndTransaction();
+        success = true;
+    } else {
+        success = false;
+    }
+    return success;
+}
+
+bool RB_CAN_McpGetReg(MCP_REGISTER reg, const uint8_t* data) {
+    bool success;
+    if (SPI1_IsTxReady() && StartTransaction()) {
+        SPI1_ByteWrite(MCP_INSTR_READ);
+        SPI1_ByteWrite(reg);
+        *data = SPI1_ByteRead();
         EndTransaction();
         success = true;
     } else {
