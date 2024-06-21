@@ -13,9 +13,14 @@
 #include "rb_library/rb_hall.h"
 #include "rb_library/rb_control.h"
 #include "rb_library/rb_pwm.h"
+#include "rb_library/rb_can.h"
 
 void RB_MainInit(void);
 void RB_SystemStart(void);
+
+//temporary checks for SPI comms
+uint16_t canInitErrors;
+uint8_t canReadResult = 0;
 
 
 /*
@@ -46,6 +51,9 @@ int main(void)
 void RB_MainInit (void)
 {
     SYSTEM_Initialize();
+    
+    RB_CAN_Init();
+    RB_CAN_McpGetReg(MCP_REG_RXB0CTRL, &canReadResult);
     
     /* PWM Init from MCAF_ConfigurationPwmUpdate */
     RB_PWMInit();

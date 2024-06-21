@@ -90,7 +90,7 @@ bool RB_CAN_McpModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data) {
     return success;
 }
 
-bool RB_CAN_McpGetReg(MCP_REGISTER reg, const uint8_t* data) {
+bool RB_CAN_McpGetReg(MCP_REGISTER reg, uint8_t* data) {
     bool success = false;
     if (SPI1_IsTxReady() && StartTransaction()) {
         SPI1_ByteWrite(MCP_INSTR_READ);
