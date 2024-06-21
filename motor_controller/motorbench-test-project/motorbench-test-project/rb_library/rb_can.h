@@ -54,8 +54,4 @@ bool RB_CAN_McpModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data);
  */
 bool RB_CAN_McpGetReg(MCP_REGISTER reg, const uint8_t* data);
 
-void RB_CAN_Send(void);
-
-void RB_CAN_Receive(void);
-
 #endif	/* RB_CAN_H */

@@ -52,21 +52,19 @@ uint16_t RB_CAN_Init(void) {
 }
 
 bool RB_CAN_McpSetReg(MCP_REGISTER reg, uint8_t data) {
-    bool success;
+    bool success = false;
     if (SPI1_IsTxReady() && StartTransaction()) {
         SPI1_ByteWrite(MCP_INSTR_WRITE);
         SPI1_ByteWrite(reg);
         SPI1_ByteWrite(data);
         EndTransaction();
         success = true;
-    } else {
-        success = false;
-    }
+    } 
     return success;
 }
 
 bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n) {
-    bool success;
+    bool success = false;
     if (SPI1_IsTxReady() && StartTransaction()) {
         SPI1_ByteWrite(MCP_INSTR_WRITE);
         SPI1_ByteWrite(firstReg);
@@ -75,14 +73,12 @@ bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n) {
         }
         EndTransaction();
         success = true;
-    } else {
-        success = false;
     }
     return success;
 }
 
 bool RB_CAN_McpModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data) {
-    bool success;
+    bool success = false;
     if (SPI1_IsTxReady() && StartTransaction()) {
         SPI1_ByteWrite(MCP_INSTR_BITMOD);
         SPI1_ByteWrite(reg);
@@ -90,23 +86,19 @@ bool RB_CAN_McpModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data) {
         SPI1_ByteWrite(data);
         EndTransaction();
         success = true;
-    } else {
-        success = false;
     }
     return success;
 }
 
 bool RB_CAN_McpGetReg(MCP_REGISTER reg, const uint8_t* data) {
-    bool success;
+    bool success = false;
     if (SPI1_IsTxReady() && StartTransaction()) {
         SPI1_ByteWrite(MCP_INSTR_READ);
         SPI1_ByteWrite(reg);
         *data = SPI1_ByteRead();
         EndTransaction();
         success = true;
-    } else {
-        success = false;
-    }
+    } 
     return success;
 }
 
