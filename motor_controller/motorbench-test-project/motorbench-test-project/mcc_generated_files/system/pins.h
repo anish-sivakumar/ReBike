@@ -45,6 +45,51 @@
 
 /**
  * @ingroup  pinsdriver
+ * @brief    Sets the RB10 GPIO Pin which has a custom name of SPI1_CS to High
+ * @pre      The RB10 must be set as Output Pin             
+ * @return   none  
+ */
+#define SPI1_CS_SetHigh()          (_LATB10 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RB10 GPIO Pin which has a custom name of SPI1_CS to Low
+ * @pre      The RB10 must be set as Output Pin
+ * @return   none  
+ */
+#define SPI1_CS_SetLow()           (_LATB10 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RB10 GPIO Pin which has a custom name of SPI1_CS
+ * @pre      The RB10 must be set as Output Pin
+ * @return   none  
+ */
+#define SPI1_CS_Toggle()           (_LATB10 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RB10 GPIO Pin which has a custom name of SPI1_CS
+ * @return   none  
+ */
+#define SPI1_CS_GetValue()         _RB10
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RB10 GPIO Pin which has a custom name of SPI1_CS as Input
+ * @return   none  
+ */
+#define SPI1_CS_SetDigitalInput()  (_TRISB10 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RB10 GPIO Pin which has a custom name of SPI1_CS as Output
+ * @return   none  
+ */
+#define SPI1_CS_SetDigitalOutput() (_TRISB10 = 0)
+
+/**
+ * @ingroup  pinsdriver
  * @brief    Sets the RE4 GPIO Pin which has a custom name of MCAF_TESTPOINT1 to High
  * @pre      The RE4 must be set as Output Pin             
  * @return   none  
