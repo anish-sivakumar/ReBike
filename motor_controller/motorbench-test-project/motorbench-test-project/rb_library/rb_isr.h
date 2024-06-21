@@ -23,14 +23,6 @@ extern "C" {
 #include "rb_board_ui.h"
 #include "library/mc-library/motor_control.h"
 
-// Specify PWM Period in micro seconds
-#define LOOPTIME_MICROSEC       50
-// Oscillator frequency (MHz) - 200MHz
-#define FOSC_MHZ                200U     
-// loop time in terms of PWM clock period (5000 - 1)
-#define PWM_PERIOD              (uint16_t)4550 //(uint16_t)(((LOOPTIME_MICROSEC*FOSC_MHZ)/2)-1)
-
-    
  
 typedef enum 
 {   
@@ -147,11 +139,10 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             MC_CalculateSineCosine_Assembly_Ram(hall.theta,&PMSM.sincosTheta);
             MC_TransformParkInverse_Assembly(&PMSM.vdqCmd,&PMSM.sincosTheta,&PMSM.valphabetaCmd);
             MC_TransformClarkeInverseSwappedInput_Assembly(&PMSM.valphabetaCmd,&PMSM.vabcCmd);
-            MC_CalculateSpaceVectorPhaseShifted_Assembly(&PMSM.vabcCmd, PWM_PERIOD, &PMSM.pwmDutycycle);
+            MC_CalculateSpaceVectorPhaseShifted_Assembly(&PMSM.vabcCmd, 4630, &PMSM.pwmDutycycle); //4630=4775-145 
             
             // Adjust Duties to be in between 225 and 4775 
-            // SVPWM duty waveform is messed up at the bottom clipping
-            pwmDutyCycleLimitCheck(&PMSM.pwmDutycycle, 225, 4775);  
+            RB_PWMDutyCycleAdjust(&PMSM.pwmDutycycle, 145, 4775);  
             
             /* Lastly, Set duties */
             

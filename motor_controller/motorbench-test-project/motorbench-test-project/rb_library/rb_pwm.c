@@ -252,8 +252,14 @@ void RB_FixedFrequencySinePWM(uint16_t pot)
 }
 
 
-void pwmDutyCycleLimitCheck (MC_DUTYCYCLEOUT_T *pPwmDutycycle,uint16_t min,uint16_t max)
+void RB_PWMDutyCycleAdjust (MC_DUTYCYCLEOUT_T *pPwmDutycycle,uint16_t min,uint16_t max)
 {
+    // Duties from SVPWM range from 0-4630. Shift by +145 for safe limits [145,4775]
+    pPwmDutycycle->dutycycle1 = pPwmDutycycle->dutycycle1 + 145;
+    pPwmDutycycle->dutycycle2 = pPwmDutycycle->dutycycle2 + 145;
+    pPwmDutycycle->dutycycle3 = pPwmDutycycle->dutycycle3 + 145;
+    
+    // Final check to make sure duty is within safe limits [145,4775]
     if (pPwmDutycycle->dutycycle1 < min)
     {
         pPwmDutycycle->dutycycle1 = min;
@@ -280,4 +286,12 @@ void pwmDutyCycleLimitCheck (MC_DUTYCYCLEOUT_T *pPwmDutycycle,uint16_t min,uint1
     {
         pPwmDutycycle->dutycycle3 = max;
     }
+}
+
+
+void RB_PWMDutyCycleSet(MC_DUTYCYCLEOUT_T *pPwmDutycycle)
+{
+    MCC_PWM_DutyCycleSet(MOTOR1_PHASE_A, pPwmDutycycle->dutycycle1);
+    MCC_PWM_DutyCycleSet(MOTOR1_PHASE_B, pPwmDutycycle->dutycycle2);
+    MCC_PWM_DutyCycleSet(MOTOR1_PHASE_C, pPwmDutycycle->dutycycle3);
 }
