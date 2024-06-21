@@ -1,5 +1,5 @@
 /* 
- * File:   mc_hall.h
+ * File:   main
  * Author: Chris Hyggen, Anish Sivakumar
  *
  */

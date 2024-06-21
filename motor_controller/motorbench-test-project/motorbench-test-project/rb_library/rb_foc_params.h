@@ -18,18 +18,18 @@ extern "C" {
 #define     RB_KE               0
 
 // D-axis current control loop coefficients in Q15 format
-#define     RB_DKP              0 // get starting values from github project
-#define     RB_DKI              0
-#define     RB_DKC              0
-#define     RB_DOUTMAX          0
-#define     RB_DOUTMIN          0    
+#define     RB_DCURRENT_KP              Q15(0.05) // initial values from ref project 
+#define     RB_DCURRENT_KI              Q15(0.003)
+#define     RB_DCURRENT_KC              Q15(0.999)
+#define     RB_DVOLTAGE_OUTMAX          0x7FFF      //32767
+#define     RB_DVOLTAGE_OUTMIN          0    
     
 // D-axis current control loop coefficients in Q15 format
-#define     RB_QKP          0 // get starting values from github project
-#define     RB_QKI          0
-#define     RB_QKC          0 
-#define     RB_QOUTMAX      0
-#define     RB_QOUTMIN      0  
+#define     RB_QCURRENT_KP          Q15(0.05) // initial values from ref project 
+#define     RB_QCURRENT_KI          Q15(0.003)
+#define     RB_QCURRENT_KC          Q15(0.999)
+#define     RB_QVOLTAGE_OUTMAX      0x7FFF      //32767
+#define     RB_QVOLTAGE_OUTMIN      0  
     
 // speed control loop coefficients in Q15 format - Do later
     

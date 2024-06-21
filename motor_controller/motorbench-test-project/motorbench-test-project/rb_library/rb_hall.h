@@ -57,7 +57,7 @@ typedef struct
 {
     uint16_t sector; // sector of [3, 2, 6, 4, 5, 1] during 1 electrical cycle
     uint16_t speed; // rotor speed in RPM using filtered period 
-    int16_t theta; // angle of estimation
+    int16_t theta; // angle of estimation: Q15 -32768 to 32767 => -pi t +pi
 
     uint16_t period; // captures raw timer1 value 
     uint32_t periodStateVar; // intermediate result for filtered period calculation

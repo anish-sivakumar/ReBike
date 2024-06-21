@@ -15,22 +15,10 @@ extern "C" {
 // these includes are OK/low-level enough, or Ours
 #include <stdint.h>
 #include <stdbool.h>
-#include "../motorBench/library/mc-library/motor_control_types.h"
+    
 #include "rb_foc_params.h"
 #include "rb_measure.h"
     
-// try to avoid using motorBench files
-#include "../motorBench/units.h"
-#include "../motorBench/foc_types.h"
-#include "../motorBench/deadtimecomp_types.h"
-#include "../motorBench/flux_control_types.h"
-#include "../motorBench/filter_types.h"
-#include "../motorbench/hal/hardware_access_functions_types.h"
-#include "../motorbench/system_state.h"
-#include "../motorbench/filter.h" 
-//#include "../motorbench/current_measure.h"
-//#include "../motorbench/foc.h"
-
     
  /**
   * Motor Parameters from vendor
@@ -83,16 +71,12 @@ typedef struct tagPMSM
     MC_DQ_T                     vdqCmd;     /** desired dq-frame voltage, output of current loop */
     MC_ALPHABETA_T              valphabetaCmd; /** desired alphabeta-frame voltage */
     MC_ABC_T                    vabcCmd;       /** desired phase voltage */
-    int16_t                     rVdc;       /** reciprocal of DC link voltage */
-    MC_ABC_T                    dabc;       /** after ZSM + clip */
-    MC_ABC_T                    pwmDutycycle;   /** PWM count */
-    int16_t                     thetaElectrical;  /** electrical angle */
-    int16_t                     omegaElectrical;  /** electrical frequency */
+    MC_DUTYCYCLEOUT_T                    pwmDutycycle;   /** PWM count */
     MC_SINCOS_T                 sincosTheta;     /** sine and cosine of electrical angle */
     
     /** Safety Related */
-    MCAF_BRIDGE_TEMPERATURE bridgeTemperature;  /** bridge temperature */
-    MCAF_FAULT_DETECT_T faultDetect;     /** fault detect state */
+    //MCAF_BRIDGE_TEMPERATURE bridgeTemperature;  /** bridge temperature */
+    //MCAF_FAULT_DETECT_T faultDetect;     /** fault detect state */
   
     /** current calibration parameters */
     RB_MEASURE_CURRENT_T currentCalib;
@@ -106,8 +90,17 @@ typedef struct tagPMSM
 } RB_MOTOR_DATA;
 
 
+/**
+ * Initialize PI controller parameters
+ * @param pPMSM
+ */
 void RB_InitControlParameters(RB_MOTOR_DATA *pPMSM);
 
+/**
+ * Initialize PI controller and ADC compensation parameters
+ * @param pPMSM
+ * @return 
+ */
 bool RB_FocInit(RB_MOTOR_DATA *pPMSM);
 
 /**

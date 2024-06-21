@@ -28,7 +28,7 @@ extern "C" {
 // Oscillator frequency (MHz) - 200MHz
 #define FOSC_MHZ                200U     
 // loop time in terms of PWM clock period (5000 - 1)
-#define PWM_PERIOD              (uint16_t)(((LOOPTIME_MICROSEC*FOSC_MHZ)/2)-1)
+#define PWM_PERIOD              (uint16_t)4550 //(uint16_t)(((LOOPTIME_MICROSEC*FOSC_MHZ)/2)-1)
 
     
  
@@ -109,13 +109,13 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
         /*********************************************************************
         *       START OF FOC ALGORITHM                                       *
-        *********************************************************************/  
-            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
-            HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
+        *********************************************************************/ 
             
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
+           
             /* Calculate qId,qIq from qSin,qCos,qIa,qIb */
-            MC_TransformClarke_InlineC(&PMSM.iabc,&PMSM.ialphabeta);
-            MC_TransformPark_InlineC(&PMSM.ialphabeta, &PMSM.sincosTheta, &PMSM.idqFdb);
+            MC_TransformClarke_Assembly(&PMSM.iabc,&PMSM.ialphabeta);
+            MC_TransformPark_Assembly(&PMSM.ialphabeta, &PMSM.sincosTheta, &PMSM.idqFdb);
             
             /* Determine d & q current reference values based */
             RB_SetCurrentReference(boardUI.potState, &PMSM.idqRef);
@@ -126,14 +126,14 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                                             &PMSM.idCtrl, 
                                             &PMSM.vdqCmd.d);
             
-            /* Dynamic d-q adjustment with d component priority vq=sqrt (vs^2 - vd^2) 
+            /* Dynamic d-q adjustment with d component priority vq=sqrt(vs^2 - vd^2) 
                 limit vq maximum to the one resulting from the calculation above 
-                MAX_VOLTAGE_VECTOR = 0.98 */
+                MAX_VOLTAGE_VECTOR^2 = 0.98 */
             int16_t temp_q15 = (int16_t)(__builtin_mulss(PMSM.vdqCmd.d,
                                                  PMSM.vdqCmd.d) >> 15);
             temp_q15 = Q15(0.98) - temp_q15; 
-            PMSM.iqCtrl.outMax = Q15SQRT(temp_q15); // set max Iq
-            PMSM.iqCtrl.outMin = - PMSM.iqCtrl.outMax; // set min Iq
+            PMSM.iqCtrl.outMax = Q15SQRT(temp_q15); // set VqCmd for max Iq
+            PMSM.iqCtrl.outMin = - PMSM.iqCtrl.outMax; // set VqCmd for min Iq
             
             /* PI control for Q-axis - sets Vq command */
             MC_ControllerPIUpdate_Assembly(PMSM.idqRef.q,
@@ -148,6 +148,10 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             MC_TransformParkInverse_Assembly(&PMSM.vdqCmd,&PMSM.sincosTheta,&PMSM.valphabetaCmd);
             MC_TransformClarkeInverseSwappedInput_Assembly(&PMSM.valphabetaCmd,&PMSM.vabcCmd);
             MC_CalculateSpaceVectorPhaseShifted_Assembly(&PMSM.vabcCmd, PWM_PERIOD, &PMSM.pwmDutycycle);
+            
+            // Adjust Duties to be in between 225 and 4775 
+            // SVPWM duty waveform is messed up at the bottom clipping
+            pwmDutyCycleLimitCheck(&PMSM.pwmDutycycle, 225, 4775);  
             
             /* Lastly, Set duties */
             
@@ -187,6 +191,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         
     }
     
+    HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
     /* Low-priority tasks at the end */
     X2CScope_Update();
     RB_BoardUIService(&boardUI); // update the button states and the POT value

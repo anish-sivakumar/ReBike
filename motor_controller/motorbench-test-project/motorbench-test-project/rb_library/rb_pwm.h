@@ -9,6 +9,7 @@
 #define	RB_PWM_H
 
 #include "board_service_types.h"
+#include "library/mc-library/motor_control.h"
 
 #ifdef	__cplusplus
 extern "C" {
@@ -92,6 +93,13 @@ void RB_FixedFrequencySinePWMInit (void);
 
 void RB_FixedFrequencySinePWM(uint16_t freqDivider);
 
+/**
+ * Clip SVPWM Duties to [225, 4775]
+ * @param pPwmDutycycle
+ * @param min
+ * @param max
+ */
+void RB_PWMDutyCycleLimit(MC_DUTYCYCLEOUT_T *pPwmDutycycle, uint16_t min,uint16_t max);
 
 
 #ifdef	__cplusplus

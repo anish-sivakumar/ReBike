@@ -193,8 +193,8 @@ void RB_FixedFrequencySinePWMInit (void)
 {
     // 120 degrees apart
     sinePWM.phaseAIndex = 0;
-    sinePWM.phaseBIndex = 99;
-    sinePWM.phaseCIndex = 198;
+    sinePWM.phaseBIndex = 198; //changed to 198, so peak index is reached after phase A
+    sinePWM.phaseCIndex = 99; // changed to 99, so peak index is reached after phase B
 }
 
 void RB_FixedFrequencySinePWM(uint16_t pot)
@@ -213,16 +213,16 @@ void RB_FixedFrequencySinePWM(uint16_t pot)
         freqDivider = 7;  
     } else if ((pot >= 45000) && (pot < 50000))
     {
-        freqDivider = 5;  
+        freqDivider = 6;  
     } else if ((pot >= 50000) && (pot < 55000))
     {
-        freqDivider = 5;  
+        freqDivider = 5;            // 13Hz 
     } else if ((pot >= 55000) && (pot < 60000))
     {
-        freqDivider = 4;  
+        freqDivider = 4;            // 16Hz  
     } else if (pot >= 60000)
     {
-        freqDivider = 3;
+        freqDivider = 3;            // 22Hz
     } 
     
     sinePWM.runningStateCounter++;
@@ -248,5 +248,36 @@ void RB_FixedFrequencySinePWM(uint16_t pot)
         sinePWM.phaseBIndex = (++sinePWM.phaseBIndex < (RB_SINE_TABLE_SIZE)) ? sinePWM.phaseBIndex : 0; 
         sinePWM.phaseCIndex = (++sinePWM.phaseCIndex < (RB_SINE_TABLE_SIZE)) ? sinePWM.phaseCIndex : 0; 
        
+    }
+}
+
+
+void pwmDutyCycleLimitCheck (MC_DUTYCYCLEOUT_T *pPwmDutycycle,uint16_t min,uint16_t max)
+{
+    if (pPwmDutycycle->dutycycle1 < min)
+    {
+        pPwmDutycycle->dutycycle1 = min;
+    }
+    else if (pPwmDutycycle->dutycycle1 > max)
+    {
+        pPwmDutycycle->dutycycle1 = max;
+    }
+    
+    if (pPwmDutycycle->dutycycle2 < min)
+    {
+        pPwmDutycycle->dutycycle2 = min;
+    }
+    else if (pPwmDutycycle->dutycycle2 > max)
+    {
+        pPwmDutycycle->dutycycle2 = max;
+    }
+    
+    if (pPwmDutycycle->dutycycle3 < min)
+    {
+        pPwmDutycycle->dutycycle3 = min;
+    }
+    else if (pPwmDutycycle->dutycycle3 > max)
+    {
+        pPwmDutycycle->dutycycle3 = max;
     }
 }

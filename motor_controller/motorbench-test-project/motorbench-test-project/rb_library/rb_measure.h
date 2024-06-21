@@ -144,8 +144,11 @@ inline static int16_t RB_ADCCompensate(int16_t measurement, int16_t offset, int1
         temp = offset - measurement;
     }
     
-    // scale by gain
-    temp = (__builtin_mulss(temp, gain)) >> 15;
+    /* Deciding not to scale by motorBench gain because it is confusing
+     * Iabc will range from [-32768, +32768]  
+     * Max value corresponds to 21.83 Apeak */
+    
+    //temp = (__builtin_mulss(temp, gain)) >> 15;
     
     return temp;
 }

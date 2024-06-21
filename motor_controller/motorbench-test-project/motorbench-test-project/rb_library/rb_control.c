@@ -6,6 +6,7 @@
  */
 
 #include "rb_control.h"
+#include "util.h"
 
 void RB_InitControlParameters(RB_MOTOR_DATA *pPMSM)
 {
@@ -14,28 +15,23 @@ void RB_InitControlParameters(RB_MOTOR_DATA *pPMSM)
     pPMSM->motorParams.ke = RB_KE;
     
     /* ============= PI D Term =============== */
-    pPMSM->idCtrl.kp = RB_DKP;
-    pPMSM->idCtrl.ki = RB_DKI;
-    pPMSM->idCtrl.kc = RB_DKC;
-    pPMSM->idCtrl.outMax = RB_DOUTMAX;
-    pPMSM->idCtrl.outMin = RB_DOUTMIN;
+    pPMSM->idCtrl.kp = RB_DCURRENT_KP;
+    pPMSM->idCtrl.ki = RB_DCURRENT_KI;
+    pPMSM->idCtrl.kc = RB_DCURRENT_KC;
+    pPMSM->idCtrl.outMax = RB_DVOLTAGE_OUTMAX;
+    pPMSM->idCtrl.outMin = RB_DVOLTAGE_OUTMIN;
 
     /* ============= PI Q Term =============== */
-    pPMSM->iqCtrl.kp = RB_QKP;
-    pPMSM->iqCtrl.ki = RB_QKI;
-    pPMSM->iqCtrl.kc = RB_QKC;
-    pPMSM->iqCtrl.outMax = RB_QOUTMAX;
-    pPMSM->iqCtrl.outMin = RB_QOUTMIN;
+    pPMSM->iqCtrl.kp = RB_QCURRENT_KP;
+    pPMSM->iqCtrl.ki = RB_QCURRENT_KI;
+    pPMSM->iqCtrl.kc = RB_QCURRENT_KC;
+    pPMSM->iqCtrl.outMax = RB_QVOLTAGE_OUTMAX;
+    pPMSM->iqCtrl.outMin = RB_QVOLTAGE_OUTMIN;
     
     /* ============= PI Speed Terms - Do Later =============== */
     
-    /* ============= Bridge Temperature Terms =============== */
-    pPMSM->bridgeTemperature.gain   = RB_BRIDGE_TEMPERATURE_GAIN;
-    pPMSM->bridgeTemperature.offset = RB_BRIDGE_TEMPERATURE_OFFSET;
-    pPMSM->bridgeTemperature.filter.gain = RB_BRIDGE_TEMPERATURE_FILTER_GAIN;
-    pPMSM->bridgeTemperature.filter.state.x32 = 0;
-    pPMSM->bridgeTemperature.filter.output = 0;
-    pPMSM->bridgeTemperature.filter.slewRate = RB_BRIDGE_TEMPERATURE_SLEW_RATE;
+    /* ============= Bridge Temperature Terms - Do Later=============== */
+    
 
 }
 
@@ -59,10 +55,23 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 
 void RB_SetCurrentReference(uint16_t potVal, MC_DQ_T *pidqRef)
 {
+    
+    int16_t signedPotVal = potVal -  0x8000; // temporary conversion to signed since SinePWM uses unsigned
+    
     // d-axis current controlled at zero
     pidqRef->d = 0;
     
-    pidqRef->q = potVal; 
+    
+    if (signedPotVal <= 500)
+    {
+        pidqRef->q = 0;
+    } else
+    {
+        pidqRef->q = (__builtin_mulss(potVal, 9800)>>15) + 200; 
+    }
+    
+            
+            
 
 }
 

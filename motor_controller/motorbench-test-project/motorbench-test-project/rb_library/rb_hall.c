@@ -14,17 +14,17 @@
 
 /**
  * LUT for the calculation of six sector to equivalent angle in Q15 format.
- *              Here the angle is varying from -32768 to 32767. 
+ *              Here the angle is varying from -32768 to 32767 => -pi t +pi
  */
-int16_t sectorToQ15Angle[8] =  // 3, 1, 5, 4, 6, 2 is the fwd order from hall signals 
+int16_t sectorToQ15Angle[8] =  // 3, 2, 6, 4, 5, 1 is the fwd order from hall signals 
 {
-    0,
-    -21845,      // sector-1 =
-    21864,     // sector-2 = (-32768+10922)
+    0,          
+    21845,      // sector-1 =
+    -21864,     // sector-2 = (-32768+10922)
     -32768,     // sector-3
     0,          // sector-4
-    -10922,      // sector-5
-    10924,     //sector-6
+    10922,      // sector-5
+    -10924,     //sector-6
     0
 };
 
