@@ -109,7 +109,7 @@ void RB_FixedFrequencySinePWMInit (void);
  * Updates Duties based on Sine LUT
  * @param freqDivider
  */
-void RB_FixedFrequencySinePWM(uint16_t freqDivider);
+void RB_FixedFrequencySinePWM(int16_t potVal);
 
 /**
  * Clip SVPWM Duties to [145, 4775]

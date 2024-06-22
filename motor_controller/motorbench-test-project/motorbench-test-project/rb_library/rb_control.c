@@ -55,23 +55,20 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 
 void RB_SetCurrentReference(uint16_t potVal, MC_DQ_T *pidqRef)
 {
-    
-    int16_t signedPotVal = potVal -  0x8000; // temporary conversion to signed since SinePWM uses unsigned
-    
+       
     // d-axis current controlled at zero
     pidqRef->d = 0;
     
-    
-    if (signedPotVal <= 500)
+    // if pot is below mid point, iq ref = 0. pot mid point is around 1600 ADC reading
+    if (potVal <= 2000)
     {
         pidqRef->q = 0;
     } else
     {
-        pidqRef->q = (__builtin_mulss(potVal, 9800)>>15) + 200; 
-    }
-    
-            
-            
+        // iq ref = potVal scaled from 0->2000
+        // (6000/2^15) * 21.83A = 4A 
+        pidqRef->q = __builtin_mulss(potVal, 6000)>>15; 
+    }    
 
 }
 

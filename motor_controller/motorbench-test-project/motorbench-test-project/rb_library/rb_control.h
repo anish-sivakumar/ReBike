@@ -71,7 +71,7 @@ typedef struct tagPMSM
     MC_DQ_T                     vdqCmd;     /** desired dq-frame voltage, output of current loop */
     MC_ALPHABETA_T              valphabetaCmd; /** desired alphabeta-frame voltage */
     MC_ABC_T                    vabcCmd;       /** desired phase voltage */
-    MC_DUTYCYCLEOUT_T                    pwmDutycycle;   /** PWM count */
+    MC_DUTYCYCLEOUT_T           pwmDutyCycle;   /** PWM count */
     MC_SINCOS_T                 sincosTheta;     /** sine and cosine of electrical angle */
     
     /** Safety Related */

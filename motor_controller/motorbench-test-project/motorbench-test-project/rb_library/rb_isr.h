@@ -27,8 +27,10 @@ extern "C" {
 typedef enum 
 {   
     RBFSM_INIT = 0,
-    RBFSM_STARTUP,
-    RBFSM_RUNNING,
+    RBFSM_BOARD_INIT,
+    RBFSM_MANUAL_STARTUP,     
+    RBFSM_RUN_OPENLOOP,
+    RBFSM_RUN_FOC,
     RBFSM_STOPPING,
     RBFSM_FAULTED
         
@@ -63,14 +65,15 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             //MCAF_MotorControllerOnRestartInit(pmotor); not sure if IMPORTANT
             RB_PWMCapBootstrapInit(&bootstrap);
             // might need this: HAL_PWM_FaultClearBegin();
-            RB_FocInit(&PMSM);
+            //RB_FocInit(&PMSM);
+            RB_ADCCalibrationInit(&PMSM.currentCalib); 
             RB_FixedFrequencySinePWMInit(); //for testing
             RB_BoardUIInit(&boardUI);
             
-            state = RBFSM_STARTUP;
+            state = RBFSM_BOARD_INIT;
             break;
             
-        case RBFSM_STARTUP:
+        case RBFSM_BOARD_INIT:
             
             if(!bootstrap.done)
             {   
@@ -82,7 +85,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                // next, take current measurements to calculate offset over multiple steps
                RB_ADCCalibrationStepISR(&PMSM.currentCalib); 
             
-            } else if((bootstrap.done) && (PMSM.currentCalib.done) && (boardUI.motorEnable.state))
+            } else if((bootstrap.done) && (PMSM.currentCalib.done) && (boardUI.motorEnable.pressed))
             {
                 // Configure Hall ISRs and data
                 RB_HALL_Init(&hall);
@@ -92,12 +95,43 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 HAL_PWM_UpperTransistorsOverride_Disable();
                 MCAF_LED1_SetHigh();
                 
-                state = RBFSM_RUNNING;
+                state = RBFSM_MANUAL_STARTUP;
+            }
+            
+            break;
+        
+        case RBFSM_MANUAL_STARTUP:
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
+            RB_HALL_Estimate(&hall);
+            
+            if((hall.speed > 15) && (hall.speed<100))// speed calculation is messed up. fix it
+            {
+                RB_InitControlLoopState(&PMSM);
+                state = RBFSM_RUN_FOC;
             }
             
             break;
             
-        case RBFSM_RUNNING:         
+        case RBFSM_RUN_OPENLOOP:
+            /* Runs fixed frequency SinePWM based on potentiometer input */
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
+            RB_HALL_Estimate(&hall);
+            RB_FixedFrequencySinePWM(boardUI.potState);
+
+            /* TESTING */
+            RB_SetCurrentReference(boardUI.potState, &PMSM.idqRef);
+            
+            // if we hit speed 27RPM, move to FOC
+            if (hall.speed >= 27){ // 35 is the top speed from OL now
+                
+                RB_InitControlLoopState(&PMSM);
+                
+                state = RBFSM_RUN_FOC;
+            }
+            
+            break;
+            
+        case RBFSM_RUN_FOC:         
             
         /*********************************************************************
         *       START OF FOC ALGORITHM                                       *
@@ -133,26 +167,23 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                                            &PMSM.iqCtrl,
                                            &PMSM.vdqCmd.q);
             
-            // estimate electrical angle into hall.theta
+            /* estimate electrical angle into hall.theta */
             RB_HALL_Estimate(&hall);
             
+            /* forward path calculations */
             MC_CalculateSineCosine_Assembly_Ram(hall.theta,&PMSM.sincosTheta);
             MC_TransformParkInverse_Assembly(&PMSM.vdqCmd,&PMSM.sincosTheta,&PMSM.valphabetaCmd);
             MC_TransformClarkeInverseSwappedInput_Assembly(&PMSM.valphabetaCmd,&PMSM.vabcCmd);
-            MC_CalculateSpaceVectorPhaseShifted_Assembly(&PMSM.vabcCmd, 4630, &PMSM.pwmDutycycle); //4630=4775-145 
+            MC_CalculateSpaceVectorPhaseShifted_Assembly(&PMSM.vabcCmd, 4630, &PMSM.pwmDutyCycle); //4630=4775-145 
             
-            // Adjust Duties to be in between 225 and 4775 
-            RB_PWMDutyCycleAdjust(&PMSM.pwmDutycycle, 145, 4775);  
+            /* Adjust Duties to be in between 145 and 4775 */
+            RB_PWMDutyCycleAdjust(&PMSM.pwmDutyCycle, 145, 4775);  
             
             /* Lastly, Set duties */
+            RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-        /*********************************************************************
-        *       END OF FOC ALGORITHM                                         *
-        *********************************************************************/
-            
-            RB_FixedFrequencySinePWM(boardUI.potState);
-            
-            if (!boardUI.motorEnable.state){
+            // if we button pressed, stop
+            if (boardUI.motorEnable.pressed){ 
 
                 //Maintains the low-side transistors at low dc and high-side OFF.
                 HAL_PWM_UpperTransistorsOverride_Low();
@@ -161,19 +192,18 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 
                 state = RBFSM_STOPPING;
             }
-
             break;
-            
+        
         case RBFSM_STOPPING:
             
-            if(boardUI.motorEnable.state)
+            if(boardUI.motorEnable.pressed)
             {   
                 // get ready to output PWM 
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
                 HAL_PWM_UpperTransistorsOverride_Disable();
                 MCAF_LED1_SetHigh();
                 
-                state = RBFSM_RUNNING;
+                state = RBFSM_MANUAL_STARTUP;
             }
             break;
             
