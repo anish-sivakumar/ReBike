@@ -8,6 +8,7 @@
 #include "rb_hall.h"
 #include "rb_isr.h"
 
+#include "timer/sccp4.h"
 #include "hal/hardware_access_functions.h"
 #include "motorBench/util.h"
 
@@ -31,7 +32,7 @@ int16_t sectorToQ15Angle[8] =  // 3, 2, 6, 4, 5, 1 is the fwd order from hall si
 
 void RB_HALL_Init(RB_HALL_DATA *phall){
    
-    phall->periodKFilter = Q15(0.005); //Q15(0.01);
+    phall->periodKFilter = Q15(0.002); //Q15(0.01);
     //hall.period = 0xFFF0; //65520
     RB_HALL_Reset(phall);
     
@@ -39,8 +40,43 @@ void RB_HALL_Init(RB_HALL_DATA *phall){
     IO_RE8_SetInterruptHandler(&RB_HALL_ISR);
     IO_RE9_SetInterruptHandler(&RB_HALL_ISR);
     IO_RE10_SetInterruptHandler(&RB_HALL_ISR);
+    
+    SCCP4_Timer_Stop();
+    SCCP4_Timer_PeriodSet(RB_HALL_TMR4_PERIOD);
+    SCCP4_Timer_TimeoutCallbackRegister(&RB_HALL_TIMEOUT_ISR);
+    SCCP4_Timer_Start();
 }
 
+uint16_t RB_HALL_NextSector(uint16_t prev){
+    uint16_t next;
+    
+    // Switching order of hall signals is 3, 1, 5, 4, 6, 2
+    switch (prev)
+    {
+        case 3:
+            next = 1;
+            break;
+        case 1:
+            next = 5;
+            break;
+        case 5:
+            next = 4;
+            break;
+        case 4:
+            next = 6;
+            break;
+        case 6:
+            next = 2;
+            break;
+        case 2:
+            next = 3;
+            break;
+        default: // Should never happen
+            next = 0;
+            break;
+    }
+    return next;
+}
 
 void RB_HALL_Reset(RB_HALL_DATA *phall)
 {
@@ -56,21 +92,28 @@ void RB_HALL_Reset(RB_HALL_DATA *phall)
 
 void RB_HALL_StateChange(RB_HALL_DATA *phall)
 {
-    uint16_t tmr1_tmp = TMR1; // store timer1 count value
+    // store timer value
+    uint16_t tmr_tmp = (uint16_t)SCCP4_Timer_Counter16BitGet(); 
 
     // Some noise is causing the hall ISR to run more often that it should. 
     // Only run the state change routine if we actually saw a change in the hall sector.
     uint16_t sector_tmp = RB_HALL_ValueRead();
+    // TODO: try to debouce this better. predicting what sector to expect next did not work for debounding.
+    // if (sector_tmp == RB_HALL_NextSector(phall->sector) || phall->sector == 0) {
     if (sector_tmp != phall->sector) {
-        TMR1 = 0;
+        // reset timer 
+        SCCP4_Timer_Stop();
+        CCP4TMRL = 0;
+        SCCP4_Timer_Start();
+        
         phall->sector = sector_tmp;
 
-        // Check if our TMR1 measurement was valid
+        // Check if our timer measurement was valid
         if(phall->timedOut){
             phall->timedOut = false;
         }else{
             phall->minSpeedReached = true;
-            phall->period = tmr1_tmp;
+            phall->period = tmr_tmp;
         }
 
         phall->sector = RB_HALL_ValueRead();

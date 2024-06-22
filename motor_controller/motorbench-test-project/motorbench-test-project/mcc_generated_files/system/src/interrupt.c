@@ -53,6 +53,10 @@ void INTERRUPT_Initialize(void)
     // Priority: 1
     IPC19bits.CNEIP = 1;
     
+    // CCT4: CCP4 Timer Event
+    // Priority: 1
+    IPC10bits.CCT4IP = 1;
+    
 }
 
 void INTERRUPT_Deinitialize(void)
@@ -61,4 +65,5 @@ void INTERRUPT_Deinitialize(void)
     IPC11bits.DMTIP = 4;
     IPC1bits.CCT1IP = 4;
     IPC19bits.CNEIP = 4;
+    IPC10bits.CCT4IP = 4;
 }

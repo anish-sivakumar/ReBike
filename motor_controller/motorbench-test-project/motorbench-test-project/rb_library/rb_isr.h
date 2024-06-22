@@ -21,6 +21,7 @@ extern "C" {
 #include "rb_hall.h"
 #include "rb_pwm.h"
 #include "rb_board_ui.h"
+#include "timer/sccp4.h"
 #include "library/mc-library/motor_control.h"
 
  
@@ -219,11 +220,19 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 }
 
 
+// /**
+//  * TMR1 timeout routine (currently unused)
+//  */
+// void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
+//     IFS0bits.T1IF = 0; // reset interrupt flag
+// //    RB_HALL_Reset(&hall);
+// }
+
 /**
- * TMR1 timeout routine
+ * Hall timer (SCCP4) expiry routine
  */
-void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
-    IFS0bits.T1IF = 0; // reset interrupt flag
+void RB_HALL_TIMEOUT_ISR(void)
+{
     RB_HALL_Reset(&hall);
 }
 
