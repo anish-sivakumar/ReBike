@@ -80,9 +80,9 @@ struct SPI1_HOST_CONFIG
 static const struct SPI1_HOST_CONFIG config[] = {  
                                         { 
                                             /*Configuration setting for HOST_CONFIG.
-                                            SPI Mode : Mode 1, Sampled at : Middle, Clock Frequency : 10000 kHz*/
-                                            0x4,//SPI1BRGL
-                                            0x21,//SPI1CON1L
+                                            SPI Mode : Mode 0, Sampled at : Middle, Clock Frequency : 5000 kHz*/
+                                            0x9,//SPI1BRGL
+                                            0x121,//SPI1CON1L
                                         },
                                     };
 

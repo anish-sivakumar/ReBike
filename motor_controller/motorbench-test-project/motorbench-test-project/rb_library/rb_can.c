@@ -15,12 +15,8 @@ static void EndTransaction();
 uint16_t RB_CAN_Init(void) {
     // Check for errors during initialization
     uint16_t errors = 0;
-    SPI1_CS_SetHigh();
-    errors += !StartTransaction();
-    SPI1_ByteWrite(MCP_INSTR_RESET);
-    EndTransaction();
-
-    DELAY_milliseconds(10);
+        
+    errors += !RB_CAN_McpReset();
 
     uint8_t zeros[14];
     memset(zeros, 0, sizeof (zeros));
@@ -48,16 +44,23 @@ uint16_t RB_CAN_Init(void) {
             );
 
     // TODO: set message filter settings here
-    DELAY_milliseconds(10);
 
     return errors;
 }
 
+bool RB_CAN_McpReset() {
+    bool success = false;
+    if (StartTransaction() && SPI1_IsTxReady()) {
+        SPI1_ByteWrite(MCP_INSTR_RESET);
+        while (!SPI1STATLbits.SPITBE);
+        success = true;
+    }
+    EndTransaction();
+    return success;
+}
+
 bool RB_CAN_McpSetMode(MCP_CAN_MODE mode) {
     RB_CAN_McpModReg(MCP_REG_CANCTRL, MCP_MASK_CANCTRL_REQOP, mode);
-
-    DELAY_milliseconds(10);
-
     uint8_t newmode;
     RB_CAN_McpGetReg(MCP_REG_CANSTAT, &newmode);
     newmode &= MCP_MASK_CANCTRL_REQOP;
@@ -68,7 +71,7 @@ bool RB_CAN_McpSetMode(MCP_CAN_MODE mode) {
 
 bool RB_CAN_McpSetReg(MCP_REGISTER reg, uint8_t data) {
     bool success = false;
-    if (SPI1_IsTxReady() && StartTransaction()) {
+    if (StartTransaction() && SPI1_IsTxReady()) {
         SPI1_ByteWrite(MCP_INSTR_WRITE);
         SPI1_ByteWrite(reg);
         SPI1_ByteWrite(data);
@@ -80,7 +83,7 @@ bool RB_CAN_McpSetReg(MCP_REGISTER reg, uint8_t data) {
 
 bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n) {
     bool success = false;
-    if (SPI1_IsTxReady() && StartTransaction()) {
+    if (StartTransaction() && SPI1_IsTxReady()) {
         SPI1_ByteWrite(MCP_INSTR_WRITE);
         SPI1_ByteWrite(firstReg);
         for (int i = 0; i < n; i++) {
@@ -94,7 +97,7 @@ bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n) {
 
 bool RB_CAN_McpModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data) {
     bool success = false;
-    if (SPI1_IsTxReady() && StartTransaction()) {
+    if (StartTransaction() && SPI1_IsTxReady()) {
         SPI1_ByteWrite(MCP_INSTR_BITMOD);
         SPI1_ByteWrite(reg);
         SPI1_ByteWrite(mask);
@@ -107,7 +110,7 @@ bool RB_CAN_McpModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data) {
 
 bool RB_CAN_McpGetReg(MCP_REGISTER reg, uint8_t* data) {
     bool success = false;
-    if (SPI1_IsTxReady() && StartTransaction()) {
+    if (StartTransaction() && SPI1_IsTxReady()) {
         SPI1_ByteWrite(MCP_INSTR_READ);
         SPI1_ByteWrite(reg);
         *data = SPI1_ByteRead();
@@ -127,6 +130,7 @@ static bool StartTransaction() {
 }
 
 static void EndTransaction() {
+    while(SPI1STATLbits.SPIBUSY);
     SPI1_Close();
     SPI1_CS_SetHigh();
 }

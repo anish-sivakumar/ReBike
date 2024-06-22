@@ -53,7 +53,7 @@ int main(void)
  */
 void RB_MainInit (void)
 {
-    SYSTEM_Initialize();
+    SYSTEM_Initialize();  
     
     canInitErrors = RB_CAN_Init();
     canTest2 = RB_CAN_McpSetMode(MCP_CAN_MODE_CONFIG);

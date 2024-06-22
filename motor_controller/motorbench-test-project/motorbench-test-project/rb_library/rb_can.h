@@ -22,6 +22,9 @@
  */
 uint16_t RB_CAN_Init(void);
 
+bool RB_CAN_McpReset();
+
+
 bool RB_CAN_McpSetMode(MCP_CAN_MODE mode);
 
 /**
