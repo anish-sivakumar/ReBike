@@ -450,6 +450,51 @@
 
 /**
  * @ingroup  pinsdriver
+ * @brief    Sets the RE14 GPIO Pin which has a custom name of SPI1_RST to High
+ * @pre      The RE14 must be set as Output Pin             
+ * @return   none  
+ */
+#define SPI1_RST_SetHigh()          (_LATE14 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RE14 GPIO Pin which has a custom name of SPI1_RST to Low
+ * @pre      The RE14 must be set as Output Pin
+ * @return   none  
+ */
+#define SPI1_RST_SetLow()           (_LATE14 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RE14 GPIO Pin which has a custom name of SPI1_RST
+ * @pre      The RE14 must be set as Output Pin
+ * @return   none  
+ */
+#define SPI1_RST_Toggle()           (_LATE14 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RE14 GPIO Pin which has a custom name of SPI1_RST
+ * @return   none  
+ */
+#define SPI1_RST_GetValue()         _RE14
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE14 GPIO Pin which has a custom name of SPI1_RST as Input
+ * @return   none  
+ */
+#define SPI1_RST_SetDigitalInput()  (_TRISE14 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE14 GPIO Pin which has a custom name of SPI1_RST as Output
+ * @return   none  
+ */
+#define SPI1_RST_SetDigitalOutput() (_TRISE14 = 0)
+
+/**
+ * @ingroup  pinsdriver
  * @brief    Initializes the PINS module
  * @return   none  
  */

@@ -13,12 +13,16 @@
 #include "stdint.h"
 #include "stdbool.h"
 
+
+
 /**
  * Initializes CAN, including MCP2515 CAN controller module.
- * @return the number of errors that occured during initialization. Probably 
+ * @return the number of errors that occurred during initialization. Probably 
  * shouldn't proceed if non zero.
  */
 uint16_t RB_CAN_Init(void);
+
+bool RB_CAN_McpSetMode(MCP_CAN_MODE mode);
 
 /**
  * Sets a register on the MCP2515

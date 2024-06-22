@@ -55,7 +55,7 @@ void PINS_Initialize(void)
     LATB = 0x0000;
     LATC = 0x0000;
     LATD = 0x0000;
-    LATE = 0x0000;
+    LATE = 0x4000;
 
     /****************************************************************************
      * Setting the GPIO Direction SFR(s)
@@ -64,7 +64,7 @@ void PINS_Initialize(void)
     TRISB = 0x0BFF;
     TRISC = 0xFFFF;
     TRISD = 0xD7FC;
-    TRISE = 0xFF2F;
+    TRISE = 0xBF2F;
 
 
     /****************************************************************************

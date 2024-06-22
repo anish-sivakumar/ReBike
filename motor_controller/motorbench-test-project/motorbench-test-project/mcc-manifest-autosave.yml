@@ -2,7 +2,7 @@
 
 manifest_file_version: 1.0.0
 project: sample-mb-33ck256mp508
-creation_date: 2024-06-20T12:20:16.576-07:00[America/Los_Angeles]
+creation_date: 2024-06-21T17:14:41.048-07:00[America/Los_Angeles]
 operating_system: Windows 10
 mcc_mode: IDE
 mcc_mode_version: v6.20
@@ -20,6 +20,7 @@ modules:
 - {name: com.microchip.mcc.motorbench.MotorBenchLibrary, type: CLASSIC, version: 2.45.0}
 - {name: '@mchp-mcc/adc-multicore-driver', type: MELODY, version: 2.1.0}
 - {name: '@mchp-mcc/clock-16bit-driver', type: MELODY, version: 1.1.1}
+- {name: '@mchp-mcc/delay-blocking-driver', type: MELODY, version: 3.1.0}
 - {name: '@mchp-mcc/dmt-16bit-driver', type: MELODY, version: 1.0.4}
 - {name: '@mchp-mcc/dspic33-configuration-bits', type: MELODY, version: 1.2.0}
 - {name: '@mchp-mcc/icd-16bit-driver', type: MELODY, version: 1.0.2}

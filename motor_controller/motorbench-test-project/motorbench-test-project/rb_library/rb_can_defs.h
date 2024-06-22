@@ -15,6 +15,7 @@
 #define MCP_MASK_RXBnCTRL_RXM       0x60
 #define MCP_MASK_RXB0CTRL_FILHIT    0x03
 #define MCP_MASK_RXB1CTRL_FILHIT    0x07
+#define MCP_MASK_CANCTRL_REQOP      0xE0
 #define MCP_MASK_STAT_RXIF          MCP_STAT_RX0IF | MCP_STAT_RX1IF
 #define MCP_MASK_EFLG_ERROR         MCP_EFLG_RX1OVR | MCP_EFLG_RX0OVR | MCP_EFLG_TXBO | MCP_EFLG_TXEP | MCP_EFLG_RXEP
 
@@ -128,7 +129,7 @@ typedef enum tagMCP_REGISTER {
 typedef enum tagMCP_STAT {
     MCP_STAT_RX0IF = (1 << 0),
     MCP_STAT_RX1IF = (1 << 1)
-} MCP_MCP_STAT;
+} MCP_STAT;
 
 typedef enum tagMCP_ERROR_FLAG {
     MCP_EFLG_RX1OVR = (1 << 7),
@@ -140,6 +141,15 @@ typedef enum tagMCP_ERROR_FLAG {
     MCP_EFLG_RXWAR = (1 << 1),
     MCP_EFLG_EWARN = (1 << 0)
 } MCP_ERROR_FLAG;
+
+typedef enum tagMCP_CAN_MODE {
+    MCP_CAN_MODE_NORMAL     = 0x00,
+    MCP_CAN_MODE_SLEEP      = 0x20,
+    MCP_CAN_MODE_LOOPBACK   = 0x40,
+    MCP_CAN_MODE_LISTENONLY = 0x60,
+    MCP_CAN_MODE_CONFIG     = 0x80,
+    MCP_CAN_MODE_POWERUP    = 0xE0
+} MCP_CAN_MODE;
 
 
 

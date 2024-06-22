@@ -2,6 +2,7 @@
 
 #include "system/pins.h"
 #include "spi_host/spi1.h"
+#include "timer/delay.h"
 
 #include "string.h" 
 
@@ -19,8 +20,8 @@ uint16_t RB_CAN_Init(void) {
     SPI1_ByteWrite(MCP_INSTR_RESET);
     EndTransaction();
 
-    // TODO: MCP2515 arduino lib has a delay here, likely need something similar
-    // Datasheet says it takes 2us to reset
+    DELAY_milliseconds(10);
+
     uint8_t zeros[14];
     memset(zeros, 0, sizeof (zeros));
     errors += !RB_CAN_McpSetRegs(MCP_REG_TXB0CTRL, zeros, 14);
@@ -47,8 +48,22 @@ uint16_t RB_CAN_Init(void) {
             );
 
     // TODO: set message filter settings here
+    DELAY_milliseconds(10);
 
     return errors;
+}
+
+bool RB_CAN_McpSetMode(MCP_CAN_MODE mode) {
+    RB_CAN_McpModReg(MCP_REG_CANCTRL, MCP_MASK_CANCTRL_REQOP, mode);
+
+    DELAY_milliseconds(10);
+
+    uint8_t newmode;
+    RB_CAN_McpGetReg(MCP_REG_CANSTAT, &newmode);
+    newmode &= MCP_MASK_CANCTRL_REQOP;
+
+    bool success = mode == newmode;
+    return success;
 }
 
 bool RB_CAN_McpSetReg(MCP_REGISTER reg, uint8_t data) {
@@ -59,7 +74,7 @@ bool RB_CAN_McpSetReg(MCP_REGISTER reg, uint8_t data) {
         SPI1_ByteWrite(data);
         EndTransaction();
         success = true;
-    } 
+    }
     return success;
 }
 
@@ -98,7 +113,7 @@ bool RB_CAN_McpGetReg(MCP_REGISTER reg, uint8_t* data) {
         *data = SPI1_ByteRead();
         EndTransaction();
         success = true;
-    } 
+    }
     return success;
 }
 
