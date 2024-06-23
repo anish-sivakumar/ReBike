@@ -29,7 +29,11 @@ void RB_ADCCalibrationInit(RB_MEASURE_CURRENT_T *pcalib)
 void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib)
 {
     
-    // read phase A and B current into current compensation structure
+    /* Read phase A and B current into current compensation structure
+     * ADC buffer is unsigned and inverted (higher value means negative current)
+     * We convert the unsigned buffer to a signed value, that is still inverted 
+     * The invert will be handled discretely when offset is applied.
+     */ 
     pcalib->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
     pcalib->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT);
     
@@ -56,6 +60,10 @@ void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib)
 void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC)
 {
     //1. read phase A and B current into current compensation structure
+    /* ADC buffer is unsigned and inverted (higher value means negative current)
+     * We convert the unsigned buffer to a signed value, that is still inverted 
+     * The invert will be handled discretely when offset is applied.
+     */ 
     pcalib->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
     pcalib->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT); 
     

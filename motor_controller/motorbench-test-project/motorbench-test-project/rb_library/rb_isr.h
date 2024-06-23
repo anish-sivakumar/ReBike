@@ -86,17 +86,12 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                // next, take current measurements to calculate offset over multiple steps
                RB_ADCCalibrationStepISR(&PMSM.currentCalib); 
             
-            } else if((bootstrap.done) && (PMSM.currentCalib.done) && (boardUI.motorEnable.pressed))
+            } else if((bootstrap.done) && (PMSM.currentCalib.done) && (boardUI.motorEnable.state))
             {
                 // Configure Hall ISRs and data
-                RB_HALL_Init(&hall);
-                
-                // get ready to output PWM 
-                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
-                HAL_PWM_UpperTransistorsOverride_Disable();
-                MCAF_LED1_SetHigh();
-                
+                RB_HALL_Init(&hall);                
                 state = RBFSM_MANUAL_STARTUP;
+                MCAF_LED1_SetHigh();
             }
             
             break;
@@ -105,8 +100,14 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
             RB_HALL_Estimate(&hall);
             
-            if((hall.speed > 15) && (hall.speed<100))// speed calculation is messed up. fix it
-            {
+            // (hall.speed > 25) 
+            if((hall.speed > 22))// speed calculation is messed up. fix it
+            {   
+                // get ready to output PWM 
+                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
+                HAL_PWM_UpperTransistorsOverride_Disable();
+                
+                
                 RB_InitControlLoopState(&PMSM);
                 state = RBFSM_RUN_FOC;
             }
@@ -118,7 +119,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
             RB_HALL_Estimate(&hall);
             RB_FixedFrequencySinePWM(boardUI.potState);
-
+            
             /* TESTING */
             RB_SetCurrentReference(boardUI.potState, &PMSM.idqRef);
             
@@ -184,7 +185,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
             // if we button pressed, stop
-            if (boardUI.motorEnable.pressed){ 
+            if (!boardUI.motorEnable.state){ 
 
                 //Maintains the low-side transistors at low dc and high-side OFF.
                 HAL_PWM_UpperTransistorsOverride_Low();
@@ -197,7 +198,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         
         case RBFSM_STOPPING:
             
-            if(boardUI.motorEnable.pressed)
+            if(boardUI.motorEnable.state)
             {   
                 // get ready to output PWM 
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);

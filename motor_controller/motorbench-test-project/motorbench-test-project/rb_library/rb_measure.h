@@ -139,15 +139,15 @@ inline static int16_t RB_ADCCompensate(int16_t measurement, int16_t offset, int1
 {
     int16_t temp;
     
-    // inverted ADC and offset
-    {
-        temp = offset - measurement;
-    }
+    /* inverted ADC and offset
+     * -(measurement - offset) = offset - measurement 
+     */
+    
+    temp = offset - measurement;
     
     /* Deciding not to scale by motorBench gain because it is confusing
      * Iabc will range from [-32768, +32768]  
      * Max value corresponds to 21.83 Apeak */
-    
     //temp = (__builtin_mulss(temp, gain)) >> 15;
     
     return temp;

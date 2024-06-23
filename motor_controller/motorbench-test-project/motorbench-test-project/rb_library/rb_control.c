@@ -53,7 +53,7 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 }
 
 
-void RB_SetCurrentReference(uint16_t potVal, MC_DQ_T *pidqRef)
+void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef)
 {
        
     // d-axis current controlled at zero
@@ -67,7 +67,7 @@ void RB_SetCurrentReference(uint16_t potVal, MC_DQ_T *pidqRef)
     {
         // iq ref = potVal scaled from 0->2000
         // (6000/2^15) * 21.83A = 4A 
-        pidqRef->q = __builtin_mulss(potVal, 6000)>>15; 
+        pidqRef->q = __builtin_mulss(potVal, -6000)>>15; 
     }    
 
 }

@@ -123,7 +123,7 @@ inline static void RB_InitControlLoopState(RB_MOTOR_DATA *pPMSM)
  * @param potVal
  * @param pidqRef
  */
-void RB_SetCurrentReference(uint16_t potVal, MC_DQ_T *pidqRef);
+void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef);
 
 /**
  * Step PI controller 

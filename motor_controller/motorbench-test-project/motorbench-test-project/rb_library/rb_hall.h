@@ -37,7 +37,7 @@ extern "C" {
 #define FOSC_OVER_2             100000000
 #define TIMER4_PRESCALER        64
 // Corresponds to a timer period of roughly 40ms
-#define RB_HALL_TMR4_PERIOD 0xFFFF
+#define RB_HALL_TMR4_PERIOD     0xFFFF
 
 #define POLEPAIRS               26
     

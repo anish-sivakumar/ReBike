@@ -50,25 +50,25 @@ void RB_HALL_Init(RB_HALL_DATA *phall){
 uint16_t RB_HALL_NextSector(uint16_t prev){
     uint16_t next;
     
-    // Switching order of hall signals is 3, 1, 5, 4, 6, 2
+    // Switching order of hall signals is 3,2,6,4,5,1
     switch (prev)
     {
         case 3:
-            next = 1;
-            break;
-        case 1:
-            next = 5;
-            break;
-        case 5:
-            next = 4;
-            break;
-        case 4:
-            next = 6;
-            break;
-        case 6:
             next = 2;
             break;
         case 2:
+            next = 6;
+            break;
+        case 6:
+            next = 4;
+            break;
+        case 4:
+            next = 5;
+            break;
+        case 5:
+            next = 1;
+            break;
+        case 1:
             next = 3;
             break;
         default: // Should never happen
@@ -99,8 +99,8 @@ void RB_HALL_StateChange(RB_HALL_DATA *phall)
     // Only run the state change routine if we actually saw a change in the hall sector.
     uint16_t sector_tmp = RB_HALL_ValueRead();
     // TODO: try to debouce this better. predicting what sector to expect next did not work for debounding.
-    // if (sector_tmp == RB_HALL_NextSector(phall->sector) || phall->sector == 0) {
-    if (sector_tmp != phall->sector) {
+    if (sector_tmp == RB_HALL_NextSector(phall->sector) || phall->sector == 0) {
+//    if (sector_tmp != phall->sector) {
         // reset timer 
         SCCP4_Timer_Stop();
         CCP4TMRL = 0;
