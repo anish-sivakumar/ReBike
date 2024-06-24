@@ -28,6 +28,11 @@
 #define MCP_RXB0CTRL_FILHIT         0x00
 #define MCP_RXB1CTRL_FILHIT         0x01
 
+// Settings for 500kbps CAN bus
+#define MCP_20MHz_500kBPS_CFG1      0x00
+#define MCP_20MHz_500kBPS_CFG2      0xFA
+#define MCP_20MHz_500kBPS_CFG3      0x87
+
 typedef enum tagMCP_INSTRUCTION {
     MCP_INSTR_WRITE = 0x02,
     MCP_INSTR_READ = 0x03,
