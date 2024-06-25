@@ -153,24 +153,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             break;      
         
     }
-    
-    // try to send SPI to can controller
-//    SPI_counter++;
-//    if (SPI_counter > 20000 && SPI1_IsTxReady())
-//    {
-//        SPI_counter = 0;
-//        
-//        uint8_t buf[2] = {0b00000011,0b00001111};
-//        SPI1_Open(0);
-//        SPI1_BufferWrite(buf,2);
-//    }
-//    if (SPI1_IsRxReady())
-//    {
-//        SPI_received = SPI1_ByteRead();
-//        SPI1_Close();
-//    }
-    
-    
+
+    // TODO: Do CAN servicing here. Should be able to send or receive one CAN message per iteration 
     
     HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
     X2CScope_Update();

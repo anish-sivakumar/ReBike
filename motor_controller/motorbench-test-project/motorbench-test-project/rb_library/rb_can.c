@@ -47,12 +47,12 @@ uint16_t RB_CAN_Init(void) {
     // TODO: set message filter settings here
 
     // set CAN bitrate to 500kbps
-    RB_CAN_McpSetReg(MCP_REG_CNF1, MCP_20MHz_500kBPS_CFG1);
-    RB_CAN_McpSetReg(MCP_REG_CNF2, MCP_20MHz_500kBPS_CFG2);
-    RB_CAN_McpSetReg(MCP_REG_CNF3, MCP_20MHz_500kBPS_CFG3);
+    errors += !RB_CAN_McpSetReg(MCP_REG_CNF1, MCP_20MHz_500kBPS_CFG1);
+    errors += !RB_CAN_McpSetReg(MCP_REG_CNF2, MCP_20MHz_500kBPS_CFG2);
+    errors += !RB_CAN_McpSetReg(MCP_REG_CNF3, MCP_20MHz_500kBPS_CFG3);
 
     // set normal mode to begin CAN send/receive capabilities;
-    RB_CAN_McpSetMode(MCP_CAN_MODE_NORMAL);
+    errors += !RB_CAN_McpSetMode(MCP_CAN_MODE_NORMAL);
 
     return errors;
 }
