@@ -165,6 +165,7 @@
       <itemPath>rb_library/rb_isr.h</itemPath>
       <itemPath>rb_library/rb_pwm.h</itemPath>
       <itemPath>rb_library/rb_board_ui.h</itemPath>
+      <itemPath>rb_library/rb_communication.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -286,6 +287,7 @@
       <itemPath>rb_library/rb_measure.c</itemPath>
       <itemPath>rb_library/rb_pwm.c</itemPath>
       <itemPath>rb_library/rb_board_ui.c</itemPath>
+      <itemPath>rb_library/rb_communication.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
