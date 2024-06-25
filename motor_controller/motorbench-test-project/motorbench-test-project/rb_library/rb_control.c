@@ -28,16 +28,16 @@ void RB_InitControlParameters(RB_MOTOR_DATA *pPMSM)
     pPMSM->iqCtrl.outMax = RB_QVOLTAGE_OUTMAX;
     pPMSM->iqCtrl.outMin = RB_QVOLTAGE_OUTMIN;
     
-    /* ============= PI Speed Terms - Do Later =============== */
+    /* ============= Q Ramp Rate terms =============== */
+    pPMSM->iqRateLim.inc = RB_QRAMP_INCREMENT;
+    pPMSM->iqRateLim.rampCount = 0;
     
     /* ============= Bridge Temperature Terms - Do Later=============== */
-    
-
 }
 
 bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 {
-    RB_InitControlLoopState(pPMSM);
+RB_InitControlLoopState(pPMSM);
       
     /* initialize the mux'd channel (doesn't matter which setting is first) */
     //pPMSM->adcSelect = HADC_POTENTIOMETER; Anish removed this variable from PMSM
@@ -53,29 +53,50 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 }
 
 
-void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef)
-{
-       
+void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef, RB_RATELIMIT *iqRateLim)
+{    
     // d-axis current controlled at zero
     pidqRef->d = 0;
     
-    // if pot is below mid point, iq ref = 0. pot mid point is around 1600 ADC reading
+    // if pot is below mid point, target Iq = 0. 
+    // pot mid point is around 1600 ADC reading
     if (potVal <= 2000)
     {
-        pidqRef->q = 0;
+        iqRateLim->target = 0;
     } else
     {
-        // iq ref = potVal scaled from 0->2000
+        // target Iq = potVal scaled from 0->2000
         // (6000/2^15) * 21.83A = 4A 
-        pidqRef->q = __builtin_mulss(potVal, -6000)>>15; 
-    }    
-
-}
-
-
-void RB_ControlDStepISR(MC_DQ_T idqFdb, MC_DQ_T idqRef, 
-        MC_PISTATE_T *pidCtrl, MC_DQ_T *pvdqCmd)
-{
-    uint16_t temp;
-    
+        iqRateLim->target = __builtin_mulss(potVal, -2000)>>15; 
+    }  
+   
+    // Set & limit Iq reference every RB_QRAMP_COUNT ISRs
+    if (iqRateLim->rampCount < RB_QRAMP_COUNT)
+    {
+        iqRateLim->rampCount++;
+    } else
+    {
+        iqRateLim->diff = pidqRef->q - iqRateLim->target;
+        
+        // increase (since Iq is negative now, this is slowing down)
+        if (iqRateLim->diff < 0)
+        {
+            /* Set this cycle reference as the sum of
+            previously calculated one plus the reference ramp value */
+            pidqRef->q = pidqRef->q + iqRateLim->inc;
+        } else
+        {   // decrease (since Iq is negative now, this is speeding up)
+            pidqRef->q = pidqRef->q - iqRateLim->inc;
+        }
+        
+        /* If difference less than half of increment, set reference
+            directly from the pot */
+        if (UTIL_Abs16(iqRateLim->diff) < (iqRateLim->inc << 1))
+        {
+            pidqRef->q = iqRateLim->target;
+        }
+        
+        iqRateLim->rampCount = 0;
+        
+    }
 }

@@ -18,7 +18,22 @@ extern "C" {
     
 #include "rb_foc_params.h"
 #include "rb_measure.h"
+  
+typedef struct
+{
+    /* increment for reference value */
+    int16_t   inc;
     
+    /* Target value*/
+    int16_t  target;
+    
+    /* difference between target and reference */
+    int16_t   diff;
+    
+    /* The rate limiting will be executed only every rampCount*/
+    int16_t   rampCount;  
+} RB_RATELIMIT;
+
     
  /**
   * Motor Parameters from vendor
@@ -28,15 +43,6 @@ extern "C" {
      int16_t    rs;                     /** Stator resistance */
      int16_t    ke;                     /** Back-EMF constant */
  } RB_MOTOR_PARAMS_T;
- 
- /**
-  * Interface for Hall-effect sensor based position and speed calculations
-  */
- typedef struct tagHallEstimator
- {
-     int16_t    thetaElectrical;         /** estimated rotor angle (electrical) */
-     int16_t    omegaElectrical;        /** estimated rotor velocity (electrical) */
- } RB_HALL_ESTIMATOR_T;
      
 
 /**
@@ -60,7 +66,8 @@ typedef struct tagPMSM
     /* Current controllers */
     MC_PISTATE_T                idCtrl;  /** controller state for the D axis */
     MC_PISTATE_T                iqCtrl;  /** controller state for the Q axis */
-     
+    RB_RATELIMIT                iqRateLim; /** rate limits Iq reference value */
+    
     /** Output limit for each axis of the current loops, normalized to DC link voltage,
      *  line-to-neutral, so that 0.57735 = 1/sqrt(3) = full line-to-line voltage */
     MC_DQ_T                     idqCtrlOutLimit; 
@@ -123,17 +130,7 @@ inline static void RB_InitControlLoopState(RB_MOTOR_DATA *pPMSM)
  * @param potVal
  * @param pidqRef
  */
-void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef);
-
-/**
- * Step PI controller 
- * @param idqFdb
- * @param idqRef
- * @param pidCtrl
- * @param pvdqCmd
- */
-void RB_ControlStepISR(MC_DQ_T idqFdb, MC_DQ_T idqRef, MC_PISTATE_T *pidCtrl, 
-        MC_DQ_T *pvdqCmd);
+void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef, RB_RATELIMIT *rateLim);
 
 #ifdef	__cplusplus
 }

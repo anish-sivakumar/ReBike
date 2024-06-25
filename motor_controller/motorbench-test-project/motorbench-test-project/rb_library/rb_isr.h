@@ -44,6 +44,7 @@ RB_FSM_STATE state;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 
+int16_t prevIqOutput;
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -107,8 +108,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
                 HAL_PWM_UpperTransistorsOverride_Disable();
                 
-                
                 RB_InitControlLoopState(&PMSM);
+                prevIqOutput = 0;
                 state = RBFSM_RUN_FOC;
             }
             
@@ -120,11 +121,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_HALL_Estimate(&hall);
             RB_FixedFrequencySinePWM(boardUI.potState);
             
-            /* TESTING */
-            RB_SetCurrentReference(boardUI.potState, &PMSM.idqRef);
-            
             // if we hit speed 27RPM, move to FOC
-            if (hall.speed >= 27){ // 35 is the top speed from OL now
+            if (hall.speed >= 40){ // 35 is the top speed from OL now
                 
                 RB_InitControlLoopState(&PMSM);
                 
@@ -135,18 +133,18 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
         case RBFSM_RUN_FOC:         
             
-        /*********************************************************************
-        *       START OF FOC ALGORITHM                                       *
-        *********************************************************************/ 
-            
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
            
-            /* Calculate qId,qIq from qSin,qCos,qIa,qIb */
+            /* Calculate Id,Iq from Sin(theta), Cos(theta), Ia, Ib */
             MC_TransformClarke_Assembly(&PMSM.iabc,&PMSM.ialphabeta);
             MC_TransformPark_Assembly(&PMSM.ialphabeta, &PMSM.sincosTheta, &PMSM.idqFdb);
             
+            /* LPF did not work well. try moving average filter forIq */
+            //PMSM.idqFdb.q = RB_LPF(PMSM.idqFdb.q, prevIqOutput, Q15(1.5)); // around 1000Hz Fc. low fc made output -> 0
+            //prevIqOutput = PMSM.idqFdb.q;
+            
             /* Determine d & q current reference values based */
-            RB_SetCurrentReference(boardUI.potState, &PMSM.idqRef);
+            RB_SetCurrentReference(boardUI.potState, &PMSM.idqRef, &PMSM.iqRateLim);
                         
             /* PI control for D-axis - sets Vd command*/
             MC_ControllerPIUpdate_Assembly( PMSM.idqRef.d, 

@@ -42,18 +42,18 @@ extern "C" {
 #define POLEPAIRS               26
     
 
-/**  SPEED MULTIPLIER CALCULATION - Rotor speed in RPM
- * = [fraction of revolution b/w hall changes] / [time b/w hall changes]
+/**  SPEED MULTIPLIER CALCULATION - 
+ * Rotor speed in RPM = [fraction of revolution b/w hall changes] / [time b/w hall changes]
  * = { [(1/(POLEPAIRS*6)] / [TMR1/(FOSC_OVER_2/TIMER1_PRESCALER)] } * 60s/min
- * = ((FOSC_OVER_2*60)/(TIMER_PRESCALER*6*POLEPAIRS))
+ * Hence, SPEED_MULTI = ((FOSC_OVER_2*60)/(TIMER_PRESCALER*6*POLEPAIRS))
  */
 #define SPEED_MULTI     (unsigned long)((float)(FOSC_OVER_2/(float)(TIMER4_PRESCALER*6*POLEPAIRS)))*(float)(60)    
 
 /** PHASE INCREMENT MULTIPLIER - Amount phase increases in 20kHz ISR step
  * = [increase in phase per hall change] * [ISR step time / hall change time]
  * = [360/6 degrees] * [hall change frequency / ISR frequency]
- * = [65536/6] * [((FOSC_OVER_2/TIMER1_PRESCALER)/TMR1) / (PWM_FREQUENCY)]
- * = (FOSC_OVER_2/(TIMER_PRESCALER*PWM_FREQUENCY))(65536/6)*/
+ * = [65536/6] * [((FOSC_OVER_2/TIMER_PRESCALER)/TMR1) / (PWM_FREQUENCY)]
+ * HENCE, PHASE_INC_MULTI = (FOSC_OVER_2/(TIMER_PRESCALER*PWM_FREQUENCY))(65536/6)*/
 #define PHASE_INC_MULTI    (unsigned long)((float)FOSC_OVER_2/((float)(TIMER4_PRESCALER)*(float)(PWMFREQUENCY_HZ))*(float)(65536/6))
 
 typedef struct
