@@ -51,7 +51,7 @@ bool RB_CAN_McpSetReg(MCP_REGISTER reg, uint8_t data);
  * @param n the number of registers to write to
  * @return true if write was successful, false otherwise
  */
-bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n);
+bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, uint8_t* data, uint8_t n);
 
 /**
  * Modifies certain bits of a register on the MCP2515

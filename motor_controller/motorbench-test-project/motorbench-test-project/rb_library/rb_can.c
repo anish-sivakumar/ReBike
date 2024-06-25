@@ -92,7 +92,7 @@ bool RB_CAN_McpSetReg(MCP_REGISTER reg, uint8_t data) {
     return success;
 }
 
-bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n) {
+bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, uint8_t* data, uint8_t n) {
     bool success = false;
     if (StartTransaction() && SPI1_IsTxReady()) {
         // first use the spi buffer to write the instruction type and reg address
@@ -100,7 +100,7 @@ bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n) {
         spiBuf[1] = firstReg;
         SPI1_BufferWrite(spiBuf,2);
         // second use the data buffer to write the remaining data
-        SPI1_BufferWrite(data, n)
+        SPI1_BufferWrite(data, n);
         success = true;
     }
     EndTransaction();
