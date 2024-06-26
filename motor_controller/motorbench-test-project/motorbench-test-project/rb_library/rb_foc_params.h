@@ -32,6 +32,7 @@ extern "C" {
 #define     RB_QVOLTAGE_OUTMIN      0  
 
 // Q-axis current ramp rate limiting
+#define     RB_QCURRENT_MAX          -4000         
 #define     RB_QRAMP_INCREMENT       Q15(0.00003) // ammount iq is incremented per ISR step
 #define     RB_QRAMP_COUNT           3 // new iq ref is calculated every [REF_RAMP_COUNT] times            
     

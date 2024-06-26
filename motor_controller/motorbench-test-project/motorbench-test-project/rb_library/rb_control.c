@@ -65,9 +65,8 @@ void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef, RB_RATELIMIT *iqRa
         iqRateLim->target = 0;
     } else
     {
-        // target Iq = potVal scaled from 0->2000
-        // (6000/2^15) * 21.83A = 4A 
-        iqRateLim->target = __builtin_mulss(potVal, -2000)>>15; 
+        // target Iq = potVal scaled from 0->-RB_QCURRENT_MAX
+        iqRateLim->target = __builtin_mulss(potVal, -RB_QCURRENT_MAX)>>15; 
     }  
    
     // Set & limit Iq reference every RB_QRAMP_COUNT ISRs
@@ -78,14 +77,14 @@ void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef, RB_RATELIMIT *iqRa
     {
         iqRateLim->diff = pidqRef->q - iqRateLim->target;
         
-        // increase (since Iq is negative now, this is slowing down)
+        // increase (since Iq is negative, this is slowing down)
         if (iqRateLim->diff < 0)
         {
             /* Set this cycle reference as the sum of
             previously calculated one plus the reference ramp value */
             pidqRef->q = pidqRef->q + iqRateLim->inc;
         } else
-        {   // decrease (since Iq is negative now, this is speeding up)
+        {   // decrease (since Iq is negative, this is speeding up)
             pidqRef->q = pidqRef->q - iqRateLim->inc;
         }
         
