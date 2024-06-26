@@ -23,7 +23,7 @@ extern "C" {
 
 /*Offset between the zero crossing sector and the Phase A 
  * current zero crossing    */
-#define OFFSET_CORRECTION   (-4000)
+#define OFFSET_CORRECTION   -10000 // (-4000)
 
 /*Hall angle correction divisor for correcting angle difference 
  *  between the sectors     */
