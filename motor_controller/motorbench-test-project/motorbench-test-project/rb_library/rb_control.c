@@ -11,8 +11,8 @@
 void RB_InitControlParameters(RB_MOTOR_DATA *pPMSM)
 {
     /* ============= Motor Parameters =============== */
-    pPMSM->motorParams.rs = RB_RS;
-    pPMSM->motorParams.ke = RB_KE;
+    pPMSM->motorParams.rs = RB_MOTOR_RS;
+    pPMSM->motorParams.ke = RB_MOTOR_KE;
     
     /* ============= PI D Term =============== */
     pPMSM->idCtrl.kp = RB_DCURRENT_KP;

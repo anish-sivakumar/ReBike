@@ -15,6 +15,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "rb_foc_params.h"
 
 /** Definitions */
 /* The count corresponding to 60degree angle i.e, 32768/3  */
@@ -33,13 +34,11 @@ extern "C" {
 #define HALL_CORRECTION_STEPS   8 
 
 
-#define PWMFREQUENCY_HZ         20000
-#define FOSC_OVER_2             100000000
+#define PWM_FREQ_HZ         20000
+#define TIMER4_FREQ_HZ          100000000
 #define TIMER4_PRESCALER        64
 // Corresponds to a timer period of roughly 40ms
 #define RB_HALL_TMR4_PERIOD     0xFFFF
-
-#define POLEPAIRS               26
     
 
 /**  SPEED MULTIPLIER CALCULATION - 
@@ -47,14 +46,14 @@ extern "C" {
  * = { [(1/(POLEPAIRS*6)] / [TMR1/(FOSC_OVER_2/TIMER1_PRESCALER)] } * 60s/min
  * Hence, SPEED_MULTI = ((FOSC_OVER_2*60)/(TIMER_PRESCALER*6*POLEPAIRS))
  */
-#define SPEED_MULTI     (unsigned long)((float)(FOSC_OVER_2/(float)(TIMER4_PRESCALER*6*POLEPAIRS)))*(float)(60)    
+#define SPEED_MULTI     (unsigned long)((float)(TIMER4_FREQ_HZ/(float)(TIMER4_PRESCALER*6*RB_MOTOR_POLEPAIRS)))*(float)(60)    
 
 /** PHASE INCREMENT MULTIPLIER - Amount phase increases in 20kHz ISR step
  * = [increase in phase per hall change] * [ISR step time / hall change time]
  * = [360/6 degrees] * [hall change frequency / ISR frequency]
  * = [65536/6] * [((FOSC_OVER_2/TIMER_PRESCALER)/TMR1) / (PWM_FREQUENCY)]
  * HENCE, PHASE_INC_MULTI = (FOSC_OVER_2/(TIMER_PRESCALER*PWM_FREQUENCY))(65536/6)*/
-#define PHASE_INC_MULTI    (unsigned long)((float)FOSC_OVER_2/((float)(TIMER4_PRESCALER)*(float)(PWMFREQUENCY_HZ))*(float)(65536/6))
+#define PHASE_INC_MULTI    (unsigned long)((float)TIMER4_FREQ_HZ/((float)(TIMER4_PRESCALER)*(float)(PWM_FREQ_HZ))*(float)(65536/6))
 
 typedef struct
 {

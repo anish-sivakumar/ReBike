@@ -14,8 +14,11 @@ extern "C" {
 
 
 // Motor Parameters from vendor
-#define     RB_RS               0
-#define     RB_KE               0
+#define     RB_MOTOR_RS               0.165   // phase resistance in ohms
+#define     RB_MOTOR_KE               8.5 // motor constant in units RPM/V, assuming Line-Line RMS voltage
+#define     RB_MOTOR_POLEPAIRS        26 // 52 poles total
+#define     RB_MOTOR_HYS_LOSS         0.715 // Hysteresis Losses (N-m)
+#define     RB_MOTOR_EDDIE_LOSS       0.009 // Eddie Losses (N-m / rad/sec)
 
 // D-axis current control loop coefficients in Q15 format
 #define     RB_DCURRENT_KP              Q15(0.05) // initial values from ref project 
