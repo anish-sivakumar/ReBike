@@ -1,14 +1,17 @@
 #include "rb_communication.h"
 
-bool isQueueFull(RB_CAN_QUEUE *queue) {
+bool isQueueFull(RB_CAN_QUEUE *queue) 
+{
     return queue->size == MAX_QUEUE_SIZE;
 }
 
-bool isQueueEmpty(RB_CAN_QUEUE *queue) {
+bool isQueueEmpty(RB_CAN_QUEUE *queue) 
+{
     return queue->size == 0;
 }
 
-bool enqueueTask(RB_CAN_QUEUE *queue, RB_CAN_TASK task) {
+bool enqueueTask(RB_CAN_QUEUE *queue, RB_CAN_TASK task) 
+{
     if (isQueueFull(queue)) return false;
     queue->tasks[queue->rear] = task;
     queue->rear = (queue->rear + 1) % MAX_QUEUE_SIZE;
@@ -25,23 +28,27 @@ bool dequeueTask(RB_CAN_QUEUE *queue, RB_CAN_TASK *task) {
 }
 
 
-bool RB_ProcessCANTasks(RB_CAN_QUEUE *queue) {
+bool RB_ProcessCANTasks(RB_CAN_QUEUE *pqueue) 
+{
     
     RB_CAN_TASK tempCurrentTask;
    
     /* first item is removed from queue and recorded into temp variable */
-    while (dequeueTask(&queue, &tempCurrentTask)) { 
+    while (dequeueTask(pqueue, &tempCurrentTask)) { 
         switch (tempCurrentTask.type) {
-            case SPI_READ:
-                // Poll SPI register and read if available
-                // Read operation logic here
+            case CAN_READ_STATUS:
+                // Is there something to read?
                 break;
-            case SPI_WRITE:
-                // Write data to SPI register
-                // Write operation logic here
+            case CAN_READ_RX:
+                // Read the data from Rx buffer
+                // parse CAN frame
+                break;
+            case CAN_WRITE_TX:
+                // build the CAN frame
+                // write data to Tx buffer
                 break;
         }
-        adcIsrCompleted = false;  // Ensure only one task is processed per ISR completion
+        
     }
     
     return true; //if completed

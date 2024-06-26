@@ -5,6 +5,9 @@
  * Implements circular buffer for handling CAN tasks
  */
 
+#include <stdint.h>
+#include <stdbool.h>
+
 #ifndef RB_COMMUNICATION_H
 #define	RB_COMMUNICATION_H
 
@@ -15,12 +18,15 @@ extern "C" {
     
 #define MAX_QUEUE_SIZE 10
     
-typedef enum {
-    CAN_READ,
-    CAN_WRITE
+typedef enum 
+{
+    CAN_READ_STATUS,
+    CAN_READ_RX,
+    CAN_WRITE_TX
 } RB_CAN_TYPE;
 
-typedef struct {
+typedef struct 
+{
     RB_CAN_TYPE type;
     uint16_t address;  // Register address for SPI
     uint16_t data;     // Data to write (if applicable)
@@ -37,7 +43,8 @@ typedef struct {
  * front - idle when enqueueing & moves to right with dequeueing
  * rear - moves to right when enqueueing & idle when dequeueing
  */ 
-typedef struct {
+typedef struct 
+{
     RB_CAN_TASK tasks[MAX_QUEUE_SIZE];
     int16_t front; // index of first item 
     int16_t rear; // index of empty spot after items
