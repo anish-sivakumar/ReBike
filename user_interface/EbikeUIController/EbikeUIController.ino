@@ -478,84 +478,6 @@ int battery_string_length;
 
 int activeRegen = 1;
 
-// Create Toggle instances for buttons to increase throttle, decrease throttle, and toggle regenerative braking
-Toggle increaseThrottle(6);       // Button to increase throttle
-Toggle decreaseThrottle(7);       // Button to decrease throttle
-Toggle toggleRegen(8);            // Button to toggle regenerative braking method
-
-void setup() {
-
-  // Initialize the OLED display
-  u8g2.begin();
-
-  // Display the logo during setup
-  u8g2.firstPage();
-  do {
-    // Draw logo during system startup
-    u8g2.drawBitmap(0, 0, 128/8, 64, epd_bitmap_REBIKE_Logo);
-  } while (u8g2.nextPage());
-
-  // Wait for 4 seconds to show the logo
-  delay(4000);
-
-   // Initialize the button toggles
-  increaseThrottle.begin(0);
-  decreaseThrottle.begin(1);
-  toggleRegen.begin(2);
-
-  // This pin is connected to a potentiometer for testing purposes.
-  pinMode(14, INPUT);
-
-  }
-
-void loop() {
-
-  // Poll the state of each button
-  increaseThrottle.poll();
-  decreaseThrottle.poll();
-  toggleRegen.poll();
-
-  // Functions to read incoming signals from the motor controller and BMS to update various
-  // system parameters for UI display (speed, power, temperature, battery range)
-  updateSpeed();
-  updatePower();
-  updateTemp();
-  updateBatteryRange();
-  
-  // Check if the increase throttle button has been pressed
-  if (increaseThrottle.onPress()) {
-
-    // Adjust the current speed by sending an increase speed request to motor controller
-    adjustSpeedRequest(+1);
-    Serial.println("Request to increase motor speed sent to Motor Controller via CAN");
-
-  }
-
-  // Check if the decrease throttle button has been pressed
-  if (decreaseThrottle.onPress()) {
-
-    // Adjust the current speed by sending a decrease speed request to motor controller
-    adjustSpeedRequest(-1);
-    Serial.println("Request to decrease motor speed sent to Motor Controller via CAN");
-
-  }
-
-  // Check if the toggle regenerative braking button has been pressed
-  if (toggleRegen.onPress()) {
-
-    // Change the active regenerative braking method
-    changeActiveRegenRequest();
-    Serial.println("Request to change the active regenerative braking method has been sent to Motor Controller via CAN");
-
-    // Update the display to show the new regenerative braking method
-    updateRegen();
-
-  }
-
-  // Update the display to show the latest values
-  updateDisplay();
-  
-}
 
 // Function to update the current speed
 void adjustSpeedRequest(int adjustment) {
@@ -717,4 +639,83 @@ void updateDisplay(void) {
 
   } while ( u8g2.nextPage() );
 
+}
+
+// Create Toggle instances for buttons to increase throttle, decrease throttle, and toggle regenerative braking
+Toggle increaseThrottle(6);       // Button to increase throttle
+Toggle decreaseThrottle(7);       // Button to decrease throttle
+Toggle toggleRegen(8);            // Button to toggle regenerative braking method
+
+void setup() {
+
+  // Initialize the OLED display
+  u8g2.begin();
+
+  // Display the logo during setup
+  u8g2.firstPage();
+  do {
+    // Draw logo during system startup
+    u8g2.drawBitmap(0, 0, 128/8, 64, epd_bitmap_REBIKE_Logo);
+  } while (u8g2.nextPage());
+
+  // Wait for 4 seconds to show the logo
+  delay(4000);
+
+   // Initialize the button toggles
+  increaseThrottle.begin(0);
+  decreaseThrottle.begin(1);
+  toggleRegen.begin(2);
+
+  // This pin is connected to a potentiometer for testing purposes.
+  pinMode(14, INPUT);
+
+  }
+
+void loop() {
+
+  // Poll the state of each button
+  increaseThrottle.poll();
+  decreaseThrottle.poll();
+  toggleRegen.poll();
+
+  // Functions to read incoming signals from the motor controller and BMS to update various
+  // system parameters for UI display (speed, power, temperature, battery range)
+  updateSpeed();
+  updatePower();
+  updateTemp();
+  updateBatteryRange();
+  
+  // Check if the increase throttle button has been pressed
+  if (increaseThrottle.onPress()) {
+
+    // Adjust the current speed by sending an increase speed request to motor controller
+    adjustSpeedRequest(+1);
+    Serial.println("Request to increase motor speed sent to Motor Controller via CAN");
+
+  }
+
+  // Check if the decrease throttle button has been pressed
+  if (decreaseThrottle.onPress()) {
+
+    // Adjust the current speed by sending a decrease speed request to motor controller
+    adjustSpeedRequest(-1);
+    Serial.println("Request to decrease motor speed sent to Motor Controller via CAN");
+
+  }
+
+  // Check if the toggle regenerative braking button has been pressed
+  if (toggleRegen.onPress()) {
+
+    // Change the active regenerative braking method
+    changeActiveRegenRequest();
+    Serial.println("Request to change the active regenerative braking method has been sent to Motor Controller via CAN");
+
+    // Update the display to show the new regenerative braking method
+    updateRegen();
+
+  }
+
+  // Update the display to show the latest values
+  updateDisplay();
+  
 }
