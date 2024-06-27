@@ -32,7 +32,7 @@ int16_t sectorToQ15Angle[8] =  // 3, 2, 6, 4, 5, 1 is the fwd order from hall si
 
 void RB_HALL_Init(RB_HALL_DATA *phall){
    
-    phall->periodKFilter = Q15(0.002); //Q15(0.01);
+    phall->periodKFilter = Q15(0.001); //Q15(0.002); //Q15(0.01);
     phall->startupCounter = 0;
     phall->sector = RB_HALL_ValueRead();
     
@@ -83,22 +83,41 @@ uint16_t RB_HALL_NextSector(uint16_t prev){
 
 void RB_HALL_Reset(RB_HALL_DATA *phall)
 {
-    phall->startupCounter = 0;
-    phall->minSpeedReached = false;
-    phall->speed = 0;
-    phall->period = 0xffff;
-    phall->periodStateVar = 0xffffffff;
-    phall->periodFilter = 0xffff;
-    phall->phaseInc = 0;
+    if(phall->timeoutCounter < 4)
+    {
+        phall->timeoutCounter++;
+    } else
+    {
+        phall->startupCounter = 0;
+        phall->minSpeedReached = false;
+        phall->speed = 0;
+        phall->period = 0xffff;
+        phall->periodStateVar = 0xffffffff;
+        phall->periodFilter = 0xffff;
+        phall->phaseInc = 0;
+    }
+            
 }
 
+uint16_t min_acceptable_tmr;
+uint32_t max_acceptable_tmr;
+uint16_t tmr_tmp;
+uint16_t set_init_period = 0;
 
 void RB_HALL_StateChange(RB_HALL_DATA *phall)
 {
     // store timer value
-    uint16_t tmr_tmp = (uint16_t)SCCP4_Timer_Counter16BitGet(); 
+    tmr_tmp = (uint16_t)SCCP4_Timer_Counter16BitGet(); 
     uint16_t sector_tmp = RB_HALL_ValueRead();
-       
+    
+    // set period at some point during startup
+    if (phall->startupCounter == 30)
+    {
+        phall->period = tmr_tmp;     
+    }
+    
+    min_acceptable_tmr = __builtin_mulus(phall->period, Q15(0.5)) >> 15; 
+    max_acceptable_tmr = phall->period + min_acceptable_tmr;
     
     /* Sector 5 is being missed. It's possible it's noisy.
      *  this makes the timer value really low (~80), and period very low
@@ -115,23 +134,27 @@ void RB_HALL_StateChange(RB_HALL_DATA *phall)
     // TODO: try to debouce this better. predicting what sector to expect next did not work for debouncing.
     if (sector_tmp == RB_HALL_NextSector(phall->sector)) {
 //    if (sector_tmp != phall->sector) {
-        // reset timer 
+        // reset timer - only want to this when we have a state change we trust
         SCCP4_Timer_Stop();
         CCP4TMRL = 0;
         SCCP4_Timer_Start();
         
         phall->sector = sector_tmp;
-
+        
+        // only use timer count as period, if it's reasonable
+        // if it's not, period will remain last reasonable value
+        if ((tmr_tmp > min_acceptable_tmr) && (tmr_tmp < max_acceptable_tmr))
+        {
+            phall->period = tmr_tmp;
+        }
+        
         // count up 78 hall states, and check that timer doesn't overflow during that time
         if(phall->startupCounter < 78){
             phall->startupCounter++;
         }else{ // startupCounter will remain expired, and reset on timer overflow
             phall->minSpeedReached = true;
-            phall->period = tmr_tmp;
         }
-
-        //phall->sector = RB_HALL_ValueRead();
-
+        
         // Instead of making abrupt correction to the angle corresponding to hall sector, find the error and make gentle correction  
         phall->thetaError = (sectorToQ15Angle[phall->sector] + OFFSET_CORRECTION) - phall->theta;
 
@@ -158,21 +181,19 @@ uint16_t RB_HALL_ValueRead(void)
 
 void RB_HALL_Estimate(RB_HALL_DATA *phall) 
 {    
-    if (phall->minSpeedReached){
+    /* calculate filtered period = delta_period x filter_gain. 
+        right shift result to remove extra 2^15 factor from fixed point multiplication*/
+    phall->periodStateVar += (((int32_t)phall->period - (int32_t)phall->periodFilter)*(int16_t)(phall->periodKFilter));
+    phall->periodFilter = (int16_t)(phall->periodStateVar>>15);
 
-        /* calculate filtered period = delta_period x filter_gain. 
-            right shift result to remove extra 2^15 factor from fixed point multiplication*/
-        phall->periodStateVar += (((int32_t)phall->period - (int32_t)phall->periodFilter)*(int16_t)(phall->periodKFilter));
-        phall->periodFilter = (int16_t)(phall->periodStateVar>>15);
+    phall->phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(uint16_t)(phall->periodFilter));
+    phall->speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(phall->periodFilter));
+    phall->theta = phall->theta + phall->phaseInc;
 
-        phall->phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(uint16_t)(phall->periodFilter));
-        phall->speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(phall->periodFilter));
-        phall->theta = phall->theta + phall->phaseInc;
+
+    if(phall->correctionCounter > 0)
+    {
+        phall->theta = phall->theta + phall->correctionFactor;
+        phall->correctionCounter--;
     }
-    
-        if(phall->correctionCounter > 0)
-        {
-            phall->theta = phall->theta + phall->correctionFactor;
-            phall->correctionCounter--;
-        }
 }

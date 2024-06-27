@@ -77,8 +77,8 @@ typedef struct
     int16_t correctionCounter; // counts the number of ISR runs to correct electrical angle over to avoid abrupt changes
     
     bool minSpeedReached;
-    uint16_t startupCounter; // enures there is no timer timeout during 78 hall states (half revolution)
-    
+    uint16_t startupCounter; // ensures there is no timer timeout during 78 hall states (half revolution)
+    uint16_t timeoutCounter; 
     
 } RB_HALL_DATA;
 
