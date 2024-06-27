@@ -1,13 +1,14 @@
 /* 
- * File:   rb_can.h
+ * File:   rb_mcp.h
  * Author: Chris
  *
  * Created on June 20, 2024, 12:23 PM
  */
 
-#ifndef RB_CAN_H
-#define	RB_CAN_H
+#ifndef RB_MCP_H
+#define	RB_MCP_H
 
+#include "rb_mcp_defs.h"
 #include "rb_can_defs.h"
 
 #include "stdint.h"
@@ -20,13 +21,13 @@
  * @return the number of errors that occurred during initialization. Probably 
  * shouldn't proceed if non zero.
  */
-uint16_t RB_CAN_Init(void);
+uint16_t RB_MCP_Init(void);
 
 /**
  * Sends a reset command to the MCP2515
  * @return true on successful reset, false otherwise.
  */
-bool RB_CAN_McpReset();
+bool RB_MCP_Reset();
 
 /**
  * Sets the mode of the MCP2515. After reset, the mode needs to be set to
@@ -34,7 +35,7 @@ bool RB_CAN_McpReset();
  * @param mode the mode to set 
  * @return true on successful mode set, false otherwise
  */
-bool RB_CAN_McpSetMode(MCP_CAN_MODE mode);
+bool RB_MCP_SetMode(MCP_CAN_MODE mode);
 
 /**
  * Sets a register on the MCP2515
@@ -42,7 +43,7 @@ bool RB_CAN_McpSetMode(MCP_CAN_MODE mode);
  * @param data the data to fill the register with
  * @return true if write was successful, false otherwise
  */
-bool RB_CAN_McpSetReg(MCP_REGISTER reg, uint8_t data);
+bool RB_MCP_SetReg(MCP_REGISTER reg, uint8_t data);
 
 /**
  * Sets multiple consecutive registers on the MCP2515
@@ -51,7 +52,7 @@ bool RB_CAN_McpSetReg(MCP_REGISTER reg, uint8_t data);
  * @param n the number of registers to write to
  * @return true if write was successful, false otherwise
  */
-bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, uint8_t* data, uint8_t n);
+bool RB_MCP_SetRegs(MCP_REGISTER firstReg, uint8_t* data, uint8_t n);
 
 /**
  * Modifies certain bits of a register on the MCP2515
@@ -60,7 +61,7 @@ bool RB_CAN_McpSetRegs(MCP_REGISTER firstReg, uint8_t* data, uint8_t n);
  * @param data the data to modify the register with
  * @return 
  */
-bool RB_CAN_McpModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data);
+bool RB_MCP_ModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data);
 
 /**
  * Requests data from a register on the MCP2515
@@ -68,7 +69,7 @@ bool RB_CAN_McpModReg(MCP_REGISTER reg, uint8_t mask, uint8_t data);
  * @param data a buffer to fill with the retrieved data
  * @return true if read was successful, false otherwise
  */
-bool RB_CAN_McpGetReg(MCP_REGISTER reg, uint8_t* data);
+bool RB_MCP_GetReg(MCP_REGISTER reg, uint8_t* data);
 
 
 /**
@@ -77,7 +78,7 @@ bool RB_CAN_McpGetReg(MCP_REGISTER reg, uint8_t* data);
  * @param data a buffer to fill with the retrieved data
  * @return true if read was successful, false otherwise
  */
-bool RB_CAN_McpGetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n);
+bool RB_MCP_GetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n);
 
 /**
  * Reads the "read status" register of the MCP2515. By applying the flags in the
@@ -86,7 +87,7 @@ bool RB_CAN_McpGetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n);
  * @param status the returned status
  * @return true if the status was successfully read, false otherwise
  */
-bool RB_CAN_McpReadStat(uint8_t* status);
+bool RB_MCP_ReadStat(uint8_t* status);
 
 
 /**
@@ -95,7 +96,7 @@ bool RB_CAN_McpReadStat(uint8_t* status);
  * @param frame the received CAN message frame
  * @return true if a valid message was received, false otherwise
  */
-bool RB_CAN_McpReadRx(uint16_t rxBufId, CAN_FRAME* frame);
+bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame);
 
 /**
  * Loads a CAN message into the specified tx buffer
@@ -103,13 +104,13 @@ bool RB_CAN_McpReadRx(uint16_t rxBufId, CAN_FRAME* frame);
  * @param frame the frame to transmit 
  * @return true if the message was successfully loaded, false otherwise
  */
-bool RB_CAN_McpLoadTx(uint16_t txBufId, const CAN_FRAME* frame);
+bool RB_MCP_LoadTx(uint16_t txBufId, const CAN_FRAME* frame);
 
 /**
  * Sends a request to the MCP2515 to send the messages in the tx buffers.
- * @return 
+ * @return true if the send request is successful, false otherwise
  */
-bool RB_CAN_McpSend();
+bool RB_MCP_Send();
 
 
-#endif	/* RB_CAN_H */
+#endif	/* RB_MCP_H */

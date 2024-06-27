@@ -14,7 +14,7 @@
 #include "rb_library/rb_hall.h"
 #include "rb_library/rb_control.h"
 #include "rb_library/rb_pwm.h"
-#include "rb_library/rb_can.h"
+#include "rb_library/rb_mcp.h"
 
 
 void RB_MainInit(void);
@@ -25,6 +25,7 @@ uint16_t canInitErrors;
 uint8_t canReadResult;
 uint16_t canTest1;
 uint16_t canTest2;
+
 
 /*
     Main application
@@ -55,9 +56,11 @@ void RB_MainInit (void)
 {
     SYSTEM_Initialize();  
     
-    canInitErrors = RB_CAN_Init();
+    canInitErrors = RB_MCP_Init();
     // Added for testing, can be removed later
-    RB_CAN_McpGetReg(MCP_REG_CANSTAT, &canReadResult);
+    RB_MCP_GetReg(MCP_REG_CANSTAT, &canReadResult);
+    RB_MCP_ReadStat(&canReadResult);
+    
 
     /* PWM Init from MCAF_ConfigurationPwmUpdate */
     RB_PWMInit();
