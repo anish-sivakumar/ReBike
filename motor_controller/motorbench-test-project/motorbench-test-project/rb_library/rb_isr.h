@@ -23,6 +23,7 @@ extern "C" {
 #include "rb_board_ui.h"
 #include "timer/sccp4.h"
 #include "library/mc-library/motor_control.h"
+#include "motorBench/math_asm.h"
 
  
 typedef enum 
@@ -41,6 +42,7 @@ typedef enum
 RB_MOTOR_DATA PMSM;
 RB_HALL_DATA hall;
 RB_FSM_STATE state;
+bool stateChanged = false;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 
@@ -87,30 +89,35 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                // next, take current measurements to calculate offset over multiple steps
                RB_ADCCalibrationStepISR(&PMSM.currentCalib); 
             
-            } else if((bootstrap.done) && (PMSM.currentCalib.done) && (boardUI.motorEnable.state))
+            } else if((bootstrap.done) && (PMSM.currentCalib.done))
             {
                 // Configure Hall ISRs and data
-                RB_HALL_Init(&hall);                
+                RB_HALL_Init(&hall);       
                 state = RBFSM_MANUAL_STARTUP;
-                MCAF_LED1_SetHigh();
+                stateChanged = true;
             }
             
             break;
         
         case RBFSM_MANUAL_STARTUP:
+            
+            if(stateChanged)
+            {
+                //Maintains the low-side transistors at low dc and high-side OFF.
+                HAL_PWM_UpperTransistorsOverride_Low();
+                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MAX_DUTY_COUNTS);
+                MCAF_LED1_SetLow();
+                stateChanged = false;
+            }
+            
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
             RB_HALL_Estimate(&hall);
             
             // (hall.speed > 25) 
-            if((hall.speed > 22))// speed calculation is messed up. fix it
+            if((boardUI.motorEnable.state) && (hall.minSpeedReached))
             {   
-                // get ready to output PWM 
-                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
-                HAL_PWM_UpperTransistorsOverride_Disable();
-                
-                RB_InitControlLoopState(&PMSM);
-                prevIqOutput = 0;
                 state = RBFSM_RUN_FOC;
+                stateChanged = true;
             }
             
             break;
@@ -123,15 +130,25 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
             // if we hit speed 27RPM, move to FOC
             if (hall.speed >= 40){ // 35 is the top speed from OL now
-                
                 RB_InitControlLoopState(&PMSM);
-                
                 state = RBFSM_RUN_FOC;
+                stateChanged = true;
             }
             
             break;
             
         case RBFSM_RUN_FOC:         
+            
+            if(stateChanged)
+            {
+                RB_InitControlLoopState(&PMSM);
+                
+                // get ready to output PWM 
+                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
+                HAL_PWM_UpperTransistorsOverride_Disable();
+                MCAF_LED1_SetHigh();
+                stateChanged = false;
+            }
             
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
            
@@ -182,29 +199,41 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-            // if we button pressed, stop
-            if (!boardUI.motorEnable.state){ 
-
+            // if we're going too slow, go back to RBFSM_MANUAL_STARTUP
+            if(!hall.minSpeedReached)
+            {
+                state = RBFSM_MANUAL_STARTUP;
+                stateChanged = true;
+            } else if (!boardUI.motorEnable.state) 
+            {   // if enable is set LO, go to RBFSM_STOPPING
+                state = RBFSM_STOPPING;
+                stateChanged = true;
+            }
+            break;
+        
+        case RBFSM_STOPPING: //slowing down state
+            
+            if(stateChanged)
+            {
                 //Maintains the low-side transistors at low dc and high-side OFF.
                 HAL_PWM_UpperTransistorsOverride_Low();
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MAX_DUTY_COUNTS);
                 MCAF_LED1_SetLow();
-                
-                state = RBFSM_STOPPING;
+                stateChanged = false;
             }
-            break;
-        
-        case RBFSM_STOPPING:
             
-            if(boardUI.motorEnable.state)
-            {   
-                // get ready to output PWM 
-                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
-                HAL_PWM_UpperTransistorsOverride_Disable();
-                MCAF_LED1_SetHigh();
+            // if we're going fast enough and motor enabled, go to RBFSM_RUN_FOC
+            if((hall.minSpeedReached) && (boardUI.motorEnable.state))
+            {                
+                state = RBFSM_RUN_FOC;
+                stateChanged = true;
                 
+            } else if (!hall.minSpeedReached)
+            {   //if we've stopped, then go back to RBFSM_MANUAL_STARTUP
                 state = RBFSM_MANUAL_STARTUP;
+                stateChanged = true;
             }
+            
             break;
             
         case RBFSM_FAULTED:

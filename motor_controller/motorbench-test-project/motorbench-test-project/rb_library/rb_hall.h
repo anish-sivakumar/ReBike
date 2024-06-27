@@ -27,11 +27,15 @@ extern "C" {
 
 /*Hall angle correction divisor for correcting angle difference 
  *  between the sectors     */
-#define HALL_CORRECTION_DIVISOR 3
+#define HALL_CORRECTION_DIVISOR 5 //old:3
 
 /*Number of steps in which the Hall sensor angle correction is done
  i.e,2^HALL_CORRECTION_DIVISOR  */
-#define HALL_CORRECTION_STEPS   8 
+#define HALL_CORRECTION_STEPS   32 //old:8, 
+/* this is only effective in between hall sector changes, which depends on speed
+ * if hall sector changes every 5ms, and theta can be corrected every 50us,
+ *      we can correct over 100 steps
+ */
 
 
 #define PWM_FREQ_HZ         20000
@@ -73,7 +77,8 @@ typedef struct
     int16_t correctionCounter; // counts the number of ISR runs to correct electrical angle over to avoid abrupt changes
     
     bool minSpeedReached;
-    bool timedOut;
+    uint16_t startupCounter; // enures there is no timer timeout during 78 hall states (half revolution)
+    
     
 } RB_HALL_DATA;
 

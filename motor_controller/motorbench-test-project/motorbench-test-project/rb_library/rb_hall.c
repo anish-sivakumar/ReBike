@@ -33,6 +33,9 @@ int16_t sectorToQ15Angle[8] =  // 3, 2, 6, 4, 5, 1 is the fwd order from hall si
 void RB_HALL_Init(RB_HALL_DATA *phall){
    
     phall->periodKFilter = Q15(0.002); //Q15(0.01);
+    phall->startupCounter = 0;
+    phall->sector = RB_HALL_ValueRead();
+    
     //hall.period = 0xFFF0; //65520
     RB_HALL_Reset(phall);
     
@@ -80,7 +83,7 @@ uint16_t RB_HALL_NextSector(uint16_t prev){
 
 void RB_HALL_Reset(RB_HALL_DATA *phall)
 {
-    phall->timedOut = true;
+    phall->startupCounter = 0;
     phall->minSpeedReached = false;
     phall->speed = 0;
     phall->period = 0xffff;
@@ -94,12 +97,23 @@ void RB_HALL_StateChange(RB_HALL_DATA *phall)
 {
     // store timer value
     uint16_t tmr_tmp = (uint16_t)SCCP4_Timer_Counter16BitGet(); 
-
+    uint16_t sector_tmp = RB_HALL_ValueRead();
+       
+    
+    /* Sector 5 is being missed. It's possible it's noisy.
+     *  this makes the timer value really low (~80), and period very low
+     *  which causes period filter to oscillate, and theta to be messed up,
+     *  which makes controls bad. 
+     * 
+     * if hall is noisy, we can check if timer value is reasonable before assinging sector
+     * --> we checked on the scope, and hall signal gets more noisy as speed increases
+     * --> need to debounce to make sure the interrupted state change is a real one
+     */
+    
     // Some noise is causing the hall ISR to run more often that it should. 
     // Only run the state change routine if we actually saw a change in the hall sector.
-    uint16_t sector_tmp = RB_HALL_ValueRead();
-    // TODO: try to debouce this better. predicting what sector to expect next did not work for debounding.
-    if (sector_tmp == RB_HALL_NextSector(phall->sector) || phall->sector == 0) {
+    // TODO: try to debouce this better. predicting what sector to expect next did not work for debouncing.
+    if (sector_tmp == RB_HALL_NextSector(phall->sector)) {
 //    if (sector_tmp != phall->sector) {
         // reset timer 
         SCCP4_Timer_Stop();
@@ -108,15 +122,15 @@ void RB_HALL_StateChange(RB_HALL_DATA *phall)
         
         phall->sector = sector_tmp;
 
-        // Check if our timer measurement was valid
-        if(phall->timedOut){
-            phall->timedOut = false;
-        }else{
+        // count up 78 hall states, and check that timer doesn't overflow during that time
+        if(phall->startupCounter < 78){
+            phall->startupCounter++;
+        }else{ // startupCounter will remain expired, and reset on timer overflow
             phall->minSpeedReached = true;
             phall->period = tmr_tmp;
         }
 
-        phall->sector = RB_HALL_ValueRead();
+        //phall->sector = RB_HALL_ValueRead();
 
         // Instead of making abrupt correction to the angle corresponding to hall sector, find the error and make gentle correction  
         phall->thetaError = (sectorToQ15Angle[phall->sector] + OFFSET_CORRECTION) - phall->theta;
