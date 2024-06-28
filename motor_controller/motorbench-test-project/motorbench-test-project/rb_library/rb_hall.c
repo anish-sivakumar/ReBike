@@ -83,31 +83,22 @@ uint16_t RB_HALL_NextSector(uint16_t prev){
 
 void RB_HALL_Reset(RB_HALL_DATA *phall)
 {
-    if(phall->timeoutCounter < 4)
-    {
-        phall->timeoutCounter++;
-    } else
-    {
-        phall->startupCounter = 0;
-        phall->minSpeedReached = false;
-        phall->speed = 0;
-        phall->period = 0xffff;
-        phall->periodStateVar = 0xffffffff;
-        phall->periodFilter = 0xffff;
-        phall->phaseInc = 0;
-    }
+    phall->startupCounter = 0;
+    phall->minSpeedReached = false;
+    phall->speed = 0;
+    phall->period = 0xffff;
+    phall->periodStateVar = 0xffffffff;
+    phall->periodFilter = 0xffff;
+    phall->phaseInc = 0;
+    
             
 }
 
-uint16_t min_acceptable_tmr;
-uint32_t max_acceptable_tmr;
-uint16_t tmr_tmp;
-uint16_t set_init_period = 0;
 
 void RB_HALL_StateChange(RB_HALL_DATA *phall)
 {
     // store timer value
-    tmr_tmp = (uint16_t)SCCP4_Timer_Counter16BitGet(); 
+    uint16_t tmr_tmp = (uint16_t)SCCP4_Timer_Counter16BitGet(); 
     uint16_t sector_tmp = RB_HALL_ValueRead();
     
     // set period at some point during startup
@@ -116,8 +107,8 @@ void RB_HALL_StateChange(RB_HALL_DATA *phall)
         phall->period = tmr_tmp;     
     }
     
-    min_acceptable_tmr = __builtin_mulus(phall->period, Q15(0.5)) >> 15; 
-    max_acceptable_tmr = phall->period + min_acceptable_tmr;
+    uint16_t min_acceptable_tmr = __builtin_mulus(phall->period, Q15(0.5)) >> 15; 
+    uint32_t max_acceptable_tmr = phall->period + min_acceptable_tmr;
     
     /* Sector 5 is being missed. It's possible it's noisy.
      *  this makes the timer value really low (~80), and period very low

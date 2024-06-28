@@ -78,7 +78,7 @@ typedef struct
     
     bool minSpeedReached;
     uint16_t startupCounter; // ensures there is no timer timeout during 78 hall states (half revolution)
-    uint16_t timeoutCounter; 
+
     
 } RB_HALL_DATA;
 
