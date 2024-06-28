@@ -35,11 +35,12 @@ extern "C" {
 #define     RB_QVOLTAGE_OUTMIN      0  
 
 // Q-axis current ramp rate limiting
-#define     RB_QCURRENT_MAX          2000         
+#define     RB_QCURRENT_MAX          2500         
 #define     RB_QRAMP_INCREMENT       Q15(0.00003) // ammount iq is incremented per ISR step
 #define     RB_QRAMP_COUNT           3 // new iq ref is calculated every [REF_RAMP_COUNT] times            
     
-
+// Safety Fault related
+#define     RB_PHASECURRENT_MAX     21000  // 21228 is 14.14peak = 10A RMS from user guide
     
 
 #ifdef	__cplusplus

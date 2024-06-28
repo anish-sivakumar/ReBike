@@ -45,25 +45,24 @@ extern "C" {
 #define VDC_SCALING_FACTOR              1024      // Q10(  1.00000) =   +1.00000             =   +1.00000             + 0.0000%
 #define VDC_SCALING_FACTOR_Q              10
   
-    
-/* Bridge Temp parameters  
- * 
- * 
- * 
- */
-    
-/* temperature gain */
-#define RB_BRIDGE_TEMPERATURE_GAIN        33000      // Q16(  0.50354) = +503.54004 m           = +503.54000 m           + 0.0000%
-#define RB_BRIDGE_TEMPERATURE_OFFSET            5000 //            temperature offset
-/* Pole of bridge temperature low-pass filter */
-#define RB_BRIDGE_TEMPERATURE_FILTER_GAIN        328      // Q16(  0.00500) = +100.09766 rad/s       = +100.00000 rad/s       + 0.0977%
-/* Maximum temperature slew rate */
-#define RB_BRIDGE_TEMPERATURE_SLEW_RATE       1311      // Q15(  0.04001) =   +4.00085 C/s         =   +4.00000 C/s         + 0.0214%
-/* Pole of voltage loop low-pass filter */
-#define RB_FILTER_COEFF_VQ                 1638      // Q16(  0.02499) = +499.87793 rad/s       = +500.00000 rad/s       - 0.0244%
-      
-    
-    
+/** Different possible faults*/
+typedef enum
+{
+    RBFAULT_NOFAULT = 0,
+    RBFAULT_BRIDGE_OVERTEMP,
+    RBFAULT_MOTOR_OVERTEMP,   
+    RBFAULT_PHASE_OVERCURRENT,
+    RBFAULT_DCBUS_OVERCURRENT,
+    RBFAULT_DCBUS_OVERVOLTAGE   
+} RB_FAULTS;
+
+
+/** structure to store fault data */
+typedef struct
+{
+    bool isFault;
+    uint16_t faultType;
+} RB_FAULT_DATA;
     
 /**
  * Calibration/Compensation parameters for ADC current measurements.
@@ -175,6 +174,16 @@ inline static int16_t RB_LPF(int16_t input, int16_t prevOutput, int16_t coeff)
     return (int16_t)(stateVar >> 15); // remove extra 2^15 factor
     
 }
+
+void RB_FaultInit(RB_FAULT_DATA *state);
+
+bool phaseCurrentFault(MC_ABC_T *piabc);
+
+bool bridgeTempFault(void);
+
+void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc);
+
+
 
 #ifdef	__cplusplus
 }

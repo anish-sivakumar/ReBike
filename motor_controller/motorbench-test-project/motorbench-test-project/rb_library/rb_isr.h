@@ -45,6 +45,7 @@ RB_FSM_STATE state;
 bool stateChanged = false;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
+RB_FAULT_DATA faultState;
 
 int16_t prevIqOutput;
 
@@ -73,6 +74,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_ADCCalibrationInit(&PMSM.currentCalib); 
             RB_FixedFrequencySinePWMInit(); //for testing
             RB_BoardUIInit(&boardUI);
+            RB_FaultInit(&faultState);
             
             state = RBFSM_BOARD_INIT;
             break;
@@ -237,9 +239,30 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             break;
             
         case RBFSM_FAULTED:
+            
+            if(stateChanged)
+            {
+                //Maintains the low-side transistors at low dc and high-side OFF.
+                HAL_PWM_UpperTransistorsOverride_Low();
+                HAL_PWM_LowerTransistorsOverride_Low();
+                MCAF_LED2_SetHigh();
+                stateChanged = false;
+            }
+            
+            // do nothing
             break;      
         
     }
+    
+    
+    RB_FaultCheck(&faultState, &PMSM.iabc);
+    if(faultState.isFault)
+    {
+        state = RBFSM_FAULTED;
+        stateChanged = true;
+    }
+    
+    
     
     HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
     /* Low-priority tasks at the end */

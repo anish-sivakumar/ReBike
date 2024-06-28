@@ -1,6 +1,8 @@
 #include "rb_measure.h"
 #include "hal/hardware_access_functions.h"
 #include "adc/adc1.h"
+#include "motorBench/util.h"
+#include "rb_foc_params.h"
 
 
 void RB_ADCCalibrationInit(RB_MEASURE_CURRENT_T *pcalib)
@@ -76,3 +78,48 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *p
     *pvDC = unsignedVdc >> 1; //vDC is signed - I don't understand   
 }
 
+
+void RB_FaultInit(RB_FAULT_DATA *state)
+{
+    state->isFault = 0;
+    state->faultType = 0;
+}
+
+
+bool phaseCurrentFault(MC_ABC_T *piabc)
+{
+    bool tempFault = true; //assume faulted
+    
+    if (UTIL_Abs16(piabc->a) <= RB_PHASECURRENT_MAX) 
+    {
+        tempFault = false;
+    } else if (UTIL_Abs16(piabc->b) <= RB_PHASECURRENT_MAX)
+    {
+        tempFault = false;
+    }
+    
+    return tempFault;
+}
+
+bool bridgeTempFault(void)
+{
+    return false;
+}
+
+void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc)
+{
+    bool tempFault = true; //assume there is a fault and check to deny that
+    
+    if (phaseCurrentFault(piabc))
+    {
+        pstate->faultType = RBFAULT_PHASE_OVERCURRENT;
+    } else if (bridgeTempFault())
+    {
+        pstate->faultType = RBFAULT_BRIDGE_OVERTEMP;
+    } else
+    {
+        tempFault = false;
+    }
+
+    pstate->isFault = tempFault;
+}
