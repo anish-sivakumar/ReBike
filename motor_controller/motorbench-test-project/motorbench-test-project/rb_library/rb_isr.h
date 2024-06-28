@@ -47,7 +47,7 @@ RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
 
-int16_t prevIqOutput;
+int16_t prevIqOutput = 0; //testing
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -159,8 +159,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             MC_TransformPark_Assembly(&PMSM.ialphabeta, &PMSM.sincosTheta, &PMSM.idqFdb);
             
             /* LPF did not work well. try moving average filter forIq */
-            //PMSM.idqFdb.q = RB_LPF(PMSM.idqFdb.q, prevIqOutput, Q15(1.5)); // around 1000Hz Fc. low fc made output -> 0
-            //prevIqOutput = PMSM.idqFdb.q;
+//            PMSM.idqFdb.q = RB_LPF(PMSM.idqFdb.q, prevIqOutput, Q15(0.628)); // around 1000Hz Fc
+//            prevIqOutput = PMSM.idqFdb.q;
             
             /* Determine d & q current reference values based */
             RB_SetCurrentReference(boardUI.potState, &PMSM.idqRef, &PMSM.iqRateLim);

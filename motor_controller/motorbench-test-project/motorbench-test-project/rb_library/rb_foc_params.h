@@ -29,7 +29,7 @@ extern "C" {
     
 // Q-axis current control loop coefficients in Q15 format
 #define     RB_QCURRENT_KP          Q15(0.05) //Q15(0.04), Q15(0.25430)
-#define     RB_QCURRENT_KI          Q15(0.03) // Q15(0.003)
+#define     RB_QCURRENT_KI          Q15(0.003) // Q15(0.003)
 #define     RB_QCURRENT_KC          Q15(0.999)
 #define     RB_QVOLTAGE_OUTMAX      0x7FFF      //32767
 #define     RB_QVOLTAGE_OUTMIN      0  

@@ -154,7 +154,7 @@ inline static int16_t RB_ADCCompensate(int16_t measurement, int16_t offset, int1
 
 /**
  * 16 bit implementation of low pass filter
- * y[n] += (x[n]-y[n-1])*coeff
+ * y[n] = y[n-1] + (x[n]-y[n-1])*coeff
  *
  * @param pfilterx16 LPF state
  * @param input 1.15 fixed point
@@ -167,7 +167,7 @@ inline static int16_t RB_LPF(int16_t input, int16_t prevOutput, int16_t coeff)
 {
     int32_t stateVar;
     
-    stateVar = (prevOutput << 15); // load 16-bit int into 32-bit int
+    stateVar = (int32_t)(prevOutput); //(prevOutput << 15); // load 16-bit int into 32-bit int
     stateVar += __builtin_mulss(input, coeff);
     stateVar -= __builtin_mulss(prevOutput, coeff);
     
