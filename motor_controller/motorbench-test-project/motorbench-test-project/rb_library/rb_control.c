@@ -37,7 +37,7 @@ void RB_InitControlParameters(RB_MOTOR_DATA *pPMSM)
 
 bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 {
-RB_InitControlLoopState(pPMSM);
+    RB_InitControlLoopState(pPMSM);
       
     /* initialize the mux'd channel (doesn't matter which setting is first) */
     //pPMSM->adcSelect = HADC_POTENTIOMETER; Anish removed this variable from PMSM
@@ -53,20 +53,20 @@ RB_InitControlLoopState(pPMSM);
 }
 
 
-void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef, RB_RATELIMIT *iqRateLim)
+void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, RB_RATELIMIT *iqRateLim)
 {    
     // d-axis current controlled at zero
     pidqRef->d = 0;
     
     // if pot is below mid point, target Iq = 0. 
     // pot mid point is around 1600 ADC reading
-    if (potVal <= 2000)
+    if (throttleCmd <= 2000)
     {
         iqRateLim->target = 0;
     } else
     {
         // target Iq = potVal scaled from 0->-RB_QCURRENT_MAX
-        iqRateLim->target = __builtin_mulss(potVal, -RB_QCURRENT_MAX)>>15; 
+        iqRateLim->target = __builtin_mulss(throttleCmd, -RB_QCURRENT_MAX)>>15; 
     }  
    
     // Set & limit Iq reference every RB_QRAMP_COUNT ISRs

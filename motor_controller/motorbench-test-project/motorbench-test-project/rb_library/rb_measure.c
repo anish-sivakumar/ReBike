@@ -59,7 +59,7 @@ void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib)
 }
 
 
-void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC)
+void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC, MC_ABC_T *pvabc)
 {
     //1. read phase A and B current into current compensation structure
     /* ADC buffer is unsigned and inverted (higher value means negative current)
@@ -75,7 +75,17 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *p
     
     //3. read DC link voltage
     uint16_t unsignedVdc = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_VOLTAGE));
-    *pvDC = unsignedVdc >> 1; //vDC is signed - I don't understand   
+    *pvDC = unsignedVdc >> 1; 
+    
+    //4. read bridge temp - buffer is also empty
+    
+    
+    //5. read phase Voltages 
+    /* Buffers are reading zero at the moment
+    * pvabc->a = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_VOLTAGE);
+    * pvabc->b = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_VOLTAGE);
+    * pvabc->c = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEC_VOLTAGE);
+    */
 }
 
 
@@ -86,7 +96,7 @@ void RB_FaultInit(RB_FAULT_DATA *state)
 }
 
 
-bool phaseCurrentFault(MC_ABC_T *piabc)
+bool RB_PhaseCurrentFault(MC_ABC_T *piabc)
 {
     bool tempFault = true; //assume faulted
     
@@ -101,8 +111,9 @@ bool phaseCurrentFault(MC_ABC_T *piabc)
     return tempFault;
 }
 
-bool bridgeTempFault(void)
+bool RB_BridgeTempFault(void)
 {
+    /* TO DO !!!!!*/
     return false;
 }
 
@@ -110,11 +121,12 @@ void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc)
 {
     bool tempFault = true; //assume there is a fault and check to deny that
     
-    if (phaseCurrentFault(piabc))
+    if (RB_PhaseCurrentFault(piabc))
     {
         pstate->faultType = RBFAULT_PHASE_OVERCURRENT;
-    } else if (bridgeTempFault())
+    } else if (RB_BridgeTempFault())
     {
+        /* TO DO !!!!!*/
         pstate->faultType = RBFAULT_BRIDGE_OVERTEMP;
     } else
     {

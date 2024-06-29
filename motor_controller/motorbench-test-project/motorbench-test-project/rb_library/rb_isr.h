@@ -30,10 +30,8 @@ typedef enum
 {   
     RBFSM_INIT = 0,
     RBFSM_BOARD_INIT,
-    RBFSM_MANUAL_STARTUP,     
-    RBFSM_RUN_OPENLOOP,
+    RBFSM_MANUAL_STARTUP,
     RBFSM_RUN_FOC,
-    RBFSM_STOPPING,
     RBFSM_FAULTED
         
 } RB_FSM_STATE; 
@@ -46,6 +44,7 @@ bool stateChanged = false;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
+int16_t throttleCmd = 0;
 
 int16_t prevIqOutput = 0; //testing
 
@@ -60,19 +59,14 @@ int16_t prevIqOutput = 0; //testing
  */
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {
-          
     switch(state){
                 
         case RBFSM_INIT:
     
-            //MCAF_FaultDetectInit(&PMSM.faultDetect);
             RB_InitControlParameters(&PMSM);
-            //MCAF_MotorControllerOnRestartInit(pmotor); not sure if IMPORTANT
             RB_PWMCapBootstrapInit(&bootstrap);
-            // might need this: HAL_PWM_FaultClearBegin();
-            //RB_FocInit(&PMSM);
             RB_ADCCalibrationInit(&PMSM.currentCalib); 
-            RB_FixedFrequencySinePWMInit(); //for testing
+            //RB_FixedFrequencySinePWMInit(); // only for testing
             RB_BoardUIInit(&boardUI);
             RB_FaultInit(&faultState);
             
@@ -112,27 +106,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 stateChanged = false;
             }
             
-            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, &PMSM.vabc);
             RB_HALL_Estimate(&hall);
-            
-            // (hall.speed > 25) 
-            if((boardUI.motorEnable.state) && (hall.minSpeedReached))
+       
+            if((throttleCmd > 2000) && (hall.minSpeedReached))
             {   
-                state = RBFSM_RUN_FOC;
-                stateChanged = true;
-            }
-            
-            break;
-            
-        case RBFSM_RUN_OPENLOOP:
-            /* Runs fixed frequency SinePWM based on potentiometer input */
-            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
-            RB_HALL_Estimate(&hall);
-            RB_FixedFrequencySinePWM(boardUI.potState);
-            
-            // if we hit speed 27RPM, move to FOC
-            if (hall.speed >= 40){ // 35 is the top speed from OL now
-                RB_InitControlLoopState(&PMSM);
                 state = RBFSM_RUN_FOC;
                 stateChanged = true;
             }
@@ -151,8 +129,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 MCAF_LED1_SetHigh();
                 stateChanged = false;
             }
-            
-            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC);
+
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, &PMSM.vabc);
            
             /* Calculate Id,Iq from Sin(theta), Cos(theta), Ia, Ib */
             MC_TransformClarke_Assembly(&PMSM.iabc,&PMSM.ialphabeta);
@@ -163,7 +141,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //            prevIqOutput = PMSM.idqFdb.q;
             
             /* Determine d & q current reference values based */
-            RB_SetCurrentReference(boardUI.potState, &PMSM.idqRef, &PMSM.iqRateLim);
+            RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim);
                         
             /* PI control for D-axis - sets Vd command*/
             MC_ControllerPIUpdate_Assembly( PMSM.idqRef.d, 
@@ -201,37 +179,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-            // if we're going too slow, go back to RBFSM_MANUAL_STARTUP
-            if(!hall.minSpeedReached)
-            {
-                state = RBFSM_MANUAL_STARTUP;
-                stateChanged = true;
-            } else if (!boardUI.motorEnable.state) 
-            {   // if enable is set LO, go to RBFSM_STOPPING
-                state = RBFSM_STOPPING;
-                stateChanged = true;
-            }
-            break;
-        
-        case RBFSM_STOPPING: //slowing down state
-            
-            if(stateChanged)
-            {
-                //Maintains the low-side transistors at low dc and high-side OFF.
-                HAL_PWM_UpperTransistorsOverride_Low();
-                HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MAX_DUTY_COUNTS);
-                MCAF_LED1_SetLow();
-                stateChanged = false;
-            }
-            
-            // if we're going fast enough and motor enabled, go to RBFSM_RUN_FOC
-            if((hall.minSpeedReached) && (boardUI.motorEnable.state))
-            {                
-                state = RBFSM_RUN_FOC;
-                stateChanged = true;
-                
-            } else if (!hall.minSpeedReached)
-            {   //if we've stopped, then go back to RBFSM_MANUAL_STARTUP
+            if (!hall.minSpeedReached) // b/c of either throttle=0 or other reasons
+            {   
                 state = RBFSM_MANUAL_STARTUP;
                 stateChanged = true;
             }
@@ -250,10 +199,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             }
             
             // do nothing
-            break;      
-        
+            break;        
     }
-    
     
     RB_FaultCheck(&faultState, &PMSM.iabc);
     if(faultState.isFault)
@@ -262,12 +209,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         stateChanged = true;
     }
     
-    
-    
     HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
     /* Low-priority tasks at the end */
     X2CScope_Update();
     RB_BoardUIService(&boardUI); // update the button states and the POT value
+    throttleCmd = boardUI.potState; // change throttleCmd to be from CAN and scale to Q15
 }
 
 

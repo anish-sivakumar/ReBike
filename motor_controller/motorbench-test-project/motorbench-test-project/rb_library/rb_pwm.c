@@ -290,9 +290,6 @@ void RB_PWMDutyCycleAdjust (MC_DUTYCYCLEOUT_T *pPwmDutycycle,uint16_t min,uint16
 
 void RB_PWMDutyCycleSet(MC_DUTYCYCLEOUT_T *pPwmDutycycle)
 {
-    
-    // FOC is spinning motor backwards. look at fwd path variables
-    // reversing dc2 and dc3 made the motor sound weird.
     MCC_PWM_DutyCycleSet(MOTOR1_PHASE_A, pPwmDutycycle->dutycycle1);
     MCC_PWM_DutyCycleSet(MOTOR1_PHASE_B, pPwmDutycycle->dutycycle2);
     MCC_PWM_DutyCycleSet(MOTOR1_PHASE_C, pPwmDutycycle->dutycycle3);

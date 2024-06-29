@@ -112,7 +112,7 @@ void RB_FixedFrequencySinePWMInit (void);
 void RB_FixedFrequencySinePWM(int16_t potVal);
 
 /**
- * Clip SVPWM Duties to [145, 4775]
+ * Clip SVPWM Duties to min and max
  * @param pPwmDutycycle
  * @param min
  * @param max

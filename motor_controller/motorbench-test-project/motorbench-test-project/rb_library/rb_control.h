@@ -32,6 +32,7 @@ typedef struct
     
     /* The rate limiting will be executed only every rampCount*/
     int16_t   rampCount;  
+    
 } RB_RATELIMIT;
 
     
@@ -88,8 +89,13 @@ typedef struct tagPMSM
     /** current calibration parameters */
     RB_MEASURE_CURRENT_T currentCalib;
         
-    /** measured DC link voltage */
+    /** measured DC link voltage via ADC. Voltage divider ratio 1:21.6 feeds the ADC
+     *  hence 40V DC Bus --> ((40V/21.6)/3.3V) * 2^15 = 18,388 in Q15
+     */ 
     int16_t vDC;
+    
+    /** phase voltage measurements - at a voltage scaling ratio of 1:21.6 */
+    MC_ABC_T vabc;       
     
     /** measured DC link current*/
     int16_t iDC;
@@ -130,7 +136,7 @@ inline static void RB_InitControlLoopState(RB_MOTOR_DATA *pPMSM)
  * @param potVal
  * @param pidqRef
  */
-void RB_SetCurrentReference(int16_t potVal, MC_DQ_T *pidqRef, RB_RATELIMIT *rateLim);
+void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, RB_RATELIMIT *rateLim);
 
 #ifdef	__cplusplus
 }

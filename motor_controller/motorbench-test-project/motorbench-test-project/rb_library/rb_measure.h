@@ -124,7 +124,7 @@ void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib);
  * @param piabc
  * @param pvDC
  */
-void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC);
+void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC,  MC_ABC_T *pvabc);
 
 
 /**
@@ -177,9 +177,9 @@ inline static int16_t RB_LPF(int16_t input, int16_t prevOutput, int16_t coeff)
 
 void RB_FaultInit(RB_FAULT_DATA *state);
 
-bool phaseCurrentFault(MC_ABC_T *piabc);
+bool RB_PhaseCurrentFault(MC_ABC_T *piabc);
 
-bool bridgeTempFault(void);
+bool RB_BridgeTempFault(void);
 
 void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc);
 

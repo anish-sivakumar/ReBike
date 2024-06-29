@@ -57,7 +57,10 @@ typedef struct
  * @param queue
  * @return 
  */
-bool isQueueFull(RB_CAN_QUEUE *queue);
+static inline bool RB_IsQueueFull(RB_CAN_QUEUE *queue) 
+{
+    return queue->size == MAX_QUEUE_SIZE;
+}
 
 
 /**
@@ -65,7 +68,10 @@ bool isQueueFull(RB_CAN_QUEUE *queue);
  * @param queue
  * @return 
  */
-bool isQueueEmpty(RB_CAN_QUEUE *queue);
+static inline bool RB_IsQueueEmpty(RB_CAN_QUEUE *queue) 
+{
+    return queue->size == 0;
+}
 
 
 /**
@@ -74,7 +80,14 @@ bool isQueueEmpty(RB_CAN_QUEUE *queue);
  * @param task
  * @return 
  */
-bool enqueueTask(RB_CAN_QUEUE *queue, RB_CAN_TASK task);
+static bool inline RB_EnqueueTask(RB_CAN_QUEUE *queue, RB_CAN_TASK task) 
+{
+    if (RB_IsQueueFull(queue)) return false;
+    queue->tasks[queue->rear] = task;
+    queue->rear = (queue->rear + 1) % MAX_QUEUE_SIZE;
+    queue->size++;
+    return true;
+}
 
 
 /**
@@ -83,7 +96,14 @@ bool enqueueTask(RB_CAN_QUEUE *queue, RB_CAN_TASK task);
  * @param task - recording of task that is being removed 
  * @return 
  */
-bool dequeueTask(RB_CAN_QUEUE *queue, RB_CAN_TASK *task);
+static bool inline RB_DequeueTask(RB_CAN_QUEUE *queue, RB_CAN_TASK *task) {
+    if (RB_IsQueueEmpty(queue)) return false;
+    *task = queue->tasks[queue->front];
+    queue->front = (queue->front + 1) % MAX_QUEUE_SIZE;
+    queue->size--;
+    return true;
+}
+
 
 /**
  * Runs after FOC/all other ISR tasks
