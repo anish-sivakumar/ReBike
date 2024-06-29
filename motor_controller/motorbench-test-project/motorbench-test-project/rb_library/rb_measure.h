@@ -53,7 +53,8 @@ typedef enum
     RBFAULT_MOTOR_OVERTEMP,   
     RBFAULT_PHASE_OVERCURRENT,
     RBFAULT_DCBUS_OVERCURRENT,
-    RBFAULT_DCBUS_OVERVOLTAGE   
+    RBFAULT_DCBUS_OVERVOLTAGE,
+    RBFAULT_ADCISR_OVERTIME
 } RB_FAULTS;
 
 
@@ -61,7 +62,7 @@ typedef enum
 typedef struct
 {
     bool isFault;
-    uint16_t faultType;
+    RB_FAULTS faultType;
 } RB_FAULT_DATA;
     
 /**

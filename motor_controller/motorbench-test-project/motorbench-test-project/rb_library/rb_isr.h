@@ -24,6 +24,7 @@ extern "C" {
 #include "timer/sccp4.h"
 #include "library/mc-library/motor_control.h"
 #include "motorBench/math_asm.h"
+#include "timer/sccp5.h"
 
  
 typedef enum 
@@ -45,8 +46,8 @@ RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
 int16_t throttleCmd = 0;
+uint16_t ADCISRExecutionTime; // monitor this value as code increases
 
-int16_t prevIqOutput = 0; //testing
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -58,7 +59,14 @@ int16_t prevIqOutput = 0; //testing
  * GPIO test point output is activated during this ISR for timing purposes.
  */
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
-{
+{    
+    /* Start timer to measure ADC ISR execution time. 
+     * Period set to 0x1387 = 499 = 50us
+     */
+    SCCP5_Timer_Stop();
+    CCP5TMRL = 0;
+    SCCP5_Timer_Start();
+    
     switch(state){
                 
         case RBFSM_INIT:
@@ -69,7 +77,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             //RB_FixedFrequencySinePWMInit(); // only for testing
             RB_BoardUIInit(&boardUI);
             RB_FaultInit(&faultState);
-            
+
             state = RBFSM_BOARD_INIT;
             break;
             
@@ -209,11 +217,17 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         stateChanged = true;
     }
     
-    HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
+    /* interrupt flag must be cleared after data is read from buffer */
+    HAL_ADC_InterruptFlag_Clear(); 
+    
     /* Low-priority tasks at the end */
     X2CScope_Update();
     RB_BoardUIService(&boardUI); // update the button states and the POT value
     throttleCmd = boardUI.potState; // change throttleCmd to be from CAN and scale to Q15
+    
+    /* Lastly, record timer period to measure ADC ISR execution time */
+    SCCP5_Timer_Stop();
+    ADCISRExecutionTime = SCCP5_Timer_CounterGet();
 }
 
 
