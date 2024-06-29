@@ -46,6 +46,7 @@
 #include "../../qei/qei1.h"
 #include "../../timer/sccp1.h"
 #include "../../timer/sccp4.h"
+#include "../../timer/sccp5.h"
 #include "../../timer/tmr1.h"
 #include "../../uart/uart1.h"
 #include "../interrupt.h"
@@ -65,6 +66,7 @@ void SYSTEM_Initialize(void)
     QEI1_Initialize();
     SCCP1_Timer_Initialize();
     SCCP4_Timer_Initialize();
+    SCCP5_Timer_Initialize();
     TMR1_Initialize();
     UART1_Initialize();
     INTERRUPT_GlobalEnable();
