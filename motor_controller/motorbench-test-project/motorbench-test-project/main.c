@@ -22,9 +22,10 @@ void RB_SystemStart(void);
 
 // temporary checks for SPI comms
 uint16_t canInitErrors;
-uint8_t canReadResult;
 uint16_t canTest1;
 uint16_t canTest2;
+CAN_FRAME testFrame;
+uint8_t canTestArr[20];
 
 
 /*
@@ -58,8 +59,6 @@ void RB_MainInit (void)
     
     canInitErrors = RB_MCP_Init();
     // Added for testing, can be removed later
-    RB_MCP_GetReg(MCP_REG_CANSTAT, &canReadResult);
-    RB_MCP_ReadStat(&canReadResult);
     
 
     /* PWM Init from MCAF_ConfigurationPwmUpdate */

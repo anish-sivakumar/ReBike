@@ -6,7 +6,10 @@
 
 #include "string.h" 
 
-static uint8_t spiBuf[10];
+static uint8_t spiBuf[20];
+
+extern uint8_t canTestArr[20];
+
 
 // Static function defines
 // These can only be used inside this file
@@ -29,6 +32,8 @@ uint16_t RB_MCP_Init(void) {
     errors += !RB_MCP_SetReg(MCP_REG_RXB1CTRL, 0);
 
     // TODO: set interrupt settings here
+    errors += !RB_MCP_SetReg(MCP_REG_CANINTE, MCP_INTF_TX0IF | MCP_INTF_TX1IF | MCP_INTF_ERRIF | MCP_INTF_MERRF);
+
 
     // Note from arduino lib:
     // receives all valid messages using either Standard or Extended Identifiers that
@@ -41,18 +46,33 @@ uint16_t RB_MCP_Init(void) {
     errors += !RB_MCP_ModReg(
             MCP_REG_RXB1CTRL,
             MCP_MASK_RXBnCTRL_RXM | MCP_MASK_RXB1CTRL_FILHIT,
-            MCP_RXBnCTRL_RXM_STDEXT | MCP_RXB1CTRL_FILHIT
+            MCP_RXBnCTRL_RXM_NOFILT | MCP_RXB1CTRL_FILHIT
             );
 
     // TODO: set message filter settings here
+    errors += !RB_MCP_SetFilter(0,CAN_ID_BMS_SOC);
+    errors += !RB_MCP_SetMask(0, MCP_RX_MASK_STD);
 
     // set CAN bitrate to 500kbps
     errors += !RB_MCP_SetReg(MCP_REG_CNF1, MCP_20MHz_500kBPS_CFG1);
     errors += !RB_MCP_SetReg(MCP_REG_CNF2, MCP_20MHz_500kBPS_CFG2);
     errors += !RB_MCP_SetReg(MCP_REG_CNF3, MCP_20MHz_500kBPS_CFG3);
 
+    errors += !RB_MCP_GetReg(MCP_REG_RXF0SIDH, &canTestArr[0]);
+    errors += !RB_MCP_GetReg(MCP_REG_RXF0SIDL, &canTestArr[1]);
+    errors += !RB_MCP_GetReg(MCP_REG_RXF0EID8, &canTestArr[2]);
+    errors += !RB_MCP_GetReg(MCP_REG_RXF0EID0, &canTestArr[3]);
+
+    errors += !RB_MCP_GetReg(MCP_REG_RXM0SIDH, &canTestArr[4]);
+    errors += !RB_MCP_GetReg(MCP_REG_RXM0SIDL, &canTestArr[5]);
+    errors += !RB_MCP_GetReg(MCP_REG_RXM0EID8, &canTestArr[6]);
+    errors += !RB_MCP_GetReg(MCP_REG_RXM0EID0, &canTestArr[7]);
+
+
+
     // set normal mode to begin CAN send/receive capabilities;
     errors += !RB_MCP_SetMode(MCP_CAN_MODE_NORMAL);
+
 
     return errors;
 }
@@ -68,11 +88,12 @@ bool RB_MCP_Reset() {
     return success;
 }
 
+uint8_t newmode;
 bool RB_MCP_SetMode(MCP_CAN_MODE mode) {
     // set the mode
     RB_MCP_ModReg(MCP_REG_CANCTRL, MCP_MASK_CANCTRL_REQOP, mode);
     // double check that the mode was set correctly
-    uint8_t newmode;
+    DELAY_microseconds(10);
     RB_MCP_GetReg(MCP_REG_CANSTAT, &newmode);
     newmode &= MCP_MASK_CANCTRL_REQOP;
     bool success = mode == newmode;
@@ -96,11 +117,11 @@ bool RB_MCP_SetRegs(MCP_REGISTER firstReg, uint8_t* data, uint8_t n) {
     bool success = false;
     if (StartTransaction() && SPI1_IsTxReady()) {
         // first use the spi buffer to write the instruction type and reg address
-        spiBuf[0] = MCP_INSTR_WRITE;
-        spiBuf[1] = firstReg;
-        SPI1_BufferWrite(spiBuf,2);
-        // second use the data buffer to write the remaining data
-        SPI1_BufferWrite(data, n);
+        SPI1_ByteWrite(MCP_INSTR_WRITE);
+        SPI1_ByteWrite(firstReg);
+        for (int i = 0; i < n; i++){
+            SPI1_ByteWrite(data[i]);
+        }
         success = true;
     }
     EndTransaction();
@@ -137,20 +158,111 @@ bool RB_MCP_GetReg(MCP_REGISTER reg, uint8_t* data) {
     return success;
 }
 
-bool RB_MCP_ReadStat(uint8_t* status){
+bool RB_MCP_ReadStat(uint8_t* readStatus){
     bool success = false;
     if (StartTransaction() && SPI1_IsTxReady()) {
         spiBuf[0] = MCP_INSTR_READ_STATUS;
         spiBuf[1] = 0;
         SPI1_BufferExchange(spiBuf, 2);
-        *status = spiBuf[1];
+        *readStatus = spiBuf[1];
         success = true;
     }
     EndTransaction();
     return success;
 }
 
-bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame);
+bool RB_MCP_SetFilter(uint16_t filterId, CAN_ID canId)
+{
+    uint8_t firstReg;
+    uint8_t buffer[4];
+    switch (filterId)
+    {
+        case 0:
+            firstReg = MCP_REG_RXF0SIDH;
+            break;
+        case 1:
+            firstReg = MCP_REG_RXF1SIDH;
+            break;
+        case 2:
+            firstReg = MCP_REG_RXF2SIDH;
+            break;
+        case 3:
+            firstReg = MCP_REG_RXF3SIDH;
+            break;
+        case 4:
+            firstReg = MCP_REG_RXF4SIDH;
+            break;
+        case 5:
+            firstReg = MCP_REG_RXF5SIDH;
+            break;
+        default:
+            return false;
+    }
+    buffer[0] = (uint8_t) (canId >> 3);
+    buffer[1] = (uint8_t) ((canId & 0x07 ) << 5);
+    buffer[2] = 0;
+    buffer[3] = 0;
+    return RB_MCP_SetRegs(firstReg, buffer, 4);
+}
+
+bool RB_MCP_SetMask(uint16_t rxBufId, uint32_t mask){
+    uint8_t firstReg;
+    switch (rxBufId){
+        case 0:
+            firstReg = MCP_REG_RXM0SIDH;
+            break;
+        case 1:
+            firstReg = MCP_REG_RXM1SIDH;
+            break;
+        default:
+            return false;
+    }   
+    
+    spiBuf[0] = (uint8_t)((mask >> 24)& 0xFF);
+    spiBuf[1] = (uint8_t)((mask >> 16)& 0xFF);
+    spiBuf[2] = (uint8_t)((mask >> 8)& 0xFF);
+    spiBuf[3] = (uint8_t)(mask & 0xFF);
+    
+    return RB_MCP_SetRegs(firstReg, spiBuf, 4);
+}
+
+
+bool RB_MCP_RxStat(uint8_t* rxStatus){
+    spiBuf[0] = MCP_INSTR_RX_STATUS;
+    spiBuf[1] = 0;
+    bool success = false;
+    if (StartTransaction() && SPI1_IsTxReady()) {
+        SPI1_BufferExchange(spiBuf, 2);
+        *rxStatus = spiBuf[1];
+        success = true;
+    }
+    EndTransaction();
+    return success;
+}
+
+bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame) {
+    
+    switch (rxBufId){
+        case 0:
+            spiBuf[0] = MCP_INSTR_READ_RX0;
+            break;
+        case 1: 
+            spiBuf[0] = MCP_INSTR_READ_RX1;
+            break;
+        default:
+            return false;
+    }
+    bool success = false;
+    if (StartTransaction() && SPI1_IsTxReady()) {
+        SPI1_BufferExchange(spiBuf, 14);
+        frame->id = ((uint16_t)spiBuf[1] << 3) || ((uint16_t)(spiBuf[2] && 0b11100000) >> 5);
+        frame->len = spiBuf[5] && 0b00001111;
+        memcpy(frame->data, &spiBuf[6], 8);
+        success = true;
+    }
+    EndTransaction();
+    return success;
+}
 
 // Static Helper Functions
 

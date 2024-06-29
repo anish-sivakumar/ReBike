@@ -25,6 +25,7 @@
 // Miscelaneous Register settings
 #define MCP_RXBnCTRL_RXM_STD        0x20
 #define MCP_RXBnCTRL_RXM_EXT        0x40
+#define MCP_RXBnCTRL_RXM_NOFILT     0x60
 #define MCP_RXBnCTRL_RXM_STDEXT     0x00
 #define MCP_RXBnCTRL_RTR            0x08
 #define MCP_RXB0CTRL_BUKT           0x04
@@ -35,6 +36,11 @@
 #define MCP_20MHz_500kBPS_CFG1      0x00
 #define MCP_20MHz_500kBPS_CFG2      0xFA
 #define MCP_20MHz_500kBPS_CFG3      0x87
+
+// receive buffer masks for CAN ID types
+#define MCP_RX_MASK_NONE    0x00000000
+#define MCP_RX_MASK_STD     0xFFE00000
+#define MCP_RX_MASK_EXT     0xFFE3FFFF
 
 typedef enum tagMCP_INSTRUCTION {
     MCP_INSTR_WRITE = 0x02,
@@ -149,6 +155,17 @@ typedef enum tagMCP_ERROR_FLAG {
     MCP_EFLG_RXWAR = (1 << 1),
     MCP_EFLG_EWARN = (1 << 0)
 } MCP_ERROR_FLAG;
+
+typedef enum tagMCP_INTERRUPT_FLAG {
+    MCP_INTF_RX0IF = 0x01,
+    MCP_INTF_RX1IF = 0x02,
+    MCP_INTF_TX0IF = 0x04,
+    MCP_INTF_TX1IF = 0x08,
+    MCP_INTF_TX2IF = 0x10,
+    MCP_INTF_ERRIF = 0x20,
+    MCP_INTF_WAKIF = 0x40,
+    MCP_INTF_MERRF = 0x80
+} MCP_INTERRUPT_FLAG;
 
 typedef enum tagMCP_CAN_MODE {
     MCP_CAN_MODE_NORMAL     = 0x00,

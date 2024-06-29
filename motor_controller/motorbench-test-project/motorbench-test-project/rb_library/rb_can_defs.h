@@ -13,7 +13,7 @@ typedef enum tagCAN_ID {
     // Note: enum cannot be used if we want 32 bit IDs. 
     // If were using extended CAN identifiers, we'll need 
     // to change the IDs to #defines instead
-    CAN_ID_TEST
+    CAN_ID_BMS_SOC = 0x355
 } CAN_ID;
 
 typedef struct tagCAN_FRAME{

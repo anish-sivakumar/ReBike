@@ -80,6 +80,11 @@ bool RB_MCP_GetReg(MCP_REGISTER reg, uint8_t* data);
  */
 bool RB_MCP_GetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n);
 
+bool RB_MCP_SetFilter(MCP_REGISTER filterReg, CAN_ID id);
+
+bool RB_MCP_SetMask(uint16_t rxBufId, uint32_t mask);
+
+
 /**
  * Reads the "read status" register of the MCP2515. By applying the flags in the
  * MCP_STAT enum to the returned status, we can tell which buffers have received 
@@ -87,7 +92,9 @@ bool RB_MCP_GetRegs(MCP_REGISTER firstReg, const uint8_t* data, uint8_t n);
  * @param status the returned status
  * @return true if the status was successfully read, false otherwise
  */
-bool RB_MCP_ReadStat(uint8_t* status);
+bool RB_MCP_ReadStat(uint8_t* readStatus);
+
+bool RB_MCP_RxStat(uint8_t* rxStatus);
 
 
 /**
