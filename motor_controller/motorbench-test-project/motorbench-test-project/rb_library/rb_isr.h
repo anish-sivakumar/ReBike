@@ -46,7 +46,7 @@ RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
 int16_t throttleCmd = 0;
-uint16_t ADCISRExectutionTime;
+uint16_t ADCISRExecutionTime; // monitor this value as code increases
 
 
 /**
@@ -60,7 +60,9 @@ uint16_t ADCISRExectutionTime;
  */
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {    
-    // start timer to measure ADC ISR execution time
+    /* Start timer to measure ADC ISR execution time. 
+     * Period set to 0x1387 = 499 = 50us
+     */
     SCCP5_Timer_Stop();
     CCP5TMRL = 0;
     SCCP5_Timer_Start();
@@ -75,10 +77,6 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             //RB_FixedFrequencySinePWMInit(); // only for testing
             RB_BoardUIInit(&boardUI);
             RB_FaultInit(&faultState);
-            
-            SCCP5_Timer_Stop();
-            SCCP5_Timer_PeriodSet(0x1387); // 0x1387 = 499 = 50us
-            SCCP5_Timer_Start();
 
             state = RBFSM_BOARD_INIT;
             break;
@@ -229,8 +227,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     
     /* Lastly, record timer period to measure ADC ISR execution time */
     SCCP5_Timer_Stop();
-    ADCISRExectutionTime = SCCP5_Timer_CounterGet();
-    
+    ADCISRExecutionTime = SCCP5_Timer_CounterGet();
 }
 
 
