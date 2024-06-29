@@ -1,6 +1,8 @@
 #include "rb_measure.h"
 #include "hal/hardware_access_functions.h"
 #include "adc/adc1.h"
+#include "motorBench/util.h"
+#include "rb_foc_params.h"
 
 
 void RB_ADCCalibrationInit(RB_MEASURE_CURRENT_T *pcalib)
@@ -29,7 +31,11 @@ void RB_ADCCalibrationInit(RB_MEASURE_CURRENT_T *pcalib)
 void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib)
 {
     
-    // read phase A and B current into current compensation structure
+    /* Read phase A and B current into current compensation structure
+     * ADC buffer is unsigned and inverted (higher value means negative current)
+     * We convert the unsigned buffer to a signed value, that is still inverted 
+     * The invert will be handled discretely when offset is applied.
+     */ 
     pcalib->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
     pcalib->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT);
     
@@ -53,9 +59,13 @@ void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib)
 }
 
 
-void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC)
+void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC, MC_ABC_T *pvabc)
 {
     //1. read phase A and B current into current compensation structure
+    /* ADC buffer is unsigned and inverted (higher value means negative current)
+     * We convert the unsigned buffer to a signed value, that is still inverted 
+     * The invert will be handled discretely when offset is applied.
+     */ 
     pcalib->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
     pcalib->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT); 
     
@@ -65,6 +75,63 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *p
     
     //3. read DC link voltage
     uint16_t unsignedVdc = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_VOLTAGE));
-    *pvDC = unsignedVdc >> 1; //vDC is signed - I don't understand   
+    *pvDC = unsignedVdc >> 1; 
+    
+    //4. read bridge temp - buffer is also empty
+    
+    
+    //5. read phase Voltages 
+    /* Buffers are reading zero at the moment
+    * pvabc->a = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_VOLTAGE);
+    * pvabc->b = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_VOLTAGE);
+    * pvabc->c = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEC_VOLTAGE);
+    */
 }
 
+
+void RB_FaultInit(RB_FAULT_DATA *state)
+{
+    state->isFault = 0;
+    state->faultType = 0;
+}
+
+
+bool RB_PhaseCurrentFault(MC_ABC_T *piabc)
+{
+    bool tempFault = true; //assume faulted
+    
+    if (UTIL_Abs16(piabc->a) <= RB_PHASECURRENT_MAX) 
+    {
+        tempFault = false;
+    } else if (UTIL_Abs16(piabc->b) <= RB_PHASECURRENT_MAX)
+    {
+        tempFault = false;
+    }
+    
+    return tempFault;
+}
+
+bool RB_BridgeTempFault(void)
+{
+    /* TO DO !!!!!*/
+    return false;
+}
+
+void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc)
+{
+    bool tempFault = true; //assume there is a fault and check to deny that
+    
+    if (RB_PhaseCurrentFault(piabc))
+    {
+        pstate->faultType = RBFAULT_PHASE_OVERCURRENT;
+    } else if (RB_BridgeTempFault())
+    {
+        /* TO DO !!!!!*/
+        pstate->faultType = RBFAULT_BRIDGE_OVERTEMP;
+    } else
+    {
+        tempFault = false;
+    }
+
+    pstate->isFault = tempFault;
+}

@@ -193,36 +193,35 @@ void RB_FixedFrequencySinePWMInit (void)
 {
     // 120 degrees apart
     sinePWM.phaseAIndex = 0;
-    sinePWM.phaseBIndex = 99;
-    sinePWM.phaseCIndex = 198;
+    sinePWM.phaseBIndex = 198; //changed to 198, so peak index is reached after phase A
+    sinePWM.phaseCIndex = 99; // changed to 99, so peak index is reached after phase B
 }
 
-void RB_FixedFrequencySinePWM(uint16_t pot)
+void RB_FixedFrequencySinePWM(int16_t potVal)
 {
     uint16_t freqDivider = 9; // 9 is safe for starting
-    
      
-    if (pot < 33000)
+    if (potVal < 500)
     {
         freqDivider = 9;
-    } else if ((pot >= 33000) && (pot < 40000))
+    } else if ((potVal >= 500) && (potVal < 5000))
     {
         freqDivider = 8;  
-    } else if ((pot >= 40000) && (pot < 45000))
+    } else if ((potVal >= 5000) && (potVal < 12000))
     {
         freqDivider = 7;  
-    } else if ((pot >= 45000) && (pot < 50000))
+    } else if ((potVal >= 12000) && (potVal < 18000))
     {
-        freqDivider = 5;  
-    } else if ((pot >= 50000) && (pot < 55000))
+        freqDivider = 6;  
+    } else if ((potVal >= 18000) && (potVal < 24000))
     {
-        freqDivider = 5;  
-    } else if ((pot >= 55000) && (pot < 60000))
+        freqDivider = 5;            // 13Hz 
+    } else if ((potVal >= 24000) && (potVal < 30000))
     {
-        freqDivider = 4;  
-    } else if (pot >= 60000)
+        freqDivider = 4;            // 16Hz  
+    } else if (potVal >= 30000)
     {
-        freqDivider = 3;
+        freqDivider = 3;            // 22Hz
     } 
     
     sinePWM.runningStateCounter++;
@@ -249,4 +248,49 @@ void RB_FixedFrequencySinePWM(uint16_t pot)
         sinePWM.phaseCIndex = (++sinePWM.phaseCIndex < (RB_SINE_TABLE_SIZE)) ? sinePWM.phaseCIndex : 0; 
        
     }
+}
+
+
+void RB_PWMDutyCycleAdjust (MC_DUTYCYCLEOUT_T *pPwmDutycycle,uint16_t min,uint16_t max)
+{
+    // Duties from SVPWM range from 0-4630. Shift by +145 for safe limits [145,4775]
+    pPwmDutycycle->dutycycle1 = pPwmDutycycle->dutycycle1 + 145;
+    pPwmDutycycle->dutycycle2 = pPwmDutycycle->dutycycle2 + 145;
+    pPwmDutycycle->dutycycle3 = pPwmDutycycle->dutycycle3 + 145;
+    
+    // Final check to make sure duty is within safe limits [145,4775]
+    if (pPwmDutycycle->dutycycle1 < min)
+    {
+        pPwmDutycycle->dutycycle1 = min;
+    }
+    else if (pPwmDutycycle->dutycycle1 > max)
+    {
+        pPwmDutycycle->dutycycle1 = max;
+    }
+    
+    if (pPwmDutycycle->dutycycle2 < min)
+    {
+        pPwmDutycycle->dutycycle2 = min;
+    }
+    else if (pPwmDutycycle->dutycycle2 > max)
+    {
+        pPwmDutycycle->dutycycle2 = max;
+    }
+    
+    if (pPwmDutycycle->dutycycle3 < min)
+    {
+        pPwmDutycycle->dutycycle3 = min;
+    }
+    else if (pPwmDutycycle->dutycycle3 > max)
+    {
+        pPwmDutycycle->dutycycle3 = max;
+    }
+}
+
+
+void RB_PWMDutyCycleSet(MC_DUTYCYCLEOUT_T *pPwmDutycycle)
+{
+    MCC_PWM_DutyCycleSet(MOTOR1_PHASE_A, pPwmDutycycle->dutycycle1);
+    MCC_PWM_DutyCycleSet(MOTOR1_PHASE_B, pPwmDutycycle->dutycycle2);
+    MCC_PWM_DutyCycleSet(MOTOR1_PHASE_C, pPwmDutycycle->dutycycle3);
 }
