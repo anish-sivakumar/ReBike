@@ -49,12 +49,6 @@ int16_t throttleCmd = 0;
 uint16_t ADCISRExectutionTime;
 
 
-int16_t prevIqOutput = 0; //testing
-
-
-
-void RB_TMR5_TIMEOUT_ISR(void);
-
 /**
  * Executes tasks in the ISR for ADC interrupts.
  * 
