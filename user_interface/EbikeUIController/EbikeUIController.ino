@@ -4,11 +4,23 @@
 #include <Toggle.h>               // Include the Toggle library for handling button states
 
 // Define OLED pin connections
-#define OLED_MOSI   11
+// SCLK - Pin 3
 #define OLED_CLK    13
-#define OLED_DC     5
-#define OLED_CS     10
+// SDA - Pin 4
+#define OLED_MOSI   11
+// RES - Pin 5
 #define OLED_RESET  23
+// DC - Pin 6
+#define OLED_DC     5
+// CS - Pin 7
+#define OLED_CS     10
+
+// Define E-Brake pin connections
+#define E_BRAKE_ACTIVATED   22
+
+// Define Throttle connections
+#define REGEN_METHOD_TOGGLE_BUTTON  19
+#define THROTTLE_SPEED_ADJUSTMENT  18
 
 // Create an instance for a 128x64 display with software SPI
 U8G2_SSD1306_128X64_NONAME_1_4W_SW_SPI u8g2(U8G2_R0, /* clk=*/ OLED_CLK, /* data=*/ OLED_MOSI, /* cs=*/ OLED_CS, /* dc=*/ OLED_DC, /* reset=*/ OLED_RESET);
@@ -153,22 +165,6 @@ const unsigned char epd_bitmap_Vert_Line [] PROGMEM = {
 const unsigned char epd_bitmap_Watts_Sym [] PROGMEM = {
 	0x00, 0x00, 0x80, 0x80, 0x88, 0x80, 0x88, 0x80, 0x88, 0x80, 0x88, 0x80, 0x7f, 0x00
 };
-// Array of all bitmaps for convenience. (Total bytes used to store images in PROGMEM = 688)
-// const unsigned char* epd_bitmap_allArray[13] = {
-// 	epd_bitmap_ACTIVE_REGEN_Label,
-// 	epd_bitmap_BATTERY_Label,
-// 	epd_bitmap_Battery_Level_Sym,
-// 	epd_bitmap_Battery_Percentage_Sym,
-// 	epd_bitmap_Celsius_Sym,
-// 	epd_bitmap_KM_HR_Sym,
-// 	epd_bitmap_Lower_Horiz_Line,
-// 	epd_bitmap_MOTOR_Label,
-// 	epd_bitmap_THROTTLE_Label,
-//   epd_bitmap_Throttle_Percentage_Sym,
-// 	epd_bitmap_Upper_Horiz_Line,
-// 	epd_bitmap_Vert_Line,
-// 	epd_bitmap_Watts_Sym
-// };
 
 // 'speed digit 0', 24x36px
 const unsigned char epd_bitmap_speed_digit_0 [] PROGMEM = {
@@ -441,16 +437,6 @@ const unsigned char epd_bitmap_Battery_Level_Sym_100_ [] PROGMEM = {
 	0x03, 0xcf, 0x3c, 0xf0, 0x03, 0xcf, 0x3c, 0xf0, 0x03, 0xcf, 0x3c, 0xf0, 0x03, 0xcf, 0x3c, 0xf0, 
 	0xf3, 0xcf, 0x3c, 0xf0, 0xf3, 0xcf, 0x3c, 0xf0, 0xf3, 0xcf, 0x3c, 0xf0, 0xf3, 0xcf, 0x3c, 0xf0
 };
-// Array of all bitmaps for convenience. (Total bytes used to store images in PROGMEM = 624)
-// const int epd_bitmap_allArray_LEN = 6;
-// const unsigned char* epd_bitmap_allArray[6] = {
-// 	epd_bitmap_Battery_Level_Sym_0_,
-// 	epd_bitmap_Battery_Level_Sym_100_,
-// 	epd_bitmap_Battery_Level_Sym_20_,
-// 	epd_bitmap_Battery_Level_Sym_40_,
-// 	epd_bitmap_Battery_Level_Sym_60_,
-// 	epd_bitmap_Battery_Level_Sym_80_
-// };
 
 // Global variables to store different parameters
 int speed = 0;                    // Speed of the e-bike
@@ -458,7 +444,7 @@ int throttle = 0;                 // Max throttle percentage
 int power = 0;                    // E-bike power output OR regenerative power
 int temp = 0;                     // Temperature of the e-bike system
 int batteryRange = 0;             // Battery range of the e-bike
-int regenMethod = 1;              // Regenerative braking method (1 or 2)
+int activeRegen = 1;              // Regenerative braking method (1 or 2)
 
 // Variables to convert system parameters from int to display format
 char speed_string[10];
@@ -475,9 +461,6 @@ int temp_string_length;
 
 char battery_string[10];
 int battery_string_length;
-
-int activeRegen = 1;
-
 
 // Function to update the current speed
 void adjustSpeedRequest(int adjustment) {
@@ -513,7 +496,7 @@ void updateSpeed(void) {
 
   // This is connected to a potentiometer for testing purposes only.
   speed = map(analogRead(14), 0, 1023, 0, 99);
-  throttle = map(analogRead(14), 0, 1023, 0, 99);
+  // throttle = map(analogRead(14), 0, 1023, 0, 99);
 
 }
 
@@ -548,21 +531,18 @@ void updateBatteryRange(void) {
 }
 
 // Function to update the active regenerative braking method
-void changeActiveRegenRequest(void) {
+void activateRegenRecovery() {
 
-  // Code to send request to motor controller FW to toggle the active regenerative braking method goes here
+  // Code to send request via CAN to motor controller FW to activate regerative braking and recover energy for battery
 
 }
 
-// Function to update the display variable that shows the active regenerative braking method
-void updateRegen(void) {
+// Function to update the active regenerative braking method
+void toggleRegenMethod() {
+ 
+  activeRegen = (activeRegen == 1) ? 2 : 1; // Toggle between 1 and 2 
 
-  // Code to update the active regenerative braking method variable goes here
-  if (activeRegen == 1) {
-    activeRegen = 2;
-  } else {
-    activeRegen = 1;
-  }
+  // Code to send request via CAN to motor controller FW to toggle the active regenerative braking method goes here
 
 }
 
@@ -641,15 +621,15 @@ void updateDisplay(void) {
 
 }
 
-// Create Toggle instances for buttons to increase throttle, decrease throttle, and toggle regenerative braking
-Toggle increaseThrottle(6);       // Button to increase throttle
-Toggle decreaseThrottle(7);       // Button to decrease throttle
-Toggle toggleRegen(8);            // Button to toggle regenerative braking method
+Toggle activateRegen(E_BRAKE_ACTIVATED); // Button that activates regenerative braking
+Toggle toggleRegen(REGEN_METHOD_TOGGLE_BUTTON); // Button to toggle regenerative braking method
 
 void setup() {
 
   // Initialize the OLED display
   u8g2.begin();
+
+  Serial.begin(9600);
 
   // Display the logo during setup
   u8g2.firstPage();
@@ -661,22 +641,29 @@ void setup() {
   // Wait for 4 seconds to show the logo
   delay(4000);
 
-   // Initialize the button toggles
-  increaseThrottle.begin(0);
-  decreaseThrottle.begin(1);
-  toggleRegen.begin(2);
+  // Initialize I/O pins as inputs
+  pinMode(E_BRAKE_YLW, INPUT);
+  pinMode(THROT_UD_GRN, INPUT);
 
-  // This pin is connected to a potentiometer for testing purposes.
-  pinMode(14, INPUT);
+  // Initialize the button toggles
+  activateRegen.begin(E_BRAKE_ACTIVATED);
+  toggleRegen.begin(REGEN_METHOD_TOGGLE_BUTTON);
+
+  // Set analog read resolution (default is 10 bits on the Teensy)
+  analogReadResolution(10); // Adjust resolution as needed (10 bits gives values from 0-1023)
 
   }
 
 void loop() {
 
-  // Poll the state of each button
-  increaseThrottle.poll();
-  decreaseThrottle.poll();
-  toggleRegen.poll();
+  // Read analog values for Throttle Increase/Decrease user inputs
+  int UDANALOG = analogRead(THROT_UD_GRN);
+
+  // Poll the state of the Regenerative Braking Method Toggle Button
+  activateRegen.poll(E_BRAKE_ACTIVATED);
+
+  // Poll the state of the Regenerative Braking Method Toggle Button
+  toggleRegen.poll(REGEN_METHOD_TOGGLE_BUTTON);
 
   // Functions to read incoming signals from the motor controller and BMS to update various
   // system parameters for UI display (speed, power, temperature, battery range)
@@ -684,22 +671,12 @@ void loop() {
   updatePower();
   updateTemp();
   updateBatteryRange();
-  
-  // Check if the increase throttle button has been pressed
-  if (increaseThrottle.onPress()) {
 
-    // Adjust the current speed by sending an increase speed request to motor controller
-    adjustSpeedRequest(+1);
-    Serial.println("Request to increase motor speed sent to Motor Controller via CAN");
+  // Check if the the mechanical break has been pulled to activate regenerative braking
+  if (activateRegen.onPress()) {
 
-  }
-
-  // Check if the decrease throttle button has been pressed
-  if (decreaseThrottle.onPress()) {
-
-    // Adjust the current speed by sending a decrease speed request to motor controller
-    adjustSpeedRequest(-1);
-    Serial.println("Request to decrease motor speed sent to Motor Controller via CAN");
+    // Activate regenerative braking
+    activateRegenRecovery();
 
   }
 
@@ -707,11 +684,7 @@ void loop() {
   if (toggleRegen.onPress()) {
 
     // Change the active regenerative braking method
-    changeActiveRegenRequest();
-    Serial.println("Request to change the active regenerative braking method has been sent to Motor Controller via CAN");
-
-    // Update the display to show the new regenerative braking method
-    updateRegen();
+    toggleRegenMethod();
 
   }
 
