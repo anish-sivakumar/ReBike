@@ -57,8 +57,8 @@ void RB_MainInit (void)
 {
     SYSTEM_Initialize();  
     
+    // Error counter added for testing, can be removed later
     canInitErrors = RB_MCP_Init();
-    // Added for testing, can be removed later
     
 
     /* PWM Init from MCAF_ConfigurationPwmUpdate */

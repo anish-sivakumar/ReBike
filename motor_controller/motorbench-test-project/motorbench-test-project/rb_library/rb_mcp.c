@@ -32,8 +32,7 @@ uint16_t RB_MCP_Init(void) {
     errors += !RB_MCP_SetReg(MCP_REG_RXB1CTRL, 0);
 
     // TODO: set interrupt settings here
-    errors += !RB_MCP_SetReg(MCP_REG_CANINTE, MCP_INTF_TX0IF | MCP_INTF_TX1IF | MCP_INTF_ERRIF | MCP_INTF_MERRF);
-
+    errors += !RB_MCP_SetReg(MCP_REG_CANINTE, MCP_INTF_RX0IF | MCP_INTF_RX1IF | MCP_INTF_ERRIF | MCP_INTF_MERRF);
 
     // Note from arduino lib:
     // receives all valid messages using either Standard or Extended Identifiers that
@@ -46,33 +45,38 @@ uint16_t RB_MCP_Init(void) {
     errors += !RB_MCP_ModReg(
             MCP_REG_RXB1CTRL,
             MCP_MASK_RXBnCTRL_RXM | MCP_MASK_RXB1CTRL_FILHIT,
-            MCP_RXBnCTRL_RXM_NOFILT | MCP_RXB1CTRL_FILHIT
+            MCP_RXBnCTRL_RXM_STDEXT | MCP_RXB1CTRL_FILHIT
             );
 
-    // TODO: set message filter settings here
-    errors += !RB_MCP_SetFilter(0,CAN_ID_BMS_SOC);
+    // TODO: finish configuring message filter settings here
+
+    errors += !RB_MCP_SetFilter(0, CAN_ID_BMS_SOC);
     errors += !RB_MCP_SetMask(0, MCP_RX_MASK_STD);
+
+    errors += !RB_MCP_SetFilter(1, CAN_ID_UIC);
+    errors += !RB_MCP_SetMask(1, MCP_RX_MASK_STD);
 
     // set CAN bitrate to 500kbps
     errors += !RB_MCP_SetReg(MCP_REG_CNF1, MCP_20MHz_500kBPS_CFG1);
     errors += !RB_MCP_SetReg(MCP_REG_CNF2, MCP_20MHz_500kBPS_CFG2);
     errors += !RB_MCP_SetReg(MCP_REG_CNF3, MCP_20MHz_500kBPS_CFG3);
 
-    errors += !RB_MCP_GetReg(MCP_REG_RXF0SIDH, &canTestArr[0]);
-    errors += !RB_MCP_GetReg(MCP_REG_RXF0SIDL, &canTestArr[1]);
-    errors += !RB_MCP_GetReg(MCP_REG_RXF0EID8, &canTestArr[2]);
-    errors += !RB_MCP_GetReg(MCP_REG_RXF0EID0, &canTestArr[3]);
-
-    errors += !RB_MCP_GetReg(MCP_REG_RXM0SIDH, &canTestArr[4]);
-    errors += !RB_MCP_GetReg(MCP_REG_RXM0SIDL, &canTestArr[5]);
-    errors += !RB_MCP_GetReg(MCP_REG_RXM0EID8, &canTestArr[6]);
-    errors += !RB_MCP_GetReg(MCP_REG_RXM0EID0, &canTestArr[7]);
+//    errors += !RB_MCP_GetReg(MCP_REG_RXF0SIDH, &canTestArr[0]);
+//    errors += !RB_MCP_GetReg(MCP_REG_RXF0SIDL, &canTestArr[1]);
+//    errors += !RB_MCP_GetReg(MCP_REG_RXF0EID8, &canTestArr[2]);
+//    errors += !RB_MCP_GetReg(MCP_REG_RXF0EID0, &canTestArr[3]);
+//
+//    errors += !RB_MCP_GetReg(MCP_REG_RXM0SIDH, &canTestArr[4]);
+//    errors += !RB_MCP_GetReg(MCP_REG_RXM0SIDL, &canTestArr[5]);
+//    errors += !RB_MCP_GetReg(MCP_REG_RXM0EID8, &canTestArr[6]);
+//    errors += !RB_MCP_GetReg(MCP_REG_RXM0EID0, &canTestArr[7]);
 
 
 
     // set normal mode to begin CAN send/receive capabilities;
     errors += !RB_MCP_SetMode(MCP_CAN_MODE_NORMAL);
 
+//    errors += !RB_MCP_GetReg(MCP_REG_CANINTE, &canTestArr[19]);
 
     return errors;
 }
@@ -93,10 +97,9 @@ bool RB_MCP_SetMode(MCP_CAN_MODE mode) {
     // set the mode
     RB_MCP_ModReg(MCP_REG_CANCTRL, MCP_MASK_CANCTRL_REQOP, mode);
     // double check that the mode was set correctly
-    DELAY_microseconds(10);
+    DELAY_microseconds(100);
     RB_MCP_GetReg(MCP_REG_CANSTAT, &newmode);
-    newmode &= MCP_MASK_CANCTRL_REQOP;
-    bool success = mode == newmode;
+    bool success = mode == (newmode & MCP_MASK_CANCTRL_REQOP);
     return success;
 }
 
@@ -240,7 +243,7 @@ bool RB_MCP_RxStat(uint8_t* rxStatus){
     return success;
 }
 
-bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame) {
+bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame, bool dataOnly) {
     
     switch (rxBufId){
         case 0:
@@ -255,8 +258,8 @@ bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame) {
     bool success = false;
     if (StartTransaction() && SPI1_IsTxReady()) {
         SPI1_BufferExchange(spiBuf, 14);
-        frame->id = ((uint16_t)spiBuf[1] << 3) || ((uint16_t)(spiBuf[2] && 0b11100000) >> 5);
-        frame->len = spiBuf[5] && 0b00001111;
+        frame->id = ((uint16_t)spiBuf[1] << 3) | ((uint16_t)(spiBuf[2] & 0b11100000) >> 5);
+        frame->len = spiBuf[5] & 0b00001111;
         memcpy(frame->data, &spiBuf[6], 8);
         success = true;
     }

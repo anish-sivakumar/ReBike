@@ -103,7 +103,7 @@ bool RB_MCP_RxStat(uint8_t* rxStatus);
  * @param frame the received CAN message frame
  * @return true if a valid message was received, false otherwise
  */
-bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame);
+bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame, bool dataOnly);
 
 /**
  * Loads a CAN message into the specified tx buffer

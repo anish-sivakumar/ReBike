@@ -33,9 +33,11 @@
 #define MCP_RXB1CTRL_FILHIT         0x01
 
 // Settings for 500kbps CAN bus
+// For some god-forbidden reason, every resource out there claims these settings are for 1000kbps CAN.
+// However, these are the only settings which seem to work for our 500kbps bus, so we're using them.
 #define MCP_20MHz_500kBPS_CFG1      0x00
-#define MCP_20MHz_500kBPS_CFG2      0xFA
-#define MCP_20MHz_500kBPS_CFG3      0x87
+#define MCP_20MHz_500kBPS_CFG2      0xD9
+#define MCP_20MHz_500kBPS_CFG3      0x82
 
 // receive buffer masks for CAN ID types
 #define MCP_RX_MASK_NONE    0x00000000

@@ -53,7 +53,6 @@ extern uint8_t canTestArr[20];
 uint16_t SPI_counter;
 uint8_t  SPI_received;
 
-
 /** system data, accessed directly */
 extern MCAF_SYSTEM_DATA systemData;
 
@@ -163,28 +162,32 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 
     // TODO: Do CAN servicing here. Should be able to send or receive one CAN message per iteration 
     SPI_counter++;
-    if (SPI_counter == 20000){
-        RB_MCP_RxStat(&mcpRxStat);
+    if (SPI_counter == 2000){
         RB_MCP_ReadStat(&mcpReadStat);
-
+        if (mcpReadStat & MCP_STAT_RX0IF){
+            RB_MCP_ReadRx(0, &canFrame0, false);
+        }
+        else if (mcpReadStat & MCP_STAT_RX1IF)
+        {
+            RB_MCP_ReadRx(1, &canFrame1, false);
+        }
+                   
         SPI_counter = 0;
     }
-    if (SPI_counter == 10000){
-        RB_MCP_ReadRx(0, &canFrame0);
-    }
-    if (SPI_counter == 10001){
-        RB_MCP_ReadRx(1, &canFrame1);
-    }
-    if (SPI_counter == 10002){
-        RB_MCP_GetReg(MCP_REG_RXB0SIDH, &canTestArr[8]);
-        RB_MCP_GetReg(MCP_REG_RXB0SIDL, &canTestArr[9]);
-        RB_MCP_GetReg(MCP_REG_RXB0EID8, &canTestArr[10]);
-        RB_MCP_GetReg(MCP_REG_RXB0EID0, &canTestArr[11]);
-        RB_MCP_GetReg(MCP_REG_RXB0DATA, &canTestArr[12]);
-        RB_MCP_GetReg(MCP_REG_RXB0DATA + 1, &canTestArr[13]);
-
-
-    }
+//    if (SPI_counter == 10000){
+//        RB_MCP_ReadRx(0, &canFrame0);
+//    }
+//    if (SPI_counter == 10001){
+//        RB_MCP_ReadRx(1, &canFrame1);
+//    }
+//    if (SPI_counter == 10002){
+//        RB_MCP_GetReg(MCP_REG_RXB0SIDH, &canTestArr[8]);
+//        RB_MCP_GetReg(MCP_REG_RXB0SIDL, &canTestArr[9]);
+//        RB_MCP_GetReg(MCP_REG_RXB0EID8, &canTestArr[10]);
+//        RB_MCP_GetReg(MCP_REG_RXB0EID0, &canTestArr[11]);
+//        RB_MCP_GetReg(MCP_REG_RXB0DATA, &canTestArr[12]);
+//        RB_MCP_GetReg(MCP_REG_RXB0DATA + 1, &canTestArr[13]);
+//    }
     
     HAL_ADC_InterruptFlag_Clear(); // interrupt flag must be cleared after data is read from buffer
     X2CScope_Update();
