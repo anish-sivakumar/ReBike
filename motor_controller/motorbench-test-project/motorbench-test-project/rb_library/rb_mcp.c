@@ -208,9 +208,9 @@ bool RB_MCP_SetFilter(uint16_t filterId, CAN_ID canId)
     return RB_MCP_SetRegs(firstReg, buffer, 4);
 }
 
-bool RB_MCP_SetMask(uint16_t rxBufId, uint32_t mask){
+bool RB_MCP_SetMask(uint16_t maskId, uint32_t mask){
     uint8_t firstReg;
-    switch (rxBufId){
+    switch (maskId){
         case 0:
             firstReg = MCP_REG_RXM0SIDH;
             break;

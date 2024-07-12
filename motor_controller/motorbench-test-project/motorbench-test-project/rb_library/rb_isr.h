@@ -183,7 +183,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         }
         readCounter = 0;
     }
-    else if (writeCounter > 20000){
+    else if (writeCounter >= 20000){
         tx_ready = RB_MCP_IsTxReady(0);
         if (tx_ready){
             RB_MCP_LoadTx(0,&canFrameTx,false);
