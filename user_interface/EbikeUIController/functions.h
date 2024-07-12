@@ -11,26 +11,26 @@
 #define FUNCTIONS_H
 
 
+// Initializes the OLED display during system startup
+void displayInit();
+
+// Initializes CAN communication
+void canInit();
+
+// Function to update the active regenerative braking method
+void toggleActiveRegenMethod();
+
+// Function to update the display variable that shows the motor parameters (speed, power, temperature)
+void updateMotorParams(const CAN_message_t &msg);
+
+// Function to update the display variable that shows the current battery range
+void updateBatterySOC(const CAN_message_t &msg);
+
 // Adjusts the speed request by a given adjustment value.
 void adjustSpeedRequest(int adjustment);
 
-// Updates the current speed reading.
-void updateSpeed(void);
-
-// Updates the current power reading.
-void updatePower(void);
-
-// Updates the current temperature reading.
-void updateTemp(void);
-
-// Updates the battery range estimation.
-void updateBatteryRange(void);
-
 // Activates regenerative recovery mode.
 void activateRegenRecovery(void);
-
-// Toggles between different regenerative braking methods.
-void toggleRegenMethod(void);
 
 // Updates the display with the latest information.
 void updateDisplay(void);

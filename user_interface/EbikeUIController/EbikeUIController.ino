@@ -5,24 +5,13 @@
 #include <U8g2lib.h>              // Library for handling OLED display
 #include <SPI.h>                  // Include the SPI library
 #include <Toggle.h>               // Include the Toggle library for handling button states
-
+#include <FlexCAN_T4.h>           // Include for CAN communication
 
 void setup() {
 
-  // Initialize the OLED display
-  u8g2.begin();
+  displayInit();
 
-  Serial.begin(9600);
-
-  // Display the logo during setup
-  u8g2.firstPage();
-  do {
-    // Draw logo during system startup
-    u8g2.drawBitmap(0, 0, 128/8, 64, epd_bitmap_REBIKE_Logo);
-  } while (u8g2.nextPage());
-
-  // Wait for 4 seconds to show the logo
-  delay(4000);
+  canInit();
 
   // Initialize I/O pins as inputs
   pinMode(THROTTLE_SPEED_ADJUSTMENT, INPUT);
@@ -46,13 +35,6 @@ void loop() {
 
   // Poll the state of the Regenerative Braking Method Toggle Button
   toggleRegen.poll(REGEN_METHOD_TOGGLE_BUTTON);
-
-  // Functions to read incoming signals from the motor controller and BMS to update various
-  // system parameters for UI display (speed, power, temperature, battery range)
-  updateSpeed();
-  updatePower();
-  updateTemp();
-  updateBatteryRange();
 
   // Check if the the mechanical break has been pulled to activate regenerative braking
   if (activateRegen.onPress()) {
