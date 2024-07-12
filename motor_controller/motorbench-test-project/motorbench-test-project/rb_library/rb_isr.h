@@ -44,13 +44,17 @@ RB_BOARD_UI boardUI;
 
 uint16_t TMR4_testing; //delete me
 
+// random can testing vars
 uint8_t mcpRxStat;
 uint8_t mcpReadStat;
 CAN_FRAME canFrame0;
 CAN_FRAME canFrame1;
+CAN_FRAME canFrameTx;
+bool tx_ready;
 extern uint8_t canTestArr[20];
 
-uint16_t SPI_counter;
+uint16_t readCounter;
+uint16_t writeCounter;
 uint8_t  SPI_received;
 
 /** system data, accessed directly */
@@ -92,7 +96,12 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_FixedFrequencySinePWMInit(); //for testing
             RB_BoardUIInit(&boardUI);
             
-            SPI_counter = 0;
+            // random can testing inits
+            readCounter = 0;
+            writeCounter = 0;
+            canFrameTx.id = 0x350;
+            canFrameTx.len = 8;
+            canFrameTx.data[0] = 0xF2;
             state = RBFSM_STARTUP;
             break;
             
@@ -157,12 +166,13 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
         case RBFSM_FAULTED:
             break;      
-        
     }
 
     // TODO: Do CAN servicing here. Should be able to send or receive one CAN message per iteration 
-    SPI_counter++;
-    if (SPI_counter == 2000){
+    readCounter++;
+    writeCounter++;
+
+    if (readCounter >= 2000){
         RB_MCP_ReadStat(&mcpReadStat);
         if (mcpReadStat & MCP_STAT_RX0IF){
             RB_MCP_ReadRx(0, &canFrame0, false);
@@ -171,9 +181,17 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         {
             RB_MCP_ReadRx(1, &canFrame1, false);
         }
-                   
-        SPI_counter = 0;
+        readCounter = 0;
     }
+    else if (writeCounter > 20000){
+        tx_ready = RB_MCP_IsTxReady(0);
+        if (tx_ready){
+            RB_MCP_LoadTx(0,&canFrameTx,false);
+            RB_MCP_SendOne(0);
+        }
+    writeCounter = 0;
+    }
+    
 //    if (SPI_counter == 10000){
 //        RB_MCP_ReadRx(0, &canFrame0);
 //    }

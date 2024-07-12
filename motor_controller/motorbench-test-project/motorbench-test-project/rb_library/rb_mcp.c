@@ -244,28 +244,136 @@ bool RB_MCP_RxStat(uint8_t* rxStatus){
 }
 
 bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame, bool dataOnly) {
-    
+    uint8_t cmd;
     switch (rxBufId){
         case 0:
-            spiBuf[0] = MCP_INSTR_READ_RX0;
+            cmd = MCP_INSTR_READ_RX0;
             break;
         case 1: 
-            spiBuf[0] = MCP_INSTR_READ_RX1;
+            cmd = MCP_INSTR_READ_RX1;
             break;
         default:
             return false;
     }
+    if (dataOnly){
+        cmd |= 0x02;
+    }
+    spiBuf[0] = cmd;
+    
     bool success = false;
     if (StartTransaction() && SPI1_IsTxReady()) {
-        SPI1_BufferExchange(spiBuf, 14);
-        frame->id = ((uint16_t)spiBuf[1] << 3) | ((uint16_t)(spiBuf[2] & 0b11100000) >> 5);
-        frame->len = spiBuf[5] & 0b00001111;
-        memcpy(frame->data, &spiBuf[6], 8);
+        if (dataOnly){
+            SPI1_BufferExchange(spiBuf, 9);
+            memcpy(frame->data, &spiBuf[1], 8);
+        }
+        else
+        {
+            SPI1_BufferExchange(spiBuf, 14);
+            frame->id = ((uint16_t)spiBuf[1] << 3) | ((uint16_t)(spiBuf[2] & 0b11100000) >> 5);
+            frame->len = spiBuf[5] & 0b00001111;
+            memcpy(frame->data, &spiBuf[6], 8);
+        }
+        success = true;  
+    }
+    EndTransaction();
+    return success;
+}
+bool RB_MCP_IsTxReady(uint16_t txBufId)
+{
+    uint8_t status;
+    bool ready;
+    
+    // check if the transmission request on the tx buffer is active
+    RB_MCP_ReadStat(&status);
+    switch (txBufId){
+        case 0: 
+            ready = (status & MCP_STAT_TX0REQ) != MCP_STAT_TX0REQ;
+            break;
+        case 1: 
+            ready = (status & MCP_STAT_TX1REQ) != MCP_STAT_TX1REQ;
+            break;
+        case 2: 
+            ready = (status & MCP_STAT_TX2REQ) != MCP_STAT_TX2REQ;
+            break;     
+        default: 
+            return false;
+    }
+    return ready;
+}
+
+bool RB_MCP_LoadTx(uint16_t txBufId, const CAN_FRAME* frame, bool dataOnly)
+{
+    uint8_t cmd;
+    uint8_t len;
+    switch (txBufId){
+        case 0:
+            cmd = MCP_INSTR_LOAD_TX0;
+            break;
+        case 1: 
+            cmd = MCP_INSTR_LOAD_TX1;
+            break;
+        case 2: 
+            cmd = MCP_INSTR_LOAD_TX2;
+            break;
+        default:
+            return false;
+    }   
+    if (dataOnly){
+        // Modify the command to start at the data regs instead of ID regs.
+        cmd |= 0x01;
+
+        // Fill buffer
+        spiBuf[0] = cmd;
+        memcpy(&spiBuf[1], frame->data, 8);
+        len = 9; 
+    }
+    else{
+        // Command not modified, so writing will start at ID regs.
+        // Fill buffer
+        spiBuf[0] = cmd;
+        spiBuf[1] = (uint8_t)(frame->id >> 3);
+        spiBuf[2] = (uint8_t)(spiBuf[1] & 0x07);
+        spiBuf[3] = 0;
+        spiBuf[4] = 0;
+        spiBuf[5] = frame->len & 0x0f;
+        memcpy(&spiBuf[6], frame->data, 8);
+        len = 14; 
+    }
+    
+    bool success = false;
+    if (StartTransaction() && SPI1_IsTxReady()) {
+        SPI1_BufferWrite(spiBuf, len);  
         success = true;
     }
     EndTransaction();
     return success;
 }
+
+bool RB_MCP_SendOne(uint16_t txBufId){
+    uint8_t cmd;
+    switch (txBufId){
+        case 0:
+            cmd = MCP_INSTR_RTS_TX0;
+            break;
+        case 1: 
+            cmd = MCP_INSTR_LOAD_TX1;
+            break;
+        case 2: 
+            cmd = MCP_INSTR_LOAD_TX2;
+            break;
+        default:
+            return false;
+    }
+    
+    bool success = false;
+    spiBuf[0] = cmd;
+    if (StartTransaction() && SPI1_IsTxReady()) {
+        SPI1_BufferWrite(spiBuf, 1);  
+        success = true;
+    }
+    return success;
+}
+
 
 // Static Helper Functions
 

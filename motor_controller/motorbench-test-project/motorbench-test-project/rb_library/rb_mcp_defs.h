@@ -144,7 +144,15 @@ typedef enum tagMCP_REGISTER {
 
 typedef enum tagMCP_STAT {
     MCP_STAT_RX0IF = (1 << 0),
-    MCP_STAT_RX1IF = (1 << 1)
+    MCP_STAT_RX1IF = (1 << 1),
+    MCP_STAT_TX0REQ = (1 << 2),
+    MCP_STAT_TX0IF = (1 << 3),
+    MCP_STAT_TX1REQ = (1 << 4),
+    MCP_STAT_TX1IF = (1 << 5),
+    MCP_STAT_TX2REQ = (1 << 6),
+    MCP_STAT_TX2IF = (1 << 7),
+            
+            
 } MCP_STAT;
 
 typedef enum tagMCP_ERROR_FLAG {

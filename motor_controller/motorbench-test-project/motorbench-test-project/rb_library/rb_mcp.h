@@ -84,7 +84,6 @@ bool RB_MCP_SetFilter(MCP_REGISTER filterReg, CAN_ID id);
 
 bool RB_MCP_SetMask(uint16_t rxBufId, uint32_t mask);
 
-
 /**
  * Reads the "read status" register of the MCP2515. By applying the flags in the
  * MCP_STAT enum to the returned status, we can tell which buffers have received 
@@ -105,19 +104,26 @@ bool RB_MCP_RxStat(uint8_t* rxStatus);
  */
 bool RB_MCP_ReadRx(uint16_t rxBufId, CAN_FRAME* frame, bool dataOnly);
 
+bool RB_MCP_IsTxReady(uint16_t txBufId);
+
 /**
  * Loads a CAN message into the specified tx buffer
  * @param txBufId the ID of the transmitting buffer, only 0, 1 and 2 are valid
  * @param frame the frame to transmit 
  * @return true if the message was successfully loaded, false otherwise
  */
-bool RB_MCP_LoadTx(uint16_t txBufId, const CAN_FRAME* frame);
+bool RB_MCP_LoadTx(uint16_t txBufId, const CAN_FRAME* frame, bool dataOnly);
 
 /**
- * Sends a request to the MCP2515 to send the messages in the tx buffers.
+ * Sends a request to the MCP2515 to send the message in one tx buffer.
  * @return true if the send request is successful, false otherwise
  */
-bool RB_MCP_Send();
+bool RB_MCP_SendOne(uint16_t txBufId);
 
+/**
+ * Sends a request to the MCP2515 to send the messages in all of the tx buffers.
+ * @return true if the send request is successful, false otherwise
+ */
+bool RB_MCP_SendAll();
 
 #endif	/* RB_MCP_H */
