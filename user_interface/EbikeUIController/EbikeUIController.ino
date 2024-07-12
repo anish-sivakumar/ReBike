@@ -22,12 +22,9 @@ void loop() {
 
   checkBrakeStateChange();
 
-  cjec
+  checkThrottleStateChange();
 
-
-
-
-
+  checkToggleRegenStateChange();
 
   // Update the display to show the latest values
   updateDisplay();
