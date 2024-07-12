@@ -181,9 +181,9 @@ void RB_FaultInit(RB_FAULT_DATA *state);
 
 bool RB_PhaseCurrentFault(MC_ABC_T *piabc);
 
-bool RB_BridgeTempFault(void);
+bool RB_BridgeTempFault(uint16_t temp);
 
-void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc);
+void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc, uint16_t bridgeTemp);
 
 
 

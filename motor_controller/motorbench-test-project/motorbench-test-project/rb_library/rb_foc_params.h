@@ -16,6 +16,7 @@ extern "C" {
 // Motor Parameters from vendor
 #define     RB_MOTOR_RS               0.165   // phase resistance in ohms
 #define     RB_MOTOR_KV               8.2 // motor constant in units RPM/V, assuming Line-Line RMS voltage
+#define     RB_MOTOR_LS               277 // microHenry
 #define     RB_MOTOR_POLEPAIRS        26 // 52 poles total
 #define     RB_MOTOR_HYS_LOSS         0.715 // Hysteresis Losses (N-m)
 #define     RB_MOTOR_EDDIE_LOSS       0.009 // Eddie Losses (N-m / rad/sec)
@@ -36,7 +37,7 @@ extern "C" {
 
 // Q-axis current ramp rate limiting
 #define     RB_QCURRENT_MAX          6000
-#define     RB_QRAMP_INCREMENT       Q15(0.03) // ammount iq is incremented per ISR step 0.00003
+#define     RB_QRAMP_INCREMENT       Q15(0.075) // 0.03 was good
 #define     RB_QRAMP_COUNT           3 // new iq ref is calculated every [REF_RAMP_COUNT] times    
 
 // Q-axis current controller saturation detection parameters    
@@ -45,6 +46,7 @@ extern "C" {
     
 // Safety Fault related
 #define     RB_PHASECURRENT_MAX     21000  // 21228 is 14.14peak = 10A RMS from user guide
+#define     RB_BRIDGETEMP_MAX       75
     
 
 #ifdef	__cplusplus

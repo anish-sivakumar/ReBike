@@ -103,6 +103,7 @@ bool RB_PhaseCurrentFault(MC_ABC_T *piabc)
 {
     bool tempFault = true; //assume faulted
     
+    // check phase current
     if (UTIL_Abs16(piabc->a) <= RB_PHASECURRENT_MAX) 
     {
         tempFault = false;
@@ -114,22 +115,31 @@ bool RB_PhaseCurrentFault(MC_ABC_T *piabc)
     return tempFault;
 }
 
-bool RB_BridgeTempFault(void)
+bool RB_BridgeTempFault(uint16_t temp)
 {
-    /* TO DO !!!!!*/
-    return false;
+    bool tempFault = true; //assume faulted
+    
+    // check temp
+    if (temp < RB_BRIDGETEMP_MAX)
+    {
+        tempFault = false; 
+    } else
+    {
+        tempFault = false;
+    }
+    return tempFault;
 }
 
-void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc)
+void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc, uint16_t bridgeTemp)
 {
     bool tempFault = true; //assume there is a fault and check to deny that
     
     if (RB_PhaseCurrentFault(piabc))
     {
         pstate->faultType = RBFAULT_PHASE_OVERCURRENT;
-    } else if (RB_BridgeTempFault())
+    } else if (RB_BridgeTempFault(bridgeTemp))
     {
-        /* TO DO !!!!!*/
+        
         pstate->faultType = RBFAULT_BRIDGE_OVERTEMP;
     } else
     {

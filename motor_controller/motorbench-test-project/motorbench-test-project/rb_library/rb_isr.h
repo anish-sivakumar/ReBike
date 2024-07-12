@@ -150,7 +150,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //            PMSM.idqFdb.q = RB_LPF(PMSM.idqFdb.q, prevIqOutput, Q15(0.628)); // around 1000Hz Fc
 //            prevIqOutput = PMSM.idqFdb.q;
             
-            /* Determine d & q current reference values based */
+            /* Determine d & q current reference values based */ 
             RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim);
             
             /* PI control for D-axis - sets Vd command */
@@ -213,7 +213,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             break;        
     }
     
-    RB_FaultCheck(&faultState, &PMSM.iabc);
+    RB_FaultCheck(&faultState, &PMSM.iabc, PMSM.bridgeTemp);
     if(faultState.isFault)
     {
         state = RBFSM_FAULTED;

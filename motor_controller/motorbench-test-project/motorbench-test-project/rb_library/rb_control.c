@@ -61,14 +61,15 @@ void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, RB_RATELIMIT 
     /** if pot is below mid point, target Iq = 0. 
      * pot mid point is around 1600 ADC reading
      */  
-    if (throttleCmd <= 2000)
+    if ((throttleCmd <= 2000) && (throttleCmd >= -2000))
     {
         iqRateLim->target = 0;
     } else
     {
-        // target Iq = potVal scaled from 0->-RB_QCURRENT_MAX
+        // target Iq is set to the potVal scaled from 0 to -RB_QCURRENT_MAX
+        // positive bike direction corresponds to negative Iq current
         iqRateLim->target = __builtin_mulss(throttleCmd, -RB_QCURRENT_MAX)>>15; 
-    }  
+    }
    
     // Set & limit Iq reference every RB_QRAMP_COUNT ISRs
     if (iqRateLim->rampCount < RB_QRAMP_COUNT)
