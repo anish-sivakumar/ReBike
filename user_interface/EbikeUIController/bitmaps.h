@@ -10,7 +10,6 @@
 #ifndef BITMAPS_H
 #define BITMAPS_H
 
-// #include <Arduino.h>
 
 // 'REBIKE Logo', 128x64px
 const unsigned char epd_bitmap_REBIKE_Logo [] PROGMEM = {

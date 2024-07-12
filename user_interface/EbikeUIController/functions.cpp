@@ -42,7 +42,7 @@ void canInit() {
 
 }
 
-void toggleActiveRegenMethod(void) {
+void sendThrottleRegenMSG(void) {
   msg.buf[0] = throttle & 0xFF; // throttle value in byte 0 
   msg.buf[1] = activeRegen & 0xFF; // regen mode in byte 1	
   can0.write(MB2, msg); // send message to mailbox 2 (transmit mailbox)
@@ -59,39 +59,6 @@ void updateMotorParams(const CAN_message_t &msg) {
 
 void updateBatterySOC(const CAN_message_t &msg) {
   batterySOC = (msg.buf[1] << 8) | msg.buf[0]; // data is in the first two bytes
-}
-
-void adjustSpeedRequest(int adjustment) {
-
-  // Code to send request to motor controller FW to adjust the current speed goes here
-
-  if (adjustment == 1) {
-    // Send increase speed request to motor controller
-
-    if (throttle == 100) {
-      return;
-    } else {
-      throttle += 5;
-    }
-
-  } else if (adjustment == -1) {
-    // Send decrease speed request to motor controller
-    
-    if (throttle == 0) {
-      return;
-    } else {
-      throttle -= 5;
-    }
-  
-  }
-
-}
-
-
-void activateRegenRecovery() {
-
-  // Code to send request via CAN to motor controller FW to activate regerative braking and recover energy for battery
-
 }
 
 // Function to update the display with the latest values

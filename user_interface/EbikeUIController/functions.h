@@ -17,20 +17,14 @@ void displayInit();
 // Initializes CAN communication
 void canInit();
 
-// Function to update the active regenerative braking method
-void toggleActiveRegenMethod();
+// Function to  Sends the current throttle value and active regeneration mode via CAN to motor controller
+void sendThrottleRegenMSG();
 
 // Function to update the display variable that shows the motor parameters (speed, power, temperature)
 void updateMotorParams(const CAN_message_t &msg);
 
 // Function to update the display variable that shows the current battery range
 void updateBatterySOC(const CAN_message_t &msg);
-
-// Adjusts the speed request by a given adjustment value.
-void adjustSpeedRequest(int adjustment);
-
-// Activates regenerative recovery mode.
-void activateRegenRecovery(void);
 
 // Updates the display with the latest information.
 void updateDisplay(void);
