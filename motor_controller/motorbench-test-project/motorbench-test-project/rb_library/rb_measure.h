@@ -45,25 +45,25 @@ extern "C" {
 #define VDC_SCALING_FACTOR              1024      // Q10(  1.00000) =   +1.00000             =   +1.00000             + 0.0000%
 #define VDC_SCALING_FACTOR_Q              10
   
-    
-/* Bridge Temp parameters  
- * 
- * 
- * 
- */
-    
-/* temperature gain */
-#define RB_BRIDGE_TEMPERATURE_GAIN        33000      // Q16(  0.50354) = +503.54004 m           = +503.54000 m           + 0.0000%
-#define RB_BRIDGE_TEMPERATURE_OFFSET            5000 //            temperature offset
-/* Pole of bridge temperature low-pass filter */
-#define RB_BRIDGE_TEMPERATURE_FILTER_GAIN        328      // Q16(  0.00500) = +100.09766 rad/s       = +100.00000 rad/s       + 0.0977%
-/* Maximum temperature slew rate */
-#define RB_BRIDGE_TEMPERATURE_SLEW_RATE       1311      // Q15(  0.04001) =   +4.00085 C/s         =   +4.00000 C/s         + 0.0214%
-/* Pole of voltage loop low-pass filter */
-#define RB_FILTER_COEFF_VQ                 1638      // Q16(  0.02499) = +499.87793 rad/s       = +500.00000 rad/s       - 0.0244%
-      
-    
-    
+/** Different possible faults*/
+typedef enum
+{
+    RBFAULT_NOFAULT = 0,
+    RBFAULT_BRIDGE_OVERTEMP,
+    RBFAULT_MOTOR_OVERTEMP,   
+    RBFAULT_PHASE_OVERCURRENT,
+    RBFAULT_DCBUS_OVERCURRENT,
+    RBFAULT_DCBUS_OVERVOLTAGE,
+    RBFAULT_ADCISR_OVERTIME
+} RB_FAULTS;
+
+
+/** structure to store fault data */
+typedef struct
+{
+    bool isFault;
+    RB_FAULTS faultType;
+} RB_FAULT_DATA;
     
 /**
  * Calibration/Compensation parameters for ADC current measurements.
@@ -125,7 +125,7 @@ void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib);
  * @param piabc
  * @param pvDC
  */
-void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC);
+void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC,  MC_ABC_T *pvabc);
 
 
 /**
@@ -139,20 +139,23 @@ inline static int16_t RB_ADCCompensate(int16_t measurement, int16_t offset, int1
 {
     int16_t temp;
     
-    // inverted ADC and offset
-    {
-        temp = offset - measurement;
-    }
+    /* inverted ADC and offset
+     * -(measurement - offset) = offset - measurement 
+     */
     
-    // scale by gain
-    temp = (__builtin_mulss(temp, gain)) >> 15;
+    temp = offset - measurement;
+    
+    /* Deciding not to scale by motorBench gain because it is confusing
+     * Iabc will range from [-32768, +32768]  
+     * Max value corresponds to 21.83 Apeak */
+    //temp = (__builtin_mulss(temp, gain)) >> 15;
     
     return temp;
 }
 
 /**
  * 16 bit implementation of low pass filter
- * y[n] += (x[n]-y[n-1])*coeff
+ * y[n] = y[n-1] + (x[n]-y[n-1])*coeff
  *
  * @param pfilterx16 LPF state
  * @param input 1.15 fixed point
@@ -165,13 +168,23 @@ inline static int16_t RB_LPF(int16_t input, int16_t prevOutput, int16_t coeff)
 {
     int32_t stateVar;
     
-    stateVar = (prevOutput << 15); // load 16-bit int into 32-bit int
+    stateVar = (int32_t)(prevOutput); //(prevOutput << 15); // load 16-bit int into 32-bit int
     stateVar += __builtin_mulss(input, coeff);
     stateVar -= __builtin_mulss(prevOutput, coeff);
     
     return (int16_t)(stateVar >> 15); // remove extra 2^15 factor
     
 }
+
+void RB_FaultInit(RB_FAULT_DATA *state);
+
+bool RB_PhaseCurrentFault(MC_ABC_T *piabc);
+
+bool RB_BridgeTempFault(void);
+
+void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc);
+
+
 
 #ifdef	__cplusplus
 }

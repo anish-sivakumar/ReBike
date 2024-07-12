@@ -9,6 +9,7 @@
 #define	RB_PWM_H
 
 #include "board_service_types.h"
+#include "library/mc-library/motor_control.h"
 
 #ifdef	__cplusplus
 extern "C" {
@@ -79,18 +80,51 @@ typedef struct tagRB_SINE_PWM
  * Functions
  */
 
+/**
+ * Initialized PWM module
+ */
 void RB_PWMInit(void);
 
 
+/**
+ * Initializes capacitor bootstrap object
+ * @param pBootstrap
+ */
 void RB_PWMCapBootstrapInit(RB_BOOTSTRAP *pBootstrap);
+
+
 /**
  * Function to perform capacitor bootstrap charging during motor starting
  */
 void RB_PWMCapBootstrapISRStep(RB_BOOTSTRAP *pBootstrap);
 
+
+/**
+ * Initializes Sine LUT indices for SinePWM
+ */
 void RB_FixedFrequencySinePWMInit (void);
 
-void RB_FixedFrequencySinePWM(uint16_t freqDivider);
+
+/**
+ * Updates Duties based on Sine LUT
+ * @param freqDivider
+ */
+void RB_FixedFrequencySinePWM(int16_t potVal);
+
+/**
+ * Clip SVPWM Duties to min and max
+ * @param pPwmDutycycle
+ * @param min
+ * @param max
+ */
+void RB_PWMDutyCycleAdjust(MC_DUTYCYCLEOUT_T *pPwmDutycycle, uint16_t min,uint16_t max);
+
+/**
+ * Sets duty cycle values to PWM registers
+ * @param pPwmDutycycle
+ */
+void RB_PWMDutyCycleSet(MC_DUTYCYCLEOUT_T *pPwmDutycycle);
+
 
 
 

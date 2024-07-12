@@ -156,6 +156,7 @@
           <itemPath>mcc_generated_files/timer/timer_interface.h</itemPath>
           <itemPath>mcc_generated_files/timer/sccp1.h</itemPath>
           <itemPath>mcc_generated_files/timer/sccp4.h</itemPath>
+          <itemPath>mcc_generated_files/timer/sccp5.h</itemPath>
           <itemPath>mcc_generated_files/timer/delay.h</itemPath>
         </logicalFolder>
         <logicalFolder name="uart" displayName="uart" projectFiles="true">
@@ -170,6 +171,7 @@
       <itemPath>rb_library/rb_isr.h</itemPath>
       <itemPath>rb_library/rb_pwm.h</itemPath>
       <itemPath>rb_library/rb_board_ui.h</itemPath>
+      <itemPath>rb_library/rb_communication.h</itemPath>
       <itemPath>rb_library/rb_mcp.h</itemPath>
       <itemPath>rb_library/rb_mcp_defs.h</itemPath>
       <itemPath>rb_library/rb_can_defs.h</itemPath>
@@ -284,6 +286,7 @@
             <itemPath>mcc_generated_files/timer/src/sccp1.c</itemPath>
             <itemPath>mcc_generated_files/timer/src/tmr1.c</itemPath>
             <itemPath>mcc_generated_files/timer/src/sccp4.c</itemPath>
+            <itemPath>mcc_generated_files/timer/src/sccp5.c</itemPath>
             <itemPath>mcc_generated_files/timer/src/delay.c</itemPath>
           </logicalFolder>
         </logicalFolder>
@@ -300,6 +303,7 @@
       <itemPath>rb_library/rb_measure.c</itemPath>
       <itemPath>rb_library/rb_pwm.c</itemPath>
       <itemPath>rb_library/rb_board_ui.c</itemPath>
+      <itemPath>rb_library/rb_communication.c</itemPath>
       <itemPath>rb_library/rb_mcp.c</itemPath>
     </logicalFolder>
   </logicalFolder>

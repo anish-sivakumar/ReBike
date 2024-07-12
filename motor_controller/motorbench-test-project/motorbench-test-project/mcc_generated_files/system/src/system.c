@@ -12,7 +12,7 @@
  * @skipline  Device : dsPIC33CK256MP508
 */
 /*
-© [2024] Microchip Technology Inc. and its subsidiaries.
+ï¿½ [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -46,6 +46,7 @@
 #include "../../qei/qei1.h"
 #include "../../timer/sccp1.h"
 #include "../../timer/sccp4.h"
+#include "../../timer/sccp5.h"
 #include "../../spi_host/spi1.h"
 #include "../../timer/tmr1.h"
 #include "../../uart/uart1.h"
@@ -66,6 +67,7 @@ void SYSTEM_Initialize(void)
     QEI1_Initialize();
     SCCP1_Timer_Initialize();
     SCCP4_Timer_Initialize();
+    SCCP5_Timer_Initialize();
     SPI1_Initialize();
     TMR1_Initialize();
     UART1_Initialize();

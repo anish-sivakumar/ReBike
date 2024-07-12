@@ -1,5 +1,5 @@
 /* 
- * File:   mc_hall.h
+ * File:   main
  * Author: Chris Hyggen, Anish Sivakumar
  *
  */
@@ -15,6 +15,7 @@
 #include "rb_library/rb_control.h"
 #include "rb_library/rb_pwm.h"
 #include "rb_library/rb_mcp.h"
+
 
 
 void RB_MainInit(void);
