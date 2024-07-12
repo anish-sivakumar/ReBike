@@ -55,21 +55,15 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 
 void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, RB_RATELIMIT *iqRateLim)
 {    
-    // d-axis current controlled at zero
-    pidqRef->d = 0;
-    
-    /** if pot is below mid point, target Iq = 0. 
-     * pot mid point is around 1600 ADC reading
-     */  
-    if ((throttleCmd <= 2000) && (throttleCmd >= -2000))
+    // d-axis current controlled at zero for positive throttle
+    if (throttleCmd > 0)
     {
-        iqRateLim->target = 0;
-    } else
-    {
-        // target Iq is set to the potVal scaled from 0 to -RB_QCURRENT_MAX
-        // positive bike direction corresponds to negative Iq current
-        iqRateLim->target = __builtin_mulss(throttleCmd, -RB_QCURRENT_MAX)>>15; 
+        pidqRef->d = 0;
     }
+    
+    // target Iq is set to the potVal scaled from 0 to -RB_QCURRENT_MAX
+    // positive bike direction corresponds to negative Iq current
+    iqRateLim->target = __builtin_mulss(throttleCmd, -RB_QCURRENT_MAX)>>15; 
    
     // Set & limit Iq reference every RB_QRAMP_COUNT ISRs
     if (iqRateLim->rampCount < RB_QRAMP_COUNT)

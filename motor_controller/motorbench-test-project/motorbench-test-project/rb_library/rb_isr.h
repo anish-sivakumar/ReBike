@@ -118,7 +118,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                     &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
             RB_HALL_Estimate(&hall);
        
-            if((throttleCmd > 2000) && (hall.minSpeedReached))
+            if((throttleCmd > 0) && (hall.minSpeedReached))
             {   
                 state = RBFSM_RUN_FOC;
                 stateChanged = true;
@@ -190,13 +190,14 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-            if (!hall.minSpeedReached) // b/c of either throttle=0 or other reasons
+            // if stopped and ThrottleCmd is positive or zero, move to startup state
+            if (!hall.minSpeedReached) //&& (throttleCmd >= 0)
             {   
                 state = RBFSM_MANUAL_STARTUP;
                 stateChanged = true;
             }
             
-            break;
+            break;           
             
         case RBFSM_FAULTED:
             
@@ -226,7 +227,12 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     /* Low-priority tasks at the end */
     X2CScope_Update();
     RB_BoardUIService(&boardUI); // update the button states and the POT value
-    throttleCmd = boardUI.potState; // change throttleCmd to be from CAN and scale to Q15
+    
+    /* change throttleCmd to be from CAN and scale to Q15
+     *  mid point of the pot is non zero, around 2000
+     */
+    throttleCmd = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
+            : boardUI.potState;
     
     /* Lastly, record timer period to measure ADC ISR execution time */
     SCCP5_Timer_Stop();
