@@ -1582,11 +1582,11 @@ inline static void HAL_ADC_SignalsInit(void)
     };
 
     trig_sources[10] = NO_TRIGGER;  // MCAF_ADC_PHASEC_CURRENT
-    trig_sources[22] = NO_TRIGGER;  // MCAF_ADC_PHASEC_VOLTAGE
-    trig_sources[17] = NO_TRIGGER;  // MCAF_ADC_PHASEA_VOLTAGE
-    trig_sources[23] = NO_TRIGGER;  // MCAF_ADC_PHASEB_VOLTAGE
-    trig_sources[ 4] = NO_TRIGGER;  // MCAF_ADC_DCLINK_CURRENT
-    trig_sources[12] = NO_TRIGGER;  // MCAF_ADC_BRIDGE_TEMPERATURE
+    trig_sources[22] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEC_VOLTAGE
+    trig_sources[17] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEA_VOLTAGE
+    trig_sources[23] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEB_VOLTAGE
+    trig_sources[ 4] = PWM1_TRIGGER1;  // MCAF_ADC_DCLINK_CURRENT
+    trig_sources[12] = PWM1_TRIGGER1;  // MCAF_ADC_BRIDGE_TEMPERATURE
     trig_sources[ 0] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEA_CURRENT
     trig_sources[ 1] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEB_CURRENT
     trig_sources[15] = PWM1_TRIGGER1;  // MCAF_ADC_DCLINK_VOLTAGE

@@ -114,7 +114,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 stateChanged = false;
             }
             
-            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, &PMSM.vabc);
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, 
+                    &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
             RB_HALL_Estimate(&hall);
        
             if((throttleCmd > 2000) && (hall.minSpeedReached))
@@ -138,7 +139,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 stateChanged = false;
             }
 
-            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, &PMSM.vabc);
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, 
+                    &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
            
             /* Calculate Id,Iq from Sin(theta), Cos(theta), Ia, Ib */
             MC_TransformClarke_Assembly(&PMSM.iabc,&PMSM.ialphabeta);
@@ -151,7 +153,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Determine d & q current reference values based */
             RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim);
             
-            /* PI control for D-axis - sets Vd command*/
+            /* PI control for D-axis - sets Vd command */
             MC_ControllerPIUpdate_Assembly( PMSM.idqRef.d, 
                                             PMSM.idqFdb.d, 
                                             &PMSM.idCtrl, 
@@ -172,10 +174,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                                            &PMSM.iqCtrl,
                                            &PMSM.vdqCmd.q);
             
-            /* estimate electrical angle into hall.theta */
+
+            /* Estimate electrical angle into hall.theta */
             RB_HALL_Estimate(&hall);
             
-            /* forward path calculations */
+            /* Forward path calculations */
             MC_CalculateSineCosine_Assembly_Ram(hall.theta,&PMSM.sincosTheta);
             MC_TransformParkInverse_Assembly(&PMSM.vdqCmd,&PMSM.sincosTheta,&PMSM.valphabetaCmd);
             MC_TransformClarkeInverseSwappedInput_Assembly(&PMSM.valphabetaCmd,&PMSM.vabcCmd);

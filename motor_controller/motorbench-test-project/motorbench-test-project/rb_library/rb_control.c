@@ -12,7 +12,7 @@ void RB_InitControlParameters(RB_MOTOR_DATA *pPMSM)
 {
     /* ============= Motor Parameters =============== */
     pPMSM->motorParams.rs = RB_MOTOR_RS;
-    pPMSM->motorParams.ke = RB_MOTOR_KE;
+    pPMSM->motorParams.ke = RB_MOTOR_KV;
     
     /* ============= PI D Term =============== */
     pPMSM->idCtrl.kp = RB_DCURRENT_KP;
@@ -58,8 +58,9 @@ void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, RB_RATELIMIT 
     // d-axis current controlled at zero
     pidqRef->d = 0;
     
-    // if pot is below mid point, target Iq = 0. 
-    // pot mid point is around 1600 ADC reading
+    /** if pot is below mid point, target Iq = 0. 
+     * pot mid point is around 1600 ADC reading
+     */  
     if (throttleCmd <= 2000)
     {
         iqRateLim->target = 0;
@@ -98,4 +99,29 @@ void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, RB_RATELIMIT 
         iqRateLim->rampCount = 0;
         
     }
+}
+
+
+bool RB_PISaturationDetect(int16_t *piqRef, int16_t iqFdb, int16_t vqCmd, 
+        int16_t speed)
+{
+    bool isSaturated = false;
+    
+    /* Check if the voltage command is at the limit 
+     * and if the current is not reaching the reference value
+     */ 
+//    if(vqCmd <= RB_VOLTAGE_CMD_MIN && iqFdb > *piqRef)
+//    {
+//
+//        *piqRef = -1400; // adjust reference
+//        isSaturated = true;
+//    }
+//    
+//    if(vqCmd >= RB_VOLTAGE_CMD_MAX && iqFdb < *piqRef)
+//    {
+//        *piqRef = 1400; // adjust reference
+//        isSaturated = true;
+//    }
+    
+    return isSaturated;
 }

@@ -44,8 +44,15 @@ typedef struct
      int16_t    rs;                     /** Stator resistance */
      int16_t    ke;                     /** Back-EMF constant */
  } RB_MOTOR_PARAMS_T;
-     
-
+   
+ 
+ typedef struct
+ {
+    bool    saturated;
+    //testing
+ } RB_CURRENT_SAT;
+ 
+ 
 /**
  * Motor state data
  */
@@ -68,12 +75,8 @@ typedef struct tagPMSM
     MC_PISTATE_T                idCtrl;  /** controller state for the D axis */
     MC_PISTATE_T                iqCtrl;  /** controller state for the Q axis */
     RB_RATELIMIT                iqRateLim; /** rate limits Iq reference value */
+    RB_CURRENT_SAT              iqSat; /* Q-axis current saturation detection */
     
-    /** Output limit for each axis of the current loops, normalized to DC link voltage,
-     *  line-to-neutral, so that 0.57735 = 1/sqrt(3) = full line-to-line voltage */
-    MC_DQ_T                     idqCtrlOutLimit; 
-    int16_t                     dynLimit;  /** dynamic current limit */
-    int16_t                     iqCmdLimit;  /** maximum output current amplitude, q-axis */
     
     /* Current loop forward path */
     MC_DQ_T                     vdqCmd;     /** desired dq-frame voltage, output of current loop */
@@ -99,6 +102,10 @@ typedef struct tagPMSM
     
     /** measured DC link current*/
     int16_t iDC;
+    
+    /** measured MOSFET bridge temp - 3V3 ref and 10mV/10degC linear slope
+     (0.15259*3.3) / 10e-3 = 50degC*/
+    uint16_t bridgeTemp;
     
 } RB_MOTOR_DATA;
 
@@ -137,6 +144,17 @@ inline static void RB_InitControlLoopState(RB_MOTOR_DATA *pPMSM)
  * @param pidqRef
  */
 void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, RB_RATELIMIT *rateLim);
+
+
+/**
+ * Detects PI Controller saturation and adjusts reference value
+ * @param piqRef
+ * @param iqFdb
+ * @param vqCmd
+ */
+bool RB_PISaturationDetect(int16_t *piqRef, int16_t iqFdb, int16_t vqCmd, int16_t speed);
+
+
 
 #ifdef	__cplusplus
 }

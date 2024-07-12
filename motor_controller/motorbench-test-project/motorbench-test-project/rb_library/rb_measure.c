@@ -59,7 +59,8 @@ void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib)
 }
 
 
-void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC, MC_ABC_T *pvabc)
+void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, 
+        int16_t *pvDC, int16_t *piDC, MC_ABC_T *pvabc, uint16_t *pbridgeTemp)
 {
     //1. read phase A and B current into current compensation structure
     /* ADC buffer is unsigned and inverted (higher value means negative current)
@@ -67,25 +68,27 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *p
      * The invert will be handled discretely when offset is applied.
      */ 
     pcalib->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
-    pcalib->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT); 
+    pcalib->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT);
     
     //2. apply current offset compensation
-    piabc->a = RB_ADCCompensate(pcalib->rawIa, pcalib->offsetIa, pcalib->qKaa);
-    piabc->b = RB_ADCCompensate(pcalib->rawIb, pcalib->offsetIb, pcalib->qKbb);
+    piabc->a = RB_ADCCompensate(pcalib->rawIa, pcalib->offsetIa);
+    piabc->b = RB_ADCCompensate(pcalib->rawIb, pcalib->offsetIb);
+    *piDC =  RB_ADCCompensate((MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_CURRENT)), 0);
     
     //3. read DC link voltage
     uint16_t unsignedVdc = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_VOLTAGE));
-    *pvDC = unsignedVdc >> 1; 
+    *pvDC = unsignedVdc >> 1;  // seems like we need to divider by two for the unsigned values    
     
-    //4. read bridge temp - buffer is also empty
+    //4. read bridge temp - apply offset and gain to get Celsius
+    int16_t rawTemp = (int16_t)((MCC_ADC_ConversionResultGet(MCAF_ADC_BRIDGE_TEMPERATURE))>>1);
+    *pbridgeTemp = (int16_t)(__builtin_mulss((rawTemp - 4964), Q15(0.010071108)) >> 15); //3.3V/(32767*0.01V)
     
     
-    //5. read phase Voltages 
-    /* Buffers are reading zero at the moment
-    * pvabc->a = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_VOLTAGE);
-    * pvabc->b = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_VOLTAGE);
-    * pvabc->c = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEC_VOLTAGE);
-    */
+    //5. read phase Voltages
+    pvabc->a = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_VOLTAGE);
+    pvabc->b = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_VOLTAGE);
+    pvabc->c = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEC_VOLTAGE);
+    
 }
 
 

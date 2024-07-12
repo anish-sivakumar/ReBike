@@ -125,7 +125,8 @@ void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib);
  * @param piabc
  * @param pvDC
  */
-void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *pvDC,  MC_ABC_T *pvabc);
+void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, 
+        int16_t *pvDC, int16_t *piDC, MC_ABC_T *pvabc, uint16_t *pbridgeTemp);
 
 
 /**
@@ -135,7 +136,7 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc, int16_t *p
  * @param gain
  * @return 
  */
-inline static int16_t RB_ADCCompensate(int16_t measurement, int16_t offset, int16_t gain)
+inline static int16_t RB_ADCCompensate(int16_t measurement, int16_t offset)
 {
     int16_t temp;
     
