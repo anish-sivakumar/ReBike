@@ -49,12 +49,8 @@ uint16_t RB_MCP_Init(void) {
             );
 
     // TODO: finish configuring message filter settings here
-
-    errors += !RB_MCP_SetFilter(0, CAN_ID_BMS_SOC);
+    errors += !RB_MCP_SetFilter(0, CAN_ID_UIC);
     errors += !RB_MCP_SetMask(0, MCP_RX_MASK_STD);
-
-    errors += !RB_MCP_SetFilter(1, CAN_ID_UIC);
-    errors += !RB_MCP_SetMask(1, MCP_RX_MASK_STD);
 
     // set CAN bitrate to 500kbps
     errors += !RB_MCP_SetReg(MCP_REG_CNF1, MCP_20MHz_500kBPS_CFG1);
