@@ -114,10 +114,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 stateChanged = false;
             }
             
-            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, &PMSM.vabc);
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, 
+                    &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
             RB_HALL_Estimate(&hall);
        
-            if((throttleCmd > 2000) && (hall.minSpeedReached))
+            if((throttleCmd != 0) && (hall.minSpeedReached))
             {   
                 state = RBFSM_RUN_FOC;
                 stateChanged = true;
@@ -138,7 +139,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 stateChanged = false;
             }
 
-            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, &PMSM.vabc);
+            RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, 
+                    &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
            
             /* Calculate Id,Iq from Sin(theta), Cos(theta), Ia, Ib */
             MC_TransformClarke_Assembly(&PMSM.iabc,&PMSM.ialphabeta);
@@ -148,10 +150,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //            PMSM.idqFdb.q = RB_LPF(PMSM.idqFdb.q, prevIqOutput, Q15(0.628)); // around 1000Hz Fc
 //            prevIqOutput = PMSM.idqFdb.q;
             
-            /* Determine d & q current reference values based */
-            RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim);
+            /* Determine d & q current reference values based */ 
+            RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim, 
+                    !hall.minSpeedReached);
             
-            /* PI control for D-axis - sets Vd command*/
+            /* PI control for D-axis - sets Vd command */
             MC_ControllerPIUpdate_Assembly( PMSM.idqRef.d, 
                                             PMSM.idqFdb.d, 
                                             &PMSM.idCtrl, 
@@ -172,10 +175,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                                            &PMSM.iqCtrl,
                                            &PMSM.vdqCmd.q);
             
-            /* estimate electrical angle into hall.theta */
+
+            /* Estimate electrical angle into hall.theta */
             RB_HALL_Estimate(&hall);
             
-            /* forward path calculations */
+            /* Forward path calculations */
             MC_CalculateSineCosine_Assembly_Ram(hall.theta,&PMSM.sincosTheta);
             MC_TransformParkInverse_Assembly(&PMSM.vdqCmd,&PMSM.sincosTheta,&PMSM.valphabetaCmd);
             MC_TransformClarkeInverseSwappedInput_Assembly(&PMSM.valphabetaCmd,&PMSM.vabcCmd);
@@ -187,13 +191,14 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-            if (!hall.minSpeedReached) // b/c of either throttle=0 or other reasons
+            // TODO: if stopped and ThrottleCmd is positive or zero, move to startup state
+            if (!hall.minSpeedReached)
             {   
                 state = RBFSM_MANUAL_STARTUP;
                 stateChanged = true;
             }
             
-            break;
+            break;           
             
         case RBFSM_FAULTED:
             
@@ -210,7 +215,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             break;        
     }
     
-    RB_FaultCheck(&faultState, &PMSM.iabc);
+    RB_FaultCheck(&faultState, &PMSM.iabc, PMSM.bridgeTemp);
     if(faultState.isFault)
     {
         state = RBFSM_FAULTED;
@@ -223,7 +228,12 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     /* Low-priority tasks at the end */
     X2CScope_Update();
     RB_BoardUIService(&boardUI); // update the button states and the POT value
-    throttleCmd = boardUI.potState; // change throttleCmd to be from CAN and scale to Q15
+    
+    /* change throttleCmd to be from CAN and scale to Q15
+     *  mid point of the pot is non zero, around 2000
+     */
+    throttleCmd = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
+            : boardUI.potState;
     
     /* Lastly, record timer period to measure ADC ISR execution time */
     SCCP5_Timer_Stop();
