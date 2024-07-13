@@ -6,10 +6,8 @@
  * various icons and symbols on the OLED display.
  */
 
-
 #ifndef BITMAPS_H
 #define BITMAPS_H
-
 
 // 'REBIKE Logo', 128x64px
 const unsigned char epd_bitmap_REBIKE_Logo [] PROGMEM = {

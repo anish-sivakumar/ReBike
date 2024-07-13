@@ -6,10 +6,8 @@
  * power updates, temperature monitoring, battery range updates, and display updates.
  */
 
-
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
-
 
 // Initializes the OLED display during system startup
 void displayInit();
@@ -17,16 +15,19 @@ void displayInit();
 // Initializes CAN communication
 void canInit();
 
-// Function to  Sends the current throttle value and active regeneration mode via CAN to motor controller
-void sendThrottleRegenMSG();
+// Initializes pin modes for the inputs with internal pull-up resistors
+void pinModesInit();
 
-// Function to update the display variable that shows the motor parameters (speed, power, temperature)
-void updateMotorParams(const CAN_message_t &msg);
+// Initialize Timer to trigger ISR at 100 Hz (every 10 milliseconds)
+void timerISRinit();
 
-// Function to update the display variable that shows the current battery range
-void updateBatterySOC(const CAN_message_t &msg);
+// Sends CAN message containing the current state of throttle, regenerative braking method, and activated regenerative braking status. 
+void sendCANMSG();
 
-// Updates the display with the latest information.
-void updateDisplay(void);
+// Update display variables that show the motor parameters (speed, power, temperature, battery percentage)
+void updateSystemParams(const CAN_message_t &msg);
+
+// Updates the display with the latest system information
+void updateDisplay();
 
 #endif // FUNCTIONS_H
