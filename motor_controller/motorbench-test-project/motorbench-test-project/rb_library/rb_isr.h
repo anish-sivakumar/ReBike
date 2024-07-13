@@ -118,7 +118,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                     &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
             RB_HALL_Estimate(&hall);
        
-            if((throttleCmd > 0) && (hall.minSpeedReached))
+            if((throttleCmd != 0) && (hall.minSpeedReached))
             {   
                 state = RBFSM_RUN_FOC;
                 stateChanged = true;
@@ -151,7 +151,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //            prevIqOutput = PMSM.idqFdb.q;
             
             /* Determine d & q current reference values based */ 
-            RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim);
+            RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim, 
+                    !hall.minSpeedReached);
             
             /* PI control for D-axis - sets Vd command */
             MC_ControllerPIUpdate_Assembly( PMSM.idqRef.d, 
@@ -190,8 +191,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-            // if stopped and ThrottleCmd is positive or zero, move to startup state
-            if (!hall.minSpeedReached) //&& (throttleCmd >= 0)
+            // Do Later: if stopped and ThrottleCmd is positive or zero, move to startup state
+            if (!hall.minSpeedReached)
             {   
                 state = RBFSM_MANUAL_STARTUP;
                 stateChanged = true;

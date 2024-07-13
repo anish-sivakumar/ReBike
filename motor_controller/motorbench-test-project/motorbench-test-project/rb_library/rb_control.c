@@ -53,18 +53,29 @@ bool RB_FocInit(RB_MOTOR_DATA *pPMSM)
 }
 
 
-void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, RB_RATELIMIT *iqRateLim)
+void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, 
+        RB_RATELIMIT *iqRateLim, bool stopped)
 {    
-    // d-axis current controlled at zero for positive throttle
-    if (throttleCmd > 0)
-    {
-        pidqRef->d = 0;
-    }
-    
-    // target Iq is set to the potVal scaled from 0 to -RB_QCURRENT_MAX
-    // positive bike direction corresponds to negative Iq current
-    iqRateLim->target = __builtin_mulss(throttleCmd, -RB_QCURRENT_MAX)>>15; 
+    /* D-axis Current Reference for controlling Flux
+     *  - controlled at zero for positive throttle
+     *  - Do later: if stopped and still braking, set Id nonzero (negative?)
+     */
    
+    // regular operation: motoring and regeneration
+    pidqRef->d = 0;
+    
+
+     
+    /* Q-axis Current Reference for controlling Torque
+     * - target Iq is set to the potVal scaled from 0 to -RB_QCURRENT_MAX
+     *      because positive bike direction corresponds to negative Iq current
+     * - reference is rate limited by RB_QRAMP_INCREMENT
+     */
+    
+    // regular operation: motoring and regeneration
+    iqRateLim->target = __builtin_mulss(throttleCmd, -RB_QCURRENT_MAX)>>15; 
+    
+    
     // Set & limit Iq reference every RB_QRAMP_COUNT ISRs
     if (iqRateLim->rampCount < RB_QRAMP_COUNT)
     {

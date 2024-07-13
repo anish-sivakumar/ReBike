@@ -143,7 +143,8 @@ inline static void RB_InitControlLoopState(RB_MOTOR_DATA *pPMSM)
  * @param potVal
  * @param pidqRef
  */
-void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, RB_RATELIMIT *rateLim);
+void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef, 
+        RB_RATELIMIT *rateLim, bool stopped);
 
 
 /**
