@@ -110,7 +110,7 @@ bool RB_PhaseCurrentFault(MC_ABC_T *piabc)
     bool tempFault = true; //assume faulted
     
     // check phase currents
-    if ((UTIL_Abs16(piabc->a) <= RB_PHASECURRENT_MAX) && (UTIL_Abs16(piabc->b) <= RB_PHASECURRENT_MAX))
+    if ((UTIL_Abs16(piabc->a) <= RB_PHASECURRENT_MAX) || (UTIL_Abs16(piabc->b) <= RB_PHASECURRENT_MAX))
     {
         tempFault = false;
     } 
