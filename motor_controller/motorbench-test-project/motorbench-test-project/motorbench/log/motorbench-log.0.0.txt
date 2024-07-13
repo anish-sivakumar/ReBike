@@ -6817,3 +6817,4 @@
   <thread>734</thread>
   <message>interface com.microchip.mcc.core.moduleViewer.IMenuItems was succesfully deregistered.</message>
 </record>
+</log>

@@ -191,7 +191,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-            // Do Later: if stopped and ThrottleCmd is positive or zero, move to startup state
+            // TODO: if stopped and ThrottleCmd is positive or zero, move to startup state
             if (!hall.minSpeedReached)
             {   
                 state = RBFSM_MANUAL_STARTUP;

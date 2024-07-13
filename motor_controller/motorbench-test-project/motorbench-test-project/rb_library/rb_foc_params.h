@@ -46,7 +46,7 @@ extern "C" {
     
 // Safety Fault related
 #define     RB_PHASECURRENT_MAX     21000  // 21228 is 14.14peak = 10A RMS from user guide
-#define     RB_BRIDGETEMP_MAX       75
+#define     RB_BRIDGETEMP_MAX       75 // MOSFET data sheet says 150C max
     
 
 #ifdef	__cplusplus
