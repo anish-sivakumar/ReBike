@@ -58,7 +58,6 @@ typedef struct
  */
 typedef struct tagPMSM
 {
-    
     RB_MOTOR_PARAMS_T           motorParams; /** Kv and Rs*/  
     
     /* Current loop command */
@@ -66,7 +65,7 @@ typedef struct tagPMSM
     MC_DQ_T                     idqRef;     /** Input command for the current loops */
     
     /* Current feedback path */
-    MC_ABC_T                    iabc;       /** phase current measurements */
+    MC_ABC_T                    iabc;       /** phase current measurements - 2^15 = 21.83A */
     MC_ALPHABETA_T              ialphabeta; /** stationary (alphabeta) frame current measurements */
     int16_t                     i0;         /** zero-sequence current = (Ia + Ib + Ic)/3 */
     MC_DQ_T                     idqFdb;        /** rotating (dq) frame current measurements */
@@ -77,17 +76,12 @@ typedef struct tagPMSM
     RB_RATELIMIT                iqRateLim; /** rate limits Iq reference value */
     RB_CURRENT_SAT              iqSat; /* Q-axis current saturation detection */
     
-    
     /* Current loop forward path */
     MC_DQ_T                     vdqCmd;     /** desired dq-frame voltage, output of current loop */
     MC_ALPHABETA_T              valphabetaCmd; /** desired alphabeta-frame voltage */
     MC_ABC_T                    vabcCmd;       /** desired phase voltage */
     MC_DUTYCYCLEOUT_T           pwmDutyCycle;   /** PWM count */
     MC_SINCOS_T                 sincosTheta;     /** sine and cosine of electrical angle */
-    
-    /** Safety Related */
-    //MCAF_BRIDGE_TEMPERATURE bridgeTemperature;  /** bridge temperature */
-    //MCAF_FAULT_DETECT_T faultDetect;     /** fault detect state */
   
     /** current calibration parameters */
     RB_MEASURE_CURRENT_T currentCalib;
@@ -104,7 +98,7 @@ typedef struct tagPMSM
     int16_t iDC;
     
     /** measured MOSFET bridge temp - 3V3 ref and 10mV/10degC linear slope
-     (0.15259*3.3) / 10e-3 = 50degC*/
+     (0.15259*3.3V) / 10e-3V/C = 50degC*/
     uint16_t bridgeTemp;
     
 } RB_MOTOR_DATA;
