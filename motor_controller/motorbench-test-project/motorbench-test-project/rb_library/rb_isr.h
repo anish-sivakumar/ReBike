@@ -28,6 +28,7 @@ extern "C" {
 
 #include "spi_host/spi1.h"
 #include "rb_mcp.h"
+#include "rb_can.h"
  
 typedef enum 
 {   
@@ -47,7 +48,7 @@ bool stateChanged = false;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
-int16_t throttleCmd = 0;
+int16_t throttleCmd_q15 = 0;
 uint16_t ADCISRExecutionTime; // monitor this value as code increases
 
 // random can testing vars
@@ -137,7 +138,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, &PMSM.vabc);
             RB_HALL_Estimate(&hall);
        
-            if((throttleCmd > 2000) && (hall.minSpeedReached))
+            if((throttleCmd_q15 > 2000) && (hall.minSpeedReached))
             {   
                 state = RBFSM_RUN_FOC;
                 stateChanged = true;
@@ -169,7 +170,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //            prevIqOutput = PMSM.idqFdb.q;
             
             /* Determine d & q current reference values based */
-            RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim);
+            RB_SetCurrentReference(throttleCmd_q15, &PMSM.idqRef, &PMSM.iqRateLim);
             
             /* PI control for D-axis - sets Vd command*/
             MC_ControllerPIUpdate_Assembly( PMSM.idqRef.d, 
@@ -238,36 +239,26 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     }
 
     // TODO: Do CAN servicing here. Should be able to send or receive one CAN message per iteration 
+    
     readCounter++;
-    writeCounter++;
-
     if (readCounter >= 2000){
-        RB_MCP_ReadStat(&mcpReadStat);
-        if (mcpReadStat & MCP_STAT_RX0IF){
-            RB_MCP_ReadRx(0, &canFrame0, false);
-        }
-        else if (mcpReadStat & MCP_STAT_RX1IF)
-        {
-            RB_MCP_ReadRx(1, &canFrame1, false);
-        }
-        readCounter = 0;
+        RB_CAN_ReadThrottle(&canFrame0, &throttleCmd_q15); 
     }
-    else if (writeCounter >= 20000){
-        tx_ready = RB_MCP_IsTxReady(0);
-        if (tx_ready){
-            RB_MCP_LoadTx(0,&canFrameTx,false);
-            RB_MCP_SendOne(0);
+    writeCounter++;
+    if (writeCounter >= 20000){
+        if (RB_CAN_IsTxReady(0) == true){
+            RB_CAN_LoadMotorParams(&canFrameTx, &RB_HALL_DATA.speed, power, temp);
         }
-    writeCounter = 0;
     }
     
+   
+   
     /* interrupt flag must be cleared after data is read from buffer */
     HAL_ADC_InterruptFlag_Clear(); 
     
     /* Low-priority tasks at the end */
     X2CScope_Update();
     RB_BoardUIService(&boardUI); // update the button states and the POT value
-    throttleCmd = boardUI.potState; // change throttleCmd to be from CAN and scale to Q15
     
     /* Lastly, record timer period to measure ADC ISR execution time */
     SCCP5_Timer_Stop();

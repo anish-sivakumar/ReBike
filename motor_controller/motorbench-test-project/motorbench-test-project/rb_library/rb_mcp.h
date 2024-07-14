@@ -9,7 +9,7 @@
 #define	RB_MCP_H
 
 #include "rb_mcp_defs.h"
-#include "rb_can_defs.h"
+#include "rb_can.h"
 
 #include "stdint.h"
 #include "stdbool.h"
