@@ -68,7 +68,6 @@ void RB_MainInit (void)
     if (MCAF_OpAmpsEnabled())
     {
         HAL_OpAmpsEnable();
-        HAL_OpAmpsInputVoltageRangeSelect();
     }
     HAL_InterruptPrioritySet();
     HAL_CMP_SetComparatorOvercurrentThreshold(HAL_PARAM_DAC_OVERCURRENT_THRESHOLD);

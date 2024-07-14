@@ -336,8 +336,8 @@
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.motorbench.MotorBenchLibrary" version="2.45.0"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.melody.Library" version="2.3.2"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.motorbench.MotorBenchLibrary" version="2.45.0"/>
    </usedLibraries>
    <tokenMap class="java.util.TreeMap">
       <entry>
