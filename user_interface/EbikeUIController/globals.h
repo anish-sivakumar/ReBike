@@ -40,8 +40,9 @@ int regenMethod = 1;              // State of active regenerative braking
 int activatedRegen = 0;           // Regenerative braking engaged
 CAN_message_t msg;                // CAN message structure
 int throttle_flag = 0;            // Flag to indicate if throttle value has changed
-int regen_toggle_flag = 0;        // Flag to indicate if regen method has changed
-int regen_active_flag = 0;        // Flag to indicate if regen method has changed
+
+// CAN2.0 declaration - CAN0 port on Teensy 3.2
+FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can0;
 
 // Define CAN IDs
 const uint32_t system_params_ID = 0x350; // Motor parameters CAN identifier

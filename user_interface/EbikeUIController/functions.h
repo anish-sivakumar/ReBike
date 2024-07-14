@@ -19,13 +19,15 @@ void canInit();
 void pinModesInit();
 
 // Initialize Timer to trigger ISR at 100 Hz (every 10 milliseconds)
-void timerISRinit();
+void timerISRInit();
+
+void timerISR();
 
 // Sends CAN message containing the current state of throttle, regenerative braking method, and activated regenerative braking status. 
 void sendCANMSG();
 
 // Update display variables that show the motor parameters (speed, power, temperature, battery percentage)
-void updateSystemParams(const CAN_message_t &msg);
+void updateSystemParams();
 
 // Updates the display with the latest system information
 void updateDisplay();

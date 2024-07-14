@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "globals.h"
 
 // State variables for debouncing
 volatile bool previousRegenState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
@@ -11,7 +12,7 @@ void setup() {
   displayInit();
   canInit();
   pinModesInit();
-  timerISRinit();
+  timerISRInit();
 }
 
 void loop() {
@@ -25,50 +26,52 @@ void timerISR() {
   static unsigned long lastBrakeTime = 0;
   unsigned long currentTime = millis(); // Get the current time in milliseconds
 
-  // Poll THROTTLE_SPEED_INPUT pin (Analog read)
-  int currentThrottleState = analogRead(THROTTLE_SPEED_INPUT);
-  if (currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
-    if (currentThrottleState != previousThrottleState) {
-      // Check for throttle up or down based on analog values
-      if (currentThrottleState <= 1) {
-        handleThrottleInput(+1); // Increase throttle request
-      } else if (currentThrottleState == 63) {
-        handleThrottleInput(-1); // Decrease throttle request
-      }
-      throttleState = currentThrottleState; // Update current throttle state
-      lastThrottleTime = currentTime; // Update last throttle event time
-    }
-    previousThrottleState = currentThrottleState; // Update previous throttle state
+  bool throttleInputDetected = pollThrottleState(previousThrottleState, lastThrottleTime);
+  if (throttleInputDetected) {
+    handleThrottleInput(throttleState);
   }
 
-  // Poll REGEN_METHOD_TOGGLE pin (Digital read)
-  bool currentRegenState = digitalRead(REGEN_METHOD_TOGGLE);
-  if (currentRegenState == LOW && previousRegenState == HIGH) {
-    // Detect falling edge and check debounce time
-    if (currentTime - lastRegenTime > 25) { // Debounce time of 25ms
-      handleToggleRegenInput(); // Handle regen toggle input
-      lastRegenTime = currentTime; // Update last regen event time
-    }
+  bool regenMethodChanged = pollRegenMethodState(previousRegenState, lastRegenTime);
+  if (regenMethodChanged) {
+    regenMethod = (regenMethod == 1) ? 2 : 1; // Toggle between regen method 1 and 2
   }
-  previousRegenState = currentRegenState; // Update previous regen state
-
-  // Poll E_BRAKE_ENGAGED pin (Digital read)
-  bool currentBrakeState = digitalRead(E_BRAKE_ENGAGED);
-  if (currentBrakeState == LOW && previousBrakeState == HIGH) {
-    // Detect falling edge and check debounce time
-    if (currentTime - lastBrakeTime > 25) { // Debounce time of 25ms
-      handleEBrakeInput(); // Handle e-brake input
-      lastBrakeTime = currentTime; // Update last brake event time
-    }
+  
+  bool brakeActivated = pollBrakeState(previousBrakeState, lastBrakeTime);
+  if (brakeActivated) {
+    activatedRegen = (activatedRegen == 0) ? 1 : 0; // Engage regenerative braking
   }
-  previousBrakeState = currentBrakeState; // Update previous brake state
 
   // Check if any flag is set to send CAN message
-  if (throttle_flag == 1 || regen_toggle_flag == 1 || regen_active_flag == 1) {
+  if (throttle_flag == 1) {
     sendCANMSG(); // Send CAN message if any flag is set
   }
 
   updateDisplay();
+}
+
+bool pollThrottleState(int &previousThrottleState, unsigned long &lastThrottleTime) {
+  unsigned long currentTime = millis(); // Get the current time in milliseconds
+
+  // Poll THROTTLE_SPEED_INPUT pin (Analog read)
+  int currentThrottleState = analogRead(THROTTLE_SPEED_INPUT);
+
+  if (currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
+    if (currentThrottleState != previousThrottleState) {
+      // Check for throttle up or down based on analog values
+      if (currentThrottleState <= 1) {
+        throttleState = +1; // Increase throttle request
+      } else if (currentThrottleState == 63) {
+        throttleState = -1; // Decrease throttle request
+      } else {
+        throttleState = 0; // No change
+      }
+      lastThrottleTime = currentTime; // Update last throttle event time
+      previousThrottleState = currentThrottleState; // Update previous throttle state
+      return true; // Return true when throttle state changes
+    }
+  }
+
+  return false; // Return false if no change or debounce not passed
 }
 
 void handleThrottleInput(int inputRequest) {
@@ -92,14 +95,42 @@ void handleThrottleInput(int inputRequest) {
   msg.buf[0] = throttle; // Update CAN message buffer with new throttle value
 }
 
-void handleToggleRegenInput() {
-  regenMethod = (regenMethod == 1) ? 2 : 1; // Toggle between regen method 1 and 2
-  toggle_regen_flag = 1; // Set regen toggle flag
-  msg.buf[1] = regenMethod; // Update CAN message buffer with new regen method
+bool pollRegenMethodState(bool previousRegenState, unsigned long &lastRegenTime) {
+  unsigned long currentTime = millis();
+
+  // Poll REGEN_METHOD_TOGGLE pin (Digital read)
+  bool currentRegenState = digitalRead(REGEN_METHOD_TOGGLE);
+
+  // Check for falling edge and debounce
+  if (currentRegenState == LOW && previousRegenState == HIGH) {
+    if (currentTime - lastRegenTime > 25) { // Debounce time of 25ms
+      lastRegenTime = currentTime; // Update last regen event time
+      return true; // Return true when regen state changes
+    }
+  }
+
+  // Update previous regen state if no state change
+  previousRegenState = currentRegenState;
+
+  return false; // Return false if no change or debounce not passed
 }
 
-void handleEBrakeInput() {
-  activatedRegen = (activatedRegen == 0) ? 1 : 0; // Toggle e-brake activation
-  regen_active_flag = 1; // Set regen active flag
-  msg.buf[2] = activatedRegen; // Update CAN message buffer with new e-brake status
+bool pollBrakeState(bool previousBrakeState, unsigned long &lastBrakeTime) {
+  unsigned long currentTime = millis(); // Get the current time in milliseconds
+
+  // Poll E_BRAKE_ENGAGED pin (Digital read)
+  bool currentBrakeState = digitalRead(E_BRAKE_ENGAGED);
+  
+  // Check for falling edge and debounce
+  if (currentBrakeState == LOW && previousBrakeState == HIGH) {
+    if (currentTime - lastBrakeTime > 25) { // Debounce time of 25ms
+      lastBrakeTime = currentTime; // Update last brake event time
+      return true; // Return true when brake state changes
+    }
+  }
+
+  // Update previous brake state if no state change
+  previousBrakeState = currentBrakeState;
+  
+  return false; // Return false if no change or debounce not passed
 }

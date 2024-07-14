@@ -42,7 +42,7 @@ void pinModesInit() {
 }
 
 // Function to initialize Timer1 and attach ISR
-void timerISRinit() {
+void timerISRInit() {
   Timer1.initialize(10000); // Initialize Timer1 to trigger ISR at 100 Hz
   Timer1.attachInterrupt(timerISR); // Attach timerISR function
 }
@@ -56,12 +56,10 @@ void sendCANMSG(void) {
 
   // Reset flags after sending the message
   throttle_flag = 0;
-  toggle_regen_flag = 0;
-  regen_active_flag = 0;
 }
 
 // Function to update system parameters from CAN messages
-void updateSystemParams(const CAN_message_t &msg) {
+void updateSystemParams(const CAN_message_t &msg, int &speed) {
   speed = (msg.buf[1] << 8) | msg.buf[0]; // Speed allocated to bytes 0-1
   power = (msg.buf[3] << 8) | msg.buf[2]; // Power allocated to bytes 2-3
   temp = msg.buf[4]; // Temperature allocated to byte 4
@@ -143,7 +141,7 @@ void updateDisplay(void) {
     }
 
     // Draw active regen status
-    if (activeRegen == 1) {
+    if (activatedRegen == 1) {
       u8g2.drawBitmap(73, 58, 8 / 8, 6, epd_bitmap_motor_digit_1);
     } else {
       u8g2.drawBitmap(73, 58, 8 / 8, 6, epd_bitmap_motor_digit_2);
