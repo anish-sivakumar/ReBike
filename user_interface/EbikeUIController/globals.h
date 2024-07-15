@@ -38,8 +38,17 @@ int temp = 0;                     // Current temperature
 int batterySOC = 0;               // Battery state of charge of the e-bike
 int regenMethod = 1;              // State of active regenerative braking
 int activatedRegen = 0;           // Regenerative braking engaged
+
+// State variables for debouncing
+volatile bool previousRegenState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
+volatile bool currentIncreaseThrottleState = LOW; // Increase throttle request
+volatile bool currentDecreaseThrottleState = LOW; // Increase throttle request
+volatile bool previousIncreaseThrottleState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
+volatile bool previousDecreaseThrottleState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
+
 CAN_message_t msg;                // CAN message structure
 int throttle_flag = 0;            // Flag to indicate if throttle value has changed
+int activate_regen_flag = 0;      // Flag to indicate if regen has been activated
 
 // CAN2.0 declaration - CAN0 port on Teensy 3.2
 FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can0;

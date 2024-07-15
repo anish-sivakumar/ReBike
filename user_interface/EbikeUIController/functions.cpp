@@ -5,6 +5,13 @@
 #include <FlexCAN_T4.h> // Include for CAN communication
 #include <TimerOne.h>   // Include for Timer ISR configuration
 
+void testingUserInputs() {
+  int UDANALOG = analogRead(THROTTLE_SPEED_INPUT);
+  Serial.print("Throttle Input");
+  Serial.println(UDANALOG);
+  Serial.print(throttle);
+}
+
 // Function to initialize the OLED display
 void displayInit() {
   u8g2.begin(); // Initialize the OLED display
@@ -47,11 +54,116 @@ void timerISRInit() {
   Timer1.attachInterrupt(timerISR); // Attach timerISR function
 }
 
+void timerISR() {
+  // Static variables to store the last time an event was handled
+  static unsigned long lastThrottleTime = 0;
+  static unsigned long lastRegenTime = 0;
+  unsigned long currentTime = millis(); // Get the current time in milliseconds
+
+  testingUserInputs();
+
+  // Poll THROTTLE_SPEED_INPUT pin (Analog read)
+  int currentThrottleValue = analogRead(THROTTLE_SPEED_INPUT);
+
+  // Determine throttle state based on current throttle value
+  if (currentThrottleValue < 20) {
+    currentIncreaseThrottleState = HIGH;  // Increase throttle request
+    currentDecreaseThrottleState = LOW;
+  } else if (currentThrottleValue > 50 && currentThrottleValue < 65) {
+    currentIncreaseThrottleState = LOW;   // Decrease throttle request
+    currentDecreaseThrottleState = HIGH;
+  } else {
+    currentIncreaseThrottleState = LOW;   // No throttle change
+    currentDecreaseThrottleState = LOW;
+    throttle_flag = 0;
+  }
+
+  // Check for throttle increase with debouncing
+  if (currentIncreaseThrottleState != previousIncreaseThrottleState &&
+      currentIncreaseThrottleState == HIGH &&
+      currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
+    handleThrottleInput(1);  // Increase throttle request
+    lastThrottleTime = currentTime; // Update last throttle event time
+  }
+
+  // Check for throttle decrease with debouncing
+  if (currentDecreaseThrottleState != previousDecreaseThrottleState &&
+      currentDecreaseThrottleState == HIGH &&
+      currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
+    handleThrottleInput(2); // Decrease throttle request
+    lastThrottleTime = currentTime; // Update last throttle event time
+  }
+
+  // Update previous throttle state for next comparison
+  previousIncreaseThrottleState = currentIncreaseThrottleState;
+  previousDecreaseThrottleState = currentDecreaseThrottleState;
+
+  // Poll REGEN_METHOD_TOGGLE pin (Digital read)
+  bool currentRegenState = digitalRead(REGEN_METHOD_TOGGLE);
+  if (currentRegenState == LOW && previousRegenState == HIGH) {
+    // Detect falling edge and check debounce time
+    if (currentTime - lastRegenTime > 25) { // Debounce time of 25ms
+      regenMethod = (regenMethod == 1) ? 2 : 1; // Toggle between regen method 1 and 2
+      lastRegenTime = currentTime; // Update last regen event time
+    }
+  }
+  previousRegenState = currentRegenState; // Update previous regen state
+
+  // Poll E-BRAKE_ACTIVATED pin (Digital read)
+  bool currentBrakeState = digitalRead(E_BRAKE_ENGAGED);
+  if (currentBrakeState == LOW) {
+    // As long as the brake is engaged, activate regen
+    handleThrottleInput(3);
+    throttle = 0;
+  } else {
+    activatedRegen = 0; // When the brake is released, deactivate regen
+  }
+
+  // Update display with current status
+  updateDisplay();
+}
+
+void handleThrottleInput(int inputRequest) {
+  if (inputRequest == 1) {
+    // Increase throttle if not at maximum
+    if (throttle == 99) {
+      return;
+    } else if (throttle == 80) {
+      throttle = 99;
+      throttle_flag = 1;
+    } else {
+      throttle += 5; // Increase throttle by 20
+      throttle_flag = 1; // Set throttle flag
+    }
+
+  } else if (inputRequest == 2) {
+    // Decrease throttle if not at minimum
+    if (throttle == 0) {
+      return;
+    } else if (throttle == 99) {
+      throttle = 80;
+      throttle_flag = 1;
+    } else {
+      throttle -= 5; // Decrease throttle by 20
+      throttle_flag = 1; // Set throttle flag
+    }
+  }
+
+  else if (inputRequest == 3) {
+    throttle = -100;
+    throttle_flag = 1;
+  }
+
+  // // Check if any flag is set to send CAN message
+  // if (throttle_flag == 1) {
+  //   sendCANMSG(); // Send CAN message if any flag is set
+  // }
+}
+
 // Function to send CAN messages
 void sendCANMSG(void) {
+
   msg.buf[0] = throttle & 0xFF; // Throttle value in byte 0
-  msg.buf[1] = regenMethod & 0xFF; // Regen mode in byte 1
-  msg.buf[2] = activatedRegen & 0xFF; // Activated regen mode in byte 2
   can0.write(MB1, msg); // Send message to mailbox 1 (transmit mailbox)
 
   // Reset flags after sending the message
@@ -141,7 +253,7 @@ void updateDisplay(void) {
     }
 
     // Draw active regen status
-    if (activatedRegen == 1) {
+    if (regenMethod == 1) {
       u8g2.drawBitmap(73, 58, 8 / 8, 6, epd_bitmap_motor_digit_1);
     } else {
       u8g2.drawBitmap(73, 58, 8 / 8, 6, epd_bitmap_motor_digit_2);
