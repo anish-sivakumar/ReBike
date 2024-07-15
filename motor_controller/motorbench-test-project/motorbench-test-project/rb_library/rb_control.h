@@ -106,6 +106,9 @@ typedef struct tagPMSM
     /** calculated power based on q-axis current*/
     int16_t torque;
     
+    /** speed converted to radians per second */
+    uint16_t omega;
+    
     /** calculated power based on torque and speed */
     int16_t power;
     

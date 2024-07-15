@@ -191,7 +191,9 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-            RB_CalculatePower(&PMSM.power, &PMSM.torque, PMSM.idqFdb.q, hall.speed);
+            /* For logging */
+            RB_CalcMotorOutput(&PMSM.power, &PMSM.torque, &PMSM.omega, 
+                    PMSM.idqFdb.q, hall.speed);
             
             // TODO: if stopped and ThrottleCmd is positive or zero, move to startup state
             if (!hall.minSpeedReached)

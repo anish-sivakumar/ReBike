@@ -158,7 +158,8 @@ void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc, uint16_t bridgeTemp)
 }
 
 
-void RB_CalculatePower(int16_t *ppower, int16_t *ptorque, int16_t iqFdb, uint16_t speed)
+void RB_CalcMotorOutput(int16_t *ppower, int16_t *ptorque, uint16_t *pomega, 
+        int16_t iqFdb, uint16_t speed)
 {
     /**
      * Torque = (3/2) * (polepairs/2) * Ke(V/rad/s) * Iq 
@@ -166,7 +167,12 @@ void RB_CalculatePower(int16_t *ppower, int16_t *ptorque, int16_t iqFdb, uint16_
      *        = 19 * Iq (Nm)
      * https://www.mathworks.com/help/sps/ug/power-motordrive-PMSM-FOC.html
      */
-    *ptorque = (__builtin_mulus(19, -iqFdb))>>3; // to fit in 16bit int
-    int16_t omega = (__builtin_mulus((int16_t)speed, Q11(0.10472)))>>15;
-    *ppower = (__builtin_mulus(*ptorque, omega))>>2; // to fit in 16bit int
+    
+    int16_t tempTorque;
+    uint16_t tempOmega; 
+    int16_t tempPower; 
+    
+    *ptorque = (__builtin_mulss(19, -iqFdb))>>3; // to fit in 16bit int 
+    *pomega = ((__builtin_mulss(speed, Q11(0.10472)))>>11);
+    *ppower = (__builtin_mulus(*pomega, *ptorque))>>4; // to fit in 16bit int
 }
