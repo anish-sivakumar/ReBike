@@ -65,7 +65,8 @@ typedef struct tagPMSM
     MC_DQ_T                     idqRef;     /** Input command for the current loops */
     
     /* Current feedback path */
-    MC_ABC_T                    iabc;       /** phase current measurements - 2^15 = 21.83A */
+    MC_ABC_T                    iabc;       /** phase current measurements - 
+                                             * 12-bit ADC resolution: 2^12 = 21.83A */
     MC_ALPHABETA_T              ialphabeta; /** stationary (alphabeta) frame current measurements */
     int16_t                     i0;         /** zero-sequence current = (Ia + Ib + Ic)/3 */
     MC_DQ_T                     idqFdb;        /** rotating (dq) frame current measurements */
@@ -94,12 +95,19 @@ typedef struct tagPMSM
     /** phase voltage measurements - at a voltage scaling ratio of 1:21.6 */
     MC_ABC_T vabc;       
     
-    /** measured DC link current*/
+    /** measured DC link current - from 12bit ADC, scaled to 21.83A
+            ex: 96 reading in iDC, (96/2^12) * 21.83A = 0.5A*/
     int16_t iDC;
     
     /** measured MOSFET bridge temp - 3V3 ref and 10mV/10degC linear slope
      (0.15259*3.3V) / 10e-3V/C = 50degC*/
     uint16_t bridgeTemp;
+    
+    /** calculated power based on q-axis current*/
+    int16_t torque;
+    
+    /** calculated power based on torque and speed */
+    int16_t power;
     
 } RB_MOTOR_DATA;
 

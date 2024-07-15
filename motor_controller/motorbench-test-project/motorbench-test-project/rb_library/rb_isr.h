@@ -138,7 +138,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 MCAF_LED1_SetHigh();
                 stateChanged = false;
             }
-
+            
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, 
                     &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
            
@@ -190,6 +190,8 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
+            
+            RB_CalculatePower(&PMSM.power, &PMSM.torque, PMSM.idqFdb.q, hall.speed);
             
             // TODO: if stopped and ThrottleCmd is positive or zero, move to startup state
             if (!hall.minSpeedReached)

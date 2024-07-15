@@ -5,6 +5,8 @@
 #include "rb_foc_params.h"
 
 
+uint16_t iDCtesting = 0;
+
 void RB_ADCCalibrationInit(RB_MEASURE_CURRENT_T *pcalib)
 {
     /* Scaling constants: Determined by calibration or hardware design. */
@@ -80,11 +82,15 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc,
     
     //3. read DC bus voltage and current
     uint16_t unsignedVdc = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_VOLTAGE));
-    *pvDC = unsignedVdc >> 1;  // seems like we need to divider by two for the unsigned values 
+    *pvDC = unsignedVdc >> 1;  // Need to divide by two for some reason
     
-    //4. read DC bus current and filter
+    /** 4. read DC bus current and filter
+     *      Board at standstill draws 0.1A & ADC reads 48 -> ((48/2) / 2^12) * 21.83 = 0.128A
+     *      Offset in Amps = 0.1A(actual) - 0.128A(measured) = -0.028A -> 0.028A for inverted op amp = 10
+     *      
+     */ 
     int16_t rawIdc = (int16_t)(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_CURRENT));
-    *piDC = RB_ADCCompensate(rawIdc, pcalib->offsetIdc);
+    *piDC = RB_ADCCompensate(rawIdc, 10);
     
     //5. read bridge temp - apply offset and gain to get Celsius
     int16_t rawTemp = (int16_t)((MCC_ADC_ConversionResultGet(MCAF_ADC_BRIDGE_TEMPERATURE))>>1);
@@ -149,4 +155,18 @@ void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc, uint16_t bridgeTemp)
     }
 
     pstate->isFault = tempFault;
+}
+
+
+void RB_CalculatePower(int16_t *ppower, int16_t *ptorque, int16_t iqFdb, uint16_t speed)
+{
+    /**
+     * Torque = (3/2) * (polepairs/2) * Ke(V/rad/s) * Iq 
+     *        = (3/2) * (26/2) * 1.164 * Iq
+     *        = 19 * Iq (Nm)
+     * https://www.mathworks.com/help/sps/ug/power-motordrive-PMSM-FOC.html
+     */
+    *ptorque = (__builtin_mulus(19, -iqFdb))>>3; // to fit in 16bit int
+    int16_t omega = (__builtin_mulus((int16_t)speed, Q11(0.10472)))>>15;
+    *ppower = (__builtin_mulus(*ptorque, omega))>>2; // to fit in 16bit int
 }
