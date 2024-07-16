@@ -47,11 +47,108 @@ void timerISRInit() {
   Timer1.attachInterrupt(timerISR); // Attach timerISR function
 }
 
+void timerISR() {
+  // Static variables to store the last time an event was handled
+  static unsigned long lastThrottleTime = 0;
+  static unsigned long lastRegenTime = 0;
+  unsigned long currentTime = millis(); // Get the current time in milliseconds
+
+  // Poll THROTTLE_SPEED_INPUT pin (Analog read)
+  int currentThrottleValue = analogRead(THROTTLE_SPEED_INPUT);
+
+  // Determine throttle state based on current throttle value
+  if (currentThrottleValue < 20) {
+    currentIncreaseThrottleState = HIGH;  // Increase throttle request
+    currentDecreaseThrottleState = LOW;
+  } else if (currentThrottleValue > 52 && currentThrottleValue < 58) {
+    currentIncreaseThrottleState = LOW;   // Decrease throttle request
+    currentDecreaseThrottleState = HIGH;
+  } else {
+    currentIncreaseThrottleState = LOW;   // No throttle change
+    currentDecreaseThrottleState = LOW;
+    throttle_flag = 0;
+  }
+
+  // Check for throttle increase with debouncing
+  if (currentIncreaseThrottleState != previousIncreaseThrottleState &&
+      currentIncreaseThrottleState == HIGH &&
+      currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
+    handleThrottleInput(1);  // Increase throttle request
+    lastThrottleTime = currentTime; // Update last throttle event time
+  }
+
+  // Check for throttle decrease with debouncing
+  if (currentDecreaseThrottleState != previousDecreaseThrottleState &&
+      currentDecreaseThrottleState == HIGH &&
+      currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
+    handleThrottleInput(2); // Decrease throttle request
+    lastThrottleTime = currentTime; // Update last throttle event time
+  }
+
+  // Update previous throttle state for next comparison
+  previousIncreaseThrottleState = currentIncreaseThrottleState;
+  previousDecreaseThrottleState = currentDecreaseThrottleState;
+
+  // Poll REGEN_METHOD_TOGGLE pin (Digital read)
+  bool currentRegenState = digitalRead(REGEN_METHOD_TOGGLE);
+  if (currentRegenState == LOW && previousRegenState == HIGH) {
+    // Detect falling edge and check debounce time
+    if (currentTime - lastRegenTime > 25) { // Debounce time of 25ms
+      regenMethod = (regenMethod == 1) ? 2 : 1; // Toggle between regen method 1 and 2
+      lastRegenTime = currentTime; // Update last regen event time
+    }
+  }
+  previousRegenState = currentRegenState; // Update previous regen state
+
+  // Poll E-BRAKE_ACTIVATED pin (Digital read)
+  bool currentBrakeState = digitalRead(E_BRAKE_ENGAGED);
+  if (currentBrakeState == LOW) {
+    // As long as the brake is engaged, activate regen
+    handleThrottleInput(3);
+  } else {
+    if (activatedRegen == 1) {
+      throttle = 0; // Reset throttle to zero when eBrake is released
+      activatedRegen = 0; // When the brake is released, deactivate regen
+    }
+  }
+
+  // Update display with current status
+  updateDisplay();
+}
+
+void handleThrottleInput(int inputRequest) {
+  if (inputRequest == 1) {
+    // Increase throttle if not at maximum
+    if (throttle == 100) {
+      return;
+    } else {
+      throttle += 5; // Increase throttle by 20
+      throttle_flag = 1; // Set throttle flag
+    }
+  } else if (inputRequest == 2) {
+    // Decrease throttle if not at minimum
+    if (throttle == 0) {
+      return;
+    } else {
+      throttle -= 5; // Decrease throttle by 20
+      throttle_flag = 1; // Set throttle flag
+    }
+  }
+  else if (inputRequest == 3) {
+    throttle = -100;
+    activatedRegen = 1;
+    throttle_flag = 1;
+  }
+  // // Check if any flag is set to send CAN message
+  // if (throttle_flag == 1) {
+  //   sendCANMSG(); // Send CAN message if any flag is set
+  // } Commented out until CAN functionality is integrated to avoid compilation errors
+}
+
 // Function to send CAN messages
 void sendCANMSG(void) {
+
   msg.buf[0] = throttle & 0xFF; // Throttle value in byte 0
-  msg.buf[1] = regenMethod & 0xFF; // Regen mode in byte 1
-  msg.buf[2] = activatedRegen & 0xFF; // Activated regen mode in byte 2
   can0.write(MB1, msg); // Send message to mailbox 1 (transmit mailbox)
 
   // Reset flags after sending the message
@@ -67,11 +164,18 @@ void updateSystemParams(const CAN_message_t &msg, int &speed) {
 }
 
 // Function to update the display with the latest values
-void updateDisplay(void) {
+void updateDisplay() {
 
+  // Handle negative throttle values
+  if (throttle < 0) {
+    itoa(throttle * -1, throttle_string, 10);
+    negativeThrottle = true;  
+  } else {
+    itoa(throttle, throttle_string, 10);
+    negativeThrottle = false;
+  }
   // Convert integer values to string representations
   itoa(speed, speed_string, 10);
-  itoa(throttle, throttle_string, 10);
   itoa(power, power_string, 10);
   itoa(temp, temp_string, 10);
   itoa(batterySOC, battery_string, 10);
@@ -91,9 +195,13 @@ void updateDisplay(void) {
       u8g2.drawBitmap((56 - speed_string_length * 28) + 30 * i, 2, 24 / 8, 36, epd_bitmap_speedDigitsArray[speed_string[i] - 48]);
     }
 
+    if (negativeThrottle) {
+      u8g2.drawBitmap(2, 46, 8/8, 2, epd_bitmap_negative_sym); // Draw negative sign
+    }
+
     // Draw throttle value on the display
     for (int i = 0; i < throttle_string_length; i++) {
-      u8g2.drawBitmap((20 - throttle_string_length * 10) + 10 * i, 41, 8 / 8, 12, epd_bitmap_throttleDigitsArray[throttle_string[i] - 48]);
+      u8g2.drawBitmap((38 - throttle_string_length * 10) + 10 * i, 41, 8 / 8, 12, epd_bitmap_throttleDigitsArray[throttle_string[i] - 48]);
     }
 
     // Draw power value on the display
@@ -117,8 +225,8 @@ void updateDisplay(void) {
     u8g2.drawBitmap(0, 55, 88 / 8, 1, epd_bitmap_Lower_Horiz_Line);
     u8g2.drawBitmap(80, 24, 48 / 8, 1, epd_bitmap_Upper_Horiz_Line);
     u8g2.drawBitmap(59, 7, 24 / 8, 25, epd_bitmap_KM_HR_Sym);
-    u8g2.drawBitmap(22, 41, 16 / 8, 12, epd_bitmap_Throttle_Percentage_Sym);
-    u8g2.drawBitmap(35, 44, 48 / 8, 6, epd_bitmap_THROTTLE_Label);
+    u8g2.drawBitmap(39, 41, 16 / 8, 12, epd_bitmap_Throttle_Percentage_Sym);
+    u8g2.drawBitmap(52, 44, 32 / 8, 6, epd_bitmap_THRTL_label);
     u8g2.drawBitmap(-2, 58, 72 / 8, 6, epd_bitmap_ACTIVE_REGEN_Label);
     u8g2.drawBitmap(92, 0, 32 / 8, 8, epd_bitmap_MOTOR_Label);
     u8g2.drawBitmap(110, 8, 16 / 8, 7, epd_bitmap_Watts_Sym);
@@ -141,7 +249,7 @@ void updateDisplay(void) {
     }
 
     // Draw active regen status
-    if (activatedRegen == 1) {
+    if (regenMethod == 1) {
       u8g2.drawBitmap(73, 58, 8 / 8, 6, epd_bitmap_motor_digit_1);
     } else {
       u8g2.drawBitmap(73, 58, 8 / 8, 6, epd_bitmap_motor_digit_2);
@@ -149,4 +257,3 @@ void updateDisplay(void) {
 
   } while (u8g2.nextPage());
 }
-

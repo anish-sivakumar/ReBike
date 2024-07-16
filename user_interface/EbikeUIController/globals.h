@@ -32,12 +32,21 @@ U8G2_SSD1306_128X64_NONAME_1_4W_SW_SPI u8g2(U8G2_R0, /* clk=*/ OLED_CLK, /* data
 
 // Global variables
 int speed = 0;                    // Current speed
-uint8_t throttle = 0;             // Current throttle percentage
+int throttle = 0;                 // Current throttle percentage
+volatile bool negativeThrottle = false;
 int power = 0;                    // Current power value
 int temp = 0;                     // Current temperature
 int batterySOC = 0;               // Battery state of charge of the e-bike
 int regenMethod = 1;              // State of active regenerative braking
 int activatedRegen = 0;           // Regenerative braking engaged
+
+// State variables for debouncing
+volatile bool previousRegenState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
+volatile bool currentIncreaseThrottleState = LOW; // Increase throttle request
+volatile bool currentDecreaseThrottleState = LOW; // Increase throttle request
+volatile bool previousIncreaseThrottleState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
+volatile bool previousDecreaseThrottleState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
+
 CAN_message_t msg;                // CAN message structure
 int throttle_flag = 0;            // Flag to indicate if throttle value has changed
 
@@ -45,7 +54,12 @@ int throttle_flag = 0;            // Flag to indicate if throttle value has chan
 FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can0;
 
 // Define CAN IDs
-const uint32_t system_params_ID = 0x350; // Motor parameters CAN identifier
+const uint32_t system_params_ID = 0x330; // Motor parameters CAN identifier
+// const uint32_t system_params_ID = 0x331; // Motor parameters CAN identifier
+// const uint32_t system_params_ID = 0x332; // Motor parameters CAN identifier
+// const uint32_t system_params_ID = 0x333; // Motor parameters CAN identifier
+// const uint32_t system_params_ID = 0x334; // Motor parameters CAN identifier
+// const uint32_t system_params_ID = 0x355; // Motor parameters CAN identifier
 
 // Strings for displaying values
 char speed_string[10];            // String to display speed

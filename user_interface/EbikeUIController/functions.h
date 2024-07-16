@@ -12,8 +12,8 @@
 // Initializes the OLED display during system startup
 void displayInit();
 
-// Initializes CAN communication
-void canInit();
+// Sets up the CAN bus communication, configuring necessary parameters for communication
+// void canInit(); Commented out until CAN functionality is integrated to avoid compilation errors
 
 // Initializes pin modes for the inputs with internal pull-up resistors
 void pinModesInit();
@@ -21,15 +21,19 @@ void pinModesInit();
 // Initialize Timer to trigger ISR at 100 Hz (every 10 milliseconds)
 void timerISRInit();
 
+// ISR to be executed every 10 milliseconds, triggered by the timer
 void timerISR();
 
-// Sends CAN message containing the current state of throttle, regenerative braking method, and activated regenerative braking status. 
-void sendCANMSG();
+// Handles the input request for throttle, updating the system state accordingly
+void handleThrottleInput(int inputRequest); 
 
-// Update display variables that show the motor parameters (speed, power, temperature, battery percentage)
-void updateSystemParams();
+// Sends CAN message containing the current state of throttle, regenerative braking method, and activated regenerative braking status
+void sendCANMSG(); 
+
+// Updates system parameters that show the motor parameters (speed, power, temperature, battery percentage)
+void updateSystemParams(); 
 
 // Updates the display with the latest system information
-void updateDisplay();
+void updateDisplay(); 
 
 #endif // FUNCTIONS_H
