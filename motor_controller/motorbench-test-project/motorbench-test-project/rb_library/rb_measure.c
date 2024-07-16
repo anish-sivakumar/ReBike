@@ -161,18 +161,25 @@ void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc, uint16_t bridgeTemp)
 void RB_CalcMotorOutput(int16_t *ppower, int16_t *ptorque, uint16_t *pomega, 
         int16_t iqFdb, uint16_t speed)
 {
+        
     /**
-     * Torque = (3/2) * (polepairs/2) * Ke(V/rad/s) * Iq 
-     *        = (3/2) * (26/2) * 1.164 * Iq
-     *        = 19 * Iq (Nm)
-     * https://www.mathworks.com/help/sps/ug/power-motordrive-PMSM-FOC.html
+     * Torque = (3/2) * Ke(V/rad/s) * Iq_Q15
+     *        = (3/2) * 1.164 (or 1.123) * Iq_Q15
+     *        = 1.746 * Iq_Q15 
+     *        = 1.746 * (Iq_Q15/750 scaling factor) [Nm]
+     *        = 0.02533 * Iq_Q15
+     * https://www.mathworks.com/help/sps/ref/pmsm.html
      */
+    *ptorque = (__builtin_mulss(Q15(0.002328), -iqFdb))>>10; // in 2^5Nm
     
-    int16_t tempTorque;
-    uint16_t tempOmega; 
-    int16_t tempPower; 
-    
-    *ptorque = (__builtin_mulss(19, -iqFdb))>>3; // to fit in 16bit int 
-    *pomega = ((__builtin_mulss(speed, Q11(0.10472)))>>11);
-    *ppower = (__builtin_mulus(*pomega, *ptorque))>>4; // to fit in 16bit int
+    /**
+     * Angular speed omega calculated from hall speed
+     *      1RPM = 0.104rad/s
+     */
+    *pomega = (__builtin_mulss(speed, Q15(0.10472)))>>15; 
+            
+    /**
+     * Motor Power = torque (Nm) x speed (rad/s)
+     */         
+    *ppower = __builtin_mulus(*pomega, *ptorque)>>5; // in Watts
 }

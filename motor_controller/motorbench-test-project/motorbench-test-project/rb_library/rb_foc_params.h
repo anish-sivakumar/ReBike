@@ -45,7 +45,7 @@ extern "C" {
 #define     RB_VOLTAGE_CMD_MIN     -28000
     
 // Safety Fault related
-#define     RB_PHASECURRENT_MAX     8000  // ((8000/2)/2^12) * 21.83 = 21.3Apeak < 20A RMS max from user guide
+#define     RB_PHASECURRENT_MAX     8000  // 10.66A peak < User guide 10A rms
 #define     RB_BRIDGETEMP_MAX       75 // MOSFET data sheet says 150C max
     
 

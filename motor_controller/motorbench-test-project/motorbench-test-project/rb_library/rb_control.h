@@ -66,7 +66,11 @@ typedef struct tagPMSM
     
     /* Current feedback path */
     MC_ABC_T                    iabc;       /** phase current measurements - 
-                                             * 12-bit ADC resolution: 2^12 = 21.83A */
+                                             * Vadc = (ADC code/2^15)x(3.3V)
+                                             * Vshunt = (Vadc/7.554 amp gain)
+                                             * I = (Vshunt/0.01ohm shunt R) 
+                                             * -> I (Amps) = ADC code / 750
+                                             */ 
     MC_ALPHABETA_T              ialphabeta; /** stationary (alphabeta) frame current measurements */
     int16_t                     i0;         /** zero-sequence current = (Ia + Ib + Ic)/3 */
     MC_DQ_T                     idqFdb;        /** rotating (dq) frame current measurements */
@@ -92,11 +96,10 @@ typedef struct tagPMSM
      */ 
     int16_t vDC;
     
-    /** phase voltage measurements - at a voltage scaling ratio of 1:21.6 */
+    /** phase voltage measurements - see vDC scaling */
     MC_ABC_T vabc;       
     
-    /** measured DC link current - from 12bit ADC, scaled to 21.83A
-            ex: 96 reading in iDC, (96/2^12) * 21.83A = 0.5A*/
+    /** measured DC link current - see iabc scaling */
     int16_t iDC;
     
     /** measured MOSFET bridge temp - 3V3 ref and 10mV/10degC linear slope
