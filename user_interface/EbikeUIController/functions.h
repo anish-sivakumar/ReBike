@@ -13,7 +13,7 @@
 void displayInit();
 
 // Sets up the CAN bus communication, configuring necessary parameters for communication
-// void canInit(); 
+// void canInit(); Commented out until CAN functionality is integrated to avoid compilation errors
 
 // Initializes pin modes for the inputs with internal pull-up resistors
 void pinModesInit();

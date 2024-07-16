@@ -2,7 +2,7 @@
 
 void setup() {
   displayInit();
-  // canInit();
+  // canInit(); Commented out until CAN functionality is integrated to avoid compilation errors
   pinModesInit();
   timerISRInit();
   Serial.begin(9600);

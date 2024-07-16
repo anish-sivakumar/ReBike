@@ -5,13 +5,6 @@
 #include <FlexCAN_T4.h> // Include for CAN communication
 #include <TimerOne.h>   // Include for Timer ISR configuration
 
-void testingUserInputs() {
-  int UDANALOG = analogRead(THROTTLE_SPEED_INPUT);
-  Serial.print("Throttle Input");
-  Serial.println(UDANALOG);
-  Serial.print(throttle);
-}
-
 // Function to initialize the OLED display
 void displayInit() {
   u8g2.begin(); // Initialize the OLED display
@@ -60,8 +53,6 @@ void timerISR() {
   static unsigned long lastRegenTime = 0;
   unsigned long currentTime = millis(); // Get the current time in milliseconds
 
-  testingUserInputs();
-
   // Poll THROTTLE_SPEED_INPUT pin (Analog read)
   int currentThrottleValue = analogRead(THROTTLE_SPEED_INPUT);
 
@@ -69,7 +60,7 @@ void timerISR() {
   if (currentThrottleValue < 20) {
     currentIncreaseThrottleState = HIGH;  // Increase throttle request
     currentDecreaseThrottleState = LOW;
-  } else if (currentThrottleValue > 50 && currentThrottleValue < 65) {
+  } else if (currentThrottleValue > 52 && currentThrottleValue < 58) {
     currentIncreaseThrottleState = LOW;   // Decrease throttle request
     currentDecreaseThrottleState = HIGH;
   } else {
@@ -114,9 +105,11 @@ void timerISR() {
   if (currentBrakeState == LOW) {
     // As long as the brake is engaged, activate regen
     handleThrottleInput(3);
-    throttle = 0;
   } else {
-    activatedRegen = 0; // When the brake is released, deactivate regen
+    if (activatedRegen == 1) {
+      throttle = 0; // Reset throttle to zero when eBrake is released
+      activatedRegen = 0; // When the brake is released, deactivate regen
+    }
   }
 
   // Update display with current status
@@ -126,38 +119,30 @@ void timerISR() {
 void handleThrottleInput(int inputRequest) {
   if (inputRequest == 1) {
     // Increase throttle if not at maximum
-    if (throttle == 99) {
+    if (throttle == 100) {
       return;
-    } else if (throttle == 80) {
-      throttle = 99;
-      throttle_flag = 1;
     } else {
       throttle += 5; // Increase throttle by 20
       throttle_flag = 1; // Set throttle flag
     }
-
   } else if (inputRequest == 2) {
     // Decrease throttle if not at minimum
     if (throttle == 0) {
       return;
-    } else if (throttle == 99) {
-      throttle = 80;
-      throttle_flag = 1;
     } else {
       throttle -= 5; // Decrease throttle by 20
       throttle_flag = 1; // Set throttle flag
     }
   }
-
   else if (inputRequest == 3) {
     throttle = -100;
+    activatedRegen = 1;
     throttle_flag = 1;
   }
-
   // // Check if any flag is set to send CAN message
   // if (throttle_flag == 1) {
   //   sendCANMSG(); // Send CAN message if any flag is set
-  // }
+  // } Commented out until CAN functionality is integrated to avoid compilation errors
 }
 
 // Function to send CAN messages
@@ -179,11 +164,18 @@ void updateSystemParams(const CAN_message_t &msg, int &speed) {
 }
 
 // Function to update the display with the latest values
-void updateDisplay(void) {
+void updateDisplay() {
 
+  // Handle negative throttle values
+  if (throttle < 0) {
+    itoa(throttle * -1, throttle_string, 10);
+    negativeThrottle = true;  
+  } else {
+    itoa(throttle, throttle_string, 10);
+    negativeThrottle = false;
+  }
   // Convert integer values to string representations
   itoa(speed, speed_string, 10);
-  itoa(throttle, throttle_string, 10);
   itoa(power, power_string, 10);
   itoa(temp, temp_string, 10);
   itoa(batterySOC, battery_string, 10);
@@ -203,9 +195,13 @@ void updateDisplay(void) {
       u8g2.drawBitmap((56 - speed_string_length * 28) + 30 * i, 2, 24 / 8, 36, epd_bitmap_speedDigitsArray[speed_string[i] - 48]);
     }
 
+    if (negativeThrottle) {
+      u8g2.drawBitmap(2, 46, 8/8, 2, epd_bitmap_negative_sym); // Draw negative sign
+    }
+
     // Draw throttle value on the display
     for (int i = 0; i < throttle_string_length; i++) {
-      u8g2.drawBitmap((20 - throttle_string_length * 10) + 10 * i, 41, 8 / 8, 12, epd_bitmap_throttleDigitsArray[throttle_string[i] - 48]);
+      u8g2.drawBitmap((38 - throttle_string_length * 10) + 10 * i, 41, 8 / 8, 12, epd_bitmap_throttleDigitsArray[throttle_string[i] - 48]);
     }
 
     // Draw power value on the display
@@ -229,8 +225,8 @@ void updateDisplay(void) {
     u8g2.drawBitmap(0, 55, 88 / 8, 1, epd_bitmap_Lower_Horiz_Line);
     u8g2.drawBitmap(80, 24, 48 / 8, 1, epd_bitmap_Upper_Horiz_Line);
     u8g2.drawBitmap(59, 7, 24 / 8, 25, epd_bitmap_KM_HR_Sym);
-    u8g2.drawBitmap(22, 41, 16 / 8, 12, epd_bitmap_Throttle_Percentage_Sym);
-    u8g2.drawBitmap(35, 44, 48 / 8, 6, epd_bitmap_THROTTLE_Label);
+    u8g2.drawBitmap(39, 41, 16 / 8, 12, epd_bitmap_Throttle_Percentage_Sym);
+    u8g2.drawBitmap(52, 44, 32 / 8, 6, epd_bitmap_THRTL_label);
     u8g2.drawBitmap(-2, 58, 72 / 8, 6, epd_bitmap_ACTIVE_REGEN_Label);
     u8g2.drawBitmap(92, 0, 32 / 8, 8, epd_bitmap_MOTOR_Label);
     u8g2.drawBitmap(110, 8, 16 / 8, 7, epd_bitmap_Watts_Sym);
@@ -261,4 +257,3 @@ void updateDisplay(void) {
 
   } while (u8g2.nextPage());
 }
-
