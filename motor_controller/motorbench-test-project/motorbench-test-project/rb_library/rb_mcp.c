@@ -9,6 +9,10 @@
 static uint8_t spiBuf[20];
 
 extern uint8_t canTestArr[20];
+extern uint16_t canTest1;
+extern uint16_t canTest2;
+
+
 
 
 // Static function defines
@@ -281,6 +285,7 @@ bool RB_MCP_IsTxReady(uint16_t txBufId)
     
     // check if the transmission request on the tx buffer is active
     RB_MCP_ReadStat(&status);
+    canTest1 = status;
     switch (txBufId){
         case 0: 
             ready = (status & MCP_STAT_TX0REQ) != MCP_STAT_TX0REQ;
@@ -294,6 +299,11 @@ bool RB_MCP_IsTxReady(uint16_t txBufId)
         default: 
             return false;
     }
+    canTestArr[0] = (status & MCP_STAT_TX0REQ);
+    canTestArr[1] = (status & MCP_STAT_TX1REQ);
+    canTestArr[2] = (status & MCP_STAT_TX2REQ);
+    
+    canTest2 = ready;
     return ready;
 }
 
@@ -328,7 +338,7 @@ bool RB_MCP_LoadTx(uint16_t txBufId, const CAN_FRAME* frame, bool dataOnly)
         // Fill buffer
         spiBuf[0] = cmd;
         spiBuf[1] = (uint8_t)(frame->id >> 3);
-        spiBuf[2] = (uint8_t)(spiBuf[1] & 0x07);
+        spiBuf[2] = (uint8_t)((frame->id & 0x07) << 5);
         spiBuf[3] = 0;
         spiBuf[4] = 0;
         spiBuf[5] = frame->len & 0x0f;
@@ -352,10 +362,10 @@ bool RB_MCP_SendOne(uint16_t txBufId){
             cmd = MCP_INSTR_RTS_TX0;
             break;
         case 1: 
-            cmd = MCP_INSTR_LOAD_TX1;
+            cmd = MCP_INSTR_RTS_TX1;
             break;
         case 2: 
-            cmd = MCP_INSTR_LOAD_TX2;
+            cmd = MCP_INSTR_RTS_TX2;
             break;
         default:
             return false;

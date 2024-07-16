@@ -52,7 +52,7 @@ int16_t throttleCmd_Q15 = 0;
 uint16_t ADCISRExecutionTime; // monitor this value as code increases
 
 // random can testing vars
-RB_CAN_CONTROL CANControl;
+volatile RB_CAN_CONTROL CANControl;
 RB_LOGGING_AVGS avgs; // FOR TESTING - delete after
 int8_t tempThrottle = 36;
 uint8_t mcpRxStat;

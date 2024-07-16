@@ -98,8 +98,7 @@ void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *C
             
             if (CANControl->counter == 2047){
                 CANControl->timestamp++;
-                CANControl->state = RBCAN_MESSAGE1;
-                //TODO check buffers 
+                CANControl->state = RBCAN_MESSAGE1; 
             }    
             break;
     

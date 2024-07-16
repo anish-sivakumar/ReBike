@@ -45,6 +45,7 @@ typedef struct tagRB_CAN_CONTROL {
     uint16_t counter;
 } RB_CAN_CONTROL;
 
+//remove after integrating logging
 typedef struct tagRB_LOGGING_AVGS{
   int16_t vDC; // DC voltage
   int16_t iDC; // DC current
@@ -92,12 +93,12 @@ bool RB_CAN_SendCANMessageV2(uint8_t buffer, CAN_ID can_id, uint16_t timestamp, 
 
 /**
  * Carries out CAN Service Routine  
- * @param 
- * @param 
- * @param 
- * @param 
- * @param 
- * @param 
+ * @param canFrame0
+ * @param throttleCmd
+ * @param CANControl
+ * @param throttleInput
+ * @param errorWarning
+ * @param avg
  */
 void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *CANControl, int8_t throttleInput, uint8_t errorWarning, RB_LOGGING_AVGS avg);
 
