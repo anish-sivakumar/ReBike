@@ -48,10 +48,13 @@ bool stateChanged = false;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
-int16_t throttleCmd_q15 = 0;
+int16_t throttleCmd_Q15 = 0;
 uint16_t ADCISRExecutionTime; // monitor this value as code increases
 
 // random can testing vars
+RB_CAN_CONTROL CANControl;
+RB_LOGGING_AVGS avgs; // FOR TESTING - delete after
+int8_t tempThrottle = 36;
 uint8_t mcpRxStat;
 uint8_t mcpReadStat;
 CAN_FRAME canFrame0;
@@ -60,8 +63,6 @@ CAN_FRAME canFrameTx;
 bool tx_ready;
 extern uint8_t canTestArr[20];
 
-uint16_t readCounter;
-uint16_t writeCounter;
 uint8_t  SPI_received;
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -91,13 +92,24 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             //RB_FixedFrequencySinePWMInit(); // only for testing
             RB_BoardUIInit(&boardUI);
             RB_FaultInit(&faultState);
-
-            // random can testing inits, can be remove later when can is working.
-            readCounter = 0;
-            writeCounter = 0;
-            canFrameTx.id = 0x350;
-            canFrameTx.len = 8;
-            canFrameTx.data[0] = 0xF2;
+               
+            //CAN testing inits
+            CANControl.timestamp = 0;
+            CANControl.state = RBCAN_MESSAGE1;
+            CANControl.counter = 0;
+            //for testing purposes
+            avgs.vDC = 36; 
+            avgs.iDC = 4; 
+            avgs.iA = 3; 
+            avgs.iB = 2; 
+            avgs.vA = 20; 
+            avgs.vB = 21; 
+            avgs.speed = 300; 
+            avgs.iqRef = 10; 
+            avgs.iqFdb = 5; 
+            avgs.temp_fet = 25; 
+            avgs.power = 250; 
+            
 
             state = RBFSM_BOARD_INIT;
             break;
@@ -139,7 +151,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                     &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
             RB_HALL_Estimate(&hall);
        
-            if((throttleCmd != 0) && (hall.minSpeedReached))
+            if((throttleCmd_Q15 != 0) && (hall.minSpeedReached))
             {   
                 state = RBFSM_RUN_FOC;
                 stateChanged = true;
@@ -172,7 +184,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //            prevIqOutput = PMSM.idqFdb.q;
             
             /* Determine d & q current reference values based */ 
-            RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim, 
+            RB_SetCurrentReference(throttleCmd_Q15, &PMSM.idqRef, &PMSM.iqRateLim, 
                     !hall.minSpeedReached);
             
             /* PI control for D-axis - sets Vd command */
@@ -244,19 +256,15 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     }
 
     // TODO: Do CAN servicing here. Should be able to send or receive one CAN message per iteration 
+        
+    CANControl.counter = (CANControl.counter + 1) % 2048;
+    RB_CAN_Service(&canFrame0, &tempThrottle, &CANControl, 99, 0, avgs);
     
-    readCounter++;
-    if (readCounter >= 2000){
-        RB_CAN_ReadThrottle(&canFrame0, &throttleCmd_q15); 
-    }
-    writeCounter++;
-    if (writeCounter >= 20000){
-        if (RB_CAN_IsTxReady(0) == true){
-            RB_CAN_LoadMotorParams(&canFrameTx, &RB_HALL_DATA.speed, power, temp);
-        }
-    }
-    
-   
+    /* change throttleCmd to be from CAN and scale to Q15
+     *  mid point of the pot is non zero, around 2000
+     */
+    throttleCmd_Q15 = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
+            : boardUI.potState;
    
     /* interrupt flag must be cleared after data is read from buffer */
     HAL_ADC_InterruptFlag_Clear(); 
@@ -264,12 +272,6 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     /* Low-priority tasks at the end */
     X2CScope_Update();
     RB_BoardUIService(&boardUI); // update the button states and the POT value
-    
-    /* change throttleCmd to be from CAN and scale to Q15
-     *  mid point of the pot is non zero, around 2000
-     */
-    throttleCmd = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
-            : boardUI.potState;
     
     /* Lastly, record timer period to measure ADC ISR execution time */
     SCCP5_Timer_Stop();
