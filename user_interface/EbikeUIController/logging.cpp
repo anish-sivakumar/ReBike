@@ -3,7 +3,6 @@
 
 #include "logging.h"
 
-//static global to store the log's filename
 static String log_name;
 
 bool loggingInit(int sd_cs_pin){
