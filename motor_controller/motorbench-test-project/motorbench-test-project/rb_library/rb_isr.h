@@ -46,8 +46,7 @@ RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
 int16_t throttleCmd = 0;
-uint16_t ADCISRExecutionTime; // monitor this value as code increases
-
+uint16_t ADCISRExecutionTime; // monitor this value. Should be < 4999 (50us)
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -61,7 +60,7 @@ uint16_t ADCISRExecutionTime; // monitor this value as code increases
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {    
     /* Start timer to measure ADC ISR execution time. 
-     * Period set to 0x1387 = 499 = 50us
+     * Period set to 0x1387 = 4999 = 50us
      */
     SCCP5_Timer_Stop();
     CCP5TMRL = 0;
@@ -225,7 +224,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         state = RBFSM_FAULTED;
         stateChanged = true;
     }
-    
+        
     /* interrupt flag must be cleared after data is read from buffer */
     HAL_ADC_InterruptFlag_Clear(); 
     

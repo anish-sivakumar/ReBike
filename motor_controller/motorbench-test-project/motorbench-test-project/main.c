@@ -28,12 +28,6 @@ int main(void)
 
     while(1)
     {
-      
-        // Re-integrate these as needed
-        //MCAF_UiStepMain(&pPMSM->ui);
-        //MCAF_SystemStateMachine_StepMain(pPMSM);
-        //MCAF_WatchdogManageMainLoop(pWatchdog);
-        //MCAF_TestHarnessStepMain(&pSysData->testing);
         X2CScope_Communicate(); 
     }    
 }
@@ -108,6 +102,8 @@ void RB_SystemStart(void)
         {
             HAL_PWM_ModeSingleUpdate();
         }
+        HAL_PWM_ADCTrigger2BEnable(); // trigger2 for DC current
+         
     }
     
     HAL_PWM_ModuleEnable();

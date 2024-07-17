@@ -85,12 +85,13 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc,
     *pvDC = unsignedVdc >> 1;  // Need to divide by two for some reason
     
     /** 4. read DC bus current and filter
-     *      Board at standstill draws 0.1A & ADC reads 48 -> ((48/2) / 2^12) * 21.83 = 0.128A
-     *      Offset in Amps = 0.1A(actual) - 0.128A(measured) = -0.028A -> 0.028A for inverted op amp = 10
+     *      Board at standstill draws 0.1A & ADC reads 360 
+     *      offset of 435 for inverting op amp gives processed
+     *      ADC reading = 435 - 360 at standstill = 75 = 0.1A
      *      
-     */ 
+     */
     int16_t rawIdc = (int16_t)(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_CURRENT));
-    *piDC = RB_ADCCompensate(rawIdc, 10);
+    *piDC = RB_ADCCompensate(rawIdc, 435);
     
     //5. read bridge temp - apply offset and gain to get Celsius
     int16_t rawTemp = (int16_t)((MCC_ADC_ConversionResultGet(MCAF_ADC_BRIDGE_TEMPERATURE))>>1);
