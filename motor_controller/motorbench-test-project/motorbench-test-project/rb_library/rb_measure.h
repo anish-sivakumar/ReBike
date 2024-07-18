@@ -172,7 +172,7 @@ bool RB_BridgeTempFault(uint16_t temp);
 
 void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc, uint16_t bridgeTemp);
 
-void RB_CalcMotorOutput(int16_t *ppower, int16_t *ptorque, uint16_t *pomega, 
+void RB_CalculateMotorOutput(int16_t *ppower, int16_t *ptorque, uint16_t *pomega, 
         int16_t iqFdb, uint16_t speed);
 
 #ifdef	__cplusplus

@@ -106,13 +106,13 @@ typedef struct tagPMSM
      (0.15259*3.3V) / 10e-3V/C = 50degC*/
     uint16_t bridgeTemp;
     
-    /** calculated power based on q-axis current*/
+    /** calculated power based on q-axis current in 2^5Nm*/
     int16_t torque;
     
-    /** speed converted to radians per second */
+    /** speed converted to rad/s */
     uint16_t omega;
     
-    /** calculated power based on torque and speed */
+    /** calculated power based on torque & speed in Watts*/
     int16_t power;
     
 } RB_MOTOR_DATA;

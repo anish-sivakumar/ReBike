@@ -60,7 +60,6 @@
             <itemPath>mcc_generated_files/motorBench/parameters/commutation_params.h</itemPath>
             <itemPath>mcc_generated_files/motorBench/parameters/adc_params.h</itemPath>
             <itemPath>mcc_generated_files/motorBench/parameters/outerloop_params.h</itemPath>
-            <itemPath>mcc_generated_files/motorBench/parameters/current_measure_params.h</itemPath>
           </logicalFolder>
           <itemPath>mcc_generated_files/motorBench/adc_compensation_types.h</itemPath>
           <itemPath>mcc_generated_files/motorBench/startup_types.h</itemPath>

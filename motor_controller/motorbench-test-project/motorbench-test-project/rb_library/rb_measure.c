@@ -5,8 +5,6 @@
 #include "rb_foc_params.h"
 
 
-uint16_t iDCtesting = 0;
-
 void RB_ADCCalibrationInit(RB_MEASURE_CURRENT_T *pcalib)
 {
     /* Scaling constants: Determined by calibration or hardware design. */
@@ -88,7 +86,6 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc,
      *      Board at standstill draws 0.1A & ADC reads 360 
      *      offset of 435 for inverting op amp gives processed
      *      ADC reading = 435 - 360 at standstill = 75 = 0.1A
-     *      
      */
     int16_t rawIdc = (int16_t)(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_CURRENT));
     *piDC = RB_ADCCompensate(rawIdc, 435);
@@ -97,11 +94,10 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc,
     int16_t rawTemp = (int16_t)((MCC_ADC_ConversionResultGet(MCAF_ADC_BRIDGE_TEMPERATURE))>>1);
     *pbridgeTemp = (int16_t)(__builtin_mulss((rawTemp - 4964), Q15(0.010071108)) >> 15); //3.3V/(32767*0.01V)
     
-    //6. read phase Voltages
+    //6. read phase voltages
     pvabc->a = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_VOLTAGE);
     pvabc->b = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_VOLTAGE);
-    pvabc->c = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEC_VOLTAGE);
-    
+    pvabc->c = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEC_VOLTAGE); 
 }
 
 
@@ -159,7 +155,7 @@ void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc, uint16_t bridgeTemp)
 }
 
 
-void RB_CalcMotorOutput(int16_t *ppower, int16_t *ptorque, uint16_t *pomega, 
+void RB_CalculateMotorOutput(int16_t *ppower, int16_t *ptorque, uint16_t *pomega, 
         int16_t iqFdb, uint16_t speed)
 {
         
