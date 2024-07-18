@@ -45,9 +45,8 @@ bool stateChanged = false;
 RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
-int16_t throttleCmd = 0;
-uint16_t ADCISRExecutionTime; // monitor this value as code increases
-
+int16_t throttleCmd_Q15 = 0;
+uint16_t ADCISRExecutionTime; // monitor this value. Should be < 4999 (50us)
 
 /**
  * Executes tasks in the ISR for ADC interrupts.
@@ -61,7 +60,7 @@ uint16_t ADCISRExecutionTime; // monitor this value as code increases
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {    
     /* Start timer to measure ADC ISR execution time. 
-     * Period set to 0x1387 = 499 = 50us
+     * Period set to 0x1387 = 4999 = 50us
      */
     SCCP5_Timer_Stop();
     CCP5TMRL = 0;
@@ -118,7 +117,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                     &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
             RB_HALL_Estimate(&hall);
        
-            if((throttleCmd != 0) && (hall.minSpeedReached))
+            if((throttleCmd_Q15 != 0) && (hall.minSpeedReached))
             {   
                 state = RBFSM_RUN_FOC;
                 stateChanged = true;
@@ -138,7 +137,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 MCAF_LED1_SetHigh();
                 stateChanged = false;
             }
-
+            
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, 
                     &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
            
@@ -151,7 +150,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 //            prevIqOutput = PMSM.idqFdb.q;
             
             /* Determine d & q current reference values based */ 
-            RB_SetCurrentReference(throttleCmd, &PMSM.idqRef, &PMSM.iqRateLim, 
+            RB_SetCurrentReference(throttleCmd_Q15, &PMSM.idqRef, &PMSM.iqRateLim, 
                     !hall.minSpeedReached);
             
             /* PI control for D-axis - sets Vd command */
@@ -191,7 +190,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-            // TODO: if stopped and ThrottleCmd is positive or zero, move to startup state
+            /* For logging */
+            RB_CalculateMotorOutput(&PMSM.power, &PMSM.torque, &PMSM.omega, 
+                    PMSM.idqFdb.q, hall.speed);
+            
+            // TODO: if stopped and throttleCmd_Q15 is positive or zero, move to startup state
             if (!hall.minSpeedReached)
             {   
                 state = RBFSM_MANUAL_STARTUP;
@@ -221,7 +224,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         state = RBFSM_FAULTED;
         stateChanged = true;
     }
-    
+        
     /* interrupt flag must be cleared after data is read from buffer */
     HAL_ADC_InterruptFlag_Clear(); 
     
@@ -229,10 +232,10 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     X2CScope_Update();
     RB_BoardUIService(&boardUI); // update the button states and the POT value
     
-    /* change throttleCmd to be from CAN and scale to Q15
+    /* change throttleCmd_Q15 to be from CAN and scale to Q15
      *  mid point of the pot is non zero, around 2000
      */
-    throttleCmd = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
+    throttleCmd_Q15 = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
             : boardUI.potState;
     
     /* Lastly, record timer period to measure ADC ISR execution time */

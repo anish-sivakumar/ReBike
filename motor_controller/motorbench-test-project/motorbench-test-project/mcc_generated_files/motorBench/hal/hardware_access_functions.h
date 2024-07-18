@@ -1585,7 +1585,7 @@ inline static void HAL_ADC_SignalsInit(void)
     trig_sources[22] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEC_VOLTAGE
     trig_sources[17] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEA_VOLTAGE
     trig_sources[23] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEB_VOLTAGE
-    trig_sources[ 4] = PWM1_TRIGGER1;  // MCAF_ADC_DCLINK_CURRENT
+    trig_sources[ 4] = PWM1_TRIGGER2;  // MCAF_ADC_DCLINK_CURRENT - trigger 1 didn't work well for this
     trig_sources[12] = PWM1_TRIGGER1;  // MCAF_ADC_BRIDGE_TEMPERATURE
     trig_sources[ 0] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEA_CURRENT
     trig_sources[ 1] = PWM1_TRIGGER1;  // MCAF_ADC_PHASEB_CURRENT
@@ -1807,6 +1807,9 @@ inline static void HAL_InterruptPrioritySet(void)
 {
     HAL_TMR_TICK_InterruptPrioritySet();
     HAL_ADC_IndividualChannelInterruptPrioritySet();
+    
+    //MCC_ADC_IndividualChannelInterruptPrioritySet(MCAF_ADC_DCLINK_CURRENT, MCAF_PRIORITY_ADC_SINGLECHANNEL);
+    // does the above. Don't need ISR for this now
     if (MCAF_SingleChannelEnabled())
     {
         HAL_ADC_BusCurrentInterruptPrioritySet();

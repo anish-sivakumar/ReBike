@@ -80,21 +80,24 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc,
     
     //3. read DC bus voltage and current
     uint16_t unsignedVdc = HAL_ADC_UnsignedFromSignedInput(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_VOLTAGE));
-    *pvDC = unsignedVdc >> 1;  // seems like we need to divider by two for the unsigned values 
+    *pvDC = unsignedVdc >> 1;  // Need to divide by two for some reason
     
-    //4. read DC bus current and filter
+    /** 4. read DC bus current and filter
+     *      Board at standstill draws 0.1A & ADC reads 360 
+     *      offset of 435 for inverting op amp gives processed
+     *      ADC reading = 435 - 360 at standstill = 75 = 0.1A
+     */
     int16_t rawIdc = (int16_t)(MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_CURRENT));
-    *piDC = RB_ADCCompensate(rawIdc, pcalib->offsetIdc);
+    *piDC = RB_ADCCompensate(rawIdc, 435);
     
     //5. read bridge temp - apply offset and gain to get Celsius
     int16_t rawTemp = (int16_t)((MCC_ADC_ConversionResultGet(MCAF_ADC_BRIDGE_TEMPERATURE))>>1);
     *pbridgeTemp = (int16_t)(__builtin_mulss((rawTemp - 4964), Q15(0.010071108)) >> 15); //3.3V/(32767*0.01V)
     
-    //6. read phase Voltages
+    //6. read phase voltages
     pvabc->a = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_VOLTAGE);
     pvabc->b = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_VOLTAGE);
-    pvabc->c = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEC_VOLTAGE);
-    
+    pvabc->c = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEC_VOLTAGE); 
 }
 
 
@@ -149,4 +152,33 @@ void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc, uint16_t bridgeTemp)
     }
 
     pstate->isFault = tempFault;
+}
+
+
+void RB_CalculateMotorOutput(int16_t *ppower, int16_t *ptorque, uint16_t *pomega, 
+        int16_t iqFdb, uint16_t speed)
+{
+        
+    /**
+     * Torque = (3/2) * Ke(V/rad/s) * Iq_Q15
+     *              --> Ke = 1/(8.5 RPM/V * 0.10472), 
+     *                  using 8.5 instead of 8.2 for lower power estimation
+     *        = (3/2) * 1.123444 * Iq_Q15
+     *        = 1.685166 * Iq_Q15 
+     *        = 1.685166 * (Iq_Q15/750 scaling factor) [Nm]
+     *        = 0.002246888 * Iq_Q15
+     * https://www.mathworks.com/help/sps/ref/pmsm.html
+     */
+    *ptorque = (__builtin_mulss(Q15(0.002246888), -iqFdb))>>10; // in 2^5Nm
+    
+    /**
+     * Angular speed omega calculated from hall speed
+     *      1RPM = 0.104rad/s
+     */
+    *pomega = (__builtin_mulss(speed, Q15(0.10472)))>>15; 
+            
+    /**
+     * Motor Power = torque (Nm) x speed (rad/s)
+     */         
+    *ppower = __builtin_mulus(*pomega, *ptorque)>>5; // in Watts
 }

@@ -134,20 +134,11 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc,
  */
 inline static int16_t RB_ADCCompensate(int16_t measurement, int16_t offset)
 {
-    int16_t temp;
     
     /* inverted ADC and offset
      * -(measurement - offset) = offset - measurement 
-     */
-    
-    temp = offset - measurement;
-    
-    /* Deciding not to scale by motorBench gain because it is confusing
-     * Iabc will range from [-32768, +32768]  
-     * Max value corresponds to 21.83 Apeak */
-    //temp = (__builtin_mulss(temp, gain)) >> 15;
-    
-    return temp;
+     */        
+    return (offset - measurement);
 }
 
 /**
@@ -181,7 +172,8 @@ bool RB_BridgeTempFault(uint16_t temp);
 
 void RB_FaultCheck(RB_FAULT_DATA *pstate, MC_ABC_T *piabc, uint16_t bridgeTemp);
 
-
+void RB_CalculateMotorOutput(int16_t *ppower, int16_t *ptorque, uint16_t *pomega, 
+        int16_t iqFdb, uint16_t speed);
 
 #ifdef	__cplusplus
 }
