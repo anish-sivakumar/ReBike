@@ -25,7 +25,7 @@ extern "C" {
 #include "library/mc-library/motor_control.h"
 #include "motorBench/math_asm.h"
 #include "timer/sccp5.h"
-
+#include "rb_logging.h"
 #include "spi_host/spi1.h"
 #include "rb_mcp.h"
 #include "rb_can.h"
@@ -50,6 +50,11 @@ RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
 int16_t throttleCmd_Q15 = 0;
 uint16_t ADCISRExecutionTime; // monitor this value as code increases
+
+// logging counter placeholder. Replace with CAN counter
+uint16_t logCounter = 0;
+RB_LOGGING_SUMS logSums;
+RB_LOGGING_AVERAGES logAverages;
 
 // random can testing vars
 uint8_t mcpRxStat;
@@ -92,6 +97,9 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_BoardUIInit(&boardUI);
             RB_FaultInit(&faultState);
 
+            // logging init
+            RB_Logging_SumReset(&logSums);
+            
             // random can testing inits, can be remove later when can is working.
             readCounter = 0;
             writeCounter = 0;
@@ -247,17 +255,34 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         stateChanged = true;
     }
 
+    // LOGGING CALCULATIONS
+    RB_Logging_SumStepISR(&logSums,
+                          PMSM.vDC, PMSM.iDC, PMSM.idqRef.q, PMSM.idqFdb.q,
+                          PMSM.power, hall.speed, PMSM.bridgeTemp, PMSM.iabc.a, 
+                          PMSM.iabc.b, PMSM.vabc.a, PMSM.vabc.b);
+    logCounter++;
+    if (logCounter >= 2047) // calculate averages one cycle before sending CAN
+    {
+        RB_Logging_Average(&logAverages, &logSums);
+        RB_Logging_SumReset(&logSums);
+        logCounter = 0;
+    }
+    
+    
+    
+    
+    
     // TODO: Do CAN servicing here. Should be able to send or receive one CAN message per iteration 
     
     readCounter++;
     if (readCounter >= 2000){
-        RB_CAN_ReadThrottle(&canFrame0, &throttleCmd_q15); 
+        //RB_CAN_ReadThrottle(&canFrame0, &throttleCmd_Q15); 
     }
     writeCounter++;
     if (writeCounter >= 20000){
-        if (RB_CAN_IsTxReady(0) == true){
-            RB_CAN_LoadMotorParams(&canFrameTx, &RB_HALL_DATA.speed, power, temp);
-        }
+//        if (RB_CAN_IsTxReady(0) == true){
+//            RB_CAN_LoadMotorParams(&canFrameTx, &RB_HALL_DATA.speed, power, temp);
+//        }
     }
     
    
