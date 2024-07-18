@@ -161,13 +161,15 @@ void RB_CalculateMotorOutput(int16_t *ppower, int16_t *ptorque, uint16_t *pomega
         
     /**
      * Torque = (3/2) * Ke(V/rad/s) * Iq_Q15
-     *        = (3/2) * 1.164 (or 1.123) * Iq_Q15
-     *        = 1.746 * Iq_Q15 
-     *        = 1.746 * (Iq_Q15/750 scaling factor) [Nm]
-     *        = 0.02533 * Iq_Q15
+     *              --> Ke = 1/(8.5 RPM/V * 0.10472), 
+     *                  using 8.5 instead of 8.2 for lower power estimation
+     *        = (3/2) * 1.123444 * Iq_Q15
+     *        = 1.685166 * Iq_Q15 
+     *        = 1.685166 * (Iq_Q15/750 scaling factor) [Nm]
+     *        = 0.002246888 * Iq_Q15
      * https://www.mathworks.com/help/sps/ref/pmsm.html
      */
-    *ptorque = (__builtin_mulss(Q15(0.002328), -iqFdb))>>10; // in 2^5Nm
+    *ptorque = (__builtin_mulss(Q15(0.002246888), -iqFdb))>>10; // in 2^5Nm
     
     /**
      * Angular speed omega calculated from hall speed
