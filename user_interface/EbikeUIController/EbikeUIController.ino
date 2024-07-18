@@ -2,6 +2,7 @@
 #include "logging.h"
 #include <TimerOne.h>   // Include for Timer ISR configuration
 #include <SPI.h>
+#include "can.h"
 
 // Global variables - only to be accessed within this file
 int speed = 0;                    // Current speed
@@ -21,9 +22,18 @@ volatile bool currentDecreaseThrottleState = LOW; // Increase throttle request
 volatile bool previousIncreaseThrottleState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
 volatile bool previousDecreaseThrottleState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
 
-// Can stuff
-CAN_message_t msg;                // CAN message structure
-int throttle_flag = 0;            // Flag to indicate if throttle value has changed
+// Can variables and declarations
+FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can0;
+CAN_message_t msg;                      // CAN message structure
+int throttle_flag = 0;                  // Flag to indicate if throttle was changed
+extern bool CAN_MB0_BikeStatus_Flag;    // Flag to indicate if CAN msg status changed
+extern bool CAN_MB1_MotorVoltages_Flag; // Flag to indicate if CAN msg status changed
+extern bool CAN_MB2_RealCurrents_Flag;  // Flag to indicate if CAN msg status changed
+extern bool CAN_MB3_CalcValues_Flag;    // Flag to indicate if CAN msg status changed
+extern bool CAN_MB4_BmsSoc_Flag;        // Flag to indicate if CAN msg status changed
+int throttleInput = 0; // value received from motor controller for verification purposes
+int batterySOH = 0; // can track if we want, no real purpose unles we did extensive testing over a long time
+
 
 // declaration of timer ISR 
 void timerISR();
@@ -32,7 +42,7 @@ void setup() {
   // Activating logging is breaking the screen SPI, commented out for now
   // logging_enabled = loggingInit(LOGGING_CS_PIN);
   displayInit();
-  // canInit(); Commented out until CAN functionality is integrated to avoid compilation errors
+  canInit(can0);
   pinModesInit();
   Serial.begin(9600);
 
@@ -71,7 +81,7 @@ void timerISR() {
   if (currentIncreaseThrottleState != previousIncreaseThrottleState &&
       currentIncreaseThrottleState == HIGH &&
       currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
-    handleThrottleInput(1, throttle, activatedRegen);  // Increase throttle request
+    throttle_flag = handleThrottleInput(1, throttle, activatedRegen);  // Increase throttle request
     lastThrottleTime = currentTime; // Update last throttle event time
   }
 
@@ -79,7 +89,7 @@ void timerISR() {
   if (currentDecreaseThrottleState != previousDecreaseThrottleState &&
       currentDecreaseThrottleState == HIGH &&
       currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
-    handleThrottleInput(2, throttle, activatedRegen); // Decrease throttle request
+    throttle_flag = handleThrottleInput(2, throttle, activatedRegen); // Decrease throttle request
     lastThrottleTime = currentTime; // Update last throttle event time
   }
 
@@ -102,7 +112,7 @@ void timerISR() {
   bool currentBrakeState = digitalRead(E_BRAKE_ENGAGED);
   if (currentBrakeState == LOW) {
     // As long as the brake is engaged, activate regen
-    handleThrottleInput(3, throttle, activatedRegen); // Ebrake request
+    throttle_flag = handleThrottleInput(3, throttle, activatedRegen); // Ebrake request
   } else {
     if (activatedRegen) {
       throttle = 0; // Reset throttle to zero when eBrake is released
@@ -110,6 +120,28 @@ void timerISR() {
     }
   }
 
+  // receive values from CAN messages if on canbus
+  if(CANPendingBikeStatusMsg()){
+    getCAN_BikeStatus_Values(CAN_MB0_BikeStatus_Flag, timestamp, speed, throttleInput, LoggingData.error);
+  }
+  if(CANPendingMotorVoltagesMsg()){
+    getCAN_MotorVoltages_Values(CAN_MB1_MotorVoltages_Flag, timestamp, LoggingData.vDC, LoggingData.vA, LoggingData.vB);
+  }
+  if(CANPendingRealCurrentsMsg()){
+    getCAN_RealCurrents_Values(CAN_MB2_RealCurrents_Flag, timestamp, LoggingData.iDC, LoggingData.iA, LoggingData.iB);
+  }
+  if(CANPendingCalcValuesMsg()){
+    getCAN_CalcValues_Values(CAN_MB3_CalcValues_Flag, timestamp, LoggingData.iqRef, LoggingData.iqFdb, power);
+  }
+  if(CCANPendingBmsSocMsg()){
+    getCAN_BmsSoc_Values(CAN_MB4_BmsSoc_Flag, timestamp, batterySOC, batterySOH);
+  }
+  // send throttle value to controller
+  CANSendThrottleMsg(can0, throttle);
+
   // Update display with current status
   updateDisplay(throttle, speed, power, temp, batterySOC, regenMethod);
+
+  // reset throttle flag
+  throttle_flag = false;
 }
