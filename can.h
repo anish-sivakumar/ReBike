@@ -38,7 +38,7 @@ typedef struct tagCAN_CalcValues_Struct{
 
 typedef struct tagCAN_BmsSoc_Struct{
     uint16_t soc; // BMS state of charge
-    uint16_t soh // BMS state of health
+    uint16_t soh; // BMS state of health
 }CAN_BmsSoc_Struct;
 
 void canInit(FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16>& can);

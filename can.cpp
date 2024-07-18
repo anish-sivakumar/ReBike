@@ -21,7 +21,7 @@ void canInit(FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16>& can) {
     can.enableMBInterrupt(); // Enable all mailboxes to interrupts
     can.onReceive(MB0, updateCAN_BikeStatus_Struct); // Set mailbox 0 to receive system parameters
     can.onReceive(MB1, updateCAN_MotorVoltages_Struct); // Set mailbox 1 to receive system parameters
-    can.onReceive(MB2, updateCAN_MotorRealCurrents_Struct); // Set mailbox 2 to receive system parameters
+    can.onReceive(MB2, updateCAN_RealCurrents_Struct); // Set mailbox 2 to receive system parameters
     can.onReceive(MB3, updateCAN_CalcValues_Struct); // Set mailbox 3 to receive system parameters
     can.onReceive(MB4, updateCAN_BmsSoc_Struct); // Set mailbox 4 to receive system parameters
     can.setMB(MB5, TX); // Set mailbox 5 as transmit
