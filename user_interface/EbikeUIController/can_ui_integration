@@ -22,24 +22,10 @@ void setup() {
 void timerISR(){
   // put before update variables function to update values before displaying, also to ensure values are updated before large display write time
   // if CAN message has been received in mailbox, update values in main
-  if(CAN_MB0_FLAG){
-    getCAN_BikeStatus_Values(CAN_MB0_BikeStatus_Flag, timestamp, speed, throttleInput, LoggingData.error);
-    CAN_MB0_FLAG = false;  
-  }
-  if(CAN_MB1_FLAG){
-    getCAN_MotorVoltages_Values(CAN_MB1_MotorVoltages_Flag, timestamp, LoggingData.vDC, LoggingData.vA, LoggingData.vB);
-    CAN_MB1_FLAG = false;  
-  }
-  if(CAN_MB2_FLAG){
-    getCAN_RealCurrents_Values(CAN_MB2_RealCurrents_Flag, timestamp, LoggingData.iDC, LoggingData.iA, LoggingData.iB);
-    CAN_MB2_FLAG = false;  
-  }
-  if(CAN_MB3_FLAG){
-    getCAN_CalcValues_Values(CAN_MB3_CalcValues_Flag, timestamp, LoggingData.iqRef, LoggingData.iqFdb, power);
-    CAN_MB3_FLAG = false;  
-  }
-  if(CAN_MB4_FLAG){
-    getCAN_BmsSoc_Values(CAN_MB4_BmsSoc_Flag, timestamp, batterySOC, batterySOH);
-    CAN_MB4_FLAG = false;  
-  }
+  if(CANPendingBikeStatusMsg()){getCAN_BikeStatus_Values(CAN_MB0_BikeStatus_Flag, timestamp, speed, throttleInput, LoggingData.error);}
+  if(CANPendingMotorVoltagesMsg()){getCAN_MotorVoltages_Values(CAN_MB1_MotorVoltages_Flag, timestamp, LoggingData.vDC, LoggingData.vA, LoggingData.vB);}
+  if(CANPendingRealCurrentsMsg()){getCAN_RealCurrents_Values(CAN_MB2_RealCurrents_Flag, timestamp, LoggingData.iDC, LoggingData.iA, LoggingData.iB);}
+  if(CANPendingCalcValuesMsg()){getCAN_CalcValues_Values(CAN_MB3_CalcValues_Flag, timestamp, LoggingData.iqRef, LoggingData.iqFdb, power);}
+  if(CCANPendingBmsSocMsg()){getCAN_BmsSoc_Values(CAN_MB4_BmsSoc_Flag, timestamp, batterySOC, batterySOH);}
+  CANSendThrottleMsg(can0, throttle);
 }

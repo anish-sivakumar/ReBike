@@ -3,13 +3,13 @@ typedef enum tagCAN_ID {
     CAN_ID_MOTOR_VOLTAGES = 0x331,
     CAN_ID_MOTOR_REAL_CURRENTS = 0x332,
     CAN_ID_MOTOR_CALC_VALUES = 0x333,
-    CAN_ID_UIC = 0x334,
+    CAN_ID_UI = 0x334,
     CAN_ID_BMS_SOC = 0x355
 } CAN_ID;
 
 typedef struct tagCAN_BikeStatus_Struct{
     uint16_t timestamp;
-    uint16_t speed;
+    uint16_t speed; //speed of motor
     uint8_t throttleInput; // receive throttleInput from motor controller for verification 
     uint8_t errorWarning; // motor controller error/warning 
     uint16_t temp_fet; // mosfet bridge temperature
@@ -43,6 +43,8 @@ typedef struct tagCAN_BmsSoc_Struct{
 
 void canInit(FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16>& can);
 
+void CANSendThrottleMsg(FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16>& can, int throttle);
+
 void updateCAN_BikeStatus_Struct(const CAN_message_t &msg);
 
 void updateCAN_MotorVoltages_Struct(const CAN_message_t &msg);
@@ -62,6 +64,18 @@ void getCAN_RealCurrents_Struct(uint16_t &timestamp, uint16_t &IDC, uint16_t &IA
 void getCAN_CalcValues_Struct(uint16_t &timestamp, uint16_t &Ref_iq, uint16_t &Fdb_iq, uint16_t &Power);
 
 void getCAN_BmsSoc_Values(uint16_t &SOC, uint16_t &SOH);
+
+bool CANPendingBikeStatusMsg();
+
+bool CANPendingMotorVoltagesMsg();
+
+bool CANPendingRealCurrentsMsg();
+
+bool CANPendingCalcValuesMsg();
+
+bool CANPendingBmsSocMsg();
+
+
 
 
 
