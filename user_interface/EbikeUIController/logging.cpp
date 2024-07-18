@@ -6,6 +6,8 @@
 static String log_name;
 
 bool loggingInit(int sd_cs_pin){
+  
+  bool success = false;
   if (SD.begin(sd_cs_pin)){
     // make a log name that doesnt already exist
     int log_number = 0;
@@ -17,9 +19,9 @@ bool loggingInit(int sd_cs_pin){
     File log_file = SD.open(log_name.c_str(), FILE_WRITE);
     log_file.println(LOGGING_HEADER);
     log_file.close();
-    return true;
+    success = true;
   }
-  return false;
+  return success;
 }
 
 
@@ -71,7 +73,10 @@ uint16_t loggingNextExpectedTimestamp(const uint16_t timestamp_list[4]){
 }
 
 void loggingStepWrite(uint16_t timestamp, const LoggingData &logging_data){
+  size_t start = millis();
+  SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
   File log_file = SD.open(log_name.c_str(), FILE_WRITE);
+  SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
   log_file.print(timestamp);
   log_file.write(',');
   log_file.print(logging_data.vDC);
@@ -104,5 +109,10 @@ void loggingStepWrite(uint16_t timestamp, const LoggingData &logging_data){
   log_file.write('\n');
 
   log_file.close();
+  SPI.endTransaction();
+
+
+  Serial.print("time to log:");
+  Serial.println(millis() - start);
 }
 

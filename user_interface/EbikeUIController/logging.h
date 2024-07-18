@@ -4,20 +4,20 @@
 #define LOGGING_HEADER "timestamp,vDC,iDC,iA,iB,vA,vB,speed,regen_method,throttle,iqRef,iqFdb,temp_fet,power,error"
 
 typedef struct tagLoggingData {
-  uint16_t vDC;    // DC voltage
-  uint16_t iDC;    // DC current
-  uint16_t iA;     // phase A current
-  uint16_t iB;     // phase B current
-  uint16_t vA;     // phase A voltage
-  uint16_t vB;     // phase B voltage
-  uint16_t speed;  // motor speed [RPM]
-  uint16_t regen_method;
-  uint8_t throttle;
-  uint16_t iqRef;     // q-axis current reference
-  uint16_t iqFdb;     // q-axis current something???
+  int16_t vDC;    // DC voltage
+  int16_t iDC;    // DC current
+  int16_t iA;     // phase A current
+  int16_t iB;     // phase B current
+  int16_t vA;     // phase A voltage
+  int16_t vB;     // phase B voltage
+  int16_t speed;  // motor speed [RPM]
+  int16_t regen_method;
+  int8_t throttle;
+  int16_t iqRef;     // q-axis current reference
+  int16_t iqFdb;     // q-axis current something???
   uint16_t temp_fet;  // mosfet bridge temperature
-  uint16_t power;     // calculated power
-  uint8_t error;      // error code from motor controller
+  int16_t power;     // calculated power
+  int8_t error;      // error code from motor controller
 } LoggingData;
 
 // TODO: decide if this is needed

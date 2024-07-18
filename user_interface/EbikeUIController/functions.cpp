@@ -1,12 +1,13 @@
 #include "functions.h"
 #include "bitmaps.h"
+#include <SPI.h>
 ////////////////////
 // SCREEN GLOBALS // 
 ////////////////////
 // Create an instance for a 128x64 display with software SPI
-static U8G2_SSD1306_128X64_NONAME_1_4W_SW_SPI u8g2(U8G2_R0, /* clk=*/ OLED_CLK, /* data=*/ OLED_MOSI, /* cs=*/ OLED_CS, /* dc=*/ OLED_DC, /* reset=*/ OLED_RESET);
 
-
+//static U8G2_SSD1306_128X64_NONAME_1_4W_SW_SPI u8g2(U8G2_R0, /* clk=*/ OLED_CLK, /* data=*/ OLED_MOSI, /* cs=*/ OLED_CS, /* dc=*/ OLED_DC, /* reset=*/ OLED_RESET);
+static U8G2_SSD1306_128X64_NONAME_1_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ OLED_CS, /* dc=*/ OLED_DC, /* reset=*/ OLED_RESET);
 // String buffers for displaying values
 char speed_string[10];            // String to display speed
 int speed_string_length;          // Length of the speed string
@@ -32,6 +33,9 @@ FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can0;
 
 // Function to initialize the OLED display
 void displayInit() {
+  // SPI.beginTransaction(SPISettings(8000000, MSBFIRST, SPI_MODE0)); // 8 MHz, most significant bit first, SPI mode 0
+  // digitalWrite(OLED_CS, LOW); // Select OLED
+
   u8g2.begin(); // Initialize the OLED display
 
   // Display the logo during setup
@@ -40,8 +44,10 @@ void displayInit() {
     u8g2.drawBitmap(0, 0, 128/8, 64, epd_bitmap_REBIKE_Logo); // Draw logo during system startup
   } while (u8g2.nextPage());
 
+  // digitalWrite(OLED_CS, HIGH); // Deselect OLED
+  // SPI.endTransaction();
   delay(4000); // Wait for 4 seconds to show the logo
-  updateDisplay(0,0,0,0,0,0);
+
 }
 
 // Function to initialize the CAN communication
@@ -65,6 +71,7 @@ void pinModesInit() {
   pinMode(E_BRAKE_ENGAGED, INPUT_PULLUP);
   pinMode(REGEN_METHOD_TOGGLE, INPUT_PULLUP);
   pinMode(THROTTLE_SPEED_INPUT, INPUT); // Analog input pin does not need pull-up
+  pinMode(OLED_CS, OUTPUT);
 }
 
 // // Function to initialize Timer1 and attach ISR
@@ -127,6 +134,10 @@ void updateSystemParams(const CAN_message_t &msg) {
 
 // Function to update the display with the latest values
 void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC, int regenMethod) {
+
+  // SPI.beginTransaction(SPISettings(8000000, MSBFIRST, SPI_MODE0)); // 8 MHz, most significant bit first, SPI mode 0
+  // digitalWrite(OLED_CS, LOW); // Select OLED display
+
   bool negativeThrottle;
   // Handle negative throttle values
   if (throttle < 0) {
@@ -219,4 +230,6 @@ void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC,
     }
 
   } while (u8g2.nextPage());
+  
+
 }
