@@ -37,3 +37,5 @@
 # Platform IO files
 .pio/
 
+# Motorbench logs
+/motorbench/log/
