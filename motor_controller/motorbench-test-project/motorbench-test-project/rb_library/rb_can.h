@@ -10,6 +10,11 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "rb_logging.h"
+
+#define RB_CAN_CYCLE_COUNT 2048
+#define RB_CAN_CYCLE_COUNT_MINUS1 RB_CAN_CYCLE_COUNT - 1
+
 
 typedef enum tagCAN_ID {
     // TODO: fill with can message IDs that we will need
@@ -44,21 +49,6 @@ typedef struct tagRB_CAN_CONTROL {
     uint16_t timestamp;
     uint16_t counter;
 } RB_CAN_CONTROL;
-
-//remove after integrating logging
-typedef struct tagRB_LOGGING_AVGS{
-  int16_t vDC; // DC voltage
-  int16_t iDC; // DC current
-  int16_t iA; // phase A current
-  int16_t iB; // phase B current
-  int16_t vA; // phase A voltage
-  int16_t vB; // phase B voltage
-  uint16_t speed; // motor speed [RPM]
-  int16_t iqRef; // q-axis current reference
-  int16_t iqFdb; // q-axis current 
-  uint16_t temp_fet; // mosfet bridge temperature
-  int16_t power; // calculated power
-}RB_LOGGING_AVGS;
 
 /**
  * Returns throttle value from CAN message otherwise value 0
@@ -100,7 +90,7 @@ bool RB_CAN_SendCANMessageV2(uint8_t buffer, CAN_ID can_id, uint16_t timestamp, 
  * @param errorWarning
  * @param avg
  */
-void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *CANControl, int8_t throttleInput, uint8_t errorWarning, RB_LOGGING_AVGS avg);
+void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *CANControl, int8_t throttleInput, uint8_t errorWarning, RB_LOGGING_AVERAGES avg);
 
 /**
  * Sends CAN message to controller 

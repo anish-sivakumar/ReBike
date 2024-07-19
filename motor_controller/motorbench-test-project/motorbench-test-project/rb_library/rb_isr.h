@@ -25,7 +25,7 @@ extern "C" {
 #include "library/mc-library/motor_control.h"
 #include "motorBench/math_asm.h"
 #include "timer/sccp5.h"
-
+#include "rb_logging.h"
 #include "spi_host/spi1.h"
 #include "rb_mcp.h"
 #include "rb_can.h"
@@ -56,9 +56,12 @@ RB_FAULT_DATA faultState;
 int16_t throttleCmd_Q15 = 0;
 uint16_t ADCISRExecutionTime; // monitor this value as code increases
 
+// logging counter placeholder. Replace with CAN counter
+RB_LOGGING_SUMS logSums;
+RB_LOGGING_AVERAGES logAverages;
+
 // random can testing vars
 RB_CAN_CONTROL CANControl;
-RB_LOGGING_AVGS avgs; // FOR TESTING - delete after
 int8_t tempThrottle = 0; // raw throttle value from teensy 
 uint8_t mcpRxStat;
 uint8_t mcpReadStat;
@@ -81,7 +84,7 @@ uint8_t  SPI_received;
 void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 {    
     /* Start timer to measure ADC ISR execution time. 
-     * Period set to 0x1387 = 499 = 50us
+     * Period set to 0x1387 = 4999 = 50us
      */
     SCCP5_Timer_Stop();
     CCP5TMRL = 0;
@@ -97,24 +100,15 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             //RB_FixedFrequencySinePWMInit(); // only for testing
             RB_BoardUIInit(&boardUI);
             RB_FaultInit(&faultState);
-            
+
+            // logging init
+            RB_Logging_SumReset(&logSums);
+                        
             //CAN testing inits
             CANControl.timestamp = 0;
             CANControl.state = RBCAN_MESSAGE1;
             CANControl.counter = 0;
-            //for testing purposes - remove after integrating logging
-            avgs.vDC = 35; 
-            avgs.iDC = 4; 
-            avgs.iA = 3; 
-            avgs.iB = 2; 
-            avgs.vA = 20; 
-            avgs.vB = 21;  
-            avgs.iqRef = 10; 
-            avgs.iqFdb = 5; 
-            avgs.temp_fet = 20; 
-            avgs.power = 250; 
-            
-
+                  
             state = RBFSM_BOARD_INIT;
             break;
             
@@ -175,7 +169,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 MCAF_LED1_SetHigh();
                 stateChanged = false;
             }
-
+            
             RB_ADCReadStepISR(&PMSM.currentCalib, &PMSM.iabc, &PMSM.vDC, 
                     &PMSM.iDC, &PMSM.vabc, &PMSM.bridgeTemp);
            
@@ -228,7 +222,11 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             /* Lastly, Set duties */
             RB_PWMDutyCycleSet(&PMSM.pwmDutyCycle);
             
-            // TODO: if stopped and ThrottleCmd is positive or zero, move to startup state
+            /* For logging */
+            RB_CalculateMotorOutput(&PMSM.power, &PMSM.torque, &PMSM.omega, 
+                    PMSM.idqFdb.q, hall.speed);
+            
+            // TODO: if stopped and throttleCmd_Q15 is positive or zero, move to startup state
             if (!hall.minSpeedReached)
             {   
                 state = RBFSM_MANUAL_STARTUP;
@@ -258,14 +256,25 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         state = RBFSM_FAULTED;
         stateChanged = true;
     }
-    
-   
 
+    // LOGGING CALCULATIONS
+    RB_Logging_SumStepISR(&logSums,
+                          PMSM.vDC, PMSM.iDC, PMSM.idqRef.q, PMSM.idqFdb.q,
+                          PMSM.power, hall.speed, PMSM.bridgeTemp, PMSM.iabc.a, 
+                          PMSM.iabc.b, PMSM.vabc.a, PMSM.vabc.b);
+    
+    
+    if (CANControl.counter == RB_CAN_CYCLE_COUNT_MINUS1) // calculate averages one cycle before sending CAN
+    {
+        RB_Logging_Average(&logAverages, &logSums);
+        RB_Logging_SumReset(&logSums);
+    }
+    
     // TODO: Do CAN servicing here. Should be able to send or receive one CAN message per iteration 
     
-    avgs.speed = hall.speed; // set variables here before sending over CAN
-    CANControl.counter = (CANControl.counter + 1) % 2048;
-    RB_CAN_Service(&canFrame0, &tempThrottle, &CANControl, throttleCmd_Q15, 0, avgs); // 0  = errorWarning
+    //logAverages.speed = hall.speed; // set variables here before sending over CAN
+    CANControl.counter = (CANControl.counter + 1) % RB_CAN_CYCLE_COUNT;
+    RB_CAN_Service(&canFrame0, &tempThrottle, &CANControl, throttleCmd_Q15, 0, logAverages); // 0  = errorWarning
     
     /* change throttleCmd to be from CAN and scale to Q15
      *  mid point of the pot is non zero, around 2000

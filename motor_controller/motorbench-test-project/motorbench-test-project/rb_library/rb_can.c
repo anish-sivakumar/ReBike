@@ -57,12 +57,12 @@ bool RB_CAN_SendCANMessageV2(uint8_t buffer, CAN_ID can_id, uint16_t timestamp, 
     return false;
 }
 
-void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *CANControl, int8_t throttleInput, uint8_t errorWarning, RB_LOGGING_AVGS avg){
+void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *CANControl, int8_t throttleInput, uint8_t errorWarning, RB_LOGGING_AVERAGES avg){
     bool messageSent = false;
     
     switch(CANControl->state){
         case RBCAN_MESSAGE1:
-            messageSent = RB_CAN_SendCANMessageV1(0, CAN_ID_BIKE_STATUS, CANControl->timestamp, avg.speed, avg.temp_fet, throttleInput, errorWarning);                
+            messageSent = RB_CAN_SendCANMessageV1(0, CAN_ID_BIKE_STATUS, CANControl->timestamp, avg.speed, avg.bridgeTemp, throttleInput, errorWarning);                
             if (messageSent){
                 CANControl->state = RBCAN_MESSAGE2; 
             }
@@ -91,7 +91,7 @@ void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *C
             
         case RBCAN_IDLE:  
             
-            if (CANControl->counter == 2047){
+            if (CANControl->counter == RB_CAN_CYCLE_COUNT_MINUS1){
                 CANControl->timestamp++;
                 CANControl->state = RBCAN_MESSAGE1; 
             }    
