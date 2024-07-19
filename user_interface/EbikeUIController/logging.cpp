@@ -6,6 +6,8 @@
 static String log_name;
 
 bool loggingInit(int sd_cs_pin){
+  
+  bool success = false;
   if (SD.begin(sd_cs_pin)){
     // make a log name that doesnt already exist
     int log_number = 0;
@@ -17,9 +19,9 @@ bool loggingInit(int sd_cs_pin){
     File log_file = SD.open(log_name.c_str(), FILE_WRITE);
     log_file.println(LOGGING_HEADER);
     log_file.close();
-    return true;
+    success = true;
   }
-  return false;
+  return success;
 }
 
 
@@ -70,7 +72,8 @@ uint16_t loggingNextExpectedTimestamp(const uint16_t timestamp_list[4]){
   }
 }
 
-void loggingStepWrite(uint16_t timestamp, const LoggingData &logging_data){
+void loggingStepWrite(uint16_t timestamp, int throttle, int speed, int power, int temp, int batterySOC, int regenMethod, const LoggingData &logging_data){
+  size_t start = millis();
   File log_file = SD.open(log_name.c_str(), FILE_WRITE);
   log_file.print(timestamp);
   log_file.write(',');
@@ -86,23 +89,30 @@ void loggingStepWrite(uint16_t timestamp, const LoggingData &logging_data){
   log_file.write(',');
   log_file.print(logging_data.vB);
   log_file.write(',');
-  log_file.print(logging_data.speed);
+  log_file.print(speed);
   log_file.write(',');
-  log_file.print(logging_data.regen_method);
+  log_file.print(regenMethod);
   log_file.write(',');
-  log_file.print(logging_data.throttle);
+  log_file.print(throttle);
   log_file.write(',');
   log_file.print(logging_data.iqRef);
   log_file.write(',');
   log_file.print(logging_data.iqFdb);
   log_file.write(',');
-  log_file.print(logging_data.temp_fet);
+  log_file.print(temp);
   log_file.write(',');
-  log_file.print(logging_data.power);
+  log_file.print(power);
   log_file.write(',');
   log_file.print(logging_data.error);
+  log_file.write(',');
+  log_file.print(batterySOC);
   log_file.write('\n');
 
   log_file.close();
+  SPI.endTransaction();
+
+
+  Serial.print("time to log:");
+  Serial.println(millis() - start);
 }
 
