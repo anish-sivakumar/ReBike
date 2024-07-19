@@ -40,8 +40,7 @@ void displayInit() {
     u8g2.drawBitmap(0, 0, 128/8, 64, epd_bitmap_REBIKE_Logo); // Draw logo during system startup
   } while (u8g2.nextPage());
 
-  delay(4000); // Wait for 4 seconds to show the logo
-  updateDisplay(0,0,0,0,0,0);
+  delay(500); // Wait for 4 seconds to show the logo
 }
 
 // Function to initialize the CAN communication
@@ -73,7 +72,7 @@ void pinModesInit() {
 //   Timer1.attachInterrupt(timerISR); // Attach timerISR function
 // }
 
-bool handleThrottleInput(int inputRequest, int &throttle, bool &activatedRegen) {
+bool handleThrottleInput(int inputRequest, int8_t &throttle, bool &activatedRegen){
   bool throttle_changed = false;
   if (inputRequest == 1) {
     // Increase throttle if not at maximum
@@ -136,8 +135,10 @@ void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC,
     itoa(throttle, throttle_string, 10);
     negativeThrottle = false;
   }
+
+  int speedKph = (int)((float)speed * 0.135);
   // Convert integer values to string representations
-  itoa(speed, speed_string, 10);
+  itoa(speedKph, speed_string, 10);
   itoa(power, power_string, 10);
   itoa(temp, temp_string, 10);
   itoa(batterySOC, battery_string, 10);

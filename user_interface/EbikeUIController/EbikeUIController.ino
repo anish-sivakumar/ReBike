@@ -5,14 +5,20 @@
 #include "can.h"
 
 // Global variables - only to be accessed within this file
-int speed = 0;                    // Current speed
-int throttle = 0;                 // Current throttle percentage
-int power = 0;                    // Current power value
-int temp = 0;                     // Current temperature
-int batterySOC = 0;               // Battery state of charge of the e-bike
+uint16_t speed = 0;                    // Current speed
+int8_t throttle = 0;                 // Current throttle percentage
+int16_t power = 0;                    // Current power value
+uint16_t temp = 0;                     // Current temperature
+uint16_t batterySOC = 0;               // Battery state of charge of the e-bike
+
 int regenMethod = 1;              // State of active regenerative braking
 bool activatedRegen = false;           // Regenerative braking engaged
 bool logging_enabled;
+
+LoggingData loggingData;
+
+// time
+uint16_t timestampList[4];
 
 
 // State variables for debouncings
@@ -23,7 +29,7 @@ volatile bool previousIncreaseThrottleState = HIGH; // Previous state of the REG
 volatile bool previousDecreaseThrottleState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
 
 // Can variables and declarations
-FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can0;
+// FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can0;
 CAN_message_t msg;                      // CAN message structure
 int throttle_flag = 0;                  // Flag to indicate if throttle was changed
 extern bool CAN_MB0_BikeStatus_Flag;    // Flag to indicate if CAN msg status changed
@@ -31,8 +37,8 @@ extern bool CAN_MB1_MotorVoltages_Flag; // Flag to indicate if CAN msg status ch
 extern bool CAN_MB2_RealCurrents_Flag;  // Flag to indicate if CAN msg status changed
 extern bool CAN_MB3_CalcValues_Flag;    // Flag to indicate if CAN msg status changed
 extern bool CAN_MB4_BmsSoc_Flag;        // Flag to indicate if CAN msg status changed
-int throttleInput = 0; // value received from motor controller for verification purposes
-int batterySOH = 0; // can track if we want, no real purpose unles we did extensive testing over a long time
+int8_t throttleInput = 0; // value received from motor controller for verification purposes
+uint16_t batterySOH = 0; // can track if we want, no real purpose unles we did extensive testing over a long time
 
 
 // declaration of timer ISR 
@@ -42,7 +48,7 @@ void setup() {
   // Activating logging is breaking the screen SPI, commented out for now
   // logging_enabled = loggingInit(LOGGING_CS_PIN);
   displayInit();
-  canInit(can0);
+  canInit();
   pinModesInit();
   Serial.begin(9600);
 
@@ -122,26 +128,28 @@ void timerISR() {
 
   // receive values from CAN messages if on canbus
   if(CANPendingBikeStatusMsg()){
-    getCAN_BikeStatus_Values(CAN_MB0_BikeStatus_Flag, timestamp, speed, throttleInput, LoggingData.error);
+    getCAN_BikeStatus_Values(timestampList[0], speed, temp, throttleInput, loggingData.error);
   }
   if(CANPendingMotorVoltagesMsg()){
-    getCAN_MotorVoltages_Values(CAN_MB1_MotorVoltages_Flag, timestamp, LoggingData.vDC, LoggingData.vA, LoggingData.vB);
+    getCAN_MotorVoltages_Values(timestampList[1], loggingData.vDC, loggingData.vA, loggingData.vB);
   }
   if(CANPendingRealCurrentsMsg()){
-    getCAN_RealCurrents_Values(CAN_MB2_RealCurrents_Flag, timestamp, LoggingData.iDC, LoggingData.iA, LoggingData.iB);
+    getCAN_RealCurrents_Values(timestampList[2], loggingData.iDC, loggingData.iA, loggingData.iB);
   }
   if(CANPendingCalcValuesMsg()){
-    getCAN_CalcValues_Values(CAN_MB3_CalcValues_Flag, timestamp, LoggingData.iqRef, LoggingData.iqFdb, power);
+    getCAN_CalcValues_Values(timestampList[3], loggingData.iqRef, loggingData.iqFdb, power);
   }
-  if(CCANPendingBmsSocMsg()){
-    getCAN_BmsSoc_Values(CAN_MB4_BmsSoc_Flag, timestamp, batterySOC, batterySOH);
+  if(CANPendingBmsSocMsg()){
+    getCAN_BmsSoc_Values(batterySOC, batterySOH);
   }
   // send throttle value to controller
-  CANSendThrottleMsg(can0, throttle);
+  CANSendThrottleMsg(throttle);
 
   // Update display with current status
   updateDisplay(throttle, speed, power, temp, batterySOC, regenMethod);
 
   // reset throttle flag
   throttle_flag = false;
+
+  Serial.println(speed);
 }

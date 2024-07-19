@@ -57,13 +57,13 @@ void pinModesInit();
 // void timerISR();
 
 // Handles the input request for throttle, updating the system state accordingly
-bool handleThrottleInput(int inputRequest, int &throttle, bool &activatedRegen); 
+bool handleThrottleInput(int inputRequest, int8_t &throttle, bool &activatedRegen); 
 
 // Sends CAN message containing the current state of throttle, regenerative braking method, and activated regenerative braking status
 void sendCANMSG(int throttle);
 
 // Updates system parameters that show the motor parameters (speed, power, temperature, battery percentage)
-void updateSystemParams(const CAN_message_t &msg, int &speed); 
+void updateSystemParams(const CAN_message_t &msg, uint16_t &speed); 
 
 // Updates the display with the latest system information
 void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC, int regenMethod);
