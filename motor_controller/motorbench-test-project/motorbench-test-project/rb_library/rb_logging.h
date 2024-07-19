@@ -23,9 +23,9 @@ typedef struct tagRB_LOGGING_SUMS{
   uint32_t bridgeTemp; // mosfet bridge temperature
   
   int64_t iA; // phase A current
-  int64_t iB; // phase B current
+  int64_t iAB; // phase A-B current
   int64_t vA; // phase A voltage
-  int64_t vB; // phase B voltage
+  int64_t vAB; // phase A-B voltage
 }RB_LOGGING_SUMS;
 
 typedef struct tagRB_LOGGING_DATA{
@@ -38,9 +38,9 @@ typedef struct tagRB_LOGGING_DATA{
   uint16_t bridgeTemp; // mosfet bridge temperature
   
   int16_t iA; // phase A current
-  int16_t iB; // phase B current
+  int16_t iAB; // phase B current
   int16_t vA; // phase A voltage
-  int16_t vB; // phase B voltage
+  int16_t vAB; // phase B voltage
 }RB_LOGGING_AVERAGES;
 
 /**
