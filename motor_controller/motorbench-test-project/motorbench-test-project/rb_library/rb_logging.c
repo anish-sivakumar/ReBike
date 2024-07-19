@@ -19,9 +19,9 @@ void RB_Logging_SumStepISR(RB_LOGGING_SUMS* sums,
     // summed squared values
     // mulss returns 32-bit int
     sums->iA += (int64_t)__builtin_mulss(iA, iA); 
-    sums->iB += (int64_t)__builtin_mulss(iB, iB); 
+    sums->iAB += (int64_t)__builtin_mulss(iA-iB, iA-iB); 
     sums->vA += (int64_t)__builtin_mulss(vA, vA); 
-    sums->vB += (int64_t)__builtin_mulss(vB, vB);
+    sums->vAB += (int64_t)__builtin_mulss(vA-vB, vA-vB);
 }
 
 void RB_Logging_Average(RB_LOGGING_AVERAGES* averages, const RB_LOGGING_SUMS* sums){
@@ -39,9 +39,9 @@ void RB_Logging_Average(RB_LOGGING_AVERAGES* averages, const RB_LOGGING_SUMS* su
      * trying square-root with floats now
      */
     averages->iA        = (int16_t) sqrtf((float)(sums->iA >> RB_LOGGING_DIVISOR));
-    averages->iB        = (int16_t) sqrtf((float)(sums->iB >> RB_LOGGING_DIVISOR)); 
+    averages->iAB        = (int16_t) sqrtf((float)(sums->iAB >> RB_LOGGING_DIVISOR)); 
     averages->vA        = (int16_t) sqrtf((float)(sums->vA >> RB_LOGGING_DIVISOR)); 
-    averages->vB        = (int16_t) sqrtf((float)(sums->vB >> RB_LOGGING_DIVISOR));
+    averages->vAB        = (int16_t) sqrtf((float)(sums->vAB >> RB_LOGGING_DIVISOR));
 }
 
 void RB_Logging_SumReset(RB_LOGGING_SUMS* sums){
@@ -53,7 +53,7 @@ void RB_Logging_SumReset(RB_LOGGING_SUMS* sums){
     sums->speed = 0; 
     sums->bridgeTemp = 0; 
     sums->iA = 0; 
-    sums->iB = 0; 
+    sums->iAB = 0; 
     sums->vA = 0; 
-    sums->vB = 0; 
+    sums->vAB = 0; 
 }
