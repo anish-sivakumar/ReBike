@@ -29,7 +29,12 @@ extern "C" {
 #include "spi_host/spi1.h"
 #include "rb_mcp.h"
 #include "rb_can.h"
- 
+    
+#define THROTTLE_MULTIPLIER 327
+    
+// comment out for CAN controlled throttle
+//#define POT_THROTTLE
+
 typedef enum 
 {   
     RBFSM_INIT = 0,
@@ -52,9 +57,9 @@ int16_t throttleCmd_Q15 = 0;
 uint16_t ADCISRExecutionTime; // monitor this value as code increases
 
 // random can testing vars
-volatile RB_CAN_CONTROL CANControl;
+RB_CAN_CONTROL CANControl;
 RB_LOGGING_AVGS avgs; // FOR TESTING - delete after
-int8_t tempThrottle = 36;
+int8_t tempThrottle = 0; // raw throttle value from teensy 
 uint8_t mcpRxStat;
 uint8_t mcpReadStat;
 CAN_FRAME canFrame0;
@@ -92,22 +97,21 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             //RB_FixedFrequencySinePWMInit(); // only for testing
             RB_BoardUIInit(&boardUI);
             RB_FaultInit(&faultState);
-               
+            
             //CAN testing inits
             CANControl.timestamp = 0;
             CANControl.state = RBCAN_MESSAGE1;
             CANControl.counter = 0;
-            //for testing purposes
-            avgs.vDC = 36; 
+            //for testing purposes - remove after integrating logging
+            avgs.vDC = 35; 
             avgs.iDC = 4; 
             avgs.iA = 3; 
             avgs.iB = 2; 
             avgs.vA = 20; 
-            avgs.vB = 21; 
-            avgs.speed = 300; 
+            avgs.vB = 21;  
             avgs.iqRef = 10; 
             avgs.iqFdb = 5; 
-            avgs.temp_fet = 25; 
+            avgs.temp_fet = 20; 
             avgs.power = 250; 
             
 
@@ -254,17 +258,26 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         state = RBFSM_FAULTED;
         stateChanged = true;
     }
+    
+   
 
     // TODO: Do CAN servicing here. Should be able to send or receive one CAN message per iteration 
-        
+    
+    avgs.speed = hall.speed; // set variables here before sending over CAN
     CANControl.counter = (CANControl.counter + 1) % 2048;
-    RB_CAN_Service(&canFrame0, &tempThrottle, &CANControl, 99, 0, avgs);
+    RB_CAN_Service(&canFrame0, &tempThrottle, &CANControl, throttleCmd_Q15, 0, avgs); // 0  = errorWarning
     
     /* change throttleCmd to be from CAN and scale to Q15
      *  mid point of the pot is non zero, around 2000
      */
+    
+#ifdef POT_THROTTLE
     throttleCmd_Q15 = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
             : boardUI.potState;
+#else
+    throttleCmd_Q15 = (int16_t)(tempThrottle) * THROTTLE_MULTIPLIER;
+#endif
+    
    
     /* interrupt flag must be cleared after data is read from buffer */
     HAL_ADC_InterruptFlag_Clear(); 

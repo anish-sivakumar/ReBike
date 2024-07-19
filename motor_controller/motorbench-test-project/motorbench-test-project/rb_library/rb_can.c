@@ -4,16 +4,11 @@
 #include "rb_mcp.h"
 
 int8_t RB_CAN_ReadThrottle(CAN_FRAME *canFrame0) {
-    uint8_t mcpReadStat;
     int8_t throttle;
-    
-    RB_MCP_ReadStat(&mcpReadStat);
-    if (mcpReadStat & MCP_STAT_RX0IF) {
-        RB_MCP_ReadRx(0, canFrame0, false);
-        throttle = (int8_t)(canFrame0->data[0]);
-        return throttle;
-    }
-
+   
+    RB_MCP_ReadRx(0, canFrame0, false);
+    throttle = (int8_t)(canFrame0->data[0]);
+    return throttle;
 }
 
 void RB_CAN_SendTxFrame(uint8_t buffer, CAN_FRAME* frame) {
@@ -105,7 +100,11 @@ void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *C
     }
 
     if(!messageSent){
+        uint8_t mcpReadStat;
+        RB_MCP_ReadStat(&mcpReadStat);
+        if (mcpReadStat & MCP_STAT_RX0IF) {
         *throttleCmd = RB_CAN_ReadThrottle(canFrame0); // lower priority than writing a message
+        }
     }
 }
    
