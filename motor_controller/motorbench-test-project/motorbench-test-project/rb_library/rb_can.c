@@ -69,14 +69,14 @@ void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *C
             break;
             
         case RBCAN_MESSAGE2:
-            messageSent = RB_CAN_SendCANMessageV2(1, CAN_ID_MOTOR_VOLTAGES, CANControl->timestamp, avg.vDC, avg.vA, avg.vB);
+            messageSent = RB_CAN_SendCANMessageV2(1, CAN_ID_MOTOR_VOLTAGES, CANControl->timestamp, avg.vDC, avg.vA, avg.vAB);
             if (messageSent){
                 CANControl->state = RBCAN_MESSAGE3; 
             }
             break;
             
         case RBCAN_MESSAGE3:
-            messageSent = RB_CAN_SendCANMessageV2(2, CAN_ID_MOTOR_REAL_CURRENTS, CANControl->timestamp, avg.iDC, avg.iA, avg.iB);
+            messageSent = RB_CAN_SendCANMessageV2(2, CAN_ID_MOTOR_REAL_CURRENTS, CANControl->timestamp, avg.iDC, avg.iA, avg.iAB);
             if (messageSent){
                 CANControl->state = RBCAN_MESSAGE4; 
             }

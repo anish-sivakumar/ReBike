@@ -56,20 +56,15 @@ RB_FAULT_DATA faultState;
 int16_t throttleCmd_Q15 = 0;
 uint16_t ADCISRExecutionTime; // monitor this value as code increases
 
-// logging counter placeholder. Replace with CAN counter
+// Logging objects
 RB_LOGGING_SUMS logSums;
 RB_LOGGING_AVERAGES logAverages;
 
 // random can testing vars
 RB_CAN_CONTROL CANControl;
 int8_t tempThrottle = 0; // raw throttle value from teensy 
-uint8_t mcpRxStat;
-uint8_t mcpReadStat;
 CAN_FRAME canFrame0;
-CAN_FRAME canFrame1;
-CAN_FRAME canFrameTx;
-bool tx_ready;
-extern uint8_t canTestArr[20];
+extern uint8_t canTestArr[20]; // DO WE NEED THIS CHRIS?
 
 uint8_t  SPI_received;
 /**
@@ -257,28 +252,23 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         stateChanged = true;
     }
 
-    // LOGGING CALCULATIONS
+    // logging summations
     RB_Logging_SumStepISR(&logSums,
                           PMSM.vDC, PMSM.iDC, PMSM.idqRef.q, PMSM.idqFdb.q,
                           PMSM.power, hall.speed, PMSM.bridgeTemp, PMSM.iabc.a, 
                           PMSM.iabc.b, PMSM.vabc.a, PMSM.vabc.b);
     
-    
-    if (CANControl.counter == RB_CAN_CYCLE_COUNT_MINUS1) // calculate averages one cycle before sending CAN
+    // calculate logging averages and rms
+    if (CANControl.counter == RB_CAN_CYCLE_COUNT_MINUS1)
     {
         RB_Logging_Average(&logAverages, &logSums);
         RB_Logging_SumReset(&logSums);
     }
     
-    // TODO: Do CAN servicing here. Should be able to send or receive one CAN message per iteration 
-    
     //logAverages.speed = hall.speed; // set variables here before sending over CAN
     CANControl.counter = (CANControl.counter + 1) % RB_CAN_CYCLE_COUNT;
     RB_CAN_Service(&canFrame0, &tempThrottle, &CANControl, throttleCmd_Q15, 0, logAverages); // 0  = errorWarning
     
-    /* change throttleCmd to be from CAN and scale to Q15
-     *  mid point of the pot is non zero, around 2000
-     */
     
 #ifdef POT_THROTTLE
     throttleCmd_Q15 = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
