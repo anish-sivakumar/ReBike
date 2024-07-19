@@ -58,15 +58,15 @@ void CANUpdateCalcValues(const CAN_message_t &msg);
 
 void CANUpdateBmsSoc(const CAN_message_t &msg);
 
-void getCAN_BikeStatus_Values(uint16_t &timestamp, uint16_t &speed, uint16_t &temp, int8_t &throttleInput, uint8_t &ErrorWarning);
+void CANGetBikeStatus(uint16_t &timestamp, uint16_t &speed, uint16_t &temp, int8_t &throttleInput, uint8_t &ErrorWarning);
 
-void getCAN_MotorVoltages_Values(uint16_t &timestamp, int16_t &VDC, int16_t &VA, int16_t &VB);
+void CANGetMotorVoltages(uint16_t &timestamp, int16_t &VDC, int16_t &VA, int16_t &VB);
 
-void getCAN_RealCurrents_Values(uint16_t &timestamp, int16_t &IDC, int16_t &IA, int16_t &IB);
+void CANGetRealCurrents(uint16_t &timestamp, int16_t &IDC, int16_t &IA, int16_t &IB);
 
-void getCAN_CalcValues_Values(uint16_t &timestamp, int16_t &Ref_iq, int16_t &Fdb_iq, int16_t &Power);
+void CANGetCalcValues(uint16_t &timestamp, int16_t &Ref_iq, int16_t &Fdb_iq, int16_t &Power);
 
-void getCAN_BmsSoc_Values(uint16_t &SOC, uint16_t &SOH);
+void CANGetBmsSoc(uint16_t &SOC, uint16_t &SOH);
 
 bool CANPendingBikeStatusMsg();
 

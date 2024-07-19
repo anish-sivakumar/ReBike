@@ -22,7 +22,6 @@ static bool CAN_MB4_BmsSoc_Flag = false;
 
 // function to initialize the CAN communication
 void canInit() {
-    Serial.begin(115200); // Set baud rate to 115200
     can.begin(); // CAN initialization
     can.setBaudRate(500000); // Set CAN baud rate to 500kbit
     can.setMaxMB(16);
@@ -56,24 +55,11 @@ void CANSendThrottleMsg(int throttle) {
 // function used as callback when bike status message enters mailbox
 void CANUpdateBikeStatus(const CAN_message_t &msg){
     // parses CAN message values into variables  
-    Serial.println("got Bike Status!:");
-
-    for(int i = 0; i < 8; i++){
-      Serial.print(msg.buf[i]);
-      Serial.print(" ");
-
-    }
-    Serial.println();
-
-
     bikeStatus.timestamp = (msg.buf[0] << 8) | msg.buf[1];
     bikeStatus.speed = (msg.buf[2] << 8) | msg.buf[3];
     bikeStatus.tempFet = ((uint16_t) msg.buf[4] << 8) | (uint16_t)msg.buf[5];
     bikeStatus.throttleInput = msg.buf[6];
     bikeStatus.errorWarning = msg.buf[7];
-    Serial.print("temp:");
-
-    Serial.println(bikeStatus.tempFet);
     CAN_MB0_BikeStatus_Flag = true; // updated values have been read
 }
 
@@ -112,12 +98,11 @@ void CANUpdateBmsSoc(const CAN_message_t &msg){
     // parses CAN message values into variables 
     bmsSoc.soc = msg.buf[0];
     bmsSoc.soh = msg.buf[2];
-    Serial.println("got SOC!");
     CAN_MB4_BmsSoc_Flag = true; // updated values have been read
 }
 
 // gets the received values from the CAN message and stores values in main
-void getCAN_BikeStatus_Values(uint16_t &timestamp, uint16_t &speed, uint16_t &temp, int8_t &throttleInput, uint8_t &ErrorWarning){
+void CANGetBikeStatus(uint16_t &timestamp, uint16_t &speed, uint16_t &temp, int8_t &throttleInput, uint8_t &ErrorWarning){
     timestamp = bikeStatus.timestamp; 
     speed = bikeStatus.speed;
     temp = bikeStatus.tempFet;
@@ -128,7 +113,7 @@ void getCAN_BikeStatus_Values(uint16_t &timestamp, uint16_t &speed, uint16_t &te
 }
 
 // gets the received values from the CAN message and stores values in main
-void getCAN_MotorVoltages_Values(uint16_t &timestamp, int16_t &VDC, int16_t &VA, int16_t &VB){
+void CANGetMotorVoltages(uint16_t &timestamp, int16_t &VDC, int16_t &VA, int16_t &VB){
     timestamp = motorVoltages.timestamp;
     VDC = motorVoltages.vDC;
     VA = motorVoltages.vA;
@@ -138,7 +123,7 @@ void getCAN_MotorVoltages_Values(uint16_t &timestamp, int16_t &VDC, int16_t &VA,
 }
 
 // gets the received values from the CAN message and stores values in main
-void getCAN_RealCurrents_Values(uint16_t &timestamp, int16_t &IDC, int16_t &IA, int16_t &IB){
+void CANGetRealCurrents(uint16_t &timestamp, int16_t &IDC, int16_t &IA, int16_t &IB){
     timestamp = realCurrents.timestamp;
     IDC = realCurrents.iDC;
     IA = realCurrents.iA;
@@ -148,7 +133,7 @@ void getCAN_RealCurrents_Values(uint16_t &timestamp, int16_t &IDC, int16_t &IA, 
 }
 
 // gets the received values from the CAN message and stores values in main
-void getCAN_CalcValues_Values(uint16_t &timestamp, int16_t &Ref_iq, int16_t &Fdb_iq, int16_t &power){
+void CANGetCalcValues(uint16_t &timestamp, int16_t &Ref_iq, int16_t &Fdb_iq, int16_t &power){
     timestamp = calcValues.timestamp;
     Ref_iq = calcValues.iqRef;
     Fdb_iq = calcValues.iqFdb;
@@ -158,7 +143,7 @@ void getCAN_CalcValues_Values(uint16_t &timestamp, int16_t &Ref_iq, int16_t &Fdb
 }
 
 // gets the received values from the CAN message and stores values in main
-void getCAN_BmsSoc_Values(uint16_t &SOC, uint16_t &SOH){
+void CANGetBmsSoc(uint16_t &SOC, uint16_t &SOH){
     SOC = bmsSoc.soc;
     SOH = bmsSoc.soh;
     CAN_MB4_BmsSoc_Flag = false; // updated values have been set in main, set flag back to false

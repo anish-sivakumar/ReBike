@@ -45,13 +45,13 @@ uint16_t batterySOH = 0; // can track if we want, no real purpose unles we did e
 void timerISR();
 
 void setup() {
+  Serial.begin(115200); // Set Serial debug baud rate to 115200
+
   // Activating logging is breaking the screen SPI, commented out for now
   // logging_enabled = loggingInit(LOGGING_CS_PIN);
   displayInit();
   canInit();
   pinModesInit();
-  Serial.begin(9600);
-
 
   Timer1.initialize(10000); // Initialize Timer1 to trigger ISR at 100 Hz
   Timer1.attachInterrupt(timerISR); // Attach timerISR function to begin the timerISR loop
@@ -128,19 +128,19 @@ void timerISR() {
 
   // receive values from CAN messages if on canbus
   if(CANPendingBikeStatusMsg()){
-    getCAN_BikeStatus_Values(timestampList[0], speed, temp, throttleInput, loggingData.error);
+    CANGetBikeStatus(timestampList[0], speed, temp, throttleInput, loggingData.error);
   }
   if(CANPendingMotorVoltagesMsg()){
-    getCAN_MotorVoltages_Values(timestampList[1], loggingData.vDC, loggingData.vA, loggingData.vB);
+    CANGetMotorVoltages(timestampList[1], loggingData.vDC, loggingData.vA, loggingData.vB);
   }
   if(CANPendingRealCurrentsMsg()){
-    getCAN_RealCurrents_Values(timestampList[2], loggingData.iDC, loggingData.iA, loggingData.iB);
+    CANGetRealCurrents(timestampList[2], loggingData.iDC, loggingData.iA, loggingData.iB);
   }
   if(CANPendingCalcValuesMsg()){
-    getCAN_CalcValues_Values(timestampList[3], loggingData.iqRef, loggingData.iqFdb, power);
+    CANGetCalcValues(timestampList[3], loggingData.iqRef, loggingData.iqFdb, power);
   }
   if(CANPendingBmsSocMsg()){
-    getCAN_BmsSoc_Values(batterySOC, batterySOH);
+    CANGetBmsSoc(batterySOC, batterySOH);
   }
   // send throttle value to controller
   CANSendThrottleMsg(throttle);
@@ -150,6 +150,4 @@ void timerISR() {
 
   // reset throttle flag
   throttle_flag = false;
-
-  Serial.println(speed);
 }
