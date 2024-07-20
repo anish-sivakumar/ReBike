@@ -73,31 +73,43 @@ void pinModesInit() {
 //   Timer1.attachInterrupt(timerISR); // Attach timerISR function
 // }
 
-bool handleThrottleInput(int inputRequest, int &throttle, bool &activatedRegen) {
+bool handleThrottleInput(UserInputRequest inputRequest, int &throttle, bool &activatedRegen, RegenMethod regenMethod) {
   bool throttle_changed = false;
-  if (inputRequest == 1) {
-    // Increase throttle if not at maximum
-    if (throttle == 100) {
-      return false;
-    } else {
-      throttle += 5; // Increase throttle by 20
-      throttle_changed = 1; // Set throttle flag
-    }
-  } else if (inputRequest == 2) {
-    // Decrease throttle if not at minimum
-    if (throttle == 0) {
-      return false;
-    } else {
-      throttle -= 5; // Decrease throttle by 20
-      throttle_changed = 1; // Set throttle flag
-    }
+  switch (UserInputRequest) {
+    case INCREASE:
+      // Increase throttle if not at maximum
+      if (throttle == 100) {
+        return false;
+      } else {
+        throttle += 5; // Increase throttle by 20
+        throttle_changed = 1; // Set throttle flag
+      }
+      break; 
+
+    case DECREASE:
+      // Decrease throttle if not at minimum
+      if (throttle == 0) {
+        return false;
+      } else {
+        throttle -= 5; // Decrease throttle by 20
+        throttle_changed = 1; // Set throttle flag
+      }
+      break; 
+
+    case REGEN:
+      switch (RegenMethod) {
+        case DIGITAL:
+          throttle = -100;
+          break; 
+      } case ANALOG:
+          // No action required as the currentBrakeState has already been set in the timerISR
+          break; 
+      activatedRegen = true;
+      throttle_changed = 1;
+      break; 
   }
 
-  else if (inputRequest == 3) {
-    throttle = -100;
-    activatedRegen = true;
-    throttle_changed = 1;
-  }
+  
   // // Check if any flag is set to send CAN message
   // if (throttle_changed == 1) {
   //   sendCANMSG(); // Send CAN message if any flag is set
