@@ -1,0 +1,11 @@
+Metric,Value
+Regen Requests,483
+Total Regen Time (s),48.8795999999996
+Total Positive Energy (Wh),35343
+Total Positive Energy Efficiency (%),nan
+Total Regen Energy (Wh),35902
+Total Regen Energy Efficiency (%),-62.48251151308182
+Starting Battery SoC (V),16468.0
+Ending Battery SoC (V),16457.0
+Battery SoC Change (V),11.0
+Estimated Effect on Range (km),-37.266666666666666
