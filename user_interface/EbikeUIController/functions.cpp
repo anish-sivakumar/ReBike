@@ -75,7 +75,12 @@ void pinModesInit() {
 
 bool handleThrottleInput(UserInputRequest inputRequest, int &throttle, bool &activatedRegen, RegenMethod regenMethod) {
   bool throttle_changed = false;
-  switch (UserInputRequest) {
+
+  // TESTING:
+  regenMethod = ANALOG;
+
+
+  switch (inputRequest) {
     case INCREASE:
       // Increase throttle if not at maximum
       if (throttle == 100) {
@@ -97,13 +102,17 @@ bool handleThrottleInput(UserInputRequest inputRequest, int &throttle, bool &act
       break; 
 
     case REGEN:
-      switch (RegenMethod) {
+      switch (regenMethod) {
         case DIGITAL:
           throttle = -100;
           break; 
-      } case ANALOG:
+        case ANALOG:
           // No action required as the currentBrakeState has already been set in the timerISR
+          Serial.println("ANALOG BRAKE: ");
+          Serial.println(throttle);
           break; 
+      }
+      
       activatedRegen = true;
       throttle_changed = 1;
       break; 

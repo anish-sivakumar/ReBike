@@ -26,6 +26,17 @@
 // CONTROLS SECTION //
 //////////////////////
 
+typedef enum tagUserInputRequest {
+  INCREASE,
+  DECREASE,
+  REGEN
+} UserInputRequest;
+
+typedef enum tagRegenMethod {
+  DIGITAL,
+  ANALOG
+} RegenMethod;
+
 // Define Throttle connections
 #define THROTTLE_SPEED_INPUT   18    // Pin for throttle increase/decrease speed user input (Analog pin)
 #define REGEN_METHOD_TOGGLE    19    // Pin for regenerative braking method toggle
@@ -57,7 +68,7 @@ void pinModesInit();
 // void timerISR();
 
 // Handles the input request for throttle, updating the system state accordingly
-bool handleThrottleInput(int inputRequest, int &throttle, bool &activatedRegen); 
+bool handleThrottleInput(UserInputRequest inputRequest, int &throttle, bool &activatedRegen, RegenMethod regenMethod); 
 
 // Sends CAN message containing the current state of throttle, regenerative braking method, and activated regenerative braking status
 void sendCANMSG(int throttle);

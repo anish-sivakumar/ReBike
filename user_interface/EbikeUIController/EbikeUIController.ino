@@ -13,16 +13,6 @@ int regenMethod = 1;              // State of active regenerative braking
 bool activatedRegen = false;           // Regenerative braking engaged
 bool logging_enabled;
 
-typedef enum tagUserInputRequest {
-  INCREASE,
-  DECREASE,
-  REGEN
-} UserInputRequest;
-
-typedef enum tagRegenMethod {
-  DIGITAL,
-  ANALOG
-} RegenMethod;
 
 // State variables for debouncings
 volatile bool previousRegenState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
@@ -31,7 +21,7 @@ volatile bool currentDecreaseThrottleState = LOW; // Increase throttle request
 volatile bool previousIncreaseThrottleState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
 volatile bool previousDecreaseThrottleState = HIGH; // Previous state of the REGEN_METHOD_TOGGLE pin
 
-// Can stuff
+// CAN stuff
 CAN_message_t msg;                // CAN message structure
 int throttle_flag = 0;            // Flag to indicate if throttle value has changed
 
@@ -45,7 +35,6 @@ void setup() {
   // canInit(); Commented out until CAN functionality is integrated to avoid compilation errors
   pinModesInit();
   Serial.begin(9600);
-
 
   Timer1.initialize(10000); // Initialize Timer1 to trigger ISR at 100 Hz
   Timer1.attachInterrupt(timerISR); // Attach timerISR function to begin the timerISR loop
@@ -109,8 +98,9 @@ void timerISR() {
   previousRegenState = currentRegenState; // Update previous regen state
 
   // Poll E-BRAKE_ACTIVATED pin (Analog read)
-  int currentBrakeState = analogRead(E_BRAKE_ENGAGED);
-  if (currentBrakeState < -1) {
+  //int currentBrakeState = analogRead(E_BRAKE_ENGAGED);
+  int currentBrakeState = map(analogRead(E_BRAKE_ENGAGED), 280, 990, 0, -100);
+  if (currentBrakeState <= -1) {
     throttle = currentBrakeState;
     if (regenMethod == 1) {
       handleThrottleInput(REGEN, throttle, activatedRegen, DIGITAL); // Digital Ebrake request
