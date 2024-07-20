@@ -30,8 +30,7 @@ volatile bool currentDecreaseThrottleState = LOW;    // Increase throttle reques
 volatile bool previousIncreaseThrottleState = HIGH;  // Previous state of the REGEN_METHOD_TOGGLE pin
 volatile bool previousDecreaseThrottleState = HIGH;  // Previous state of the REGEN_METHOD_TOGGLE pin
 
-// Can variables and declarations
-// FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can0;
+// Can variables
 CAN_message_t msg;                      // CAN message structure
 int throttle_flag = 0;                  // Flag to indicate if throttle was changed
 int8_t throttleInput = 0; // value received from motor controller for verification purposes
@@ -85,7 +84,7 @@ void timerISR() {
   if (currentIncreaseThrottleState != previousIncreaseThrottleState &&
       currentIncreaseThrottleState == HIGH &&
       currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
-    throttle_flag = handleThrottleInput(1, throttle, activatedRegen);  // Increase throttle request
+    handleThrottleInput(INCREASE, throttle, activatedRegen, DIGITAL);  // Increase throttle request
     lastThrottleTime = currentTime; // Update last throttle event time
   }
 
@@ -93,7 +92,7 @@ void timerISR() {
   if (currentDecreaseThrottleState != previousDecreaseThrottleState &&
       currentDecreaseThrottleState == HIGH &&
       currentTime - lastThrottleTime > 25) { // Debounce time of 25ms
-    throttle_flag = handleThrottleInput(2, throttle, activatedRegen); // Decrease throttle request
+    handleThrottleInput(DECREASE, throttle, activatedRegen, DIGITAL); // Decrease throttle request
     lastThrottleTime = currentTime; // Update last throttle event time
   }
 
@@ -112,11 +111,18 @@ void timerISR() {
   }
   previousRegenState = currentRegenState;  // Update previous regen state
 
-  // Poll E-BRAKE_ACTIVATED pin (Digital read)
-  bool currentBrakeState = digitalRead(E_BRAKE_ENGAGED);
-  if (currentBrakeState == LOW) {
-    // As long as the brake is engaged, activate regen
-    throttle_flag = handleThrottleInput(3, throttle, activatedRegen); // Ebrake request
+  // Poll E-BRAKE_ACTIVATED pin (Analog read)
+  //int currentBrakeState = analogRead(E_BRAKE_ENGAGED);
+  int currentBrakeState = map(analogRead(E_BRAKE_ENGAGED), 280, 990, 0, -100);
+  if (currentBrakeState <= -1) {
+    throttle = currentBrakeState;
+    if (regenMethod == 1) {
+      handleThrottleInput(REGEN, throttle, activatedRegen, DIGITAL); // Digital Ebrake request
+    } 
+    else if (regenMethod == 2) {
+      handleThrottleInput(REGEN, throttle, activatedRegen, ANALOG); // Analog Ebrake request
+    }
+    
   } else {
     if (activatedRegen) {
       throttle = 0;            // Reset throttle to zero when eBrake is released
