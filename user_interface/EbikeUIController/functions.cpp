@@ -75,12 +75,11 @@ void pinModesInit() {
 //   Timer1.attachInterrupt(timerISR); // Attach timerISR function
 // }
 
-bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &activatedRegen){
+bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &activatedRegen, RegenMethod regenMethod){
   bool throttle_changed = false;
 
   // TESTING:
   regenMethod = ANALOG;
-
 
   switch (inputRequest) {
     case INCREASE:

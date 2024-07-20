@@ -55,23 +55,11 @@ typedef enum tagRegenMethod {
 // Initializes the OLED display during system startup
 void displayInit();
 
-// Sets up the CAN bus communication, configuring necessary parameters for communication
-// void canInit(); Commented out until CAN functionality is integrated to avoid compilation errors
-
 // Initializes pin modes for the inputs with internal pull-up resistors
 void pinModesInit();
 
-// Initialize Timer to trigger ISR at 100 Hz (every 10 milliseconds)
-// void timerISRInit();
-
-// ISR to be executed every 10 milliseconds, triggered by the timer
-// void timerISR();
-
 // Handles the input request for throttle, updating the system state accordingly
-bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &activatedRegen); 
-
-// Sends CAN message containing the current state of throttle, regenerative braking method, and activated regenerative braking status
-void sendCANMSG(int throttle);
+bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &activatedRegen, RegenMethod regenMethod ); 
 
 // Updates system parameters that show the motor parameters (speed, power, temperature, battery percentage)
 void updateSystemParams(const CAN_message_t &msg, uint16_t &speed); 
