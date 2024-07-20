@@ -10,8 +10,8 @@ void RB_Logging_SumStepISR(RB_LOGGING_SUMS* sums,
     // summed values
     sums->vDC += vDC;
     sums->iDC += iDC; 
-    sums->iqRef += iqRef; 
-    sums->iqFdb += iqFdb; 
+    sums->iqRef += -iqRef; // applying switch in direction from controls
+    sums->iqFdb += -iqFdb; 
     sums->power += power; 
     sums->speed += speed; 
     sums->bridgeTemp += bridgeTemp; 

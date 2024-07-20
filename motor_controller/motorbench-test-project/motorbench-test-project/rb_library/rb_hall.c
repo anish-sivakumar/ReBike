@@ -178,10 +178,18 @@ void RB_HALL_Estimate(RB_HALL_DATA *phall)
     phall->periodFilter = (int16_t)(phall->periodStateVar>>15);
 
     phall->phaseInc = __builtin_divud((uint32_t)PHASE_INC_MULTI,(uint16_t)(phall->periodFilter));
-    phall->speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(phall->periodFilter));
     phall->theta = phall->theta + phall->phaseInc;
 
-
+    if (phall->minSpeedReached)
+    {
+        phall->speed = __builtin_divud((uint32_t)SPEED_MULTI,(uint16_t)(phall->periodFilter));
+    } 
+    else
+    {
+        phall->speed = 0;
+    }
+    
+    
     if(phall->correctionCounter > 0)
     {
         phall->theta = phall->theta + phall->correctionFactor;

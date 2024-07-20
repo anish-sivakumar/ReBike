@@ -23,9 +23,9 @@ typedef enum tagCAN_ID {
     // to change the IDs to #defines instead
     CAN_ID_BMS_SOC = 0x355,
     CAN_ID_UIC = 0x334,
-    CAN_ID_BIKE_STATUS = 0x330,
-    CAN_ID_MOTOR_VOLTAGES = 0x331,
-    CAN_ID_MOTOR_REAL_CURRENTS = 0x332,
+    CAN_ID_BIKE_STATUS = 0x300,
+    CAN_ID_MOTOR_VOLTAGES = 0x311,
+    CAN_ID_MOTOR_REAL_CURRENTS = 0x322,
     CAN_ID_MOTOR_CALC_VALUES = 0x333
 } CAN_ID;
 
