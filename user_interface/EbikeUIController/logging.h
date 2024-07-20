@@ -1,7 +1,7 @@
 
 #define CAN_RX_MSG_COUNT 4  // number of different can messages received from the motor controller
 #define LOGGING_CS_PIN 9    // chip select pin for sd card module
-#define LOGGING_HEADER "timestamp,vDC,iDC,iA,iB,vA,vB,speed,regen_method,throttle,iqRef,iqFdb,temp_fet,power,error,SOC"
+#define LOGGING_HEADER "timestamp,vDC,iDC,iA,iB,vA,vB,speed,regen_method,throttle,iqRef,iqFdb,temp_fet,power,error,SOC,vBMS,iBMS"
 
 // variables that only appear in our logs
 typedef struct tagLoggingData {
@@ -14,6 +14,8 @@ typedef struct tagLoggingData {
   int16_t iqRef;     // q-axis current reference
   int16_t iqFdb;     // q-axis current something???
   uint8_t error;      // error code from motor controller
+  int16_t vBMS;
+  int16_t iBMS;
 } LoggingData;
 
 // TODO: decide if this is needed

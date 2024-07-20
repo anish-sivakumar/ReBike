@@ -147,6 +147,10 @@ void timerISR() {
   }
   if(CANPendingBmsSocMsg()){
     CANGetBmsSoc(batterySOC, batterySOH);
+    //Serial.print(batterySOC); Serial.println(batterySOH);
+  }
+  if(CANPendingBmsVIMsg()){
+    CANGetBmsVI(loggingData.vBMS, loggingData.iBMS);
   }
   // send throttle value to controller
   CANSendThrottleMsg(throttle);

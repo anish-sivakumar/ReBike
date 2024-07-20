@@ -106,6 +106,10 @@ void loggingStepWrite(uint16_t timestamp, int throttle, int speed, int power, in
   log_file.print(logging_data.error);
   log_file.write(',');
   log_file.print(batterySOC);
+  log_file.write(',');
+  log_file.print(logging_data.vBMS);
+  log_file.write(',');
+  log_file.print(logging_data.iBMS);
   log_file.write('\n');
 
   log_file.close();
