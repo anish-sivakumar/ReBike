@@ -111,8 +111,11 @@ void timerISR() {
 
   // Poll E-BRAKE_ACTIVATED pin (Analog read)
   //int currentBrakeState = analogRead(E_BRAKE);
-  int currentBrakeState = map(analogRead(E_BRAKE), 280, 990, 0, -100);
-  if (currentBrakeState <= -1) {
+  int currentBrakeState = map(analogRead(E_BRAKE), 280, 980, 0, -100);
+
+  currentBrakeState = (currentBrakeState < -100) ? -100 : currentBrakeState;
+
+  if (currentBrakeState <= -5) { //analog ebrake sits at -2 at above mapping
     throttle = currentBrakeState;
     if (regenMethod == 1) {
       handleThrottleInput(REGEN, throttle, activatedRegen, DIGITAL); // Digital Ebrake request

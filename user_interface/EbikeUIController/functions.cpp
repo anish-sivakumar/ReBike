@@ -75,8 +75,6 @@ bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &
           break; 
         case ANALOG:
           // No action required as the currentBrakeState has already been set in the timerISR
-          Serial.println("ANALOG BRAKE: ");
-          Serial.println(throttle);
           break; 
       }
       
