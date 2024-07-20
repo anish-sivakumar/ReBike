@@ -24,14 +24,6 @@ int temp_string_length;           // Length of the temperature string
 char battery_string[10];          // String to display battery range
 int battery_string_length;        // Length of the battery string
 
-/////////////////
-// CAN GLOBALS //
-/////////////////
-
-// CAN2.0 declaration - CAN0 port on Teensy 3.2
-FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can0;
-
-// Function to initialize the OLED display
 void displayInit() {
 
   u8g2.begin(); // Initialize the OLED display
@@ -46,40 +38,14 @@ void displayInit() {
 
 }
 
-// Function to initialize the CAN communication
-// void canInit() {
-//   Serial.begin(115200); // Set baud rate to 115200
-//   can0.begin(); // CAN initialization
-//   can0.setBaudRate(500000); // Set CAN baud rate to 500kbit
-
-//   can0.setMBFilter(REJECT_ALL);
-//   can0.setMBFilter(MB0, SYSTEM_PARAMS_ID); // Set mailbox CAN ID filters
-//   can0.enableMBInterrupt(MB0); // Enable mailbox interrupts
-//   can0.onReceive(MB0, updateSystemParams); // Set mailbox 0 to receive system parameters, assign updateSystemParams function
-//   can0.setMB(MB1, TX); // Set mailbox 1 as transmit
-  
-//   msg.id = 0x333; // Set CAN ID 0x333 to throttle/regen info 
-//   msg.len = 8; // Data length set to 8 bytes
-// }
-
-// Function to set pin modes
 void pinModesInit() {
-  pinMode(E_BRAKE_ENGAGED, INPUT_PULLUP);
+  pinMode(E_BRAKE, INPUT_PULLUP);
   pinMode(REGEN_METHOD_TOGGLE, INPUT_PULLUP);
   pinMode(THROTTLE_SPEED_INPUT, INPUT); // Analog input pin does not need pull-up
 }
 
-// // Function to initialize Timer1 and attach ISR
-// void timerISRInit() {
-//   Timer1.initialize(10000); // Initialize Timer1 to trigger ISR at 100 Hz
-//   Timer1.attachInterrupt(timerISR); // Attach timerISR function
-// }
-
 bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &activatedRegen, RegenMethod regenMethod){
   bool throttle_changed = false;
-
-  // TESTING:
-  regenMethod = ANALOG;
 
   switch (inputRequest) {
     case INCREASE:
@@ -127,24 +93,6 @@ bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &
   // } Commented out until CAN functionality is integrated to avoid compilation errors
 
   return throttle_changed;
-}
-
-// Function to send CAN messages
-void sendCANMSG(int throttle) {
-  CAN_message_t msg;
-  msg.buf[0] = throttle & 0xFF; // Throttle value in byte 0
-  can0.write(MB1, msg); // Send message to mailbox 1 (transmit mailbox)
-
-  // // Reset flags after sending the message
-  // throttle_flag = 0;
-}
-
-// Function to update system parameters from CAN messages
-void updateSystemParams(const CAN_message_t &msg) {
-  // speed = (msg.buf[1] << 8) | msg.buf[0]; // Speed allocated to bytes 0-1
-  // power = (msg.buf[3] << 8) | msg.buf[2]; // Power allocated to bytes 2-3
-  // temp = msg.buf[4]; // Temperature allocated to byte 4
-  // batterySOC = (msg.buf[6] << 8) | msg.buf[5]; // Battery SOC allocated to bytes 5-6
 }
 
 // Function to update the display with the latest values

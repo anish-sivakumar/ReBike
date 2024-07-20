@@ -13,7 +13,6 @@ uint16_t batterySOC = 0;               // Battery state of charge of the e-bike
 
 int regenMethod = 1;              // State of active regenerative braking
 bool activatedRegen = false;           // Regenerative braking engaged
-bool logging_enabled;
 
 LoggingData loggingData;
 
@@ -43,8 +42,7 @@ void timerISR();
 void setup() {
   Serial.begin(115200); // Set Serial debug baud rate to 115200
 
-  // Activating logging is breaking the screen SPI, commented out for now
-  logging_enabled = loggingInit(LOGGING_CS_PIN);
+  loggingInit(LOGGING_CS_PIN);
   displayInit();
   canInit();
   pinModesInit();
@@ -112,8 +110,8 @@ void timerISR() {
   previousRegenState = currentRegenState;  // Update previous regen state
 
   // Poll E-BRAKE_ACTIVATED pin (Analog read)
-  //int currentBrakeState = analogRead(E_BRAKE_ENGAGED);
-  int currentBrakeState = map(analogRead(E_BRAKE_ENGAGED), 280, 990, 0, -100);
+  //int currentBrakeState = analogRead(E_BRAKE);
+  int currentBrakeState = map(analogRead(E_BRAKE), 280, 990, 0, -100);
   if (currentBrakeState <= -1) {
     throttle = currentBrakeState;
     if (regenMethod == 1) {

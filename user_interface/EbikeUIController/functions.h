@@ -37,19 +37,10 @@ typedef enum tagRegenMethod {
   ANALOG
 } RegenMethod;
 
-// Define Throttle connections
-#define THROTTLE_SPEED_INPUT   18    // Pin for throttle increase/decrease speed user input (Analog pin)
-#define REGEN_METHOD_TOGGLE    19    // Pin for regenerative braking method toggle
-
-// Define E-Brake pin connections
-#define E_BRAKE_ENGAGED        16    // Pin for E-Brake activation
-
-/////////////////
-// CAN SECTION // 
-/////////////////
-#include <FlexCAN_T4.h>
-
-#define SYSTEM_PARAMS_ID  (uint32_t)0x330  // Motor parameters CAN identifier
+// Define Controls connections
+#define THROTTLE_SPEED_INPUT  18    // Pin for throttle increase/decrease speed user input (Analog pin)
+#define REGEN_METHOD_TOGGLE   19    // Pin for regenerative braking method toggle
+#define E_BRAKE               16    // Pin for E-Brake activation
 
 
 // Initializes the OLED display during system startup
@@ -60,9 +51,6 @@ void pinModesInit();
 
 // Handles the input request for throttle, updating the system state accordingly
 bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &activatedRegen, RegenMethod regenMethod ); 
-
-// Updates system parameters that show the motor parameters (speed, power, temperature, battery percentage)
-void updateSystemParams(const CAN_message_t &msg, uint16_t &speed); 
 
 // Updates the display with the latest system information
 void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC, int regenMethod);
