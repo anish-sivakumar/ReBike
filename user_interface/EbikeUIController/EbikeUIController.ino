@@ -110,11 +110,9 @@ void timerISR() {
   previousRegenState = currentRegenState;  // Update previous regen state
 
   // Poll E-BRAKE_ACTIVATED pin (Analog read)
-  //int currentBrakeState = analogRead(E_BRAKE);
   int currentBrakeState = map(analogRead(E_BRAKE), 280, 980, 0, -100);
-
+  // Clamp the value of analog brake to -100.
   currentBrakeState = (currentBrakeState < -100) ? -100 : currentBrakeState;
-
   if (currentBrakeState <= -5) { //analog ebrake sits at -2 at above mapping
     throttle = currentBrakeState;
     if (regenMethod == 1) {
@@ -130,6 +128,8 @@ void timerISR() {
       activatedRegen = false;  // When the brake is released, deactivate regen
     }
   }
+  Serial.println("Throttle: ");
+  Serial.println(throttle);
 
   // receive values from CAN messages if there are pending messages
   bool gotNewTimestamp = false;

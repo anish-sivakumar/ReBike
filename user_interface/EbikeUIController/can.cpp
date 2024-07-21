@@ -1,7 +1,7 @@
 #include "can.h"
 
 // global can object
-static FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> can;
+static FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_16> can;
 
 // global objects to hold can data;
 CAN_BikeStatus_Struct     bikeStatus;
@@ -54,7 +54,7 @@ void CANSendThrottleMsg(int throttle) {
   msg.id = CAN_ID_UI; // ID: 0x334
   msg.len = 8;
   msg.buf[0] = throttle & 0xFF; // Throttle value in byte 0
-  can.write(msg); // Send message to mailbox 6 (transmit mailbox)
+  can.write(msg); // Send message to mailbox 5 (transmit mailbox)
 }
 
 // function used as callback when bike status message enters mailbox

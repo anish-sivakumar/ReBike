@@ -40,7 +40,7 @@ typedef enum tagRegenMethod {
 // Define Controls connections
 #define THROTTLE_SPEED_INPUT  18    // Pin for throttle increase/decrease speed user input (Analog pin)
 #define REGEN_METHOD_TOGGLE   19    // Pin for regenerative braking method toggle
-#define E_BRAKE               16    // Pin for E-Brake activation
+#define E_BRAKE               17    // Pin for E-Brake activation
 
 
 // Initializes the OLED display during system startup
