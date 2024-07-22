@@ -27,6 +27,10 @@ void canInit() {
     can.begin(); // CAN initialization
     can.setBaudRate(500000); // Set CAN baud rate to 500kbit
     can.setMaxMB(16);
+    can.setMB(MB0, RX, STD); // Set mailbox 0 as standard ID receive
+    can.setMB(MB1, RX, STD); // Set mailbox 1 as standard ID receive
+    can.setMB(MB2, RX, STD); // Set mailbox 2 as standard ID receive
+    can.setMB(MB3, RX, STD); // Set mailbox 3 as standard ID receive
     can.setMB(MB4, RX, STD); // Set mailbox 4 as standard ID receive
     can.setMB(MB6, RX, STD); // Set mailbox 6 as standard ID receive
     can.setMB(MB5, TX); // Set mailbox 5 as transmit
@@ -54,7 +58,7 @@ void CANSendThrottleMsg(int throttle) {
   msg.id = CAN_ID_UI; // ID: 0x334
   msg.len = 8;
   msg.buf[0] = throttle & 0xFF; // Throttle value in byte 0
-  can.write(msg); // Send message to mailbox 5 (transmit mailbox)
+  can.write(MB5, msg); // Send message to mailbox 5 (transmit mailbox)
 }
 
 // function used as callback when bike status message enters mailbox
