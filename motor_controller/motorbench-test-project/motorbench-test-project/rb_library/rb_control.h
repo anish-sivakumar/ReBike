@@ -164,6 +164,14 @@ void RB_SetCurrentReference(int16_t throttleCmd, MC_DQ_T *pidqRef,
 bool RB_PISaturationDetect(int16_t *piqRef, int16_t iqFdb, int16_t vqCmd, int16_t speed);
 
 
+/**
+ * Clamp input to max and min
+ * @param input
+ * @param max
+ * @param min
+ */
+void RB_ClampInput8Bit(int8_t* input, int8_t max, int8_t min);
+
 
 #ifdef	__cplusplus
 }

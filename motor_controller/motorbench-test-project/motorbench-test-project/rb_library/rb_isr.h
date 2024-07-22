@@ -274,6 +274,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     throttleCmd_Q15 = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
             : boardUI.potState;
 #else
+    RB_ClampInput8Bit(&tempThrottle, MAX_THROTTLE_INPUT, MIN_THROTTLE_INPUT);
     throttleCmd_Q15 = (int16_t)(tempThrottle) * THROTTLE_MULTIPLIER;
 #endif
     

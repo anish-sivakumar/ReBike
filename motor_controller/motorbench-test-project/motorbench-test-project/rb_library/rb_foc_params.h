@@ -48,6 +48,10 @@ extern "C" {
 #define     RB_PHASECURRENT_MAX     10000  // 13.33A peak < User guide 10A rms
 #define     RB_BRIDGETEMP_MAX       75 // MOSFET data sheet says 150C max
     
+// Throttle input from CAN
+#define     MAX_THROTTLE_INPUT      100
+#define     MIN_THROTTLE_INPUT      -100
+    
 
 #ifdef	__cplusplus
 }
