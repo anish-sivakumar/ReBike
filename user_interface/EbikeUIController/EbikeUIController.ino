@@ -64,7 +64,8 @@ void timerISR() {
 
   // Poll THROTTLE_SPEED_INPUT pin (Analog read)
   int currentThrottleValue = analogRead(THROTTLE_SPEED_INPUT);
-  Serial.println(currentThrottleValue);
+  //Serial.println(currentThrottleValue);
+
   // Determine throttle state based on current throttle value
   if (currentThrottleValue < 20) {
     currentIncreaseThrottleState = HIGH;  // Increase throttle request
@@ -110,10 +111,17 @@ void timerISR() {
   previousRegenState = currentRegenState;  // Update previous regen state
 
   // Poll E-BRAKE_ACTIVATED pin (Analog read)
-  int currentBrakeState = map(analogRead(E_BRAKE), 280, 980, 0, -100);
+  int rawAnalogBrake = analogRead(E_BRAKE);
+
+  /* adjusted with motor running. noise can caue ADC reading for 311 with no pull
+      there's also a dead zone from 280 to 310  when pulling*/
+  int currentBrakeState = map(rawAnalogBrake, 315, 730, 0, -100);
+
   // Clamp the value of analog brake to -100.
   currentBrakeState = (currentBrakeState < -100) ? -100 : currentBrakeState;
-  if (currentBrakeState <= -5) { //analog ebrake sits at -2 at above mapping
+
+  if (currentBrakeState <= -5) { //safety factor to not trigger on noise
+
     throttle = (int8_t)currentBrakeState;
     if (regenMethod == 1) {
       handleThrottleInput(REGEN, throttle, activatedRegen, DIGITAL); // Digital Ebrake request
@@ -164,7 +172,7 @@ void timerISR() {
     timestampExpected = loggingNextExpectedTimestamp(timestampList);
   } else {
     // Update display with current status
-    updateDisplay(-100, speed, -800, temp, batterySOC, regenMethod);
+    updateDisplay(throttle, speed, power, temp, batterySOC, regenMethod);
   }
 
   // reset throttle flag
