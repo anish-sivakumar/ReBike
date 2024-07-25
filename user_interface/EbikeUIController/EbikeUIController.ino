@@ -64,12 +64,12 @@ void timerISR() {
 
   // Poll THROTTLE_SPEED_INPUT pin (Analog read)
   int currentThrottleValue = analogRead(THROTTLE_SPEED_INPUT);
-
+  Serial.println(currentThrottleValue);
   // Determine throttle state based on current throttle value
   if (currentThrottleValue < 20) {
     currentIncreaseThrottleState = HIGH;  // Increase throttle request
     currentDecreaseThrottleState = LOW;
-  } else if (currentThrottleValue > 52 && currentThrottleValue < 58) {
+  } else if (currentThrottleValue > 52 && currentThrottleValue < 70) {
     currentIncreaseThrottleState = LOW;  // Decrease throttle request
     currentDecreaseThrottleState = HIGH;
   } else {
@@ -114,7 +114,7 @@ void timerISR() {
   // Clamp the value of analog brake to -100.
   currentBrakeState = (currentBrakeState < -100) ? -100 : currentBrakeState;
   if (currentBrakeState <= -5) { //analog ebrake sits at -2 at above mapping
-    throttle = currentBrakeState;
+    throttle = (int8_t)currentBrakeState;
     if (regenMethod == 1) {
       handleThrottleInput(REGEN, throttle, activatedRegen, DIGITAL); // Digital Ebrake request
     } 
@@ -128,29 +128,25 @@ void timerISR() {
       activatedRegen = false;  // When the brake is released, deactivate regen
     }
   }
-  Serial.println("Throttle: ");
-  Serial.println(throttle);
+  // Serial.println("Throttle: ");
+  // Serial.println(throttle);
 
-  // receive values from CAN messages if there are pending messages
   bool gotNewTimestamp = false;
-  if(CANPendingBikeStatusMsg()){
+  if(CANPendingBikeStatusMsg()){  // receive values from CAN messages if there are pending messages
     CANGetBikeStatus(timestampList[0], speed, temp, throttleInput, loggingData.error);
     gotNewTimestamp = true;
   }
   if(CANPendingMotorVoltagesMsg()){
     CANGetMotorVoltages(timestampList[1], loggingData.vDC, loggingData.vA, loggingData.vB);
     gotNewTimestamp = true;
-
   }
   if(CANPendingRealCurrentsMsg()){
     CANGetRealCurrents(timestampList[2], loggingData.iDC, loggingData.iA, loggingData.iB);
     gotNewTimestamp = true;
-
   }
   if(CANPendingCalcValuesMsg()){
     CANGetCalcValues(timestampList[3], loggingData.iqRef, loggingData.iqFdb, power);
     gotNewTimestamp = true;
-
   }
   if(CANPendingBmsSocMsg()){
     CANGetBmsSoc(batterySOC, batterySOH);
@@ -168,7 +164,7 @@ void timerISR() {
     timestampExpected = loggingNextExpectedTimestamp(timestampList);
   } else {
     // Update display with current status
-    updateDisplay(throttle, speed, power, temp, batterySOC, regenMethod);
+    updateDisplay(-100, speed, -800, temp, batterySOC, regenMethod);
   }
 
   // reset throttle flag

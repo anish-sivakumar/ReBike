@@ -94,7 +94,7 @@ bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &
 }
 
 // Function to update the display with the latest values
-void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC, int regenMethod) {
+void updateDisplay(int8_t throttle, uint16_t speed, int16_t power, uint16_t temp, uint16_t batterySOC, int regenMethod) {
 
   // SPI.beginTransaction(SPISettings(8000000, MSBFIRST, SPI_MODE0)); // 8 MHz, most significant bit first, SPI mode 0
   // digitalWrite(OLED_CS, LOW); // Select OLED display
@@ -109,10 +109,19 @@ void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC,
     negativeThrottle = false;
   }
 
+  bool negativePower;
+  // Handle negative power values
+  if (power < 0) {
+    itoa(power * -1, power_string, 10);
+    negativePower = true;  
+  } else {
+    itoa(power, power_string, 10);
+    negativePower = false;
+  }
+
   int speedKph = (int)((float)speed * 0.135);
   // Convert integer values to string representations
   itoa(speedKph, speed_string, 10);
-  itoa(power, power_string, 10);
   itoa(temp, temp_string, 10);
   itoa(batterySOC, battery_string, 10);
 
@@ -133,7 +142,7 @@ void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC,
     }
 
     if (negativeThrottle) {
-      u8g2.drawBitmap(2, 46, 8/8, 2, epd_bitmap_negative_sym); // Draw negative sign
+      u8g2.drawBitmap(1, 45, 8/8, 2, epd_bitmap_negative_throttle_symbol); // Draw negative sign
     }
 
     // Draw throttle value on the display
@@ -141,9 +150,17 @@ void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC,
       u8g2.drawBitmap((38 - throttle_string_length * 10) + 10 * i, 41, 8 / 8, 12, epd_bitmap_throttleDigitsArray[throttle_string[i] - 48]);
     }
 
+    // if (negativePower) {
+    //   u8g2.drawBitmap(80, 12, 8/8, 1, epd_bitmap_negative_power_symbol); // Draw negative sign
+    // }
+
     // Draw power value on the display
     for (int i = 0; i < power_string_length; i++) {
       u8g2.drawBitmap((102 - power_string_length * 4) + 6 * i, 9, 8 / 8, 6, epd_bitmap_motorDigitsArray[power_string[i] - 48]);
+    }
+
+    if (negativePower) {
+      u8g2.drawBitmap(83, 11, 8/8, 1, epd_bitmap_negative_power_symbol); // Draw negative sign
     }
 
     // Draw temperature value on the display

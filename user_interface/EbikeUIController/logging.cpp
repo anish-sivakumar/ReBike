@@ -115,7 +115,6 @@ void loggingStepWrite(uint16_t timestamp, int throttle, int speed, int power, in
   log_file.close();
   SPI.endTransaction();
 
-
   Serial.print("time to log:");
   Serial.println(millis() - start);
 }

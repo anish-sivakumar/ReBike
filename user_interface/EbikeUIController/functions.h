@@ -53,6 +53,6 @@ void pinModesInit();
 bool handleThrottleInput(UserInputRequest inputRequest, int8_t &throttle, bool &activatedRegen, RegenMethod regenMethod ); 
 
 // Updates the display with the latest system information
-void updateDisplay(int throttle, int speed, int power, int temp, int batterySOC, int regenMethod);
+void updateDisplay(int8_t throttle, uint16_t speed, int16_t power, uint16_t temp, uint16_t batterySOC, int regenMethod);
 
 #endif // FUNCTIONS_H
