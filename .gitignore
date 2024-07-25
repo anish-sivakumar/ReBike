@@ -38,4 +38,4 @@
 .pio/
 
 # Motorbench logs
-/motorbench/log/
+*/motorbench/log/*

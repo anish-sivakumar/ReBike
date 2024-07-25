@@ -79,21 +79,21 @@ typedef struct
 typedef struct
 {
     int16_t                 rawIa;      /** raw phase A current from ADC */ 
-    int16_t                 qKaa;        /** Q15 phase A gain */
-    int16_t                 qKab;        /** Q15 cross-coupling gain B->A */
     int32_t                 sumIa;       /* Accumulation of Ia to calculate offset*/
-    int16_t                 offsetIa;     /** phase A offset */
+    int16_t                 offsetIa;     /** phase A current offset */
     
     int16_t                 rawIb;      /** raw phase B current from ADC */
-    int16_t                 qKba;        /** Q15 cross-coupling gain A->B */
-    int16_t                 qKbb;        /** Q15 phase B gain */
     int32_t                 sumIb;       /* Accumulation of Ib to calculate offset*/
-    int16_t                 offsetIb;     /** phase B offset */
+    int16_t                 offsetIb;     /** phase B current offset */
     
     int16_t                 rawIdc;      /** raw DC current from ADC */
-    int16_t                 qKidc;       /** Q15 DC link gain */
     int32_t                 sumIdc;        /* Accumulation of Idc to calculate offset*/
-    int16_t                 offsetIdc;   /** DC link offset */
+    int16_t                 offsetIdc;   /** DC link current offset */
+    
+    // only doing this for phase A voltage because it is offset, and others are not
+    int16_t                 rawVa;      /** raw phase A voltage from ADC */ 
+    int32_t                 sumVa;       /* Accumulation of Va to calculate offset*/
+    int16_t                 offsetVa;     /** phase A voltage offset */
     
     int16_t                 calibCounter;  /** counted number of samples used to calc offset */
     bool                    done; /** true when offset values have been calculated */

@@ -134,6 +134,10 @@
           <itemPath>mcc_generated_files/qei/qei_interface.h</itemPath>
           <itemPath>mcc_generated_files/qei/qei_types.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="spi_host" displayName="spi_host" projectFiles="true">
+          <itemPath>mcc_generated_files/spi_host/spi_host_interface.h</itemPath>
+          <itemPath>mcc_generated_files/spi_host/spi1.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <itemPath>mcc_generated_files/system/interrupt.h</itemPath>
           <itemPath>mcc_generated_files/system/reset_types.h</itemPath>
@@ -153,6 +157,7 @@
           <itemPath>mcc_generated_files/timer/sccp1.h</itemPath>
           <itemPath>mcc_generated_files/timer/sccp4.h</itemPath>
           <itemPath>mcc_generated_files/timer/sccp5.h</itemPath>
+          <itemPath>mcc_generated_files/timer/delay.h</itemPath>
         </logicalFolder>
         <logicalFolder name="uart" displayName="uart" projectFiles="true">
           <itemPath>mcc_generated_files/uart/uart1.h</itemPath>
@@ -167,6 +172,10 @@
       <itemPath>rb_library/rb_pwm.h</itemPath>
       <itemPath>rb_library/rb_board_ui.h</itemPath>
       <itemPath>rb_library/rb_communication.h</itemPath>
+      <itemPath>rb_library/rb_mcp.h</itemPath>
+      <itemPath>rb_library/rb_mcp_defs.h</itemPath>
+      <itemPath>rb_library/rb_logging.h</itemPath>
+      <itemPath>rb_library/rb_can.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -255,6 +264,11 @@
             <itemPath>mcc_generated_files/qei/src/qei1.c</itemPath>
           </logicalFolder>
         </logicalFolder>
+        <logicalFolder name="spi_host" displayName="spi_host" projectFiles="true">
+          <logicalFolder name="src" displayName="src" projectFiles="true">
+            <itemPath>mcc_generated_files/spi_host/src/spi1.c</itemPath>
+          </logicalFolder>
+        </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/system/src/dmt_asm.s</itemPath>
@@ -274,6 +288,7 @@
             <itemPath>mcc_generated_files/timer/src/tmr1.c</itemPath>
             <itemPath>mcc_generated_files/timer/src/sccp4.c</itemPath>
             <itemPath>mcc_generated_files/timer/src/sccp5.c</itemPath>
+            <itemPath>mcc_generated_files/timer/src/delay.c</itemPath>
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="uart" displayName="uart" projectFiles="true">
@@ -290,6 +305,9 @@
       <itemPath>rb_library/rb_pwm.c</itemPath>
       <itemPath>rb_library/rb_board_ui.c</itemPath>
       <itemPath>rb_library/rb_communication.c</itemPath>
+      <itemPath>rb_library/rb_mcp.c</itemPath>
+      <itemPath>rb_library/rb_logging.c</itemPath>
+      <itemPath>rb_library/rb_can.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

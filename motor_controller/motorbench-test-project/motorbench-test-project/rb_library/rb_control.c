@@ -131,3 +131,15 @@ bool RB_PISaturationDetect(int16_t *piqRef, int16_t iqFdb, int16_t vqCmd,
     
     return isSaturated;
 }
+
+
+void RB_ClampInput8Bit(int8_t* input, int8_t max, int8_t min)
+{
+    if(*input > max)
+    {
+        *input = max;
+    } else if (*input < min)
+    {
+        *input = min;
+    }
+}

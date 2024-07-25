@@ -25,8 +25,16 @@ extern "C" {
 #include "library/mc-library/motor_control.h"
 #include "motorBench/math_asm.h"
 #include "timer/sccp5.h"
+#include "rb_logging.h"
+#include "spi_host/spi1.h"
+#include "rb_mcp.h"
+#include "rb_can.h"
+    
+#define THROTTLE_MULTIPLIER 327
+    
+// comment out for CAN controlled throttle
+//#define POT_THROTTLE
 
- 
 typedef enum 
 {   
     RBFSM_INIT = 0,
@@ -46,8 +54,19 @@ RB_BOOTSTRAP bootstrap;
 RB_BOARD_UI boardUI;
 RB_FAULT_DATA faultState;
 int16_t throttleCmd_Q15 = 0;
-uint16_t ADCISRExecutionTime; // monitor this value. Should be < 4999 (50us)
+uint16_t ADCISRExecutionTime; // monitor this value as code increases
 
+// Logging objects
+RB_LOGGING_SUMS logSums;
+RB_LOGGING_AVERAGES logAverages;
+
+// random can testing vars
+RB_CAN_CONTROL CANControl;
+int8_t tempThrottle = 0; // raw throttle value from teensy 
+CAN_FRAME canFrame0;
+extern uint8_t canTestArr[20]; // DO WE NEED THIS CHRIS?
+
+uint8_t  SPI_received;
 /**
  * Executes tasks in the ISR for ADC interrupts.
  * 
@@ -77,6 +96,14 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
             RB_BoardUIInit(&boardUI);
             RB_FaultInit(&faultState);
 
+            // logging init
+            RB_Logging_SumReset(&logSums);
+                        
+            //CAN testing inits
+            CANControl.timestamp = 0;
+            CANControl.state = RBCAN_MESSAGE1;
+            CANControl.counter = 0;
+                  
             state = RBFSM_BOARD_INIT;
             break;
             
@@ -224,19 +251,40 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
         state = RBFSM_FAULTED;
         stateChanged = true;
     }
-        
+
+    // logging summations
+    RB_Logging_SumStepISR(&logSums,
+                          PMSM.vDC, PMSM.iDC, PMSM.idqRef.q, PMSM.idqFdb.q,
+                          PMSM.power, hall.speed, PMSM.bridgeTemp, PMSM.iabc.a, 
+                          PMSM.iabc.b, PMSM.vabc.a, PMSM.vabc.b);
+    
+    // calculate logging averages and rms
+    if (CANControl.counter == RB_CAN_CYCLE_COUNT_MINUS1)
+    {
+        RB_Logging_Average(&logAverages, &logSums);
+        RB_Logging_SumReset(&logSums);
+    }
+    
+    //logAverages.speed = hall.speed; // set variables here before sending over CAN
+    CANControl.counter = (CANControl.counter + 1) % RB_CAN_CYCLE_COUNT;
+    RB_CAN_Service(&canFrame0, &tempThrottle, &CANControl, throttleCmd_Q15, 0, logAverages); // 0  = errorWarning
+    
+    
+#ifdef POT_THROTTLE
+    throttleCmd_Q15 = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
+            : boardUI.potState;
+#else
+    RB_ClampInput8Bit(&tempThrottle, MAX_THROTTLE_INPUT, MIN_THROTTLE_INPUT);
+    throttleCmd_Q15 = (int16_t)(tempThrottle) * THROTTLE_MULTIPLIER;
+#endif
+    
+   
     /* interrupt flag must be cleared after data is read from buffer */
     HAL_ADC_InterruptFlag_Clear(); 
     
     /* Low-priority tasks at the end */
     X2CScope_Update();
     RB_BoardUIService(&boardUI); // update the button states and the POT value
-    
-    /* change throttleCmd_Q15 to be from CAN and scale to Q15
-     *  mid point of the pot is non zero, around 2000
-     */
-    throttleCmd_Q15 = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
-            : boardUI.potState;
     
     /* Lastly, record timer period to measure ADC ISR execution time */
     SCCP5_Timer_Stop();

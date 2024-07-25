@@ -7,20 +7,17 @@
 
 void RB_ADCCalibrationInit(RB_MEASURE_CURRENT_T *pcalib)
 {
-    /* Scaling constants: Determined by calibration or hardware design. */
-    pcalib->qKaa = C_KAA;
-    pcalib->qKab = C_KAB;         /* cross-axis gain compensation terms */
     pcalib->sumIa = 0;
     pcalib->offsetIa = 0;
     
-    pcalib->qKba = C_KBA;         /* cross-axis gain compensation terms */
-    pcalib->qKbb = C_KBB;
     pcalib->sumIb = 0;
     pcalib->offsetIb = 0;
     
-    pcalib->qKidc = 0; // not sure for now, deal with Idc later
     pcalib->sumIdc = 0;
     pcalib->offsetIdc = 0;
+    
+    pcalib->sumVa = 0;
+    pcalib->offsetVa = 0;
     
     pcalib->calibCounter = 0;
     pcalib->done = false;
@@ -39,11 +36,13 @@ void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib)
     pcalib->rawIa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_CURRENT);
     pcalib->rawIb = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_CURRENT);
     pcalib->rawIdc = MCC_ADC_ConversionResultGet(MCAF_ADC_DCLINK_CURRENT);
+    pcalib->rawVa = MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_VOLTAGE);
     
     // sum current values
     pcalib->sumIa += pcalib->rawIa;
     pcalib->sumIb += pcalib->rawIb;
     pcalib->sumIdc += pcalib->rawIdc;
+    pcalib->sumVa += pcalib->rawVa;
     
     pcalib->calibCounter++;
     
@@ -53,11 +52,13 @@ void RB_ADCCalibrationStepISR(RB_MEASURE_CURRENT_T *pcalib)
         pcalib->offsetIa = (int16_t)(pcalib->sumIa >> CURRENT_OFFSET_COUNT_BITS);
         pcalib->offsetIb = (int16_t)(pcalib->sumIb >> CURRENT_OFFSET_COUNT_BITS);
         pcalib->offsetIdc = (int16_t)(pcalib->sumIdc >> CURRENT_OFFSET_COUNT_BITS);
+        pcalib->offsetVa = (int16_t)(pcalib->sumVa >> CURRENT_OFFSET_COUNT_BITS);
 
         pcalib->calibCounter = 0;
         pcalib->sumIa = 0;
         pcalib->sumIb = 0;
         pcalib->sumIdc = 0;
+        pcalib->sumVa = 0;
         pcalib->done = true;
     }
 }
@@ -94,8 +95,8 @@ void RB_ADCReadStepISR(RB_MEASURE_CURRENT_T *pcalib, MC_ABC_T *piabc,
     int16_t rawTemp = (int16_t)((MCC_ADC_ConversionResultGet(MCAF_ADC_BRIDGE_TEMPERATURE))>>1);
     *pbridgeTemp = (int16_t)(__builtin_mulss((rawTemp - 4964), Q15(0.010071108)) >> 15); //3.3V/(32767*0.01V)
     
-    //6. read phase voltages
-    pvabc->a = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_VOLTAGE);
+    //6. read phase voltages, and apply offset just for Phase A 
+    pvabc->a = ((int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEA_VOLTAGE)) - pcalib->offsetVa;
     pvabc->b = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEB_VOLTAGE);
     pvabc->c = (int16_t)MCC_ADC_ConversionResultGet(MCAF_ADC_PHASEC_VOLTAGE); 
 }
