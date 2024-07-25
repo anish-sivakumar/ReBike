@@ -77,15 +77,17 @@ void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *C
             
         case RBCAN_MESSAGE3:
             messageSent = RB_CAN_SendCANMessageV2(2, CAN_ID_MOTOR_REAL_CURRENTS, CANControl->timestamp, avg.iDC, avg.iA, avg.iAB);
-            if (messageSent){
+            if (messageSent){     
                 CANControl->state = RBCAN_MESSAGE4; 
             }
             break;
             
         case RBCAN_MESSAGE4:
-            messageSent = RB_CAN_SendCANMessageV2(0, CAN_ID_MOTOR_CALC_VALUES, CANControl->timestamp, avg.iqRef, avg.iqFdb, avg.power);    
-            if (messageSent){
-                CANControl->state = RBCAN_IDLE; 
+            if (CANControl->counter > 100){
+                messageSent = RB_CAN_SendCANMessageV2(0, CAN_ID_MOTOR_CALC_VALUES, CANControl->timestamp, avg.iqRef, avg.iqFdb, avg.power);    
+                if (messageSent){
+                    CANControl->state = RBCAN_IDLE; 
+                }
             }
             break;
             
@@ -96,7 +98,6 @@ void RB_CAN_Service(CAN_FRAME *canFrame0, int8_t *throttleCmd, RB_CAN_CONTROL *C
                 CANControl->state = RBCAN_MESSAGE1; 
             }    
             break;
-    
     }
 
     if(!messageSent){
