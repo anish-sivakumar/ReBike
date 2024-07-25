@@ -21,7 +21,7 @@ typedef struct tagRB_BUTTON {
 } RB_BUTTON;
 
 typedef struct tagRB_BOARD_UI {
-    RB_BUTTON motorEnable;
+    RB_BUTTON potThrottle;
     int16_t potState;
 } RB_BOARD_UI;
 

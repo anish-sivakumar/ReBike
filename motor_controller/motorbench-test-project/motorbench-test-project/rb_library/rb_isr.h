@@ -33,7 +33,7 @@ extern "C" {
 #define THROTTLE_MULTIPLIER 327
     
 // comment out for CAN controlled throttle
-//#define POT_THROTTLE
+#define POT_THROTTLE
 
 typedef enum 
 {   
@@ -161,7 +161,6 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 // get ready to output PWM 
                 HAL_PWM_DutyCycle_SetIdentical(HAL_PARAM_MIN_DUTY_COUNTS);
                 HAL_PWM_UpperTransistorsOverride_Disable();
-                MCAF_LED1_SetHigh();
                 stateChanged = false;
             }
             
@@ -237,7 +236,6 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
                 //Maintains the low-side transistors at low dc and high-side OFF.
                 HAL_PWM_UpperTransistorsOverride_Low();
                 HAL_PWM_LowerTransistorsOverride_Low();
-                MCAF_LED2_SetHigh();
                 stateChanged = false;
             }
             
@@ -270,14 +268,19 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
     RB_CAN_Service(&canFrame0, &tempThrottle, &CANControl, throttleCmd_Q15, 0, logAverages); // 0  = errorWarning
     
     
-#ifdef POT_THROTTLE
-    throttleCmd_Q15 = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
+    if (boardUI.potThrottle.state){
+        throttleCmd_Q15 = (boardUI.potState >= -3000 && boardUI.potState <= 3000) ? 0 
             : boardUI.potState;
-#else
-    RB_ClampInput8Bit(&tempThrottle, MAX_THROTTLE_INPUT, MIN_THROTTLE_INPUT);
-    throttleCmd_Q15 = (int16_t)(tempThrottle) * THROTTLE_MULTIPLIER;
-#endif
-    
+        MCAF_LED2_SetHigh();
+
+    }
+    else {
+        RB_ClampInput8Bit(&tempThrottle, MAX_THROTTLE_INPUT, MIN_THROTTLE_INPUT);
+        throttleCmd_Q15 = (int16_t)(tempThrottle) * THROTTLE_MULTIPLIER;
+        MCAF_LED2_SetLow();
+
+    }
+        
    
     /* interrupt flag must be cleared after data is read from buffer */
     HAL_ADC_InterruptFlag_Clear(); 
