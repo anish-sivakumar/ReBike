@@ -36,7 +36,7 @@ extern "C" {
 #define     RB_QVOLTAGE_OUTMIN      0  
 
 // Q-axis current ramp rate limiting
-#define     RB_QCURRENT_MAX          6000
+#define     RB_QCURRENT_MAX          18000
 #define     RB_QRAMP_INCREMENT       Q15(0.075) // 0.03 was slower
 #define     RB_QRAMP_COUNT           3 // new iq ref is calculated every [REF_RAMP_COUNT] times    
 
@@ -45,7 +45,7 @@ extern "C" {
 #define     RB_VOLTAGE_CMD_MIN     -28000
     
 // Safety Fault related
-#define     RB_PHASECURRENT_MAX     10000  // 13.33A peak < User guide 10A rms
+#define     RB_PHASECURRENT_MAX     19500  // 26A peak
 #define     RB_BRIDGETEMP_MAX       75 // MOSFET data sheet says 150C max
     
 // Throttle input from CAN
