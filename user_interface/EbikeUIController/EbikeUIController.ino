@@ -115,7 +115,7 @@ void timerISR() {
 
   /* adjusted with motor running. noise can caue ADC reading for 311 with no pull
       there's also a dead zone from 280 to 310  when pulling*/
-  int currentBrakeState = map(rawAnalogBrake, 315, 730, 0, -100);
+  int currentBrakeState = map(rawAnalogBrake, 340, 730, 0, -100);
 
   // Clamp the value of analog brake to -100.
   currentBrakeState = (currentBrakeState < -100) ? -100 : currentBrakeState;
