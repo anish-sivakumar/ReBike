@@ -36,8 +36,8 @@ extern "C" {
 #define     RB_QVOLTAGE_OUTMIN      0  
 
 // Q-axis current ramp rate limiting
-#define     RB_QCURRENT_MAX          18000
-#define     RB_QRAMP_INCREMENT       Q15(0.075) // 0.03 was slower
+#define     RB_QCURRENT_MAX          20000
+#define     RB_QRAMP_INCREMENT       Q15(0.00007) // 0.00003 is good start unloaded
 #define     RB_QRAMP_COUNT           3 // new iq ref is calculated every [REF_RAMP_COUNT] times    
 
 // Q-axis current controller saturation detection parameters    
@@ -45,7 +45,7 @@ extern "C" {
 #define     RB_VOLTAGE_CMD_MIN     -28000
     
 // Safety Fault related
-#define     RB_PHASECURRENT_MAX     19500  // 26A peak
+#define     RB_PHASECURRENT_MAX     21000  // 28A peak
 #define     RB_BRIDGETEMP_MAX       75 // MOSFET data sheet says 150C max
     
 // Throttle input from CAN
