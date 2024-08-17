@@ -8,16 +8,14 @@ The custom 36V, 8Ah battery pack with a JIKONG BMS monitors, protects, and balan
 
 ## Motor Controls
 DC power from the battery pack is converted to 3-ϕ AC power to drive the motor in the DSPIC33CK Motor Control Development Board. Field-Oriented Control (FOC) is implemented to isolate the torque-producing current and integrate regen braking. To mitigate safety risks, inverter temperature and current are monitored with fault detection. 
-![image](https://github.com/user-attachments/assets/de39634b-ddfb-4037-8257-189e21daa129)
 
 Nearly all geared e-bike motors are incapable of regen due to their freewheeling clutch. Hence, a direct drive PMSM is selected with a 45km/h top speed with a 36V battery.
-![image](https://github.com/user-attachments/assets/eefcd2ba-b375-4a1b-8944-69aef89e761a)
+![image](https://github.com/user-attachments/assets/de39634b-ddfb-4037-8257-189e21daa129)
 
 ## User-Interface
 The Teensy 4.0 development board processes user inputs, delivers throttle commands over CAN, and displays the bike status on an OLED screen with custom graphics. 
-![image](https://github.com/user-attachments/assets/c1a2ead3-2a05-4f83-a756-98e736e1f187)
-![image](https://github.com/user-attachments/assets/ccff905c-24a9-4f7e-a7fb-465af0e40bcc)
-
+![image](https://github.com/user-attachments/assets/854b580c-d32f-4331-8045-a99331eb3284)
+![image](https://github.com/user-attachments/assets/a2c56918-8903-4689-9376-ca45ef3621f7)
 
 ## CAN & Logging
 Combining custom and Sol-Ark CAN protocols allows fast, noise-resilient inter-device communication on a single 500kbs bus. Throttle commands, screen values, and raw data are saved to an SD card for post-ride performance analysis. A dedicated CAN controller buffers incoming messages to the motor controller, protecting critical tasks from being interrupted.
