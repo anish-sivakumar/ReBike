@@ -1,5 +1,6 @@
 # ReBike
-ECE 499 Capstone Design Project - Regenerative Braking E-Bike
+ECE499 Capstone Design Project - Regenerative Braking E-Bike
+
 Main subsystems: Battery Pack, Motor Controls, User-Interface, CAN & Logging
 
 ![image](https://github.com/user-attachments/assets/63a7b341-faa4-4de2-bde8-7ec958bbb726)
