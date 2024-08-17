@@ -17,8 +17,7 @@ DC power from the battery pack is converted to 3-ϕ AC power to drive the motor 
 
 Nearly all geared e-bike motors are incapable of regen due to their freewheeling clutch. Hence, a direct drive PMSM is selected with a 45km/h top speed with a 36V battery.
 
-![motor](https://github.com/user-attachments/assets/2794bada-02e3-4ca3-b8cb-68e1eb7f8551)
-
+![image](https://github.com/user-attachments/assets/9190e69b-c699-4e04-985f-875e471d5432)
 
 ## User-Interface
 The Teensy 4.0 development board processes user inputs, delivers throttle commands over CAN, and displays the bike status on an OLED screen with custom graphics.
