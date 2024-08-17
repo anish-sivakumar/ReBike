@@ -2,6 +2,8 @@
 ECE 499 Capstone Design Project - Regenerative Braking E-Bike
 Main subsystems: Battery Pack, Motor Controls, User-Interface, CAN & Logging
 
+![image](https://github.com/user-attachments/assets/63a7b341-faa4-4de2-bde8-7ec958bbb726)
+
 ## Battery Pack
 The custom 36V, 8Ah battery pack with a JIKONG BMS monitors, protects, and balances individual cells, and provides SoC estimation over CAN. The lithium-ion cells are spot welded together with pure nickel strips in a 10 Series – 2 Parallel arrangement.
 
