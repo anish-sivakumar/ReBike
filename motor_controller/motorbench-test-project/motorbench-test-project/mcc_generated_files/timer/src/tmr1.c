@@ -70,8 +70,8 @@ const struct TIMER_INTERFACE MCC_TMR_PROFILE = {
 
 void TMR1_Initialize (void)
 {
-    //TCS External; TSYNC disabled; TCKPS 1:1; TGATE disabled; TECS FCY; PRWIP Write complete; TMWIP Write complete; TMWDIS disabled; TSIDL disabled; TON disabled; 
-    T1CON = 0x102;
+    //TCS FOSC/2; TSYNC disabled; TCKPS 1:1; TGATE disabled; TECS ; PRWIP Write complete; TMWIP Write complete; TMWDIS disabled; TSIDL disabled; TON disabled; 
+    T1CON = 0x0;
     //TMR 0x0; 
     TMR1 = 0x0;
     //Period 0 ms; Frequency 100,000,000 Hz; PR 65535; 

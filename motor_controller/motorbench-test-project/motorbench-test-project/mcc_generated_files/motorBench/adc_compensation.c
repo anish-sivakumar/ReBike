@@ -70,7 +70,7 @@ void MCAF_ADCRead(MCAF_MOTOR_DATA *pmotor)
     MCAF_ADCCurrentRead(&pmotor->currentMeasure, &pmotor->iabc);
     
     MCAF_ADCApplyCurrentCompensation(&pmotor->currentCalibration, &pmotor->iabc);
-
+    
     uint16_t unipolarADCResult = HAL_ADC_UnsignedFromSignedInput(HAL_ADC_ValueDclink());
     if (MCAF_ADCIsVdcScaled())
     {
@@ -78,7 +78,7 @@ void MCAF_ADCRead(MCAF_MOTOR_DATA *pmotor)
     }
     pmotor->psys->vDC = unipolarADCResult >> 1;    
     pmotor->vDC = pmotor->psys->vDC;
-
+    
     if (!MCAF_OverrideVelocityCommand(&pmotor->testing))
     {
         pmotor->velocityControl.velocityCmd = pmotor->velocityControl.velocityCmdApi;

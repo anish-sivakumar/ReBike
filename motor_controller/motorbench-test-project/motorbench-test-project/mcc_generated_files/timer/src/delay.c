@@ -1,17 +1,14 @@
 /**
- * INTERRUPT Generated Driver Source File 
+ * DELAY Generated Driver File
  * 
- * @file      interrupt.c
- *            
- * @ingroup   interruptdriver
- *            
- * @brief     This is the generated driver source file for INTERRUPT driver
- *            
- * @version   Driver Version 1.1.0
- *            
- * @skipline  Device : dsPIC33CK256MP508
+ * @file delay.c
+ * 
+ * @ingroup delay
+ * 
+ * @brief This file contains functions to generate delays in the range of milliseconds and microseconds, using timer ticks to indicate delay length.
+ *
+ * @version DELAY Driver Version 1.1.0
 */
-
 /*
 © [2024] Microchip Technology Inc. and its subsidiaries.
 
@@ -33,42 +30,29 @@
     THIS SOFTWARE.
 */
 
-// Section: Includes
-#include <xc.h>
-#include "../interrupt.h"
+#ifndef FCY
+#define FCY CLOCK_InstructionFrequencyGet()
+#endif
 
-// Section: Driver Interface Function Definitions
+#include "../../system/clock.h"
+#include <libpic30.h>
+#include <stdint.h>
 
-void INTERRUPT_Initialize(void)
-{
-    // DMT: Dead Man Timer
-    // Priority: 1
-    IPC11bits.DMTIP = 1;
-    
-    // CCT1: CCP1 Timer Event
-    // Priority: 1
-    IPC1bits.CCT1IP = 1;
-    
-    // CNE: Change Notification E
-    // Priority: 1
-    IPC19bits.CNEIP = 1;
-    
-    // CCT4: CCP4 Timer Event
-    // Priority: 1
-    IPC10bits.CCT4IP = 1;
-    
-    // CCT5: CCP5 Timer Event
-    // Priority: 1
-    IPC11bits.CCT5IP = 1;
-    
+void DELAY_milliseconds(uint16_t milliseconds) {
+    while(milliseconds--){ 
+        __delay_ms(1); 
+    }
 }
 
-void INTERRUPT_Deinitialize(void)
-{
-    //POR default value of priority
-    IPC11bits.DMTIP = 4;
-    IPC1bits.CCT1IP = 4;
-    IPC19bits.CNEIP = 4;
-    IPC10bits.CCT4IP = 4;
-    IPC11bits.CCT5IP = 4;
+void DELAY_microseconds(uint16_t microseconds) {
+    while( microseconds >= 32)
+    {
+        __delay_us(32);
+        microseconds -= 32;
+    }
+    
+    while(microseconds--)
+    {
+        __delay_us(1);
+    }
 }

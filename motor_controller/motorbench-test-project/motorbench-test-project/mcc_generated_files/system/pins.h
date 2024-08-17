@@ -45,6 +45,51 @@
 
 /**
  * @ingroup  pinsdriver
+ * @brief    Sets the RB10 GPIO Pin which has a custom name of SPI1_CS to High
+ * @pre      The RB10 must be set as Output Pin             
+ * @return   none  
+ */
+#define SPI1_CS_SetHigh()          (_LATB10 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RB10 GPIO Pin which has a custom name of SPI1_CS to Low
+ * @pre      The RB10 must be set as Output Pin
+ * @return   none  
+ */
+#define SPI1_CS_SetLow()           (_LATB10 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RB10 GPIO Pin which has a custom name of SPI1_CS
+ * @pre      The RB10 must be set as Output Pin
+ * @return   none  
+ */
+#define SPI1_CS_Toggle()           (_LATB10 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RB10 GPIO Pin which has a custom name of SPI1_CS
+ * @return   none  
+ */
+#define SPI1_CS_GetValue()         _RB10
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RB10 GPIO Pin which has a custom name of SPI1_CS as Input
+ * @return   none  
+ */
+#define SPI1_CS_SetDigitalInput()  (_TRISB10 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RB10 GPIO Pin which has a custom name of SPI1_CS as Output
+ * @return   none  
+ */
+#define SPI1_CS_SetDigitalOutput() (_TRISB10 = 0)
+
+/**
+ * @ingroup  pinsdriver
  * @brief    Sets the RE4 GPIO Pin which has a custom name of MCAF_TESTPOINT1 to High
  * @pre      The RE4 must be set as Output Pin             
  * @return   none  
@@ -180,6 +225,141 @@
 
 /**
  * @ingroup  pinsdriver
+ * @brief    Sets the RE8 GPIO Pin which has a custom name of IO_RE8 to High
+ * @pre      The RE8 must be set as Output Pin             
+ * @return   none  
+ */
+#define IO_RE8_SetHigh()          (_LATE8 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RE8 GPIO Pin which has a custom name of IO_RE8 to Low
+ * @pre      The RE8 must be set as Output Pin
+ * @return   none  
+ */
+#define IO_RE8_SetLow()           (_LATE8 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RE8 GPIO Pin which has a custom name of IO_RE8
+ * @pre      The RE8 must be set as Output Pin
+ * @return   none  
+ */
+#define IO_RE8_Toggle()           (_LATE8 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RE8 GPIO Pin which has a custom name of IO_RE8
+ * @return   none  
+ */
+#define IO_RE8_GetValue()         _RE8
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE8 GPIO Pin which has a custom name of IO_RE8 as Input
+ * @return   none  
+ */
+#define IO_RE8_SetDigitalInput()  (_TRISE8 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE8 GPIO Pin which has a custom name of IO_RE8 as Output
+ * @return   none  
+ */
+#define IO_RE8_SetDigitalOutput() (_TRISE8 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RE9 GPIO Pin which has a custom name of IO_RE9 to High
+ * @pre      The RE9 must be set as Output Pin             
+ * @return   none  
+ */
+#define IO_RE9_SetHigh()          (_LATE9 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RE9 GPIO Pin which has a custom name of IO_RE9 to Low
+ * @pre      The RE9 must be set as Output Pin
+ * @return   none  
+ */
+#define IO_RE9_SetLow()           (_LATE9 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RE9 GPIO Pin which has a custom name of IO_RE9
+ * @pre      The RE9 must be set as Output Pin
+ * @return   none  
+ */
+#define IO_RE9_Toggle()           (_LATE9 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RE9 GPIO Pin which has a custom name of IO_RE9
+ * @return   none  
+ */
+#define IO_RE9_GetValue()         _RE9
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE9 GPIO Pin which has a custom name of IO_RE9 as Input
+ * @return   none  
+ */
+#define IO_RE9_SetDigitalInput()  (_TRISE9 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE9 GPIO Pin which has a custom name of IO_RE9 as Output
+ * @return   none  
+ */
+#define IO_RE9_SetDigitalOutput() (_TRISE9 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RE10 GPIO Pin which has a custom name of IO_RE10 to High
+ * @pre      The RE10 must be set as Output Pin             
+ * @return   none  
+ */
+#define IO_RE10_SetHigh()          (_LATE10 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RE10 GPIO Pin which has a custom name of IO_RE10 to Low
+ * @pre      The RE10 must be set as Output Pin
+ * @return   none  
+ */
+#define IO_RE10_SetLow()           (_LATE10 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RE10 GPIO Pin which has a custom name of IO_RE10
+ * @pre      The RE10 must be set as Output Pin
+ * @return   none  
+ */
+#define IO_RE10_Toggle()           (_LATE10 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RE10 GPIO Pin which has a custom name of IO_RE10
+ * @return   none  
+ */
+#define IO_RE10_GetValue()         _RE10
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE10 GPIO Pin which has a custom name of IO_RE10 as Input
+ * @return   none  
+ */
+#define IO_RE10_SetDigitalInput()  (_TRISE10 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE10 GPIO Pin which has a custom name of IO_RE10 as Output
+ * @return   none  
+ */
+#define IO_RE10_SetDigitalOutput() (_TRISE10 = 0)
+
+/**
+ * @ingroup  pinsdriver
  * @brief    Sets the RE11 GPIO Pin which has a custom name of MCAF_BUTTON1 to High
  * @pre      The RE11 must be set as Output Pin             
  * @return   none  
@@ -270,11 +450,101 @@
 
 /**
  * @ingroup  pinsdriver
+ * @brief    Sets the RE14 GPIO Pin which has a custom name of SPI1_RST to High
+ * @pre      The RE14 must be set as Output Pin             
+ * @return   none  
+ */
+#define SPI1_RST_SetHigh()          (_LATE14 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RE14 GPIO Pin which has a custom name of SPI1_RST to Low
+ * @pre      The RE14 must be set as Output Pin
+ * @return   none  
+ */
+#define SPI1_RST_SetLow()           (_LATE14 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RE14 GPIO Pin which has a custom name of SPI1_RST
+ * @pre      The RE14 must be set as Output Pin
+ * @return   none  
+ */
+#define SPI1_RST_Toggle()           (_LATE14 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RE14 GPIO Pin which has a custom name of SPI1_RST
+ * @return   none  
+ */
+#define SPI1_RST_GetValue()         _RE14
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE14 GPIO Pin which has a custom name of SPI1_RST as Input
+ * @return   none  
+ */
+#define SPI1_RST_SetDigitalInput()  (_TRISE14 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RE14 GPIO Pin which has a custom name of SPI1_RST as Output
+ * @return   none  
+ */
+#define SPI1_RST_SetDigitalOutput() (_TRISE14 = 0)
+
+/**
+ * @ingroup  pinsdriver
  * @brief    Initializes the PINS module
  * @return   none  
  */
 void PINS_Initialize(void);
 
+/**
+ * @ingroup  pinsdriver
+ * @brief    This function is callback for IO_RE10 Pin
+ * @return   none   
+ */
+void IO_RE10_CallBack(void);
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    This function is callback for IO_RE8 Pin
+ * @return   none   
+ */
+void IO_RE8_CallBack(void);
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    This function is callback for IO_RE9 Pin
+ * @return   none   
+ */
+void IO_RE9_CallBack(void);
+
+
+/**
+ * @ingroup    pinsdriver
+ * @brief      This function assigns a function pointer with a callback address
+ * @param[in]  InterruptHandler - Address of the callback function 
+ * @return     none  
+ */
+void IO_RE10_SetInterruptHandler(void (* InterruptHandler)(void));
+
+/**
+ * @ingroup    pinsdriver
+ * @brief      This function assigns a function pointer with a callback address
+ * @param[in]  InterruptHandler - Address of the callback function 
+ * @return     none  
+ */
+void IO_RE8_SetInterruptHandler(void (* InterruptHandler)(void));
+
+/**
+ * @ingroup    pinsdriver
+ * @brief      This function assigns a function pointer with a callback address
+ * @param[in]  InterruptHandler - Address of the callback function 
+ * @return     none  
+ */
+void IO_RE9_SetInterruptHandler(void (* InterruptHandler)(void));
 
 
 #endif

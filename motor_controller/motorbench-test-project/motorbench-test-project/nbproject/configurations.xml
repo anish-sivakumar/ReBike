@@ -134,6 +134,10 @@
           <itemPath>mcc_generated_files/qei/qei_interface.h</itemPath>
           <itemPath>mcc_generated_files/qei/qei_types.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="spi_host" displayName="spi_host" projectFiles="true">
+          <itemPath>mcc_generated_files/spi_host/spi_host_interface.h</itemPath>
+          <itemPath>mcc_generated_files/spi_host/spi1.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <itemPath>mcc_generated_files/system/interrupt.h</itemPath>
           <itemPath>mcc_generated_files/system/reset_types.h</itemPath>
@@ -151,6 +155,9 @@
           <itemPath>mcc_generated_files/timer/tmr1.h</itemPath>
           <itemPath>mcc_generated_files/timer/timer_interface.h</itemPath>
           <itemPath>mcc_generated_files/timer/sccp1.h</itemPath>
+          <itemPath>mcc_generated_files/timer/sccp4.h</itemPath>
+          <itemPath>mcc_generated_files/timer/sccp5.h</itemPath>
+          <itemPath>mcc_generated_files/timer/delay.h</itemPath>
         </logicalFolder>
         <logicalFolder name="uart" displayName="uart" projectFiles="true">
           <itemPath>mcc_generated_files/uart/uart1.h</itemPath>
@@ -158,6 +165,17 @@
           <itemPath>mcc_generated_files/uart/uart_types.h</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>rb_library/rb_control.h</itemPath>
+      <itemPath>rb_library/rb_hall.h</itemPath>
+      <itemPath>rb_library/rb_measure.h</itemPath>
+      <itemPath>rb_library/rb_isr.h</itemPath>
+      <itemPath>rb_library/rb_pwm.h</itemPath>
+      <itemPath>rb_library/rb_board_ui.h</itemPath>
+      <itemPath>rb_library/rb_communication.h</itemPath>
+      <itemPath>rb_library/rb_mcp.h</itemPath>
+      <itemPath>rb_library/rb_mcp_defs.h</itemPath>
+      <itemPath>rb_library/rb_logging.h</itemPath>
+      <itemPath>rb_library/rb_can.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -246,6 +264,11 @@
             <itemPath>mcc_generated_files/qei/src/qei1.c</itemPath>
           </logicalFolder>
         </logicalFolder>
+        <logicalFolder name="spi_host" displayName="spi_host" projectFiles="true">
+          <logicalFolder name="src" displayName="src" projectFiles="true">
+            <itemPath>mcc_generated_files/spi_host/src/spi1.c</itemPath>
+          </logicalFolder>
+        </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/system/src/dmt_asm.s</itemPath>
@@ -263,6 +286,9 @@
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/timer/src/sccp1.c</itemPath>
             <itemPath>mcc_generated_files/timer/src/tmr1.c</itemPath>
+            <itemPath>mcc_generated_files/timer/src/sccp4.c</itemPath>
+            <itemPath>mcc_generated_files/timer/src/sccp5.c</itemPath>
+            <itemPath>mcc_generated_files/timer/src/delay.c</itemPath>
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="uart" displayName="uart" projectFiles="true">
@@ -272,6 +298,16 @@
         </logicalFolder>
       </logicalFolder>
       <itemPath>main.c</itemPath>
+      <itemPath>rb_library/rb_hall.c</itemPath>
+      <itemPath>rb_library/rb_control.c</itemPath>
+      <itemPath>rb_library/rb_foc_params.h</itemPath>
+      <itemPath>rb_library/rb_measure.c</itemPath>
+      <itemPath>rb_library/rb_pwm.c</itemPath>
+      <itemPath>rb_library/rb_board_ui.c</itemPath>
+      <itemPath>rb_library/rb_communication.c</itemPath>
+      <itemPath>rb_library/rb_mcp.c</itemPath>
+      <itemPath>rb_library/rb_logging.c</itemPath>
+      <itemPath>rb_library/rb_can.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -282,7 +318,7 @@
         <targetDevice>dsPIC33CK256MP508</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool>pkob4hybrid</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>2.10</languageToolchainVersion>
         <platform>3</platform>
@@ -453,6 +489,204 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
       </C30Global>
+      <Tool>
+        <property key="ADC" value="true"/>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="CLC 1" value="true"/>
+        <property key="CLC 2" value="true"/>
+        <property key="CLC 3" value="true"/>
+        <property key="CLC 4" value="true"/>
+        <property key="CRC" value="true"/>
+        <property key="DACFRZ" value="true"/>
+        <property key="DMA" value="true"/>
+        <property key="FRZ" value="true"/>
+        <property key="Freeze All Other Peripherals" value="true"/>
+        <property key="I2C 1" value="true"/>
+        <property key="I2C 2" value="true"/>
+        <property key="I2C 3" value="true"/>
+        <property key="MCCP/SCCP 1" value="true"/>
+        <property key="MCCP/SCCP 2" value="true"/>
+        <property key="MCCP/SCCP 3" value="true"/>
+        <property key="MCCP/SCCP 4" value="true"/>
+        <property key="MCCP/SCCP 5" value="true"/>
+        <property key="MCCP/SCCP 6" value="true"/>
+        <property key="MCCP/SCCP 7" value="true"/>
+        <property key="MCCP/SCCP 8" value="true"/>
+        <property key="MCCP/SCCP 9" value="true"/>
+        <property key="PG1" value="true"/>
+        <property key="PG2" value="true"/>
+        <property key="PG3" value="true"/>
+        <property key="PG4" value="true"/>
+        <property key="PG5" value="true"/>
+        <property key="PG6" value="true"/>
+        <property key="PG7" value="true"/>
+        <property key="PG8" value="true"/>
+        <property key="PMP" value="true"/>
+        <property key="PTGFRZ" value="true"/>
+        <property key="QEI1" value="true"/>
+        <property key="QEI2" value="true"/>
+        <property key="REFO" value="true"/>
+        <property key="SENT1" value="true"/>
+        <property key="SENT2" value="true"/>
+        <property key="SPI 1" value="true"/>
+        <property key="SPI 2" value="true"/>
+        <property key="SPI 3" value="true"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
+        <property key="TIMER1" value="true"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UpdateOptions"
+                  value="ToolFirmwareOption.UseLatest"/>
+        <property key="ToolFirmwareToolPack"
+                  value="Press to select which tool pack to use"/>
+        <property key="communication.interface" value=""/>
+        <property key="communication.interface.jtag" value="2wire"/>
+        <property key="communication.speed" value="${communication.speed.default}"/>
+        <property key="debugoptions.debug-startup" value="Use system settings"/>
+        <property key="debugoptions.reset-behaviour" value="Use system settings"/>
+        <property key="debugoptions.simultaneous.debug" value="false"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
+        <property key="event.recorder.enabled" value="false"/>
+        <property key="event.recorder.scvd.files" value=""/>
+        <property key="freeze.timers" value="false"/>
+        <property key="lastid" value=""/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="0-2beff"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/Users/siani/Documents/Classes/Summer24/ECE499/eBike/motor_controller/motorbench-test-project/motorbench-test-project/debug/default/default_ptg"/>
+        <property key="programoptions.donoteraseauxmem" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.pgmentry.voltage" value="low"/>
+        <property key="programoptions.pgmspeed" value="Med"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value=""/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.program.otpconfig" value="false"/>
+        <property key="programoptions.programcalmem" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.smart.program" value="When debugging only"/>
+        <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
+      </Tool>
+      <pkob4hybrid>
+        <property key="ADC" value="true"/>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="CLC 1" value="true"/>
+        <property key="CLC 2" value="true"/>
+        <property key="CLC 3" value="true"/>
+        <property key="CLC 4" value="true"/>
+        <property key="CRC" value="true"/>
+        <property key="DACFRZ" value="true"/>
+        <property key="DMA" value="true"/>
+        <property key="FRZ" value="true"/>
+        <property key="Freeze All Other Peripherals" value="true"/>
+        <property key="I2C 1" value="true"/>
+        <property key="I2C 2" value="true"/>
+        <property key="I2C 3" value="true"/>
+        <property key="MCCP/SCCP 1" value="true"/>
+        <property key="MCCP/SCCP 2" value="true"/>
+        <property key="MCCP/SCCP 3" value="true"/>
+        <property key="MCCP/SCCP 4" value="true"/>
+        <property key="MCCP/SCCP 5" value="true"/>
+        <property key="MCCP/SCCP 6" value="true"/>
+        <property key="MCCP/SCCP 7" value="true"/>
+        <property key="MCCP/SCCP 8" value="true"/>
+        <property key="MCCP/SCCP 9" value="true"/>
+        <property key="PG1" value="true"/>
+        <property key="PG2" value="true"/>
+        <property key="PG3" value="true"/>
+        <property key="PG4" value="true"/>
+        <property key="PG5" value="true"/>
+        <property key="PG6" value="true"/>
+        <property key="PG7" value="true"/>
+        <property key="PG8" value="true"/>
+        <property key="PMP" value="true"/>
+        <property key="PTGFRZ" value="true"/>
+        <property key="QEI1" value="true"/>
+        <property key="QEI2" value="true"/>
+        <property key="REFO" value="true"/>
+        <property key="SENT1" value="true"/>
+        <property key="SENT2" value="true"/>
+        <property key="SPI 1" value="true"/>
+        <property key="SPI 2" value="true"/>
+        <property key="SPI 3" value="true"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
+        <property key="TIMER1" value="true"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UpdateOptions"
+                  value="ToolFirmwareOption.UseLatest"/>
+        <property key="ToolFirmwareToolPack"
+                  value="Press to select which tool pack to use"/>
+        <property key="communication.interface" value=""/>
+        <property key="communication.interface.jtag" value="2wire"/>
+        <property key="communication.speed" value="${communication.speed.default}"/>
+        <property key="debugoptions.debug-startup" value="Use system settings"/>
+        <property key="debugoptions.reset-behaviour" value="Use system settings"/>
+        <property key="debugoptions.simultaneous.debug" value="false"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
+        <property key="event.recorder.enabled" value="false"/>
+        <property key="event.recorder.scvd.files" value=""/>
+        <property key="freeze.timers" value="false"/>
+        <property key="lastid" value=""/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="0-2beff"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/Users/siani/Documents/Classes/Summer24/ECE499/eBike/motor_controller/motorbench-test-project/motorbench-test-project/debug/default/default_ptg"/>
+        <property key="programoptions.donoteraseauxmem" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.pgmentry.voltage" value="low"/>
+        <property key="programoptions.pgmspeed" value="Med"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value=""/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.program.otpconfig" value="false"/>
+        <property key="programoptions.programcalmem" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.smart.program" value="When debugging only"/>
+        <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
+      </pkob4hybrid>
     </conf>
   </confs>
 </configurationDescriptor>

@@ -131,8 +131,8 @@ typedef struct tagMOTOR
     MCAF_U_CURRENT_DQ        idq;        /** rotating (dq) frame current measurements */
 
     /* Current controllers */
-    MCAF_PISTATE_T      idCtrl;  /** controller state for the D axis */
-    MCAF_PISTATE_T      iqCtrl;  /** controller state for the Q axis */
+    MCAF_PISTATE_T            idCtrl;  /** controller state for the D axis */
+    MCAF_PISTATE_T            iqCtrl;  /** controller state for the Q axis */
      
     /** Output limit for each axis of the current loops, normalized to DC link voltage,
      *  line-to-neutral, so that 0.57735 = 1/sqrt(3) = full line-to-line voltage */

@@ -1,17 +1,14 @@
 /**
- * INTERRUPT Generated Driver Source File 
+ * DELAY Generated Driver API Header File
  * 
- * @file      interrupt.c
- *            
- * @ingroup   interruptdriver
- *            
- * @brief     This is the generated driver source file for INTERRUPT driver
- *            
- * @version   Driver Version 1.1.0
- *            
- * @skipline  Device : dsPIC33CK256MP508
+ * @file delay.h
+ * 
+ * @defgroup delay DELAY BLOCKING DRIVER
+ * 
+ * @brief This file contains the API to generate delays in the range of milliseconds and microseconds.
+ *
+ * @version DELAY Driver Version 1.1.0
 */
-
 /*
 © [2024] Microchip Technology Inc. and its subsidiaries.
 
@@ -33,42 +30,25 @@
     THIS SOFTWARE.
 */
 
-// Section: Includes
-#include <xc.h>
-#include "../interrupt.h"
+#ifndef _DELAY_H
+#define _DELAY_H
 
-// Section: Driver Interface Function Definitions
+#include <stdint.h>
 
-void INTERRUPT_Initialize(void)
-{
-    // DMT: Dead Man Timer
-    // Priority: 1
-    IPC11bits.DMTIP = 1;
-    
-    // CCT1: CCP1 Timer Event
-    // Priority: 1
-    IPC1bits.CCT1IP = 1;
-    
-    // CNE: Change Notification E
-    // Priority: 1
-    IPC19bits.CNEIP = 1;
-    
-    // CCT4: CCP4 Timer Event
-    // Priority: 1
-    IPC10bits.CCT4IP = 1;
-    
-    // CCT5: CCP5 Timer Event
-    // Priority: 1
-    IPC11bits.CCT5IP = 1;
-    
-}
+/**
+*  @ingroup delay
+*  @brief Delays the execution of the program for a certain number of milliseconds
+*  @param[in] milliseconds - Number of milliseconds to delay
+*  @return None.
+*/
+void DELAY_milliseconds(uint16_t milliseconds);
 
-void INTERRUPT_Deinitialize(void)
-{
-    //POR default value of priority
-    IPC11bits.DMTIP = 4;
-    IPC1bits.CCT1IP = 4;
-    IPC19bits.CNEIP = 4;
-    IPC10bits.CCT4IP = 4;
-    IPC11bits.CCT5IP = 4;
-}
+/**
+*  @ingroup delay
+*  @brief Delays the execution of the program for a certain number of microseconds
+*  @param[in] microseconds - Number of microseconds to delay
+*  @return None.
+*/
+void DELAY_microseconds(uint16_t microseconds);
+
+#endif	// _DELAY_H

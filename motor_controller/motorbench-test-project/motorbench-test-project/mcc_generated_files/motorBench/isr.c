@@ -55,6 +55,8 @@
 #include "ui.h"
 #include "mcapi_internal.h"
 #include "current_measure.h"
+
+
 /**
  * motor state variables, accessed directly
  * 
@@ -88,7 +90,9 @@ extern volatile MCAF_WATCHDOG_T watchdog;
  * 
  * GPIO test point output is activated during this ISR for timing purposes.
  */
-void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
+
+//void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
+void HAL_ADC_ISR_ORIGINAL(void)
 {
     if (MCAF_AdcIsrPrologEnabled())
     {
@@ -128,7 +132,7 @@ void __attribute__((interrupt, auto_psv)) HAL_ADC_ISR(void)
 void __attribute__((interrupt, auto_psv)) HAL_ADC_SINGLE_CHANNEL_ISR(void)
 {
     MCAF_SingleChannelCurrentMeasure(&motor);
-    
+
     ADC1_IndividualChannelInterruptFlagClear(MCAF_ADC_DCLINK_CURRENT);
 }
 #endif
