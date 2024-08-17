@@ -14,8 +14,8 @@ Nearly all geared e-bike motors are incapable of regen due to their freewheeling
 
 ## User-Interface
 The Teensy 4.0 development board processes user inputs, delivers throttle commands over CAN, and displays the bike status on an OLED screen with custom graphics.
-![flowchart](https://github.com/user-attachments/assets/854b580c-d32f-4331-8045-a99331eb3284)
 
+![flowchart](https://github.com/user-attachments/assets/854b580c-d32f-4331-8045-a99331eb3284)
 ![screengraphic](https://github.com/user-attachments/assets/a2c56918-8903-4689-9376-ca45ef3621f7)
 
 ## CAN & Logging
