@@ -14,6 +14,7 @@ The custom 36V, 8Ah battery pack with a JIKONG BMS monitors, protects, and balan
 
 ## Motor Controls
 DC power from the battery pack is converted to 3-ϕ AC power to drive the motor in the DSPIC33CK Motor Control Development Board. Field-Oriented Control (FOC) is implemented to isolate the torque-producing current and integrate regen braking. To mitigate safety risks, inverter temperature and current are monitored with fault detection. Custom firmware was written on the Microchip dsPIC33CK Low Voltage Motor Control (LVMC) Development Board.
+
 FSM:
 
 ![FSM](https://github.com/user-attachments/assets/8ec09012-f001-452d-b119-f9a687071c2f)
