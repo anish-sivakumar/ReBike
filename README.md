@@ -22,6 +22,10 @@ FOC:
 
 ![FOC](https://github.com/user-attachments/assets/e9fff6b6-0308-4521-be1c-9d897573b3ec)
 
+Hall Signal Filter:
+
+![filter](https://github.com/user-attachments/assets/f1dd9497-abb8-42a7-8893-44aa2fd3074d)
+
 Decoded Hall Sector:
 
 ![HallSector](https://github.com/user-attachments/assets/3d4a943b-a9f9-4bb3-86d2-6eddd20568f7)
@@ -48,9 +52,15 @@ The Teensy 4.0 development board processes user inputs, delivers throttle comman
 ## CAN & Logging
 Combining custom and Sol-Ark CAN protocols allows fast, noise-resilient inter-device communication on a single 500kbs bus. Throttle commands, screen values, and raw data are saved to an SD card for post-ride performance analysis. A dedicated CAN controller buffers incoming messages to the motor controller, protecting critical tasks from being interrupted.
 
+CAN Bus Diagram:
+
 ![CANdiagram](https://github.com/user-attachments/assets/1dda9d8c-1969-4304-8dcb-d35f7c6e3d53)
 
+CAN Message Protocol:
+
 ![CANformat](https://github.com/user-attachments/assets/e99ee30e-1115-4e31-b20e-5e668804d60c)
+
+Logging Format:
 
 ![Loggingtable](https://github.com/user-attachments/assets/5dc08cc5-000d-43fd-be2b-371af2df1aa1)
 
