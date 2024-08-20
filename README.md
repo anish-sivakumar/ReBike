@@ -3,6 +3,10 @@ ECE499 Capstone Design Project - Regenerative Braking E-Bike
 
 Main subsystems: Battery Pack, Motor Controls, User-Interface, CAN & Logging
 
+YouTube Link:
+
+https://youtu.be/TVtY72QqjGI
+
 ![team](https://github.com/user-attachments/assets/63a7b341-faa4-4de2-bde8-7ec958bbb726)
 
 ## Battery Pack
