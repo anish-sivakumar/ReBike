@@ -21,7 +21,8 @@ DC power from the battery pack is converted to 3-ϕ AC power to drive the motor 
 
 FSM:
 
-![FSM](https://github.com/user-attachments/assets/8ec09012-f001-452d-b119-f9a687071c2f)
+![FSM](https://github.com/user-attachments/assets/d9deb837-57ba-417c-8567-d8efca7ace3e)
+
 
 FOC:
 
